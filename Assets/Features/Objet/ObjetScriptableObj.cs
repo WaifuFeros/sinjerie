@@ -22,4 +22,5 @@ public class ObjetScriptableObj : ScriptableObject
     public ObjetMatiralType objetMatiralType;
     public float objetWeight;
     public float objectDamage;
+    public float objectHeal;
 }

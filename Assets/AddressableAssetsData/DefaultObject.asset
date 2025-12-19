@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
-  m_Name: NouvelObjet
+  m_Script: {fileID: 11500000, guid: 3a189bb168d8d90478a09ea08c2f3d72, type: 3}
+  m_Name: DefaultObject
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
-  objetName: Sword
-  objetDescription: 'Une '
-  objetMatiralType: 0
-  objetWeight: 0
-  objectDamage: 0
+  m_AddressableAssetSettingsGuid: d52e8d16913abce409ac2715eb41a8ee
