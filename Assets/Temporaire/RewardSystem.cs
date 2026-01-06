@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using System;
+
 
 [System.Serializable]
 public class Reward
