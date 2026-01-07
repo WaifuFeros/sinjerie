@@ -16,21 +16,24 @@ public class ExposeAttributeDrawer : PropertyDrawer
 
         // Draw foldout arrow
         if (property.objectReferenceValue != null)
+        {
             property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, GUIContent.none);
 
-        // Draw foldout properties
-        if (property.isExpanded)
-        {
-            // Make child fields be indented
-            EditorGUI.indentLevel++;
 
-            // Draw object properties
-            if (!editor)
-                Editor.CreateCachedEditor(property.objectReferenceValue, null, ref editor);
-            editor.OnInspectorGUI();
+            // Draw foldout properties
+            if (property.isExpanded)
+            {
+                // Make child fields be indented
+                EditorGUI.indentLevel++;
 
-            // Set indent back to what it is
-            EditorGUI.indentLevel--;
+                // Draw object properties
+                if (!editor)
+                    Editor.CreateCachedEditor(property.objectReferenceValue, null, ref editor);
+                editor.OnInspectorGUI();
+
+                // Set indent back to what it is
+                EditorGUI.indentLevel--;
+            }
         }
     }
 }
