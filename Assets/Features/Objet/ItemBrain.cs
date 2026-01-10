@@ -6,7 +6,7 @@ using System.Collections;
 
 public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] private ObjetSO itemData;
+    [SerializeField] public ObjetSO itemData;                  // Public provi --> creer des fonctions pour stocker les données
     [SerializeField] private GameObject descritptionPanel;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private GameObject effectImage; 
@@ -69,7 +69,7 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
     private void OnDestroy()
     {
         if (ItemManager.Instance != null)
-            ItemManager.Instance.activeItems.Remove(this);
+            ItemManager.Instance.activeItems.Remove(gameObject);
     }
 
 
