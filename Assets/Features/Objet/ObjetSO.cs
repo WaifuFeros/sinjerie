@@ -10,17 +10,25 @@ public enum ObjetMatiralType
     Plastic,
     Glass,
     Stone,
-    Organic
+    Organic,
+    fire
+}
+public enum ObjetEffectType
+{
+    Heal,
+    Attack,
+    Special
 }
 
 [CreateAssetMenu(fileName = "NouvelObjet", menuName = "Objets/Nouvel Objet", order = 1)]
-public class ObjetScriptableObj : ScriptableObject
+public class ObjetSO : ScriptableObject
 {
     public Sprite objetSprite;
     public string objetName;
     public string objetDescription;
     public ObjetMatiralType objetMatiralType;
     public float objetWeight;
-    public float objectDamage;
-    public float objectHeal;
+    public ObjetEffectType objectType;
+    public float objectEffect;
+    public SpecialActionSO specialAction;
 }

@@ -17,10 +17,17 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 2e6be7af97a738b499669625f6b8f062
   m_SerializeEntries:
-  - m_GUID: 9a6f24b1d9d0d2640bae5310c8277708
-    m_Address: Assets/Features/Objet/NouvelObjet.asset
+  - m_GUID: d286ff4a698090d40a527815396731fb
+    m_Address: Assets/Features/Objet/ObjectSO/mario.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6c6ae101e0413a4bab3a86b5e2c98b0
+    m_Address: Assets/Features/Objet/ObjectSO/mario2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d52e8d16913abce409ac2715eb41a8ee, type: 2}
