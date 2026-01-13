@@ -60,12 +60,11 @@ public class ItemManager : MonoBehaviour
 
 
     // Recup des items de l'inventaire
-    public List<GameObject> GetAllItem()
+    public List<GameObject> GetAllItems()
     {
         return activeItems;
     }
-
-    public List<GameObject> GetHealItem()
+    public List<GameObject> GetHealItems()
     {
         List<GameObject> result = new List<GameObject>();
         foreach (GameObject item in activeItems)
@@ -78,8 +77,7 @@ public class ItemManager : MonoBehaviour
         }
         return result;
     }
-
-    public List<GameObject> GetAttackItem()
+    public List<GameObject> GetAttackItems()
     {
         List<GameObject> result = new List<GameObject>();
         foreach (GameObject item in activeItems)
@@ -89,6 +87,36 @@ public class ItemManager : MonoBehaviour
             {
                 result.Add(item);
             }
+        }
+        return result;
+    }
+    public List<GameObject> GetSpecialItems()
+    {
+        List<GameObject> result = new List<GameObject>();
+        foreach (GameObject item in activeItems)
+        {
+            ItemBrain itemBrain = item.GetComponent<ItemBrain>();
+            if (itemBrain.itemData.objectType == ObjetEffectType.Special)
+            {
+                result.Add(item);
+            }
+        }
+        return result;
+    }
+    public List<GameObject> GetRandomItems(int nb)
+    {
+        List<GameObject> result = new List<GameObject>();
+        if (nb <= 0 || activeItems.Count == 0)
+        {
+            return result;
+        }
+        List<GameObject> tempPool = new List<GameObject>(activeItems);
+        int countToGet = Mathf.Min(nb, tempPool.Count);
+        for (int i = 0; i < countToGet; i++)
+        {
+            int randomIndex = Random.Range(0, tempPool.Count);
+            result.Add(tempPool[randomIndex]);
+            tempPool.RemoveAt(randomIndex);
         }
         return result;
     }
