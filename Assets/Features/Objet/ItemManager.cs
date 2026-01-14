@@ -120,4 +120,35 @@ public class ItemManager : MonoBehaviour
         }
         return result;
     }
+
+    // Applique effet sur un item
+    public void ChangeItemType(List<GameObject> items)
+    {
+        foreach (GameObject item in items)
+        {
+            if (item.GetComponent<ItemBrain>().itemData.objectType == ObjetEffectType.Attack)
+            {
+                item.GetComponent<ItemBrain>().itemData.objectType = ObjetEffectType.Heal;
+            } else {
+                item.GetComponent<ItemBrain>().itemData.objectType = ObjetEffectType.Attack;
+            }
+            item.GetComponent<ItemBrain>().UpdateVisuals();
+        }
+    }
+    public void ChangeItemWeight(List<GameObject> items, int Weight)
+    {
+        foreach (GameObject item in items)
+        {
+            item.GetComponent<ItemBrain>().itemData.objetWeight = Weight;
+            item.GetComponent<ItemBrain>().UpdateVisuals();
+        }
+    }
+    public void ChangeItemEffect(List<GameObject> items, float Effect)
+    {
+        foreach (GameObject item in items)
+        {
+            item.GetComponent<ItemBrain>().itemData.objectEffect = Effect;
+            item.GetComponent<ItemBrain>().UpdateVisuals();
+        }
+    }
 }

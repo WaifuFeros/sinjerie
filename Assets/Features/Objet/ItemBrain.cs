@@ -51,7 +51,7 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
         UpdateVisuals();
     }
 
-    private void UpdateVisuals()
+    public void UpdateVisuals()
     {
         GetComponent<Image>().sprite = itemData.objetSprite;
         descriptionText.text = itemData.objetDescription;
