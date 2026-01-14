@@ -20,6 +20,7 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
 
     void Start()
     {
+
         isDragging = false;
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
@@ -46,7 +47,7 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
     // Fonction appelée par le Manager juste après le Instantiate
     public void InitItem(ObjetSO data)
     {
-        itemData = data;
+        itemData = Instantiate(data);
         UpdateVisuals();
     }
 
@@ -70,11 +71,14 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
     {
         if (ItemManager.Instance != null)
             ItemManager.Instance.activeItems.Remove(gameObject);
+        Destroy(itemData);
     }
 
 
 
 
+
+    // Interactions UI
 
     public void OnPointerDown(PointerEventData eventData)
     {
