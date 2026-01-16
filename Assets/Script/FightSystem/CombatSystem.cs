@@ -14,6 +14,9 @@ public class CombatSystem : MonoBehaviour
     [Header("Attack Buttons")]
     [SerializeField] private AttackButtonData[] attackButtons; // Les boutons d'attaque configurés dans l'Inspector
 
+    [Header("Skip Turn Button")]
+    [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
+
     [System.Serializable]
     public class AttackButtonData
     {
@@ -33,6 +36,21 @@ public class CombatSystem : MonoBehaviour
 
         // Configurer les boutons d'attaque
         SetupAttackButtons();
+
+        // Configurer le bouton de passage de tour
+        SetupSkipTurnButton();
+    }
+
+    ///<summary>
+    ///Configure le bouton de passage de tour
+    ///</summary>
+    private void SetupSkipTurnButton()
+    {
+        if (skipTurnButton != null)
+        {
+            skipTurnButton.onClick.RemoveAllListeners();
+            skipTurnButton.onClick.AddListener(() => OnSkipTurnButtonClicked());
+        }
     }
 
     /// <summary>
@@ -100,6 +118,7 @@ public class CombatSystem : MonoBehaviour
 
         // Activer les boutons d'attaque
         SetAttackButtonsInteractable(true);
+        SetupSkipTurnButtonInteractable(true);
 
         Debug.Log("Combat démarré! Touchez un bouton pour attaquer.");
     }
@@ -116,6 +135,7 @@ public class CombatSystem : MonoBehaviour
 
         waitingForPlayerAction = false;
         SetAttackButtonsInteractable(false);
+        SetupSkipTurnButtonInteractable(false);
 
         Debug.Log($"Attaque utilisée: {attack.attackName}");
 
@@ -131,6 +151,24 @@ public class CombatSystem : MonoBehaviour
     }
 
     /// <summary>
+    /// Appelé quand le bouton de passage de tour est cliqué
+    /// </summary>
+    private void OnSkipTurnButtonClicked()
+    {
+        if (!combatActive || !waitingForPlayerAction)
+        {
+            return;
+        }
+        waitingForPlayerAction = false;
+        SetAttackButtonsInteractable(false);
+        SetupSkipTurnButtonInteractable(false);
+        Debug.Log("Tour passé!");
+        // l'ennemis attack
+        StartCoroutine(EnemyAttackSequence());
+    }
+
+
+    /// <summary>
     /// Active ou désactive les boutons d'attaque
     /// </summary>
     private void SetAttackButtonsInteractable(bool interactable)
@@ -143,6 +181,18 @@ public class CombatSystem : MonoBehaviour
             {
                 attackButton.button.interactable = interactable;
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Vérifie si le bouton de passage de tour doit être interactif
+    /// </summary>
+    private void SetupSkipTurnButtonInteractable(bool interactable)
+    {
+        if (skipTurnButton != null)
+        {
+            skipTurnButton.interactable = interactable;
         }
     }
 
@@ -192,6 +242,7 @@ public class CombatSystem : MonoBehaviour
         // Retour au tour du joueur
         waitingForPlayerAction = true;
         SetAttackButtonsInteractable(true);
+        SetupSkipTurnButtonInteractable(true);
         Debug.Log("À vous de jouer! Touchez un bouton pour attaquer.");
     }
 
@@ -200,6 +251,7 @@ public class CombatSystem : MonoBehaviour
         combatActive = false;
         waitingForPlayerAction = false;
         SetAttackButtonsInteractable(false);
+        SetupSkipTurnButtonInteractable(false);
 
         if (victory)
         {
