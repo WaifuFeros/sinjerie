@@ -1,4 +1,5 @@
 using Unity.VisualScripting.FullSerializer;
+using UnityEditor.Search;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Objets/Actions/MettreLePoidA1")]
@@ -6,6 +7,8 @@ public class WeightToOne : SpecialActionSO
 {
     public override void Execute()
     {
-        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAH ça marche hein 222222222222");
+        var items = ItemManager.Instance.GetAllItems();
+        ItemManager.Instance.ChangeItemWeight(items, 1);
+        Debug.Log("WeightToOne");
     }
 }

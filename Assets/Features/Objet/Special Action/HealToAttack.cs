@@ -6,6 +6,10 @@ public class HealToAttack : SpecialActionSO
 {
     public override void Execute()
     {
-        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAH ça marche hein");
+        var atkItems = ItemManager.Instance.GetAttackItems();
+        var healItems = ItemManager.Instance.GetHealItems();
+        ItemManager.Instance.ChangeItemType(atkItems, ObjetEffectType.Heal);
+        ItemManager.Instance.ChangeItemType(healItems, ObjetEffectType.Attack);
+        Debug.Log("HealToAttack");
     }
 }

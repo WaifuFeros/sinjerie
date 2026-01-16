@@ -17,14 +17,50 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 2e6be7af97a738b499669625f6b8f062
   m_SerializeEntries:
-  - m_GUID: d286ff4a698090d40a527815396731fb
-    m_Address: Assets/Features/Objet/ObjectSO/mario.asset
+  - m_GUID: 110d5ff5eeb09134b9016dbfc23ffef3
+    m_Address: Assets/Features/Objet/ObjectSO/stick.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d6c6ae101e0413a4bab3a86b5e2c98b0
-    m_Address: Assets/Features/Objet/ObjectSO/mario2.asset
+  - m_GUID: 2189040e6dd943a48af681ed39a0dd1a
+    m_Address: Assets/Features/Objet/ObjectSO/weight to one.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2cd0fb81435a0e54392717fa3fda1819
+    m_Address: Assets/Features/Objet/ObjectSO/torch.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 660dbaf783506f94c91a55198006a2cf
+    m_Address: Assets/Features/Objet/ObjectSO/rock.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c5b7f7ac7bd9ee4a978efddb7b8839b
+    m_Address: Assets/Features/Objet/ObjectSO/heal kit.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c328fd249b3f444b93552af4224f8f6
+    m_Address: Assets/Features/Objet/ObjectSO/heal potion.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8f4ce4483de4da4587b51ca19194c4b
+    m_Address: Assets/Features/Objet/ObjectSO/Echange type.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c55c76fd672ea174fb12f0e62044694d
+    m_Address: Assets/Features/Objet/ObjectSO/sword.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items

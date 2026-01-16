@@ -122,16 +122,11 @@ public class ItemManager : MonoBehaviour
     }
 
     // Applique effet sur un item
-    public void ChangeItemType(List<GameObject> items)
+    public void ChangeItemType(List<GameObject> items, ObjetEffectType type)
     {
         foreach (GameObject item in items)
         {
-            if (item.GetComponent<ItemBrain>().itemData.objectType == ObjetEffectType.Attack)
-            {
-                item.GetComponent<ItemBrain>().itemData.objectType = ObjetEffectType.Heal;
-            } else {
-                item.GetComponent<ItemBrain>().itemData.objectType = ObjetEffectType.Attack;
-            }
+            item.GetComponent<ItemBrain>().itemData.objectType = type;
             item.GetComponent<ItemBrain>().UpdateVisuals();
         }
     }
