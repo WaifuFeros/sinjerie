@@ -47,7 +47,7 @@ public class GPSManager : MonoBehaviour
         longitude = Input.location.lastData.longitude;
         gpsReady = true;
 
-        positionText.text =
-            $"Lat: {latitude:F5}\nLon: {longitude:F5}";
+        //positionText.text =
+        //    $"Lat: {latitude:F5}\nLon: {longitude:F5}";
     }
 }

@@ -47,9 +47,9 @@ public class WeatherManager : MonoBehaviour
         positionText.text =
             $"{data.name}\n" +
             $"{data.main.temp:F1} °C\n" +
-            $"{data.weather[0].description}\n\n" +
-            $"Lat: {gpsManager.latitude:F5}\n" +
-            $"Lon: {gpsManager.longitude:F5}";
+            $"{data.weather[0].description}\n\n";
+            //$"Lat: {gpsManager.latitude:F5}\n" +
+            //$"Lon: {gpsManager.longitude:F5}";
     }
 }
 
