@@ -6,13 +6,14 @@ public class DropItemZoneController : GameDroppableZoneController<DraggableItem>
     [SerializeField]
     private DraggableItem startingItem;
 
-    protected override void Awake()
-    {
-        base.Awake();
+    //protected override void Awake()
+    //{
+    //    base.Awake();
 
-        if (startingItem == null)
-            return;
+    //    if (startingItem == null)
+    //        return;
 
-        tryAddDraggable(startingItem);
-    }
+    //    tryAddDraggable(startingItem);
+    //    startingItem.OnDropCallback += RemoveItem;
+    //}
 }

@@ -58,7 +58,7 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
         draggable.OnDropCallback += RemoveItem;
     }
 
-    private void RemoveItem(GameDraggableObjectController draggable, bool transferOwnership)
+    protected void RemoveItem(GameDraggableObjectController draggable, bool transferOwnership)
     {
         draggable.OnDropCallback -= RemoveItem;
 
