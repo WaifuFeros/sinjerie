@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,6 +13,9 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
 
     [SerializeField]
     protected bool _setDraggablePositionOnDropValid;
+
+    [SerializeField]
+    protected bool _transferOwnershipOnDrop;
 
     protected Dictionary<T, Transform> _currentDraggables;
 
@@ -49,7 +53,17 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
             draggable.transform.position = _currentDraggables[draggable].position;
         }
 
-        draggable.OnDrop(this, isDropValid);
+        draggable.OnDrop(this, isDropValid, _transferOwnershipOnDrop);
+
+        draggable.OnDropCallback += RemoveItem;
+    }
+
+    private void RemoveItem(GameDraggableObjectController draggable, bool transferOwnership)
+    {
+        draggable.OnDropCallback -= RemoveItem;
+
+        if (transferOwnership)
+            RemoveDraggable((T)draggable);
     }
 
     /// <summary>
@@ -87,6 +101,12 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
         }
 
         return false;
+    }
+
+    public void RemoveDraggable(T draggable)
+    {
+        _remainingSlots.Push(this._currentDraggables[draggable]);
+        this._currentDraggables.Remove(draggable);
     }
 
     protected virtual bool isStackableObject(T draggable)
