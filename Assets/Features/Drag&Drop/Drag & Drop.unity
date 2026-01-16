@@ -191,6 +191,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 20108948}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &20108951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +408,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 142833900}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &142833903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +539,7 @@ MonoBehaviour:
   _isInteractable: 1
   _droppablesSlot: []
   _setDraggablePositionOnDropValid: 0
+  _transferOwnershipOnDrop: 1
   TestMessage: Attack
 --- !u!114 &217319651
 MonoBehaviour:
@@ -1127,6 +1130,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 511341582}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &511341585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,6 +1636,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 820632149}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,6 +1889,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 1057391829}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &1057391832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2028,6 +2034,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 1278589079}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &1278589082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2135,6 +2142,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 1291539077}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &1291539080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,6 +2326,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 1737948947}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &1737948950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2824,6 +2833,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 1950451026}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &1950451029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3394,6 +3404,7 @@ MonoBehaviour:
   _isInteractable: 1
   _droppablesSlot: []
   _setDraggablePositionOnDropValid: 0
+  _transferOwnershipOnDrop: 1
   TestMessage: Use Item
 --- !u!1 &2146078300
 GameObject:
@@ -3464,6 +3475,7 @@ MonoBehaviour:
   _droppablesSlot:
   - {fileID: 2146078301}
   _setDraggablePositionOnDropValid: 1
+  _transferOwnershipOnDrop: 1
 --- !u!114 &2146078304
 MonoBehaviour:
   m_ObjectHideFlags: 0

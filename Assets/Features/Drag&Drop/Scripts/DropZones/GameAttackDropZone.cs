@@ -9,8 +9,6 @@ public class GameAttackDropZone : GameDroppableZoneController<DraggableItem>
     {
         base.OnDropObject(draggable, eventData, isDropValid);
 
-        //draggable.SendBackToStartingPosition();
-
         Destroy(draggable.gameObject);
         Debug.Log(TestMessage);
     }

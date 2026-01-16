@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,6 +8,8 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
     /// The current gameobject being dragged
     /// </summary>
     public static GameDraggableObjectController CurrentDraggedObject { get; set; }
+
+    public Action<GameDraggableObjectController, bool> OnDropCallback;
 
     [SerializeField]
     protected bool _resetPositionOnEndDrag;
@@ -32,8 +35,6 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
     protected bool _isDropSuccess;
 
     protected float _startingScale;
-
-    protected Transform _parent;
 
     protected override void Awake()
     {
@@ -86,11 +87,7 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
         this._isDropSuccess = false;
         this._raycastTarget.isEnabled = false;
 
-        if (DraggableManager.IsValid())
-        {
-            _parent = transform.parent;
-            transform.SetParent(DraggableManager.Instance.DraggingParent);
-        }
+        transform.SetAsLastSibling();
 
         this._startingPosition = transform.position;
 
@@ -117,9 +114,6 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
         this._isDragging = false;
         this._raycastTarget.isEnabled = true;
 
-        if (_parent != null)
-            transform.SetParent(_parent);
-
         if (!this._isDropSuccess && _resetPositionOnEndDrag)
             this.SendBackToStartingPosition();
 
@@ -131,9 +125,11 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
     /// Set the drop interaction as successful or not
     /// </summary>
     /// <param name="success"></param>
-    public virtual void OnDrop<T>(GameDroppableZoneController<T> droppableZone, bool success) where T : GameDraggableObjectController
+    public virtual void OnDrop<T>(GameDroppableZoneController<T> droppableZone, bool success, bool transferOwnership) where T : GameDraggableObjectController
     {
         this._isDropSuccess = success;
+
+        this.OnDropCallback?.Invoke(this, transferOwnership);
     }
 
     /// <summary>
