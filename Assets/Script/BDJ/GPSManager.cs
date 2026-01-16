@@ -8,6 +8,7 @@ public class GPSManager : MonoBehaviour
 
     public float latitude;
     public float longitude;
+    public bool gpsReady = false;
 
     IEnumerator Start()
     {
@@ -22,9 +23,7 @@ public class GPSManager : MonoBehaviour
 
         if (!Input.location.isEnabledByUser)
         {
-            Debug.Log("GPS désactivé");
-            if (positionText != null)
-                positionText.text = "GPS désactivé";
+            positionText.text = "GPS désactivé";
             yield break;
         }
 
@@ -33,31 +32,22 @@ public class GPSManager : MonoBehaviour
         int maxWait = 20;
         while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
         {
-            if (positionText != null)
-                positionText.text = "Recherche GPS...";
+            positionText.text = "Recherche GPS...";
             yield return new WaitForSeconds(1);
             maxWait--;
         }
 
         if (Input.location.status != LocationServiceStatus.Running)
         {
-            Debug.Log("GPS indisponible");
-            if (positionText != null)
-                positionText.text = "GPS indisponible";
+            positionText.text = "GPS indisponible";
             yield break;
         }
 
         latitude = Input.location.lastData.latitude;
         longitude = Input.location.lastData.longitude;
+        gpsReady = true;
 
-        Debug.Log($"GPS OK : {latitude} / {longitude}");
-
-        if (positionText != null)
-        {
-            positionText.text =
-                $"Latitude : {latitude:F5}\nLongitude : {longitude:F5}";
-        }
-
-        Input.location.Stop();
+        positionText.text =
+            $"Lat: {latitude:F5}\nLon: {longitude:F5}";
     }
 }
