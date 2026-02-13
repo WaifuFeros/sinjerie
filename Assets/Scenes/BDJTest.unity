@@ -1079,7 +1079,7 @@ MonoBehaviour:
     level: 1
     experience: 0
     experienceToNextLevel: 100
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 865689393}
 --- !u!212 &888578475
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2979,6 +2979,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnnemyPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7794748103152349169, guid: f25d252f683b74f42b253f5458719fa0,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 866004970}
     - target: {fileID: 8740970206973225899, guid: f25d252f683b74f42b253f5458719fa0,
         type: 3}
       propertyPath: m_LocalPosition.x
