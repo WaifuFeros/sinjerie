@@ -127,7 +127,7 @@ public class ItemManager : MonoBehaviour
         foreach (GameObject item in items)
         {
             item.GetComponent<ItemBrain>().itemData.objectType = type;
-            item.GetComponent<ItemBrain>().UpdateVisuals();
+            item.GetComponent<ItemBrain>().TriggerVisualUpdate();
         }
     }
     public void ChangeItemWeight(List<GameObject> items, int Weight)
@@ -135,7 +135,7 @@ public class ItemManager : MonoBehaviour
         foreach (GameObject item in items)
         {
             item.GetComponent<ItemBrain>().itemData.objetWeight = Weight;
-            item.GetComponent<ItemBrain>().UpdateVisuals();
+            item.GetComponent<ItemBrain>().TriggerVisualUpdate();
         }
     }
     public void ChangeItemEffect(List<GameObject> items, float Effect)
@@ -143,7 +143,7 @@ public class ItemManager : MonoBehaviour
         foreach (GameObject item in items)
         {
             item.GetComponent<ItemBrain>().itemData.objectEffect = Effect;
-            item.GetComponent<ItemBrain>().UpdateVisuals();
+            item.GetComponent<ItemBrain>().TriggerVisualUpdate();
         }
     }
 }

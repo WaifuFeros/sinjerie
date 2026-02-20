@@ -4,20 +4,27 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
 
-
 public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler
 {
+    [Header("Data")]
     [SerializeField] public ObjetSO itemData;
+
+    [Header("UI")]
     [SerializeField] private GameObject descritptionPanel;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private GameObject effectImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
 
+    [Header("Smoke Effect")]
+    [SerializeField] private Animator smokeAnimator;
+    [SerializeField] private float delayBeforeChange = 0.25f;
+
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
     private Coroutine longPressCoroutine;
+    private Coroutine updateCoroutine;
     private bool isDragging;
 
     void Start()
@@ -29,42 +36,36 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
-        UpdateVisuals();
+        ApplyVisuals();
         descritptionPanel.SetActive(false);
     }
 
-
-    public void OnBeginDrag(PointerEventData eventData)
+    public void TriggerVisualUpdate()
     {
-        isDragging = true;
-        canvasGroup.blocksRaycasts = false;
-        transform.SetAsLastSibling();
+        if (updateCoroutine != null) StopCoroutine(updateCoroutine);
+        updateCoroutine = StartCoroutine(VisualUpdateRoutine());
     }
 
-    public void OnDrag(PointerEventData eventData)
+    private IEnumerator VisualUpdateRoutine()
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if (smokeAnimator != null)
+        {
+            smokeAnimator.SetTrigger("PlaySmoke");
+        }
+
+        yield return new WaitForSeconds(delayBeforeChange);
+
+        ApplyVisuals();
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        isDragging = false;
-        canvasGroup.blocksRaycasts = true;
-    }
-
-
-    public void InitItem(ObjetSO data)
-    {
-        itemData = Instantiate(data);
-        UpdateVisuals();
-    }
-
-    public void UpdateVisuals()
+    public void ApplyVisuals()
     {
         if (itemData == null) return;
 
         GetComponent<Image>().sprite = itemData.objetSprite;
         descriptionText.text = itemData.objetDescription;
+
+        effectImage.SetActive(true);
 
         if (itemData.objectType == ObjetEffectType.Heal)
             effectImage.GetComponent<Image>().color = Color.red;
@@ -77,22 +78,45 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
         weightText.text = itemData.objetWeight.ToString();
     }
 
+    public void InitItem(ObjetSO data)
+    {
+
+        if (itemData != null) Destroy(itemData);
+
+        itemData = Instantiate(data);
+        ApplyVisuals();
+    }
+
+
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        isDragging = true;
+        canvasGroup.blocksRaycasts = false;
+        transform.SetAsLastSibling();
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+    }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        isDragging = false;
+        canvasGroup.blocksRaycasts = true;
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         longPressCoroutine = StartCoroutine(WaitAndShowDescription());
     }
-
     public void OnPointerUp(PointerEventData eventData)
     {
         StopLongPress();
     }
-
     private IEnumerator WaitAndShowDescription()
     {
         yield return new WaitForSeconds(1.5f);
-        descritptionPanel.SetActive(true);
+        if (!isDragging) descritptionPanel.SetActive(true);
     }
-
     private void StopLongPress()
     {
         if (longPressCoroutine != null) StopCoroutine(longPressCoroutine);
@@ -103,6 +127,7 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
     {
         if (ItemManager.Instance != null)
             ItemManager.Instance.activeItems.Remove(gameObject);
-        Destroy(itemData);
+
+        if (itemData != null) Destroy(itemData);
     }
 }
