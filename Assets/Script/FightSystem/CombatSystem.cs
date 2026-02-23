@@ -158,7 +158,6 @@ public class CombatSystem : MonoBehaviour
         }
 
         waitingForPlayerAction = false;
-        SetupSkipTurnButtonInteractable(false);
 
         //Debug.Log($"Attaque utilisée: {attack.attackName}");
 
@@ -234,7 +233,7 @@ public class CombatSystem : MonoBehaviour
         }
 
         // L'ennemi attaque après un délai
-        StartCoroutine(EnemyAttackSequence());
+        //StartCoroutine(EnemyAttackSequence());
     }
 
     /// <summary>

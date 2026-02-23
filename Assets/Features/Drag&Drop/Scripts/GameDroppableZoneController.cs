@@ -42,8 +42,6 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
         GameDraggableObjectController draggable = GameDraggableObjectController.CurrentDraggedObject;
 
         bool isDropValid = verifyDraggable(draggable);
-        print("yo");
-        print(isDropValid);
         OnDropObject((T)draggable, eventData, isDropValid);
     }
 
