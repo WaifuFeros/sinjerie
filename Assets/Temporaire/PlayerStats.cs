@@ -10,6 +10,8 @@ public class PlayerStatsData
     public int attack = 15;
     public int defense = 10;
     public int speed = 50;
+    public int maxStamina = 5;
+    public int currentStamina;
 
     [Header("Level & Experience")]
     public int level = 1;
@@ -24,11 +26,16 @@ public class PlayerStats : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
+    [SerializeField] private StaminaUIManager staminaUI;
 
     private void Start()
     {
         stats.currentHealth = stats.maxHealth;
+        stats.currentStamina = stats.maxStamina;
+
         UpdateHealthBar();
+        staminaUI.SetupStamina(stats.maxStamina);
+        staminaUI.UpdateDisplay(stats.currentStamina);
     }
 
     /// <summary>
@@ -105,6 +112,28 @@ public class PlayerStats : MonoBehaviour
             healthBar.value = (float)stats.currentHealth / stats.maxHealth;
         }
     }
+
+
+    // Enleve de la stamina, retourne true si l'action est possible, false sinon
+    public bool removeStamina(int nb)
+    {
+        if (stats.currentStamina - nb >= 0)
+        {
+            stats.currentStamina -= nb;
+            staminaUI.UpdateDisplay(stats.currentStamina);
+            return true;
+        }
+        return false;
+    }
+    // Remet la stamina à son maximum
+    public void refillStamina()
+    {
+        stats.currentStamina = stats.maxStamina;
+        staminaUI.UpdateDisplay(stats.currentStamina);
+    }
+
+
+
 
     // Getters
     public bool IsDead()

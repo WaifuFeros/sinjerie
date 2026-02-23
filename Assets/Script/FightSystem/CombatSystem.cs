@@ -28,7 +28,7 @@ public class CombatSystem : MonoBehaviour
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
     private bool combatActive = false;
-    private bool waitingForPlayerAction = true;
+    private bool isPlayerTurn = true;
 
     public void Initialize()
     {
@@ -104,7 +104,7 @@ public class CombatSystem : MonoBehaviour
         onVictoryCallback = onVictory;
         onDefeatCallback = onDefeat;
         combatActive = true;
-        waitingForPlayerAction = true;
+        isPlayerTurn = true;
 
         // Récupérer l'ennemi actuel
         if (roomManager != null)
@@ -152,12 +152,11 @@ public class CombatSystem : MonoBehaviour
 
     public void AttackEnemy(ObjetSO attack)
     {
-        if (!combatActive || !waitingForPlayerAction)
+        if (!combatActive || !isPlayerTurn)
         {
             return;
         }
 
-        waitingForPlayerAction = false;
 
         //Debug.Log($"Attaque utilisée: {attack.attackName}");
 
@@ -177,14 +176,15 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
-        if (!combatActive || !waitingForPlayerAction)
+        if (!combatActive || !isPlayerTurn)
         {
             return;
         }
-        waitingForPlayerAction = false;
-        ////////////////////////////////SetAttackButtonsInteractable(false);
+        isPlayerTurn = false;
+        ///////////////////////////////SetAttackButtonsInteractable(false);
         SetupSkipTurnButtonInteractable(false);
         Debug.Log("Tour passé!");
+        playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
         // l'ennemis attack
         StartCoroutine(EnemyAttackSequence());
     }
@@ -262,7 +262,7 @@ public class CombatSystem : MonoBehaviour
         }
 
         // Retour au tour du joueur
-        waitingForPlayerAction = true;
+        isPlayerTurn = true;
         //////////////////////////////////////////////SetAttackButtonsInteractable(true);
         SetupSkipTurnButtonInteractable(true);
         Debug.Log("À vous de jouer! Touchez un bouton pour attaquer.");
@@ -271,7 +271,7 @@ public class CombatSystem : MonoBehaviour
     private void EndCombat(bool victory)
     {
         combatActive = false;
-        waitingForPlayerAction = false;
+        isPlayerTurn = false;
         //////////////////////////////////////SetAttackButtonsInteractable(false);
         SetupSkipTurnButtonInteractable(false);
 

@@ -1,21 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemDrop : MonoBehaviour/*, IDropHandler*/
+public class ItemDrop : MonoBehaviour
 {
     [SerializeField]
     private CombatSystem _combatSystem;
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        GameObject item = eventData.pointerDrag;
-
-        if (item != null)
-        {
-            Debug.Log("Item laché sur le slot !");
-            //ExecuteItemAction(item);
-        }
-    }
 
     public void ExecuteItemAction(ItemBrain item)
     {

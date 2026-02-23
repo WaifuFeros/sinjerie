@@ -27,7 +27,7 @@ public class ObjetSO : ScriptableObject
     public string objetName;
     public string objetDescription;
     public ObjetMatiralType objetMatiralType;
-    public float objetWeight;
+    public int objetWeight;
     public ObjetEffectType objectType;
     public float objectEffect;
     public SpecialActionSO specialAction;

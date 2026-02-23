@@ -665,6 +665,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 456567645}
   m_CullTransparentMesh: 1
+--- !u!1 &740559715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 740559716}
+  - component: {fileID: 740559717}
+  - component: {fileID: 740559718}
+  m_Layer: 5
+  m_Name: StaminaContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &740559716
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740559715}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1115764344}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -410, y: 143}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &740559717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740559715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 3
+  m_Spacing: 10
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &740559718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740559715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52be87cfd947504891768311fe3cd78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staminaPointPrefab: {fileID: 1528513099036458522, guid: b27604a4128b2a544825149a3dce7818,
+    type: 3}
+  fullStaminaSprite: {fileID: 21300000, guid: 4ccdf5f8c73d5534394de287a6c149bf, type: 3}
+  emptyStaminaSprite: {fileID: 21300000, guid: c95a9b3b82343a3479c614f3f42a9a51, type: 3}
 --- !u!1 &843896588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,10 +1170,13 @@ MonoBehaviour:
     attack: 15
     defense: 10
     speed: 50
+    maxStamina: 5
+    currentStamina: 0
     level: 1
     experience: 0
     experienceToNextLevel: 100
   healthBar: {fileID: 865689393}
+  staminaUI: {fileID: 740559718}
 --- !u!212 &888578475
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1571,6 +1653,7 @@ RectTransform:
   m_Children:
   - {fileID: 2088251473}
   - {fileID: 865689392}
+  - {fileID: 740559716}
   m_Father: {fileID: 1516513039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2302,19 +2385,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1578029001}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1758276131}
-        m_TargetAssemblyTypeName: CombatSystem, Assembly-CSharp
-        m_MethodName: OnSkipTurnButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1578029001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2474,6 +2545,7 @@ MonoBehaviour:
   _droppablesSlot: []
   _setDraggablePositionOnDropValid: 0
   _transferOwnershipOnDrop: 1
+  _playerStats: {fileID: 888578474}
   OnDropItem:
     m_PersistentCalls:
       m_Calls:

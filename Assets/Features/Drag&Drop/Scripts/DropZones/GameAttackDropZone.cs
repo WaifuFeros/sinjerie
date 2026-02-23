@@ -4,6 +4,10 @@ using UnityEngine.EventSystems;
 
 public class GameAttackDropZone : GameDroppableZoneController<ItemBrain>
 {
+
+    [SerializeField]
+    private PlayerStats _playerStats;
+
     public UnityEvent<ItemBrain> OnDropItem;
 
     public string TestMessage;
@@ -12,8 +16,12 @@ public class GameAttackDropZone : GameDroppableZoneController<ItemBrain>
     {
         Debug.Log(draggable.GetType());
         base.OnDropObject(draggable, eventData, isDropValid);
-
-        OnDropItem.Invoke(draggable);
+        if (isDropValid && _playerStats.removeStamina(draggable.itemData.objetWeight))
+        {
+            OnDropItem.Invoke(draggable);
+        }
+        
+        
     }
 
     protected override bool verifyDraggable(GameDraggableObjectController draggable)
