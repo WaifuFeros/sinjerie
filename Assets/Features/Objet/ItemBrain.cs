@@ -3,8 +3,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
+using Unity.VisualScripting;
 
-public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler
+public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPointerUpHandler
 {
     [Header("Data")]
     [SerializeField] public ObjetSO itemData;
@@ -91,21 +92,21 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
 
 
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        isDragging = true;
-        canvasGroup.blocksRaycasts = false;
-        transform.SetAsLastSibling();
-    }
-    public void OnDrag(PointerEventData eventData)
-    {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-    }
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        isDragging = false;
-        canvasGroup.blocksRaycasts = true;
-    }
+    //public void OnBeginDrag(PointerEventData eventData)
+    //{
+    //    isDragging = true;
+    //    canvasGroup.blocksRaycasts = false;
+    //    transform.SetAsLastSibling();
+    //}
+    //public void OnDrag(PointerEventData eventData)
+    //{
+    //    rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+    //}
+    //public void OnEndDrag(PointerEventData eventData)
+    //{
+    //    isDragging = false;
+    //    canvasGroup.blocksRaycasts = true;
+    //}
     public void OnPointerDown(PointerEventData eventData)
     {
         longPressCoroutine = StartCoroutine(WaitAndShowDescription());

@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GameAttackDropZone : GameDroppableZoneController<DraggableItem>
+public class GameAttackDropZone : GameDroppableZoneController<ItemBrain>
 {
     public string TestMessage;
 
-    protected override void OnDropObject(DraggableItem draggable, PointerEventData eventData, bool isDropValid)
+    protected override void OnDropObject(ItemBrain draggable, PointerEventData eventData, bool isDropValid)
     {
         base.OnDropObject(draggable, eventData, isDropValid);
 
@@ -15,6 +15,6 @@ public class GameAttackDropZone : GameDroppableZoneController<DraggableItem>
 
     protected override bool verifyDraggable(GameDraggableObjectController draggable)
     {
-        return draggable is DraggableItem;
+        return draggable is ItemBrain;
     }
 }
