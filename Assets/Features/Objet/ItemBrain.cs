@@ -50,6 +50,8 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
     {
         if (smokeAnimator != null)
         {
+            float delay = Random.Range(0.01f, 0.2F);
+            yield return new WaitForSeconds(delay);
             smokeAnimator.SetTrigger("StartSmoke");
         }
 
