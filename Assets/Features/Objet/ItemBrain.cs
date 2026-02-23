@@ -51,7 +51,6 @@ public class ItemBrain : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoin
         if (smokeAnimator != null)
         {
             smokeAnimator.SetTrigger("StartSmoke");
-            print("aaaaaaaaah");
         }
 
         yield return new WaitForSeconds(delayBeforeChange);
