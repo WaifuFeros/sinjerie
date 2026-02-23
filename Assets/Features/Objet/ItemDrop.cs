@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemDrop : MonoBehaviour, IDropHandler
+public class ItemDrop : MonoBehaviour/*, IDropHandler*/
 {
+    [SerializeField]
+    private CombatSystem _combatSystem;
+
     public void OnDrop(PointerEventData eventData)
     {
         GameObject item = eventData.pointerDrag;
@@ -10,14 +13,13 @@ public class ItemDrop : MonoBehaviour, IDropHandler
         if (item != null)
         {
             Debug.Log("Item laché sur le slot !");
-            ExecuteItemAction(item);
+            //ExecuteItemAction(item);
         }
     }
 
-    private void ExecuteItemAction(GameObject item)
+    public void ExecuteItemAction(ItemBrain item)
     {
-
-        ObjetSO data = item.GetComponent<ItemBrain>().itemData;
+        ObjetSO data = item.itemData;
 
         switch (data.objectType)
         {
@@ -26,6 +28,7 @@ public class ItemDrop : MonoBehaviour, IDropHandler
                 break;
 
             case ObjetEffectType.Attack:
+                _combatSystem.AttackEnemy(item.itemData);
                 Debug.Log($"Attaque effectuée : {data.objectEffect} Dégâts");
                 break;
 
@@ -41,6 +44,6 @@ public class ItemDrop : MonoBehaviour, IDropHandler
                 }
                 break;
         }
-        Destroy(item);
+        Destroy(item.gameObject);
     }
 }

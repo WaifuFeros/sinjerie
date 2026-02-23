@@ -6,8 +6,8 @@ public class HealToAttack : SpecialActionSO
 {
     public override void Execute()
     {
-        var atkItems = ItemManager.Instance.GetAttackItems();
-        var healItems = ItemManager.Instance.GetHealItems();
+        var atkItems = ItemManager.Instance.GetItemsOfType(ObjetEffectType.Attack);
+        var healItems = ItemManager.Instance.GetItemsOfType(ObjetEffectType.Heal);
         ItemManager.Instance.ChangeItemType(atkItems, ObjetEffectType.Heal);
         ItemManager.Instance.ChangeItemType(healItems, ObjetEffectType.Attack);
         Debug.Log("HealToAttack");

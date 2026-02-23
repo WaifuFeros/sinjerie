@@ -10,8 +10,14 @@ public class ItemManager : MonoBehaviour
     [Header("Configuration")]
     [SerializeField] private GameObject itemPrefab;
 
+    [SerializeField] private Transform itemParents;
+
     // Liste de tous les items
-    public List<GameObject> activeItems = new List<GameObject>();
+    public List<ItemBrain> activeItems = new List<ItemBrain>();
+
+    [SerializeField]
+    private ObjetSO[] _startingItems;
+
     // Liste interne des SO chargés avec adressables
     private List<ObjetSO> availableItemData = new List<ObjetSO>();
 
@@ -35,6 +41,11 @@ public class ItemManager : MonoBehaviour
                 availableItemData.AddRange(handle.Result);
                 Debug.Log($"{availableItemData.Count} items load");
             }
+
+            foreach (ObjetSO item in _startingItems)
+            {
+                SpawnItem(item);
+            }
         };
     }
 
@@ -49,68 +60,56 @@ public class ItemManager : MonoBehaviour
         int randomIndex = Random.Range(0, availableItemData.Count);
         ObjetSO randomData = availableItemData[randomIndex];
 
-        GameObject newItemGo = Instantiate(itemPrefab, position, Quaternion.identity, transform);
+        ItemBrain newItemGo = Instantiate(itemPrefab, position, Quaternion.identity, itemParents).GetComponent<ItemBrain>();
 
 
-        newItemGo.GetComponent<ItemBrain>().InitItem(randomData);
+        newItemGo.InitItem(randomData);
         activeItems.Add(newItemGo);
-
     }
 
+    public void SpawnItem(ObjetSO objetSO)
+    {
+        if (availableItemData.Count == 0)
+        {
+            return;
+        }
 
+        Vector3 position = new Vector3(transform.position.x, transform.position.y, 0f);
+
+        ItemBrain newItemGo = Instantiate(itemPrefab, position, Quaternion.identity, itemParents).GetComponent<ItemBrain>();
+
+
+        newItemGo.InitItem(objetSO);
+        activeItems.Add(newItemGo);
+    }
 
     // Recup des items de l'inventaire
-    public List<GameObject> GetAllItems()
+    public List<ItemBrain> GetAllItems()
     {
         return activeItems;
     }
-    public List<GameObject> GetHealItems()
+
+    public List<ItemBrain> GetItemsOfType(ObjetEffectType type)
     {
-        List<GameObject> result = new List<GameObject>();
-        foreach (GameObject item in activeItems)
+        List<ItemBrain> result = new List<ItemBrain>();
+        foreach (ItemBrain item in activeItems)
         {
-            ItemBrain itemBrain = item.GetComponent<ItemBrain>();
-            if (itemBrain.itemData.objectType == ObjetEffectType.Heal)
+            if (item.itemData.objectType == type)
             {
                 result.Add(item);
             }
         }
         return result;
     }
-    public List<GameObject> GetAttackItems()
+
+    public List<ItemBrain> GetRandomItems(int nb)
     {
-        List<GameObject> result = new List<GameObject>();
-        foreach (GameObject item in activeItems)
-        {
-            ItemBrain itemBrain = item.GetComponent<ItemBrain>();
-            if (itemBrain.itemData.objectType == ObjetEffectType.Attack)
-            {
-                result.Add(item);
-            }
-        }
-        return result;
-    }
-    public List<GameObject> GetSpecialItems()
-    {
-        List<GameObject> result = new List<GameObject>();
-        foreach (GameObject item in activeItems)
-        {
-            ItemBrain itemBrain = item.GetComponent<ItemBrain>();
-            if (itemBrain.itemData.objectType == ObjetEffectType.Special)
-            {
-                result.Add(item);
-            }
-        }
-        return result;
-    }
-    public List<GameObject> GetRandomItems(int nb)
-    {
-        List<GameObject> result = new List<GameObject>();
+        List<ItemBrain> result = new List<ItemBrain>();
         if (nb <= 0 || activeItems.Count == 0)
         {
             return result;
         }
-        List<GameObject> tempPool = new List<GameObject>(activeItems);
+        List<ItemBrain> tempPool = new List<ItemBrain>(activeItems);
         int countToGet = Mathf.Min(nb, tempPool.Count);
         for (int i = 0; i < countToGet; i++)
         {
@@ -122,28 +121,28 @@ public class ItemManager : MonoBehaviour
     }
 
     // Applique effet sur un item
-    public void ChangeItemType(List<GameObject> items, ObjetEffectType type)
+    public void ChangeItemType(List<ItemBrain> items, ObjetEffectType type)
     {
-        foreach (GameObject item in items)
+        foreach (ItemBrain item in items)
         {
-            item.GetComponent<ItemBrain>().itemData.objectType = type;
-            item.GetComponent<ItemBrain>().TriggerVisualUpdate();
+            item.itemData.objectType = type;
+            item.TriggerVisualUpdate();
         }
     }
-    public void ChangeItemWeight(List<GameObject> items, int Weight)
+    public void ChangeItemWeight(List<ItemBrain> items, int Weight)
     {
-        foreach (GameObject item in items)
+        foreach (ItemBrain item in items)
         {
-            item.GetComponent<ItemBrain>().itemData.objetWeight = Weight;
-            item.GetComponent<ItemBrain>().TriggerVisualUpdate();
+            item.itemData.objetWeight = Weight;
+            item.TriggerVisualUpdate();
         }
     }
-    public void ChangeItemEffect(List<GameObject> items, float Effect)
+    public void ChangeItemEffect(List<ItemBrain> items, float Effect)
     {
-        foreach (GameObject item in items)
+        foreach (ItemBrain item in items)
         {
-            item.GetComponent<ItemBrain>().itemData.objectEffect = Effect;
-            item.GetComponent<ItemBrain>().TriggerVisualUpdate();
+            item.itemData.objectEffect = Effect;
+            item.TriggerVisualUpdate();
         }
     }
 }

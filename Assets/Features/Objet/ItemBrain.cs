@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPointerUpHandler
 {
@@ -129,7 +128,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     private void OnDestroy()
     {
         if (ItemManager.Instance != null)
-            ItemManager.Instance.activeItems.Remove(gameObject);
+            ItemManager.Instance.activeItems.Remove(this);
 
         if (itemData != null) Destroy(itemData);
     }

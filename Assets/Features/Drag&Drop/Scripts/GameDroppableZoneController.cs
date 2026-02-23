@@ -42,7 +42,8 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
         GameDraggableObjectController draggable = GameDraggableObjectController.CurrentDraggedObject;
 
         bool isDropValid = verifyDraggable(draggable);
-
+        print("yo");
+        print(isDropValid);
         OnDropObject((T)draggable, eventData, isDropValid);
     }
 
@@ -60,10 +61,26 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
 
     protected void RemoveItem(GameDraggableObjectController draggable, bool transferOwnership)
     {
+        //draggable.OnDropCallback -= RemoveItem;
+
+        //if (transferOwnership)
+        //    RemoveDraggable((T)draggable);
+
         draggable.OnDropCallback -= RemoveItem;
 
-        if (transferOwnership)
-            RemoveDraggable((T)draggable);
+        if (!transferOwnership)
+            return;
+
+        T castedDraggable = (T)draggable;
+
+        if (_currentDraggables.ContainsKey(castedDraggable))
+        {
+            RemoveDraggable(castedDraggable);
+        }
+        else
+        {
+            Debug.LogError("RemoveItem appelé alors que l'objet n'est pas enregistré dans la zone !");
+        }
     }
 
     /// <summary>
@@ -105,8 +122,11 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
 
     public void RemoveDraggable(T draggable)
     {
-        _remainingSlots.Push(this._currentDraggables[draggable]);
-        this._currentDraggables.Remove(draggable);
+        if (this._currentDraggables.ContainsKey(draggable))
+        {
+            _remainingSlots.Push(this._currentDraggables[draggable]);
+            this._currentDraggables.Remove(draggable);
+        }
     }
 
     protected virtual bool isStackableObject(T draggable)
