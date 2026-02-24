@@ -3260,6 +3260,12 @@ MonoBehaviour:
   enemyAttackDelay: 1
   playerStats: {fileID: 888578474}
   skipTurnButton: {fileID: 1578029000}
+  _canvasParent: {fileID: 1516513039}
+  _itemAnimPrefab: {fileID: 1330769031389707562, guid: 7d2ef08ee1909e644a9a125609496501,
+    type: 3}
+  _enemyTransform: {fileID: 143735323}
+  _playerTransform: {fileID: 1704814110}
+  _animationDuration: 0.8
 --- !u!1 &1834556309
 GameObject:
   m_ObjectHideFlags: 0

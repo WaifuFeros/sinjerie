@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
+using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class CombatSystem : MonoBehaviour
 {
@@ -15,6 +18,13 @@ public class CombatSystem : MonoBehaviour
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
+
+    [Header("Animation References")]
+    [SerializeField] private Transform _canvasParent;
+    [SerializeField] private GameObject _itemAnimPrefab;
+    [SerializeField] private Transform _enemyTransform;
+    [SerializeField] private Transform _playerTransform;
+    [SerializeField] private float _animationDuration = 0.8f;
 
     private Enemy currentEnemy;
     private System.Action onVictoryCallback;
@@ -105,7 +115,6 @@ public class CombatSystem : MonoBehaviour
         }
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
-        Debug.Log("Tour passé!");
         playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
         // l'ennemis attack
         StartCoroutine(EnemyAttackSequence());
@@ -142,41 +151,71 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private IEnumerator EnemyAttackSequence()
     {
-        if (!combatActive)
-            yield break;
-        ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(currentEnemy.EnemyStats.Items, currentEnemy.currentHealth, currentEnemy.EnemyStats.MaxStamina);
+        if (!combatActive) yield break;
 
-        // ANIMATTION
+        ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(
+            currentEnemy.EnemyStats.Items,
+            currentEnemy.currentHealth,
+            currentEnemy.EnemyStats.MaxStamina
+        );
 
-        yield return new WaitForSeconds(enemyAttackDelay);
-
-
-
-
-
-        // L'ennemi attaque
         foreach (ObjetSO item in chosenItems)
         {
+            // Animation
+            yield return StartCoroutine(AnimateItemThrow(item));
+            yield return new WaitForSeconds(0.4f); // Petit délai entre les attaques
+            // Appliquer l'effet de l'objet
             if (item.objectType == ObjetEffectType.Attack)
-            {
                 AttackPlayer(item);
-                Debug.Log($"------------L'ennemi utilise {item.name} et inflige {item.objectEffect} dégâts!");
-            }
             else if (item.objectType == ObjetEffectType.Heal)
-            {
                 HealEnemy(item);
-                Debug.Log($"------------L'ennemi utilise {item.name} et se soigne de {item.objectEffect} PV!");
-            }
         }
+
 
         CheckCombatEnd();
 
-        // Retour au tour du joueur
         isPlayerTurn = true;
         SetupSkipTurnButtonInteractable(true);
-        Debug.Log("À vous de jouer! Touchez un bouton pour attaquer.");
     }
 
+    private IEnumerator AnimateItemThrow(ObjetSO item)
+    {
+        GameObject projectile = Instantiate(_itemAnimPrefab, _canvasParent);
+        projectile.transform.position = _enemyTransform.position;
+        projectile.GetComponent<UnityEngine.UI.Image>().sprite = item.objetSprite;
+
+        Vector3 startPos = _enemyTransform.position;
+        Sequence throwSequence = DOTween.Sequence();
+
+        if (item.objectType == ObjetEffectType.Heal)
+        {
+            Vector3 endPos = _enemyTransform.position;
+            Vector3 midPoint = startPos + new Vector3(50f, 250f, 0); // Petit décalage X pour la courbe
+            Vector3[] path = new Vector3[] { startPos, midPoint, endPos };
+
+            throwSequence.Append(projectile.transform.DOPath(path, _animationDuration, PathType.CatmullRom)
+                .SetEase(Ease.InOutSine));
+            throwSequence.Join(projectile.transform.DORotate(new Vector3(0, 0, -360), _animationDuration, RotateMode.FastBeyond360)
+                .SetEase(Ease.InOutSine));
+        }
+        else
+        {
+            Vector3 endPos = _playerTransform.position;
+            Vector3 midPoint = (startPos + endPos) / 2 + new Vector3(0, 300f, 0);
+            Vector3[] path = new Vector3[] { startPos, midPoint, endPos };
+
+            throwSequence.Append(projectile.transform.DOPath(path, _animationDuration, PathType.CatmullRom)
+                .SetEase(Ease.InQuad));
+
+            throwSequence.Join(projectile.transform.DORotate(new Vector3(0, 0, -360), _animationDuration, RotateMode.FastBeyond360)
+                .SetEase(Ease.Linear));
+        }
+
+        throwSequence.Join(projectile.transform.DOScale(2f, _animationDuration / 2).SetLoops(2, LoopType.Yoyo));
+
+        yield return throwSequence.WaitForCompletion();
+        Destroy(projectile);
+    }
     private IEnumerator EndCombat(bool victory)
     {
         combatActive = false;
