@@ -142,6 +142,7 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private IEnumerator EnemyAttackSequence()
     {
+        ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(currentEnemy.EnemyStats.Items, currentEnemy.currentHealth, currentEnemy.EnemyStats.MaxStamina);
 
 
         yield return new WaitForSeconds(enemyAttackDelay);

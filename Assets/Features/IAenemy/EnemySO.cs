@@ -10,5 +10,6 @@ public class EnemySO : ScriptableObject
     public string Description;
     public int MaxHealth;
     public int MaxStamina;
-    public Object[] Items;
+    public ObjetSO[] Items;
+    public EnemyBehaviorSO behavior;
 }
