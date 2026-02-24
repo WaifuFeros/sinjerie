@@ -53,6 +53,7 @@ public class SaveScript : MonoBehaviour
         else
         {
             Debug.LogWarning("Le fichier PlayerPerf.json ou le dossier encyclopedia n'existe pas encore.");
+            return;
         }
     }
 }
