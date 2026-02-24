@@ -44,7 +44,12 @@ public class ItemManager : MonoBehaviour
 
             foreach (ObjetSO item in _startingItems)
             {
-                SpawnItem(item);
+                var itemBrain = SpawnItem(item);
+                if (InventoryManager.Instance.HasEmptySlot())
+                {
+                    var slot = InventoryManager.Instance.GetEmptySlot();
+                    slot.SetItem(itemBrain);
+                }
             }
         };
     }
@@ -67,20 +72,22 @@ public class ItemManager : MonoBehaviour
         activeItems.Add(newItemGo);
     }
 
-    public void SpawnItem(ObjetSO objetSO)
+    public ItemBrain SpawnItem(ObjetSO objetSO)
     {
         if (availableItemData.Count == 0)
         {
-            return;
+            return null;
         }
 
         Vector3 position = new Vector3(transform.position.x, transform.position.y, 0f);
 
-        ItemBrain newItemGo = Instantiate(itemPrefab, position, Quaternion.identity, itemParents).GetComponent<ItemBrain>();
+        ItemBrain newItemBrain = Instantiate(itemPrefab, position, Quaternion.identity, itemParents).GetComponent<ItemBrain>();
 
 
-        newItemGo.InitItem(objetSO);
-        activeItems.Add(newItemGo);
+        newItemBrain.InitItem(objetSO);
+        activeItems.Add(newItemBrain);
+
+        return newItemBrain;
     }
 
     // Recup des items de l'inventaire

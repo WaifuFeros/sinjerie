@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DropItemZoneController : GameDroppableZoneController<GameDraggableObjectController>
+public class DropItemZoneController : MonoBehaviour /*GameDroppableSlotController<GameDraggableObjectController>*/
 {
 
 }

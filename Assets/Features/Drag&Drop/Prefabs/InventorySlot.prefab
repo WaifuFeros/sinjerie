@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1438731589780744568}
   - component: {fileID: 247507125127079880}
   - component: {fileID: 7564455757580035168}
-  - component: {fileID: 1455383646998402910}
   - component: {fileID: 8161524661587374428}
+  - component: {fileID: 2606810668737892851}
   m_Layer: 5
   m_Name: InventorySlot
   m_TagString: Untagged
@@ -77,23 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1455383646998402910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4614904959159839428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7d9757093d35c4aac30f47bdd492ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isInteractable: 1
-  _droppablesSlot:
-  - {fileID: 1438731589780744568}
-  _setDraggablePositionOnDropValid: 1
-  _transferOwnershipOnDrop: 1
 --- !u!114 &8161524661587374428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,3 +91,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 7564455757580035168}
   _useRaycastTargetVariable: 1
+--- !u!114 &2606810668737892851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614904959159839428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466c9ebe0197b6b47b6ead8c33132a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isInteractable: 1
+  _droppableSlot: {fileID: 1438731589780744568}
