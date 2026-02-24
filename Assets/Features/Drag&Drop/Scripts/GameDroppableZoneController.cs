@@ -1,38 +1,10 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public abstract class GameDroppableZoneController<T> : GameInteractableObjectController, IDropHandler where T : GameDraggableObjectController
 {
-    /// <summary>
-    /// The predetermined slots for cards
-    /// </summary>
-    [SerializeField]
-    protected Transform[] _droppablesSlot;
-
-    [SerializeField]
-    protected bool _setDraggablePositionOnDropValid;
-
-    [SerializeField]
-    protected bool _transferOwnershipOnDrop;
-
-    protected Dictionary<T, Transform> _currentDraggables;
-
-    protected Stack<Transform> _remainingSlots;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        this._currentDraggables = new Dictionary<T, Transform>();
-        this._remainingSlots = new Stack<Transform>();
-
-        for (int i = _droppablesSlot.Length - 1; i >= 0; i--)
-        {
-            _remainingSlots.Push(_droppablesSlot[i]);
-        }
-    }
-
     /// <summary>
     /// The event for when player stop dragging and drop an object on this object
     /// </summary>
@@ -41,45 +13,14 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
     {
         GameDraggableObjectController draggable = GameDraggableObjectController.CurrentDraggedObject;
 
-        bool isDropValid = verifyDraggable(draggable);
-        OnDropObject((T)draggable, eventData, isDropValid);
-    }
-
-    protected virtual void OnDropObject(T draggable, PointerEventData eventData, bool isDropValid)
-    {
-        if (isDropValid && _setDraggablePositionOnDropValid)
-        {
-            draggable.transform.position = _currentDraggables[draggable].position;
-        }
-
-        draggable.OnDrop(this, isDropValid, _transferOwnershipOnDrop);
-
-        draggable.OnDropCallback += RemoveItem;
-    }
-
-    protected void RemoveItem(GameDraggableObjectController draggable, bool transferOwnership)
-    {
-        //draggable.OnDropCallback -= RemoveItem;
-
-        //if (transferOwnership)
-        //    RemoveDraggable((T)draggable);
-
-        draggable.OnDropCallback -= RemoveItem;
-
-        if (!transferOwnership)
+        if (draggable == null)
             return;
 
-        T castedDraggable = (T)draggable;
-
-        if (_currentDraggables.ContainsKey(castedDraggable))
-        {
-            RemoveDraggable(castedDraggable);
-        }
-        else
-        {
-            Debug.LogError("RemoveItem appelé alors que l'objet n'est pas enregistré dans la zone !");
-        }
+        bool isDropValid = verifyDraggable(draggable);
+        onDropObject(draggable, eventData, isDropValid);
     }
+
+    protected abstract void onDropObject(GameDraggableObjectController draggable, PointerEventData eventData, bool isDropValid);
 
     /// <summary>
     /// Verify if the draggable object is valid
@@ -88,52 +29,13 @@ public abstract class GameDroppableZoneController<T> : GameInteractableObjectCon
     /// <returns></returns>
     protected virtual bool verifyDraggable(GameDraggableObjectController draggable)
     {
-        if (draggable is T castedDraggable)
-        {
-            return this.tryAddDraggable(castedDraggable);
-        }
-
-        return false;
+        return draggable is T;
     }
 
-    /// <summary>
-    /// Try to add a draggable objects
-    /// </summary>
-    /// <param name="draggable"></param>
-    /// <returns></returns>
-    protected bool tryAddDraggable(T draggable)
+    protected virtual bool verifyDraggable(GameDraggableObjectController draggable, out T castedDraggable)
     {
-        if (isStackableObject(draggable))
-        {
-            StackObject(draggable);
-            return true;
-        }
-        else if (this._currentDraggables.Count < this._droppablesSlot.Length && !this._currentDraggables.ContainsKey(draggable))
-        {
-            this._currentDraggables.Add(draggable, _remainingSlots.Pop());
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public void RemoveDraggable(T draggable)
-    {
-        if (this._currentDraggables.ContainsKey(draggable))
-        {
-            _remainingSlots.Push(this._currentDraggables[draggable]);
-            this._currentDraggables.Remove(draggable);
-        }
-    }
-
-    protected virtual bool isStackableObject(T draggable)
-    {
-        return false;
-    }
-
-    protected virtual void StackObject(T draggable)
-    {
-        Destroy(draggable);
+        bool isValid = draggable is T;
+        castedDraggable = draggable as T;
+        return isValid;
     }
 }

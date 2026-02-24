@@ -29,6 +29,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
     void Start()
     {
+        name = $"Item: {itemData.objetName}";
         isDragging = false;
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
@@ -125,8 +126,10 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         descritptionPanel.SetActive(false);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (ItemManager.Instance != null)
             ItemManager.Instance.activeItems.Remove(this);
 

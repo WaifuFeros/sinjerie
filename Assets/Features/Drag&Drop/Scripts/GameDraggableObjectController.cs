@@ -2,14 +2,16 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GameDraggableObjectController : GameInteractableObjectController, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class GameDraggableObjectController : GameInteractableObjectController, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     /// <summary>
     /// The current gameobject being dragged
     /// </summary>
     public static GameDraggableObjectController CurrentDraggedObject { get; set; }
 
-    public Action<GameDraggableObjectController, bool> OnDropCallback;
+    public GameDroppableSlotController CurrentSlot { get; protected set; }
+
+    public bool IsInSlot => CurrentSlot != null;
 
     [SerializeField]
     protected bool _resetPositionOnEndDrag;
@@ -43,6 +45,12 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
         this._startingPosition = transform.position;
     }
 
+    protected virtual void OnDestroy()
+    {
+        if (CurrentSlot != null)
+            CurrentSlot.SetItem(null);
+    }
+
     #region Drag Interfaces
 
     /// <summary>
@@ -70,6 +78,14 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
     public void OnEndDrag(PointerEventData eventData)
     {
         EndDrag();
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (IsInSlot)
+        {
+            CurrentSlot.OnDrop(eventData);
+        }
     }
         
     #endregion
@@ -114,7 +130,7 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
         this._isDragging = false;
         this._raycastTarget.isEnabled = true;
 
-        if (!this._isDropSuccess && _resetPositionOnEndDrag)
+        if (!this._isDropSuccess && CurrentSlot != null)
             this.SendBackToStartingPosition();
 
         CurrentDraggedObject = null;
@@ -125,11 +141,19 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
     /// Set the drop interaction as successful or not
     /// </summary>
     /// <param name="success"></param>
-    public virtual void OnDrop<T>(GameDroppableZoneController<T> droppableZone, bool success, bool transferOwnership) where T : GameDraggableObjectController
+    public virtual void OnDrop<T>(GameDroppableZoneController<T> droppableZone, bool success) where T : GameDraggableObjectController
     {
         this._isDropSuccess = success;
+        if (!success && CurrentSlot != null)
+        {
+            this.SendBackToStartingPosition();
+        }
+    }
 
-        this.OnDropCallback?.Invoke(this, transferOwnership);
+    public void SetSlot(GameDroppableSlotController slot)
+    {
+        CurrentSlot = slot;
+        this._startingPosition = transform.position;
     }
 
     /// <summary>
