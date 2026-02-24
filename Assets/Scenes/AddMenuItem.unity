@@ -1541,8 +1541,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717d29de2472a2d4b9a617d471ae2ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _encyclopediaPanel: {fileID: 1154080567}
-  _parametresPanel: {fileID: 1700675317}
+  _EncyclopediaPanel: {fileID: 1154080567}
+  _ParametresPanel: {fileID: 1700675317}
   _ParametresButton: {fileID: 152532354}
   _EncyclopediaButton: {fileID: 373351256}
   _StartButton: {fileID: 356959390}
