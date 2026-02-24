@@ -22,7 +22,6 @@ public class ItemDrop : MonoBehaviour
                 break;
 
             case ObjetEffectType.Attack:
-                print("hey");
                 if (_isPlayer)
                 {
                     print("1");

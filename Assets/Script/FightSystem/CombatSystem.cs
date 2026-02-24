@@ -142,19 +142,31 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private IEnumerator EnemyAttackSequence()
     {
+        if (!combatActive)
+            yield break;
         ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(currentEnemy.EnemyStats.Items, currentEnemy.currentHealth, currentEnemy.EnemyStats.MaxStamina);
 
+        // ANIMATTION
 
         yield return new WaitForSeconds(enemyAttackDelay);
 
-        if (!combatActive)
-            yield break;
+
+
+
 
         // L'ennemi attaque
-        if (currentEnemy != null && playerStats != null)
+        foreach (ObjetSO item in chosenItems)
         {
-            playerStats.TakeDamage(3);
-            Debug.Log($"L'ennemi inflige {3} dégâts!");
+            if (item.objectType == ObjetEffectType.Attack)
+            {
+                AttackPlayer(item);
+                Debug.Log($"------------L'ennemi utilise {item.name} et inflige {item.objectEffect} dégâts!");
+            }
+            else if (item.objectType == ObjetEffectType.Heal)
+            {
+                HealEnemy(item);
+                Debug.Log($"------------L'ennemi utilise {item.name} et se soigne de {item.objectEffect} PV!");
+            }
         }
 
         CheckCombatEnd();

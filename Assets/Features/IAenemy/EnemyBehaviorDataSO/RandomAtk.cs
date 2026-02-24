@@ -13,10 +13,10 @@ public class RandomAtk : EnemyBehaviorSO
         foreach (var obj in objs)
         {
             ObjetSO selecObj = objs[Random.Range(0, objs.Length)];
-            if (staminaAvailable - obj.objetWeight >= 0)
+            if (staminaAvailable - selecObj.objetWeight >= 0)
             {
-                inventaireAttaque.Add(obj);
-                staminaAvailable -= obj.objetWeight;
+                inventaireAttaque.Add(selecObj);
+                staminaAvailable -= selecObj.objetWeight;
             }
         }
         return inventaireAttaque.ToArray();

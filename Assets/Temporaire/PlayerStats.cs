@@ -41,10 +41,7 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamage(int damage)
     {
         stats.currentHealth -= damage;
-
         UpdateHealthBar();
-
-        Debug.Log($"Joueur prend {damage} dégâts. PV restants: {stats.currentHealth}");
     }
 
     /// <summary>
@@ -54,7 +51,6 @@ public class PlayerStats : MonoBehaviour
     {
         stats.currentHealth = Mathf.Min(stats.maxHealth, stats.currentHealth + amount);
         UpdateHealthBar();
-        Debug.Log($"Joueur soigné de {amount} PV. PV actuels: {stats.currentHealth}/{stats.maxHealth}");
     }
 
     /// <summary>
