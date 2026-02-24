@@ -7,9 +7,6 @@ public class PlayerStatsData
     [Header("Base Stats")]
     public int maxHealth = 100;
     public int currentHealth;
-    public int attack = 15;
-    public int defense = 10;
-    public int speed = 50;
     public int maxStamina = 5;
     public int currentStamina;
 
@@ -43,13 +40,11 @@ public class PlayerStats : MonoBehaviour
     /// </summary>
     public void TakeDamage(int damage)
     {
-        int actualDamage = Mathf.Max(1, damage - stats.defense);
-        stats.currentHealth -= actualDamage;
-        stats.currentHealth = Mathf.Max(0, stats.currentHealth);
+        stats.currentHealth -= damage;
 
         UpdateHealthBar();
 
-        Debug.Log($"Joueur prend {actualDamage} dégâts. PV restants: {stats.currentHealth}");
+        Debug.Log($"Joueur prend {damage} dégâts. PV restants: {stats.currentHealth}");
     }
 
     /// <summary>
@@ -93,9 +88,6 @@ public class PlayerStats : MonoBehaviour
 
         stats.maxHealth += healthIncrease;
         stats.currentHealth = stats.maxHealth; // Soigne complètement au level up
-        stats.attack += attackIncrease;
-        stats.defense += defenseIncrease;
-        stats.speed += speedIncrease;
 
         UpdateHealthBar();
         Debug.Log($" Level Up! Niveau {stats.level}");
@@ -141,20 +133,6 @@ public class PlayerStats : MonoBehaviour
         return stats.currentHealth <= 0;
     }
 
-    public int GetAttack()
-    {
-        return stats.attack;
-    }
-
-    public int GetDefense()
-    {
-        return stats.defense;
-    }
-
-    public int GetSpeed()
-    {
-        return stats.speed;
-    }
 
     public PlayerStatsData GetStats()
     {

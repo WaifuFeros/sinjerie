@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class CombatSystem : MonoBehaviour
 {
@@ -34,9 +35,6 @@ public class CombatSystem : MonoBehaviour
     {
         Debug.Log("CombatSystem initialisé");
 
-        // Configurer les boutons d'attaque
-        //////////////////////////////////////////SetupAttackButtons();
-
         // Configurer le bouton de passage de tour
         SetupSkipTurnButton();
     }
@@ -52,49 +50,6 @@ public class CombatSystem : MonoBehaviour
             skipTurnButton.onClick.AddListener(() => OnSkipTurnButtonClicked());
         }
     }
-
-    /// <summary>
-    /// Configure les boutons d'attaque
-    /// </summary>
-    ////////////////////////////////////private void SetupAttackButtons()
-    ////////////////////////////////////{
-    ////////////////////////////////////    if (attackButtons == null) return;
-
-    ////////////////////////////////////    for (int i = 0; i < attackButtons.Length; i++)
-    ////////////////////////////////////    {
-    ////////////////////////////////////        if (attackButtons[i].button != null && attackButtons[i].attackData != null)
-    ////////////////////////////////////        {
-    ////////////////////////////////////            AttackData attack = attackButtons[i].attackData;
-    ////////////////////////////////////            int index = i; // Capture pour le closure
-
-    ////////////////////////////////////            attackButtons[i].button.onClick.RemoveAllListeners();
-    ////////////////////////////////////            attackButtons[i].button.onClick.AddListener(() => OnAttackButtonClicked(attack));
-
-    ////////////////////////////////////            // Mettre à jour le texte/icône du bouton si nécessaire
-    ////////////////////////////////////            UpdateAttackButtonUI(attackButtons[i].button, attack);
-    ////////////////////////////////////        }
-    ////////////////////////////////////    }
-    ////////////////////////////////////}
-
-    /// <summary>
-    /// Met à jour l'UI d'un bouton d'attaque
-    /// </summary>
-    //////////////////////////////////////private void UpdateAttackButtonUI(UnityEngine.UI.Button button, AttackData attack)
-    //////////////////////////////////////{
-    //////////////////////////////////////    // Mettre à jour le texte si présent
-    //////////////////////////////////////    TMPro.TextMeshProUGUI text = button.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-    //////////////////////////////////////    if (text != null)
-    //////////////////////////////////////    {
-    //////////////////////////////////////        text.text = attack.attackName;
-    //////////////////////////////////////    }
-
-    //////////////////////////////////////    // Mettre à jour l'icône si présent
-    //////////////////////////////////////    UnityEngine.UI.Image icon = button.GetComponentInChildren<UnityEngine.UI.Image>();
-    //////////////////////////////////////    if (icon != null && attack.attackIcon != null)
-    //////////////////////////////////////    {
-    //////////////////////////////////////        icon.sprite = attack.attackIcon;
-    //////////////////////////////////////    }
-    //////////////////////////////////////}
 
     /// <summary>
     /// Démarre un combat
@@ -116,59 +71,39 @@ public class CombatSystem : MonoBehaviour
             }
         }
 
-        // Activer les boutons d'attaque
-        //////////////////////////////////SetAttackButtonsInteractable(true);
         SetupSkipTurnButtonInteractable(true);
 
         Debug.Log("Combat démarré! Touchez un bouton pour attaquer.");
     }
 
-    /// <summary>
-    /// Appelé quand un bouton d'attaque est cliqué
-    /// </summary>
-    ////////////////////////////////////private void OnAttackButtonClicked(AttackData attack)
-    ////////////////////////////////////{
-    ////////////////////////////////////    if (!combatActive || !waitingForPlayerAction)
-    ////////////////////////////////////    {
-    ////////////////////////////////////        return;
-    ////////////////////////////////////    }
-
-    ////////////////////////////////////    waitingForPlayerAction = false;
-    ////////////////////////////////////    SetAttackButtonsInteractable(false);
-    ////////////////////////////////////    SetupSkipTurnButtonInteractable(false);
-
-    ////////////////////////////////////    Debug.Log($"Attaque utilisée: {attack.attackName}");
-
-    ////////////////////////////////////    // Infliger les dégâts à l'ennemi
-    ////////////////////////////////////    if (currentEnemy != null)
-    ////////////////////////////////////    {
-    ////////////////////////////////////        currentEnemy.TakeDamage(attack.damageAmount);
-    ////////////////////////////////////        Debug.Log($"L'ennemi prend {attack.damageAmount} dégâts!");
-    ////////////////////////////////////    }
-
-    ////////////////////////////////////    // Vérifier les conditions de fin de combat
-    ////////////////////////////////////    StartCoroutine(CheckCombatEndAfterDelay());
-    ////////////////////////////////////}
+    public void AttackPlayer(ObjetSO attack)
+    {
+        if (!combatActive)
+            return;
+        playerStats.TakeDamage(attack.objectEffect);
+        CheckCombatEnd();
+    }
+    public void HealPlayer (ObjetSO healItem)
+    {
+        if (!combatActive)
+            return;
+        playerStats.Heal(healItem.objectEffect);
+        CheckCombatEnd();
+    }
 
     public void AttackEnemy(ObjetSO attack)
     {
-        if (!combatActive || !isPlayerTurn)
-        {
+        if (!combatActive || currentEnemy == null)
             return;
-        }
-
-
-        //Debug.Log($"Attaque utilisée: {attack.attackName}");
-
-        // Infliger les dégâts à l'ennemi
-        if (currentEnemy != null)
-        {
-            currentEnemy.TakeDamage((int)attack.objectEffect);
-            //Debug.Log($"L'ennemi prend {attack.damageAmount} dégâts!");
-        }
-
-        // Vérifier les conditions de fin de combat
-        StartCoroutine(CheckCombatEndAfterDelay());
+        currentEnemy.TakeDamage(attack.objectEffect);
+        CheckCombatEnd();
+    }
+    public void HealEnemy(ObjetSO healItem)
+    {
+        if (!combatActive ||  currentEnemy == null)
+            return;
+        currentEnemy.Heal(healItem.objectEffect);
+        CheckCombatEnd();
     }
 
     /// <summary>
@@ -181,31 +116,12 @@ public class CombatSystem : MonoBehaviour
             return;
         }
         isPlayerTurn = false;
-        ///////////////////////////////SetAttackButtonsInteractable(false);
         SetupSkipTurnButtonInteractable(false);
         Debug.Log("Tour passé!");
         playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
         // l'ennemis attack
         StartCoroutine(EnemyAttackSequence());
     }
-
-
-    /// <summary>
-    /// Active ou désactive les boutons d'attaque
-    /// </summary>
-    ////////////////////////////////////private void SetAttackButtonsInteractable(bool interactable)
-    ////////////////////////////////////{
-    ////////////////////////////////////    if (attackButtons == null) return;
-
-    ////////////////////////////////////    foreach (var attackButton in attackButtons)
-    ////////////////////////////////////    {
-    ////////////////////////////////////        if (attackButton.button != null)
-    ////////////////////////////////////        {
-    ////////////////////////////////////            attackButton.button.interactable = interactable;
-    ////////////////////////////////////        }
-    ////////////////////////////////////    }
-    ////////////////////////////////////}
-
 
     /// <summary>
     /// Vérifie si le bouton de passage de tour doit être interactif
@@ -221,19 +137,16 @@ public class CombatSystem : MonoBehaviour
     /// <summary>
     /// Vérifie les conditions de fin de combat après un délai
     /// </summary>
-    private IEnumerator CheckCombatEndAfterDelay()
+    private void CheckCombatEnd()
     {
-        yield return new WaitForSeconds(0.5f);
-
-        // Vérifier si l'ennemi est mort
         if (currentEnemy != null && currentEnemy.IsDead())
         {
             EndCombat(true);
-            yield break;
         }
-
-        // L'ennemi attaque après un délai
-        //StartCoroutine(EnemyAttackSequence());
+        else if (playerStats.IsDead())
+        {
+            EndCombat(false);
+        }
     }
 
     /// <summary>
@@ -249,31 +162,27 @@ public class CombatSystem : MonoBehaviour
         // L'ennemi attaque
         if (currentEnemy != null && playerStats != null)
         {
-            int enemyDamage = currentEnemy.GetAttackDamage();
-            playerStats.TakeDamage(enemyDamage);
-            Debug.Log($"L'ennemi inflige {enemyDamage} dégâts!");
+            playerStats.TakeDamage(3);
+            Debug.Log($"L'ennemi inflige {3} dégâts!");
         }
 
-        // Vérifier si le joueur est mort
-        if (playerStats != null && playerStats.IsDead())
-        {
-            EndCombat(false);
-            yield break;
-        }
+        CheckCombatEnd();
 
         // Retour au tour du joueur
         isPlayerTurn = true;
-        //////////////////////////////////////////////SetAttackButtonsInteractable(true);
         SetupSkipTurnButtonInteractable(true);
         Debug.Log("À vous de jouer! Touchez un bouton pour attaquer.");
     }
 
-    private void EndCombat(bool victory)
+    private IEnumerator EndCombat(bool victory)
     {
         combatActive = false;
         isPlayerTurn = false;
-        //////////////////////////////////////SetAttackButtonsInteractable(false);
         SetupSkipTurnButtonInteractable(false);
+
+        yield return new WaitForSeconds(0.5f);
+
+        // Vérifier si l'ennemi est mort
 
         if (victory)
         {
@@ -285,6 +194,7 @@ public class CombatSystem : MonoBehaviour
             Debug.Log("Défaite au combat!");
             onDefeatCallback?.Invoke();
         }
+        yield break;
     }
 
     public bool IsCombatActive()

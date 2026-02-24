@@ -5,9 +5,6 @@ public class EnemyStats
 {
     public int maxHealth = 100;
     public int currentHealth;
-    public int attackDamage = 10;
-    public int defense = 5;
-    public int speed = 50;
 }
 
 public class Enemy : MonoBehaviour
@@ -31,30 +28,25 @@ public class Enemy : MonoBehaviour
 
         stats.maxHealth = Mathf.RoundToInt(stats.maxHealth * difficultyMultiplier);
         stats.currentHealth = stats.maxHealth;
-        stats.attackDamage = Mathf.RoundToInt(stats.attackDamage * difficultyMultiplier);
-        stats.defense = Mathf.RoundToInt(stats.defense * difficultyMultiplier);
-        stats.speed = Mathf.RoundToInt(stats.speed * difficultyMultiplier);
 
         UpdateHealthBar();
 
-        Debug.Log($"Ennemi configuré - PV: {stats.maxHealth}, Attaque: {stats.attackDamage}, Défense: {stats.defense}");
+        Debug.Log($"Ennemi configuré - PV: {stats.maxHealth}");
     }
 
     public void TakeDamage(int damage)
     {
-        int actualDamage = Mathf.Max(1, damage - stats.defense);
-        stats.currentHealth -= actualDamage;
-        stats.currentHealth = Mathf.Max(0, stats.currentHealth);
-
+        stats.currentHealth -= damage;
         UpdateHealthBar();
 
-        Debug.Log($"Ennemi prend {actualDamage} dégâts. PV restants: {stats.currentHealth}");
+        Debug.Log($"Ennemi prend {damage} dégâts. PV restants: {stats.currentHealth}");
+    }
+    public void Heal(int heal)
+    {
+        stats.currentHealth += heal;
+        UpdateHealthBar();
     }
 
-    public int GetAttackDamage()
-    {
-        return stats.attackDamage;
-    }
 
     public bool IsDead()
     {

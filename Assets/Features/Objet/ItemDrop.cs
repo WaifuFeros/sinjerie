@@ -5,6 +5,8 @@ public class ItemDrop : MonoBehaviour
 {
     [SerializeField]
     private CombatSystem _combatSystem;
+    [SerializeField]
+    private bool _isPlayer;
 
     public void ExecuteItemAction(ItemBrain item)
     {
@@ -13,24 +15,32 @@ public class ItemDrop : MonoBehaviour
         switch (data.objectType)
         {
             case ObjetEffectType.Heal:
-                Debug.Log($"Soin appliqué : {data.objectEffect} PV");
+                if (_isPlayer)
+                    _combatSystem.HealPlayer(data);
+                else
+                    _combatSystem.HealEnemy(data);
                 break;
 
             case ObjetEffectType.Attack:
-                _combatSystem.AttackEnemy(item.itemData);
+                print("hey");
+                if (_isPlayer)
+                {
+                    print("1");
+                    _combatSystem.AttackPlayer(data);
+                }
+                else
+                {
+                    print("2");
+                    _combatSystem.AttackEnemy(data);
+                }
+
                 Debug.Log($"Attaque effectuée : {data.objectEffect} Dégâts");
                 break;
 
             case ObjetEffectType.Special:
-                if (data.specialAction != null)
-                {
+                if (_isPlayer)
                     data.specialAction.Execute();
-                    Debug.Log("Action spéciale exécutée !");
-                }
-                else
-                {
-                    Debug.LogWarning("Aucune action spéciale assignée à cet objet.");
-                }
+                
                 break;
         }
         Destroy(item.gameObject);

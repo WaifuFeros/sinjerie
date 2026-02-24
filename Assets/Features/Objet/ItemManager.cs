@@ -137,7 +137,7 @@ public class ItemManager : MonoBehaviour
             item.TriggerVisualUpdate();
         }
     }
-    public void ChangeItemEffect(List<ItemBrain> items, float Effect)
+    public void ChangeItemEffect(List<ItemBrain> items, int Effect)
     {
         foreach (ItemBrain item in items)
         {
