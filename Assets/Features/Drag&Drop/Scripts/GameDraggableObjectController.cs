@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class GameDraggableObjectController : GameInteractableObjectController, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -87,7 +88,7 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
             CurrentSlot.OnDrop(eventData);
         }
     }
-        
+
     #endregion
 
     /// <summary>
@@ -104,9 +105,9 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
         this._raycastTarget.isEnabled = false;
 
         transform.SetAsLastSibling();
+        transform.DOScale(1.2f, 0.2f).SetEase(Ease.OutBack);
 
         this._startingPosition = transform.position;
-
         CurrentDraggedObject = this;
     }
 
@@ -129,6 +130,9 @@ public class GameDraggableObjectController : GameInteractableObjectController, I
     {
         this._isDragging = false;
         this._raycastTarget.isEnabled = true;
+
+
+        transform.DOScale(1f, 0.2f).SetEase(Ease.OutQuad);
 
         if (!this._isDropSuccess && CurrentSlot != null)
             this.SendBackToStartingPosition();

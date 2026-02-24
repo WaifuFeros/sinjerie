@@ -110,6 +110,19 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         descritptionPanel.SetActive(false);
     }
 
+    public override void BeginDrag(Vector3 mousePosition)
+    {
+        isDragging = true;
+        base.BeginDrag(mousePosition);
+    }
+
+    public override void EndDrag()
+    {
+        isDragging = false;
+        base.EndDrag();
+    }
+
+
     protected override void OnDestroy()
     {
         base.OnDestroy();
