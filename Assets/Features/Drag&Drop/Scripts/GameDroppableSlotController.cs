@@ -40,7 +40,6 @@ public class GameDroppableSlotController : GameDroppableZoneController<GameDragg
         if (draggable == null)
             return false;
 
-        Debug.Log($"Set Item {draggable.name} in {name}");
         CurrentDraggable = draggable;
         draggable.SetSlot(this);
         draggable.transform.position = _droppableSlot.position;

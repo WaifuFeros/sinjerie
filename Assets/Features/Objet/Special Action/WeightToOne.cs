@@ -1,5 +1,3 @@
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Search;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Objets/Actions/MettreLePoidA1")]

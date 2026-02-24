@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class RoomManager : MonoBehaviour
 {
@@ -9,19 +13,25 @@ public class RoomManager : MonoBehaviour
 
     [Header("Enemy Spawn")]
     [SerializeField] private Transform enemySpawnPoint;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject enemy;
 
     private GameObject currentRoom;
-    private GameObject currentEnemy;
+    private List<EnemySO> availableEnemyData = new List<EnemySO>();
 
-    public void Initialize()
+    public void Initialize(Action onLoadCompleted) 
     {
-        Debug.Log("RoomManager initialisé");
+        Addressables.LoadAssetsAsync<EnemySO>("Enemy", null).Completed += handle =>
+        {
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                availableEnemyData.AddRange(handle.Result);
+                onLoadCompleted?.Invoke();
+            }
+        };
     }
 
     public IEnumerator GenerateNewRoom(int roomNumber)
     {
-        Debug.Log($"Génération de la salle #{roomNumber}");
 
         // Détruire l'ancienne salle si elle existe
         if (currentRoom != null)
@@ -48,18 +58,13 @@ public class RoomManager : MonoBehaviour
 
     private void SpawnEnemy(int roomNumber)
     {
-        if (enemyPrefab != null && enemySpawnPoint != null)
+        if (enemy != null && enemySpawnPoint != null)
         {
-            // Détruire l'ancien ennemi si il existe
-            if (currentEnemy != null)
-            {
-                Destroy(currentEnemy);
-            }
-
-            currentEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, enemySpawnPoint.rotation);
-
             // Configurer l'ennemi selon le numéro de salle (difficulté progressive)
-            Enemy enemyScript = currentEnemy.GetComponent<Enemy>();
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            int randomIndex = UnityEngine.Random.Range(0, availableEnemyData.Count);
+            EnemySO randomData = availableEnemyData[randomIndex];
+            enemyScript.Initialize(randomData);
             if (enemyScript != null)
             {
                 enemyScript.SetDifficulty(roomNumber);
@@ -67,8 +72,8 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public GameObject GetCurrentEnemy()
+    public GameObject GetEnemy()
     {
-        return currentEnemy;
+        return enemy;
     }
 }

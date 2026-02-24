@@ -52,22 +52,23 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        Debug.Log("Commencer le jeu");
         currentState = GameState.Starting;
         currentRoomNumber = 0;
 
         // Initialiser les systèmes
         if (roomManager != null)
-            roomManager.Initialize();
+            roomManager.Initialize(() =>
+            {
+                if (combatSystem != null)
+                    combatSystem.Initialize();
 
-        if (combatSystem != null)
-            combatSystem.Initialize();
+                if (rewardSystem != null)
+                    rewardSystem.Initialize();
 
-        if (rewardSystem != null)
-            rewardSystem.Initialize();
+                // Passer à la première salle
+                StartCoroutine(TransitionToNewRoom()); 
 
-        // Passer à la première salle
-        StartCoroutine(TransitionToNewRoom());
+            });
     }
 
     /// <summary>
@@ -78,7 +79,6 @@ public class GameLoopManager : MonoBehaviour
         currentRoomNumber++;
         currentState = GameState.InRoom;
 
-        Debug.Log($"Nouvelle salle #{currentRoomNumber}");
 
         // Générer une nouvelle salle
         if (roomManager != null)
@@ -105,7 +105,6 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void StartCombat()
     {
-        Debug.Log("Démarrage du combat");
         currentState = GameState.InCombat;
 
         if (combatSystem != null)

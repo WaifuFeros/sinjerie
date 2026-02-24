@@ -7,19 +7,64 @@ public class CombatSystem : MonoBehaviour
 {
     [Header("Combat Settings")]
     [SerializeField] private RoomManager roomManager;
-    [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
+    [SerializeField] private float enemyAttackDelay = 2f; // Dï¿½lai avant que l'ennemi attaque
 
     [Header("References")]
     [SerializeField] private PlayerStats playerStats;
 
-    [Header("Attack Buttons")]
-    [SerializeField] private AttackButtonData[] attackButtons; // Les boutons d'attaque configurés dans l'Inspector
-
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
-    [System.Serializable]
-    public class AttackButtonData
+
+    private Enemy currentEnemy;
+    private System.Action onVictoryCallback;
+    private System.Action onDefeatCallback;
+    private bool combatActive = false;
+    private bool isPlayerTurn = true;
+
+    public void Initialize()
+    {
+        // Configurer le bouton de passage de tour
+        SetupSkipTurnButton();
+    }
+
+    ///<summary>
+    ///Configure le bouton de passage de tour
+    ///</summary>
+    private void SetupSkipTurnButton()
+    {
+        if (skipTurnButton != null)
+        {
+            skipTurnButton.onClick.RemoveAllListeners();
+            skipTurnButton.onClick.AddListener(() => OnSkipTurnButtonClicked());
+        }
+    }
+
+    /// <summary>
+    /// Dï¿½marre un combat
+    /// </summary>
+    public void StartCombat(System.Action onVictory, System.Action onDefeat)
+    {
+        onVictoryCallback = onVictory;
+        onDefeatCallback = onDefeat;
+        combatActive = true;
+        isPlayerTurn = true;
+
+        // Rï¿½cupï¿½rer l'ennemi actuel
+        if (roomManager != null)
+        {
+            GameObject enemyObj = roomManager.GetEnemy();
+            if (enemyObj != null)
+            {
+                currentEnemy = enemyObj.GetComponent<Enemy>();
+            }
+        }
+
+        SetupSkipTurnButtonInteractable(true);
+
+    }
+
+    public void AttackPlayer(ObjetSO attack)
     {
         public UnityEngine.UI.Button button;
         public AttackData attackData;
@@ -33,7 +78,7 @@ public class CombatSystem : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log("CombatSystem initialisé");
+        Debug.Log("CombatSystem initialisï¿½");
 
         // Configurer le bouton de passage de tour
         SetupSkipTurnButton();
@@ -52,7 +97,7 @@ public class CombatSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Démarre un combat
+    /// Dï¿½marre un combat
     /// </summary>
     public void StartCombat(System.Action onVictory, System.Action onDefeat)
     {
@@ -61,7 +106,7 @@ public class CombatSystem : MonoBehaviour
         combatActive = true;
         isPlayerTurn = true;
 
-        // Récupérer l'ennemi actuel
+        // Rï¿½cupï¿½rer l'ennemi actuel
         if (roomManager != null)
         {
             GameObject enemyObj = roomManager.GetCurrentEnemy();
@@ -73,7 +118,7 @@ public class CombatSystem : MonoBehaviour
 
         SetupSkipTurnButtonInteractable(true);
 
-        Debug.Log("Combat démarré! Touchez un bouton pour attaquer.");
+        Debug.Log("Combat dï¿½marrï¿½! Touchez un bouton pour attaquer.");
     }
 
     public void AttackPlayer(ObjetSO attack)
@@ -107,26 +152,48 @@ public class CombatSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Appelé quand le bouton de passage de tour est cliqué
+    /// Appelï¿½ quand le bouton de passage de tour est cliquï¿½
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
-        if (!combatActive || !isPlayerTurn)
+        if (currentEnemy != null && currentEnemy.IsDead())
         {
-            return;
+            EndCombat(true);
         }
-        isPlayerTurn = false;
-        SetupSkipTurnButtonInteractable(false);
-        Debug.Log("Tour passé!");
-        playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
-        // l'ennemis attack
-        StartCoroutine(EnemyAttackSequence());
+        else if (playerStats.IsDead())
+        {
+            EndCombat(false);
+        }
     }
 
     /// <summary>
-    /// Vérifie si le bouton de passage de tour doit être interactif
+    /// Sï¿½quence d'attaque de l'ennemi
     /// </summary>
-    private void SetupSkipTurnButtonInteractable(bool interactable)
+    private IEnumerator EnemyAttackSequence()
+    {
+
+
+        yield return new WaitForSeconds(enemyAttackDelay);
+
+        if (!combatActive)
+            yield break;
+
+        // L'ennemi attaque
+        if (currentEnemy != null && playerStats != null)
+        {
+            playerStats.TakeDamage(3);
+            Debug.Log($"L'ennemi inflige {3} dï¿½gï¿½ts!");
+        }
+
+        CheckCombatEnd();
+
+        // Retour au tour du joueur
+        isPlayerTurn = true;
+        SetupSkipTurnButtonInteractable(true);
+        Debug.Log("ï¿½ vous de jouer! Touchez un bouton pour attaquer.");
+    }
+
+    private IEnumerator EndCombat(bool victory)
     {
         if (skipTurnButton != null)
         {
@@ -135,7 +202,7 @@ public class CombatSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Vérifie les conditions de fin de combat après un délai
+    /// Vï¿½rifie les conditions de fin de combat aprï¿½s un dï¿½lai
     /// </summary>
     private void CheckCombatEnd()
     {
@@ -150,7 +217,7 @@ public class CombatSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Séquence d'attaque de l'ennemi
+    /// Sï¿½quence d'attaque de l'ennemi
     /// </summary>
     private IEnumerator EnemyAttackSequence()
     {
@@ -163,7 +230,7 @@ public class CombatSystem : MonoBehaviour
         if (currentEnemy != null && playerStats != null)
         {
             playerStats.TakeDamage(3);
-            Debug.Log($"L'ennemi inflige {3} dégâts!");
+            Debug.Log($"L'ennemi inflige {3} dï¿½gï¿½ts!");
         }
 
         CheckCombatEnd();
@@ -171,7 +238,7 @@ public class CombatSystem : MonoBehaviour
         // Retour au tour du joueur
         isPlayerTurn = true;
         SetupSkipTurnButtonInteractable(true);
-        Debug.Log("À vous de jouer! Touchez un bouton pour attaquer.");
+        Debug.Log("ï¿½ vous de jouer! Touchez un bouton pour attaquer.");
     }
 
     private IEnumerator EndCombat(bool victory)
@@ -182,7 +249,7 @@ public class CombatSystem : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        // Vérifier si l'ennemi est mort
+        // Vï¿½rifier si l'ennemi est mort
 
         if (victory)
         {
@@ -191,7 +258,7 @@ public class CombatSystem : MonoBehaviour
         }
         else
         {
-            Debug.Log("Défaite au combat!");
+            Debug.Log("Dï¿½faite au combat!");
             onDefeatCallback?.Invoke();
         }
         yield break;

@@ -1,68 +1,70 @@
+using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-[System.Serializable]
-public class EnemyStats
-{
-    public int maxHealth = 100;
-    public int currentHealth;
-}
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Enemy Stats")]
-    [SerializeField] private EnemyStats stats;
 
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
+    [SerializeField] private UnityEngine.UI.Image _enemyImage;
 
-    private void Start()
+    public EnemySO EnemyStats;
+
+    public int currentHealth;
+    public void Initialize(EnemySO stats)
     {
-        stats.currentHealth = stats.maxHealth;
+        EnemyStats = stats;
+        currentHealth = EnemyStats.MaxHealth;
+        _enemyImage.sprite = EnemyStats.Sprite;
         UpdateHealthBar();
     }
 
     public void SetDifficulty(int roomNumber)
     {
         // Augmenter la difficulté selon le numéro de salle
+        /*
         float difficultyMultiplier = 1f + (roomNumber * 0.2f);
 
         stats.maxHealth = Mathf.RoundToInt(stats.maxHealth * difficultyMultiplier);
-        stats.currentHealth = stats.maxHealth;
+        currentHealth = EnemyStats.MaxHealth;
 
         UpdateHealthBar();
 
-        Debug.Log($"Ennemi configuré - PV: {stats.maxHealth}");
+        Debug.Log($"Ennemi configuré - PV: {EnemyStats.MaxHealth}");
+        */
     }
 
     public void TakeDamage(int damage)
     {
-        stats.currentHealth -= damage;
+        currentHealth -= damage;
         UpdateHealthBar();
-
-        Debug.Log($"Ennemi prend {damage} dégâts. PV restants: {stats.currentHealth}");
+        Debug.Log($"Ennemi prend {damage} dégâts. PV restants: {currentHealth}");
     }
     public void Heal(int heal)
     {
-        stats.currentHealth += heal;
+        currentHealth += heal;
         UpdateHealthBar();
     }
 
 
     public bool IsDead()
     {
-        return stats.currentHealth <= 0;
+        return currentHealth <= 0;
     }
 
     private void UpdateHealthBar()
     {
         if (healthBar != null)
         {
-            healthBar.value = (float)stats.currentHealth / stats.maxHealth;
+            healthBar.value = (float)currentHealth / EnemyStats.MaxHealth;
         }
     }
 
-    public EnemyStats GetStats()
+    public EnemySO GetStats()
     {
-        return stats;
+        return EnemyStats;
     }
 }

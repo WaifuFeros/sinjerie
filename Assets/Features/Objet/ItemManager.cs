@@ -39,7 +39,6 @@ public class ItemManager : MonoBehaviour
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 availableItemData.AddRange(handle.Result);
-                Debug.Log($"{availableItemData.Count} items load");
             }
 
             foreach (ObjetSO item in _startingItems)
