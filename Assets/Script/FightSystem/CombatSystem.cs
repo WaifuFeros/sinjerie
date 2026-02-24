@@ -24,8 +24,6 @@ public class CombatSystem : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log("CombatSystem initialisé");
-
         // Configurer le bouton de passage de tour
         SetupSkipTurnButton();
     }
@@ -64,7 +62,6 @@ public class CombatSystem : MonoBehaviour
 
         SetupSkipTurnButtonInteractable(true);
 
-        Debug.Log("Combat démarré! Touchez un bouton pour attaquer.");
     }
 
     public void AttackPlayer(ObjetSO attack)
@@ -145,6 +142,8 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private IEnumerator EnemyAttackSequence()
     {
+
+
         yield return new WaitForSeconds(enemyAttackDelay);
 
         if (!combatActive)

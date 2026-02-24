@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     public void Initialize(EnemySO stats)
     {
         EnemyStats = stats;
-        print($"Ennemi initialisé - PV: {EnemyStats.MaxHealth}");
         currentHealth = EnemyStats.MaxHealth;
         _enemyImage.sprite = EnemyStats.Sprite;
         UpdateHealthBar();

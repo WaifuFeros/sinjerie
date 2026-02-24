@@ -23,7 +23,7 @@ public class RewardSystem : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log("RewardSystem initialisé");
+        // init le reward
     }
 
     public void GiveRewards(bool victory, int roomNumber, System.Action onComplete)
