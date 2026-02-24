@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class Menu : MonoBehaviour
 {
-    [SerializeField] private  GameObject _encyclopedia;
+    [SerializeField] private  GameObject _EncyclopediaPanel;
+    [SerializeField] private  GameObject _ParametresPanel;
+    [SerializeField] private Button _ParametresButton;
+    [SerializeField] private Button _EncyclopediaButton;
+    [SerializeField] private Button _StartButton;
+    [SerializeField] private Button _LeftTheGameButtonButton;
     public void StartGame()
     {
         SceneManager.LoadScene("EnjminDiff");
@@ -17,11 +23,38 @@ public class Menu : MonoBehaviour
 
     public void OpenEncyclopedia()
     {
-        _encyclopedia.SetActive(true);
+        _EncyclopediaPanel.SetActive(true);
+        _ParametresButton.gameObject.SetActive(false);
+        _StartButton.gameObject.SetActive(false);
+        _LeftTheGameButtonButton.gameObject.SetActive(false);
+        _EncyclopediaButton.gameObject.SetActive(false);
     }
 
     public void CloseEncyclopedia()
-        {
-            _encyclopedia.SetActive(false);
+    {
+        _EncyclopediaPanel.SetActive(false);
+        _ParametresButton.gameObject.SetActive(true);
+        _StartButton.gameObject.SetActive(true);
+        _LeftTheGameButtonButton.gameObject.SetActive(true);
+        _EncyclopediaButton.gameObject.SetActive(true);
+
+    }
+
+    public void OpenParametres()
+    {
+        _ParametresPanel.SetActive(true);
+        _ParametresButton.gameObject.SetActive(false);
+        _StartButton.gameObject.SetActive(false);
+        _LeftTheGameButtonButton.gameObject.SetActive(false);
+        _EncyclopediaButton.gameObject.SetActive(false);
+    }
+
+    public void CloseParametres()
+    {
+        _ParametresPanel.SetActive(false);
+        _ParametresButton.gameObject.SetActive(true);
+        _StartButton.gameObject.SetActive(true);
+        _LeftTheGameButtonButton.gameObject.SetActive(true);
+        _EncyclopediaButton.gameObject.SetActive(true);
     }
 }
