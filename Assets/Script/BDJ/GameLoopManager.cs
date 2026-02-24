@@ -58,16 +58,18 @@ public class GameLoopManager : MonoBehaviour
 
         // Initialiser les systèmes
         if (roomManager != null)
-            roomManager.Initialize();
+            roomManager.Initialize(() =>
+            {
+                if (combatSystem != null)
+                    combatSystem.Initialize();
 
-        if (combatSystem != null)
-            combatSystem.Initialize();
+                if (rewardSystem != null)
+                    rewardSystem.Initialize();
 
-        if (rewardSystem != null)
-            rewardSystem.Initialize();
+                // Passer à la première salle
+                StartCoroutine(TransitionToNewRoom()); 
 
-        // Passer à la première salle
-        StartCoroutine(TransitionToNewRoom());
+            });
     }
 
     /// <summary>

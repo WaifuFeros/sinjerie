@@ -23,6 +23,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 131c7b082b0024945855716183c22b11
+    m_Address: Assets/Features/IAenemy/EnemySO/mario.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2189040e6dd943a48af681ed39a0dd1a
     m_Address: Assets/Features/Objet/ObjectSO/weight to one.asset
     m_ReadOnly: 0
@@ -34,6 +40,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39aa3a2d8d50a7a48874982575d9efb9
+    m_Address: Assets/Features/IAenemy/EnemySO/beber.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 660dbaf783506f94c91a55198006a2cf
     m_Address: Assets/Features/Objet/ObjectSO/rock.asset

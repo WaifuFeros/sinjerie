@@ -12,18 +12,9 @@ public class CombatSystem : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerStats playerStats;
 
-    [Header("Attack Buttons")]
-    [SerializeField] private AttackButtonData[] attackButtons; // Les boutons d'attaque configurés dans l'Inspector
-
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
-    [System.Serializable]
-    public class AttackButtonData
-    {
-        public UnityEngine.UI.Button button;
-        public AttackData attackData;
-    }
 
     private Enemy currentEnemy;
     private System.Action onVictoryCallback;
@@ -64,7 +55,7 @@ public class CombatSystem : MonoBehaviour
         // Récupérer l'ennemi actuel
         if (roomManager != null)
         {
-            GameObject enemyObj = roomManager.GetCurrentEnemy();
+            GameObject enemyObj = roomManager.GetEnemy();
             if (enemyObj != null)
             {
                 currentEnemy = enemyObj.GetComponent<Enemy>();
