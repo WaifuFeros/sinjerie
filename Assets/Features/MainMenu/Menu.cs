@@ -11,6 +11,15 @@ public class Menu : MonoBehaviour
     [SerializeField] private Button _EncyclopediaButton;
     [SerializeField] private Button _StartButton;
     [SerializeField] private Button _LeftTheGameButtonButton;
+    public SaveScript _saveScript;
+
+    private void Awake()
+    {
+        if (_saveScript != null)
+        {
+            _saveScript.LoadInfo();
+        }
+    }
     public void StartGame()
     {
         SceneManager.LoadScene("EnjminDiff");
