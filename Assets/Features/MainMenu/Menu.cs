@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Menu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private  GameObject _encyclopedia;
+    public void StartGame()
     {
-        
+        SceneManager.LoadScene("EnjminDiff");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void QuitGame()
     {
-        
+        Application.Quit();
+    }
+
+    public void OpenEncyclopedia()
+    {
+        _encyclopedia.SetActive(true);
+    }
+
+    public void CloseEncyclopedia()
+        {
+            _encyclopedia.SetActive(false);
     }
 }
