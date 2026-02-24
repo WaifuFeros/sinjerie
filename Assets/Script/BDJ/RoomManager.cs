@@ -25,16 +25,13 @@ public class RoomManager : MonoBehaviour
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 availableEnemyData.AddRange(handle.Result);
-                Debug.Log($"{availableEnemyData.Count} enemy load");
                 onLoadCompleted?.Invoke();
             }
         };
-        Debug.Log("RoomManager initialisé");
     }
 
     public IEnumerator GenerateNewRoom(int roomNumber)
     {
-        Debug.Log($"Génération de la salle #{roomNumber}");
 
         // Détruire l'ancienne salle si elle existe
         if (currentRoom != null)

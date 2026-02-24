@@ -52,7 +52,6 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        Debug.Log("Commencer le jeu");
         currentState = GameState.Starting;
         currentRoomNumber = 0;
 
@@ -80,7 +79,6 @@ public class GameLoopManager : MonoBehaviour
         currentRoomNumber++;
         currentState = GameState.InRoom;
 
-        Debug.Log($"Nouvelle salle #{currentRoomNumber}");
 
         // Générer une nouvelle salle
         if (roomManager != null)
@@ -107,7 +105,6 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void StartCombat()
     {
-        Debug.Log("Démarrage du combat");
         currentState = GameState.InCombat;
 
         if (combatSystem != null)
