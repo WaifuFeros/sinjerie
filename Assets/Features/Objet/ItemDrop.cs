@@ -23,17 +23,9 @@ public class ItemDrop : MonoBehaviour
 
             case ObjetEffectType.Attack:
                 if (_isPlayer)
-                {
-                    print("1");
                     _combatSystem.AttackPlayer(data);
-                }
                 else
-                {
-                    print("2");
                     _combatSystem.AttackEnemy(data);
-                }
-
-                Debug.Log($"Attaque effectuée : {data.objectEffect} Dégâts");
                 break;
 
             case ObjetEffectType.Special:

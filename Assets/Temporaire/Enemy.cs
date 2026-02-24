@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -39,13 +40,12 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        currentHealth = Mathf.Max(0, currentHealth - damage);
         UpdateHealthBar();
-        Debug.Log($"Ennemi prend {damage} dégâts. PV restants: {currentHealth}");
     }
     public void Heal(int heal)
     {
-        currentHealth += heal;
+        currentHealth = Mathf.Min(EnemyStats.MaxHealth, currentHealth + heal);
         UpdateHealthBar();
     }
 

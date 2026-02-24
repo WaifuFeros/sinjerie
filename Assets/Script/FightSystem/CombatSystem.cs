@@ -163,12 +163,13 @@ public class CombatSystem : MonoBehaviour
         {
             // Animation
             yield return StartCoroutine(AnimateItemThrow(item));
-            yield return new WaitForSeconds(0.4f); // Petit délai entre les attaques
             // Appliquer l'effet de l'objet
             if (item.objectType == ObjetEffectType.Attack)
                 AttackPlayer(item);
             else if (item.objectType == ObjetEffectType.Heal)
                 HealEnemy(item);
+
+            yield return new WaitForSeconds(0.4f); // Petit délai entre les attaques
         }
 
 
@@ -190,7 +191,7 @@ public class CombatSystem : MonoBehaviour
         if (item.objectType == ObjetEffectType.Heal)
         {
             Vector3 endPos = _enemyTransform.position;
-            Vector3 midPoint = startPos + new Vector3(50f, 250f, 0); // Petit décalage X pour la courbe
+            Vector3 midPoint = startPos + new Vector3(0, 350f, 0); // Petit décalage X pour la courbe
             Vector3[] path = new Vector3[] { startPos, midPoint, endPos };
 
             throwSequence.Append(projectile.transform.DOPath(path, _animationDuration, PathType.CatmullRom)
@@ -211,7 +212,7 @@ public class CombatSystem : MonoBehaviour
                 .SetEase(Ease.Linear));
         }
 
-        throwSequence.Join(projectile.transform.DOScale(2f, _animationDuration / 2).SetLoops(2, LoopType.Yoyo));
+        throwSequence.Join(projectile.transform.DOScale(2.5f, _animationDuration / 2).SetLoops(2, LoopType.Yoyo));
 
         yield return throwSequence.WaitForCompletion();
         Destroy(projectile);

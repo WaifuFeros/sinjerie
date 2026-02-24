@@ -10,6 +10,5 @@ public class HealToAttack : SpecialActionSO
         var healItems = ItemManager.Instance.GetItemsOfType(ObjetEffectType.Heal);
         ItemManager.Instance.ChangeItemType(atkItems, ObjetEffectType.Heal);
         ItemManager.Instance.ChangeItemType(healItems, ObjetEffectType.Attack);
-        Debug.Log("HealToAttack");
     }
 }
