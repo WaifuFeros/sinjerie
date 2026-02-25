@@ -25,11 +25,12 @@ public class RewardUIManager : MonoBehaviour
     [SerializeField]
     private int _NumberOfRewardToChoose;
 
-    public void AddButton()
+    public void AddToggle()
     {
         for (int i = 0; i < _NumberOfToggle; i++)
         {
             GameObject button = Instantiate(_ToggleButton, _Panel);
+            print(button);
         }
 
         _Text.text = $"Choisissez {_NumberOfRewardToChoose} récompenses ";
@@ -37,10 +38,15 @@ public class RewardUIManager : MonoBehaviour
 
     public void ValidateChoice()
     {
-        //_Panel.gameObject.SetActive(false);
-        for(int i = 0; i < _NumberOfToggle; i++)
+        _Panel.gameObject.SetActive(false);
+        for(int i = 0; i < _Panel.childCount; i++)
         {
-            Destroy(_Panel.GetChild(i).gameObject);
+            string Name = "Item(Clone)";
+            if(Name == _Panel.GetChild(i).name)
+            {
+                print("test");
+                Destroy(_Panel.GetChild(i).gameObject);
+            }
         }
     }
 }
