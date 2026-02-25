@@ -159,9 +159,9 @@ RectTransform:
   - {fileID: 255631726}
   m_Father: {fileID: 1516513039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1071}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -36.31006}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &127507768
@@ -530,6 +530,7 @@ MonoBehaviour:
   combatSystem: {fileID: 1758276131}
   rewardSystem: {fileID: 2006066270}
   uiManager: {fileID: 1516513035}
+  itemManager: {fileID: 1093873787}
   currentState: 0
   currentRoomNumber: 0
 --- !u!1 &255631725
@@ -1387,9 +1388,20 @@ MonoBehaviour:
     currentHealth: 0
     maxStamina: 5
     currentStamina: 0
+    nbStartItem: 8
+    nbItemPerTurn: 2
     level: 1
     experience: 0
     experienceToNextLevel: 100
+    Deck:
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+    - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+    - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
+    - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+    - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
+    - {fileID: 11400000, guid: 7c5b7f7ac7bd9ee4a978efddb7b8839b, type: 2}
+    - {fileID: 11400000, guid: b8f4ce4483de4da4587b51ca19194c4b, type: 2}
   healthBar: {fileID: 865689393}
   staminaUI: {fileID: 740559718}
 --- !u!212 &888578475
@@ -1709,7 +1721,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Skip Turn
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1736,8 +1748,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1815,10 +1827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 285272aa45e2fa44990636fe2f6089f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionText: {fileID: 255631727}
-  latitude: 0
-  longitude: 0
-  gpsReady: 0
 --- !u!4 &1021912355
 Transform:
   m_ObjectHideFlags: 0
@@ -1882,15 +1890,6 @@ MonoBehaviour:
     type: 3}
   itemParents: {fileID: 2088251474}
   activeItems: []
-  _startingItems:
-  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
-  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
-  - {fileID: 11400000, guid: 7c5b7f7ac7bd9ee4a978efddb7b8839b, type: 2}
-  - {fileID: 11400000, guid: b8f4ce4483de4da4587b51ca19194c4b, type: 2}
-  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
 --- !u!1 &1115764343
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,8 +2843,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -14, y: -78.131744}
+  m_SizeDelta: {x: 160, y: 186.2616}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &1584343051
 GameObject:
@@ -3262,7 +3261,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomManager: {fileID: 1515819104}
   enemyAttackDelay: 1
-  playerStats: {fileID: 888578474}
+  _playerStats: {fileID: 888578474}
+  _itemManager: {fileID: 1093873787}
   skipTurnButton: {fileID: 1578029000}
   _canvasParent: {fileID: 1516513039}
   _itemAnimPrefab: {fileID: 1330769031389707562, guid: 7d2ef08ee1909e644a9a125609496501,

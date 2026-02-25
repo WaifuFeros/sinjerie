@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -15,9 +16,6 @@ public class ItemManager : MonoBehaviour
     // Liste de tous les items
     public List<ItemBrain> activeItems = new List<ItemBrain>();
 
-    [SerializeField]
-    private ObjetSO[] _startingItems;
-
     // Liste interne des SO chargés avec adressables
     private List<ObjetSO> availableItemData = new List<ObjetSO>();
 
@@ -27,66 +25,45 @@ public class ItemManager : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
-    private void Start()
-    {
-        LoadItemData();
-    }
 
-    private void LoadItemData()
+    public void Initialize(Action onLoadCompleted)
     {
         Addressables.LoadAssetsAsync<ObjetSO>("Items", null).Completed += handle =>
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 availableItemData.AddRange(handle.Result);
-            }
-
-            foreach (ObjetSO item in _startingItems)
-            {
-                var itemBrain = SpawnItem(item);
-                if (InventoryManager.Instance.HasEmptySlot())
-                {
-                    var slot = InventoryManager.Instance.GetEmptySlot();
-                    slot.SetItem(itemBrain);
-                }
+                onLoadCompleted?.Invoke();
             }
         };
+
     }
 
     public void SpawnRandomItem()
     {
         if (availableItemData.Count == 0)
-        {
             return;
-        }
 
-        Vector3 position = new Vector3(transform.position.x, transform.position.y, 0f);
-        int randomIndex = Random.Range(0, availableItemData.Count);
+
+        int randomIndex = UnityEngine.Random.Range(0, availableItemData.Count);
         ObjetSO randomData = availableItemData[randomIndex];
-
-        ItemBrain newItemGo = Instantiate(itemPrefab, position, Quaternion.identity, itemParents).GetComponent<ItemBrain>();
-
-
-        newItemGo.InitItem(randomData);
-        activeItems.Add(newItemGo);
+        SpawnItem(randomData);
     }
 
-    public ItemBrain SpawnItem(ObjetSO objetSO)
+    public void SpawnItem(ObjetSO objetSO)
     {
-        if (availableItemData.Count == 0)
-        {
-            return null;
-        }
+        if (availableItemData.Count == 0 || !InventoryManager.Instance.HasEmptySlot())
+            return;
 
         Vector3 position = new Vector3(transform.position.x, transform.position.y, 0f);
 
         ItemBrain newItemBrain = Instantiate(itemPrefab, position, Quaternion.identity, itemParents).GetComponent<ItemBrain>();
 
-
         newItemBrain.InitItem(objetSO);
         activeItems.Add(newItemBrain);
 
-        return newItemBrain;
+        var slot = InventoryManager.Instance.GetEmptySlot();
+        slot.SetItem(newItemBrain);
     }
 
     // Recup des items de l'inventaire
@@ -119,7 +96,7 @@ public class ItemManager : MonoBehaviour
         int countToGet = Mathf.Min(nb, tempPool.Count);
         for (int i = 0; i < countToGet; i++)
         {
-            int randomIndex = Random.Range(0, tempPool.Count);
+            int randomIndex = UnityEngine.Random.Range(0, tempPool.Count);
             result.Add(tempPool[randomIndex]);
             tempPool.RemoveAt(randomIndex);
         }

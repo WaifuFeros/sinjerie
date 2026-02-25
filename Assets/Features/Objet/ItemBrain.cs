@@ -18,7 +18,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
     [Header("Smoke Effect")]
     [SerializeField] private Animator smokeAnimator;
-    [SerializeField] private float delayBeforeChange = 0.25f;
+    [SerializeField] private float delayBeforeChange = 0.021f;
 
     private RectTransform rectTransform;
     private Canvas canvas;
@@ -36,8 +36,6 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
-
-        ApplyVisuals();
         descritptionPanel.SetActive(false);
     }
 
@@ -55,7 +53,6 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
             yield return new WaitForSeconds(delay);
             smokeAnimator.SetTrigger("StartSmoke");
         }
-
         yield return new WaitForSeconds(delayBeforeChange);
 
         ApplyVisuals();
@@ -87,7 +84,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         if (itemData != null) Destroy(itemData);
 
         itemData = Instantiate(data);
-        ApplyVisuals();
+        TriggerVisualUpdate();
     }
 
 

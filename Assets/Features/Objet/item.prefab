@@ -829,7 +829,7 @@ MonoBehaviour:
   effectText: {fileID: 3134645131967731897}
   weightText: {fileID: 589202801167609858}
   smokeAnimator: {fileID: 6366638186658251795}
-  delayBeforeChange: 0.1
+  delayBeforeChange: 0.021
 --- !u!114 &-1921863523013163353
 MonoBehaviour:
   m_ObjectHideFlags: 0
