@@ -20,3 +20,4 @@ MonoBehaviour:
   objectType: 1
   objectEffect: 7
   specialAction: {fileID: 0}
+  objetRarity: 2
