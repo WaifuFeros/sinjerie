@@ -15,7 +15,8 @@ public class WeatherManager : MonoBehaviour
     //public TextMeshProUGUI coordText;
     public Image weatherIcon;
 
-    public string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
+    [SerializeField]
+    private string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
 
     void Start()
     {
@@ -23,7 +24,7 @@ public class WeatherManager : MonoBehaviour
         StartCoroutine(GetWeather());
     }
 
-    IEnumerator GetWeather()
+    private IEnumerator GetWeather()
     {
         Debug.Log("Coroutine GetWeather démarrée, attente GPS...");
         yield return new WaitUntil(() => gpsManager != null && gpsManager.gpsReady);
@@ -56,7 +57,7 @@ public class WeatherManager : MonoBehaviour
         StartCoroutine(LoadIcon(iconUrl));
     }
 
-    IEnumerator LoadIcon(string url)
+    private IEnumerator LoadIcon(string url)
     {
         Debug.Log("Téléchargement de l'icône depuis : " + url);
         using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(url))

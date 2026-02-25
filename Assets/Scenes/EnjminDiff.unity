@@ -1815,6 +1815,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 285272aa45e2fa44990636fe2f6089f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionText: {fileID: 255631727}
+  latitude: 0
+  longitude: 0
+  gpsReady: 0
 --- !u!4 &1021912355
 Transform:
   m_ObjectHideFlags: 0
