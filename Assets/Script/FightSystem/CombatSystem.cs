@@ -11,6 +11,7 @@ public class CombatSystem : MonoBehaviour
     [Header("Combat Settings")]
     [SerializeField] private RoomManager roomManager;
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
+    [SerializeField] private float shitDelay = 2f; // Fait caca tous les X secondes
 
     [Header("References")]
     [SerializeField] private PlayerStats _playerStats;
@@ -196,7 +197,6 @@ public class CombatSystem : MonoBehaviour
             _itemManager.SpawnItem(obj);
         }
     }
-
     private IEnumerator AnimateItemThrow(ObjetSO item)
     {
         GameObject projectile = Instantiate(_itemAnimPrefab, _canvasParent);

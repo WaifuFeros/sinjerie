@@ -8,6 +8,7 @@ public class PlayerStatsData
     public int maxHealth = 100;
     public int currentHealth;
     public int maxStamina = 5;
+    public int staminaRegenPerTurn = 2;
     public int currentStamina;
     public int nbStartItem = 8;
     public int nbItemPerTurn = 2;
@@ -125,7 +126,7 @@ public class PlayerStats : MonoBehaviour
     // Remet la stamina à son maximum
     public void refillStamina()
     {
-        stats.currentStamina = stats.maxStamina;
+        stats.currentStamina = Mathf.Min(stats.currentStamina + stats.staminaRegenPerTurn, stats.maxStamina);
         staminaUI.UpdateDisplay(stats.currentStamina);
     }
 
