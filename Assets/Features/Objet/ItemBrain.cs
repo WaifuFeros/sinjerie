@@ -10,6 +10,8 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     [SerializeField] public ObjetSO itemData;
 
     [Header("UI")]
+    [SerializeField] private Image itemIcon;
+    [SerializeField] private Image itemBackground;
     [SerializeField] private GameObject descritptionPanel;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private GameObject effectImage;
@@ -18,7 +20,14 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
     [Header("Smoke Effect")]
     [SerializeField] private Animator smokeAnimator;
-    [SerializeField] private float delayBeforeChange = 0.25f;
+    [SerializeField] private float delayBeforeChange = 0.021f;
+
+    [Header("Asset Rarity")]
+    [SerializeField] private Sprite _communSprite;
+    [SerializeField] private Sprite _uncommonSprite;
+    [SerializeField] private Sprite _rareSprite;
+    [SerializeField] private Sprite _epicSprite;
+    [SerializeField] private Sprite _lengendarySprite;
 
     private RectTransform rectTransform;
     private Canvas canvas;
@@ -36,8 +45,6 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
-
-        ApplyVisuals();
         descritptionPanel.SetActive(false);
     }
 
@@ -55,7 +62,6 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
             yield return new WaitForSeconds(delay);
             smokeAnimator.SetTrigger("StartSmoke");
         }
-
         yield return new WaitForSeconds(delayBeforeChange);
 
         ApplyVisuals();
@@ -65,8 +71,26 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     {
         if (itemData == null) return;
 
-        GetComponent<Image>().sprite = itemData.objetSprite;
+        itemIcon.sprite = itemData.objetSprite;
         descriptionText.text = itemData.objetDescription;
+        switch (itemData.objetRarity)
+        {
+            case ObjetRarity.Common:
+                itemBackground.sprite = _communSprite;
+                break;
+            case ObjetRarity.Uncommon:
+                itemBackground.sprite = _uncommonSprite;
+                break;
+            case ObjetRarity.Rare:
+                itemBackground.sprite = _rareSprite;
+                break;
+            case ObjetRarity.Epic:
+                itemBackground.sprite = _epicSprite;
+                break;
+            case ObjetRarity.Legendary:
+                itemBackground.sprite = _lengendarySprite;
+                break;
+        }
 
         effectImage.SetActive(true);
 
@@ -87,7 +111,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         if (itemData != null) Destroy(itemData);
 
         itemData = Instantiate(data);
-        ApplyVisuals();
+        TriggerVisualUpdate();
     }
 
 

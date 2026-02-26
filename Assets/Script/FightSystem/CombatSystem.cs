@@ -13,7 +13,8 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
 
     [Header("References")]
-    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private ItemManager _itemManager;
 
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
@@ -70,6 +71,14 @@ public class CombatSystem : MonoBehaviour
             }
         }
 
+        // Ajout item dans l'inventaire du joueur
+        for (int i = 0; i < _playerStats.stats.nbStartItem; i++)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
+            ObjetSO obj = _playerStats.stats.Deck[randomIndex];
+            _itemManager.SpawnItem(obj);
+        }
+
         SetupSkipTurnButtonInteractable(true);
 
     }
@@ -78,14 +87,14 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive)
             return;
-        playerStats.TakeDamage(attack.objectEffect);
+        _playerStats.TakeDamage(attack.objectEffect);
         CheckCombatEnd();
     }
     public void HealPlayer(ObjetSO healItem)
     {
         if (!combatActive)
             return;
-        playerStats.Heal(healItem.objectEffect);
+        _playerStats.Heal(healItem.objectEffect);
         CheckCombatEnd();
     }
 
@@ -115,7 +124,7 @@ public class CombatSystem : MonoBehaviour
         }
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
-        playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
+        _playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
         // l'ennemis attack
         StartCoroutine(EnemyAttackSequence());
     }
@@ -140,7 +149,7 @@ public class CombatSystem : MonoBehaviour
         {
             EndCombat(true);
         }
-        else if (playerStats.IsDead())
+        else if (_playerStats.IsDead())
         {
             EndCombat(false);
         }
@@ -177,6 +186,15 @@ public class CombatSystem : MonoBehaviour
 
         isPlayerTurn = true;
         SetupSkipTurnButtonInteractable(true);
+
+        // pioche des items aléatoires à la fin du tour
+        for (int i = 0; i < _playerStats.stats.nbItemPerTurn; i++)
+        {
+            
+            int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
+            ObjetSO obj = _playerStats.stats.Deck[randomIndex];
+            _itemManager.SpawnItem(obj);
+        }
     }
 
     private IEnumerator AnimateItemThrow(ObjetSO item)
