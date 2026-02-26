@@ -75,6 +75,7 @@ public class CombatSystem : MonoBehaviour
         for (int i = 0; i < _playerStats.stats.nbStartItem; i++)
         {
             int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
+            print ("Deck length : " + _playerStats.stats.Deck.Length);
             ObjetSO obj = _playerStats.stats.Deck[randomIndex];
             _itemManager.SpawnItem(obj);
         }
@@ -145,13 +146,17 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private void CheckCombatEnd()
     {
+            print(_playerStats.stats.currentHealth);
+
         if (currentEnemy != null && currentEnemy.IsDead())
         {
-            EndCombat(true);
+            StartCoroutine(EndCombat(true));
+
         }
         else if (_playerStats.IsDead())
         {
-            EndCombat(false);
+            print(_playerStats.IsDead());
+            StartCoroutine(EndCombat(false));
         }
     }
 
@@ -241,8 +246,12 @@ public class CombatSystem : MonoBehaviour
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
 
+        print("rentre il icic ? ");
+
+
         yield return new WaitForSeconds(0.5f);
 
+        print("Fin du combat. Victoire : " + victory);
         // Vérifier si l'ennemi est mort
 
         if (victory)
