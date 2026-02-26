@@ -73,11 +73,24 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         itemIcon.sprite = itemData.objetSprite;
         descriptionText.text = itemData.objetDescription;
-        if (itemData.objetRarity == ObjetRarity.Common) itemBackground.sprite = _communSprite;
-        else if (itemData.objetRarity == ObjetRarity.Uncommon) itemBackground.sprite = _uncommonSprite;
-        else if (itemData.objetRarity == ObjetRarity.Rare) itemBackground.sprite = _rareSprite;
-        else if (itemData.objetRarity == ObjetRarity.Epic) itemBackground.sprite = _epicSprite;
-        else if (itemData.objetRarity == ObjetRarity.Legendary) itemBackground.sprite = _lengendarySprite;
+        switch (itemData.objetRarity)
+        {
+            case ObjetRarity.Common:
+                itemBackground.sprite = _communSprite;
+                break;
+            case ObjetRarity.Uncommon:
+                itemBackground.sprite = _uncommonSprite;
+                break;
+            case ObjetRarity.Rare:
+                itemBackground.sprite = _rareSprite;
+                break;
+            case ObjetRarity.Epic:
+                itemBackground.sprite = _epicSprite;
+                break;
+            case ObjetRarity.Legendary:
+                itemBackground.sprite = _lengendarySprite;
+                break;
+        }
 
         effectImage.SetActive(true);
 
