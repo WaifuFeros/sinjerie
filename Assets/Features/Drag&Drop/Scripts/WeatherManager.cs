@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using static System.Net.WebRequestMethods;
 
 public class WeatherManager : MonoBehaviour
 {
@@ -11,12 +10,10 @@ public class WeatherManager : MonoBehaviour
 
     public TextMeshProUGUI cityText;
     public TextMeshProUGUI tempText;
-    //public TextMeshProUGUI descText;
+    public TextMeshProUGUI descText;
     //public TextMeshProUGUI coordText;
-    public Image weatherIcon;
 
-    [SerializeField]
-    private string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
+    public string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
 
     void Start()
     {
@@ -24,7 +21,7 @@ public class WeatherManager : MonoBehaviour
         StartCoroutine(GetWeather());
     }
 
-    private IEnumerator GetWeather()
+    IEnumerator GetWeather()
     {
         Debug.Log("Coroutine GetWeather démarrée, attente GPS...");
         yield return new WaitUntil(() => gpsManager != null && gpsManager.gpsReady);
@@ -50,41 +47,8 @@ public class WeatherManager : MonoBehaviour
 
         cityText.text = data.name;
         tempText.text = $"{data.main.temp:F1} °C";
-        string iconUrl = $"https://openweathermap.org/img/wn/{data.weather[0].icon}@2x.png";
-        Debug.Log("URL icône météo : " + iconUrl);
+        descText.text = data.weather[0].main;
         //coordText.text = $"{gpsManager.latitude:F4}, {gpsManager.longitude:F4}";
-
-        StartCoroutine(LoadIcon(iconUrl));
-    }
-
-    private IEnumerator LoadIcon(string url)
-    {
-        Debug.Log("Téléchargement de l'icône depuis : " + url);
-        using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(url))
-        {
-            yield return request.SendWebRequest();
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Erreur icône : " + request.error);
-                yield break;
-            }
-
-            Texture2D texture = DownloadHandlerTexture.GetContent(request);
-            Debug.Log("Texture téléchargée, taille : " + texture.width + "x" + texture.height);
-
-            if (texture.width == 0 || texture.height == 0)
-            {
-                Debug.LogError("Texture vide ! Vérifie l'URL ou utilise un sprite local.");
-                yield break;
-            }
-
-            Sprite sprite = Sprite.Create(texture,
-                                          new Rect(0, 0, texture.width, texture.height),
-                                          new Vector2(0.5f, 0.5f));
-            weatherIcon.sprite = sprite;
-            Debug.Log("Icône assignée !");
-        }
     }
 }
 
@@ -105,5 +69,5 @@ public class Main
 [System.Serializable]
 public class Weather
 {
-    public string icon;
+    public string main;
 }

@@ -10,8 +10,30 @@ public class GPSManager : MonoBehaviour
     public float longitude;
     public bool gpsReady = false;
 
+    [Header("EDITOR DEBUG")]
+    public bool simulateInEditor = true;
+    public float editorLatitude = 45.6484f;   // Angoulême
+    public float editorLongitude = 0.1562f;
+
     IEnumerator Start()
     {
+#if UNITY_EDITOR
+        if (simulateInEditor)
+        {
+            Debug.Log("GPS SIMULÉ (Editor)");
+
+            latitude = editorLatitude;
+            longitude = editorLongitude;
+            gpsReady = true;
+
+            if (positionText != null)
+                positionText.text =
+                    $"EDITOR GPS\nLat:{latitude:F4} Lon:{longitude:F4}";
+
+            yield break;
+        }
+#endif
+
 #if UNITY_ANDROID
         if (!UnityEngine.Android.Permission.HasUserAuthorizedPermission(
             UnityEngine.Android.Permission.FineLocation))
@@ -23,23 +45,24 @@ public class GPSManager : MonoBehaviour
 
         if (!Input.location.isEnabledByUser)
         {
-            positionText.text = "GPS désactivé";
+            SetText("GPS désactivé");
             yield break;
         }
 
         Input.location.Start();
 
         int maxWait = 20;
+
         while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
         {
-            positionText.text = "Recherche GPS...";
+            SetText("Recherche GPS...");
             yield return new WaitForSeconds(1);
             maxWait--;
         }
 
         if (Input.location.status != LocationServiceStatus.Running)
         {
-            positionText.text = "GPS indisponible";
+            SetText("GPS indisponible");
             yield break;
         }
 
@@ -47,7 +70,12 @@ public class GPSManager : MonoBehaviour
         longitude = Input.location.lastData.longitude;
         gpsReady = true;
 
-        //positionText.text =
-        //    $"Lat: {latitude:F5}\nLon: {longitude:F5}";
+        SetText($"Lat:{latitude:F4} Lon:{longitude:F4}");
+    }
+
+    void SetText(string msg)
+    {
+        if (positionText != null)
+            positionText.text = msg;
     }
 }
