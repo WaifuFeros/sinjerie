@@ -155,7 +155,6 @@ public class CombatSystem : MonoBehaviour
         }
         else if (_playerStats.IsDead())
         {
-            print(_playerStats.IsDead());
             StartCoroutine(EndCombat(false));
         }
     }
@@ -246,12 +245,8 @@ public class CombatSystem : MonoBehaviour
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
 
-        print("rentre il icic ? ");
-
-
         yield return new WaitForSeconds(0.5f);
 
-        print("Fin du combat. Victoire : " + victory);
         // Vérifier si l'ennemi est mort
 
         if (victory)
