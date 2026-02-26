@@ -9,21 +9,30 @@ public class PlayerStatsData
     public int currentHealth;
     public int maxStamina = 5;
     public int currentStamina;
+    public int nbStartItem = 8;
+    public int nbItemPerTurn = 2;
 
     [Header("Level & Experience")]
     public int level = 1;
     public int experience = 0;
     public int experienceToNextLevel = 100;
+
+
+    [Header("TEMPORAIRE")]
+    [SerializeField] public ObjetSO[] Deck;
+
 }
 
 public class PlayerStats : MonoBehaviour
 {
     [Header("Player Stats")]
-    [SerializeField] private PlayerStatsData stats;
+    [SerializeField] public PlayerStatsData stats;
 
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
     [SerializeField] private StaminaUIManager staminaUI;
+
+
 
     private void Start()
     {

@@ -21,3 +21,4 @@ MonoBehaviour:
   objectType: 2
   objectEffect: 0
   specialAction: {fileID: 11400000, guid: 74f63fa0d0986db4e8c629449df7497c, type: 2}
+  objetRarity: 3

@@ -20,6 +20,15 @@ public enum ObjetEffectType
     Special
 }
 
+public enum ObjetRarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+    Legendary
+}
+
 [CreateAssetMenu(fileName = "NouvelObjet", menuName = "Objets/Nouvel Objet", order = 1)]
 public class ObjetSO : ScriptableObject
 {
@@ -31,4 +40,5 @@ public class ObjetSO : ScriptableObject
     public ObjetEffectType objectType;
     public int objectEffect;
     public SpecialActionSO specialAction;
+    public ObjetRarity objetRarity;
 }

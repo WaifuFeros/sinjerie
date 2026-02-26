@@ -18,7 +18,7 @@ public class RoomManager : MonoBehaviour
     private GameObject currentRoom;
     private List<EnemySO> availableEnemyData = new List<EnemySO>();
 
-    public void Initialize(Action onLoadCompleted) 
+    public void Initialize(Action onLoadCompleted)
     {
         Addressables.LoadAssetsAsync<EnemySO>("Enemy", null).Completed += handle =>
         {

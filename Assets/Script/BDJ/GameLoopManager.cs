@@ -21,6 +21,7 @@ public class GameLoopManager : MonoBehaviour
     [SerializeField] private CombatSystem combatSystem;
     [SerializeField] private RewardSystem rewardSystem;
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private ItemManager itemManager;
 
     [Header("Game State")]
     [SerializeField] private GameState currentState = GameState.Starting;
@@ -56,19 +57,20 @@ public class GameLoopManager : MonoBehaviour
         currentRoomNumber = 0;
 
         // Initialiser les systèmes
-        if (roomManager != null)
-            roomManager.Initialize(() =>
+        roomManager.Initialize(() =>
+        {
+            itemManager.Initialize(() =>
             {
                 if (combatSystem != null)
                     combatSystem.Initialize();
 
                 if (rewardSystem != null)
                     rewardSystem.Initialize();
-
-                // Passer à la première salle
-                StartCoroutine(TransitionToNewRoom()); 
-
             });
+            // Passer à la première salle
+            StartCoroutine(TransitionToNewRoom()); 
+
+        });
     }
 
     /// <summary>
