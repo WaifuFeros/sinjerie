@@ -3,6 +3,9 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; }
+
+
     [Header("Panels")]
     [SerializeField] 
     private GameObject roomPanel;
@@ -27,16 +30,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] 
     private TextMeshProUGUI combatStatusText;
 
-    [Header("References")]
-    [SerializeField] 
     private CombatSystem combatSystem;
-
-    [SerializeField]
     private RewardSystem rewardSystem;
 
-
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
     private void Start()
     {
+        combatSystem = CombatSystem.Instance;
+        rewardSystem = RewardSystem.Instance;
         // Masquer tous les panels au démarrage
         HideAllPanels();
     }

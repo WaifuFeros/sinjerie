@@ -4,10 +4,15 @@ using UnityEngine.EventSystems;
 public class ItemDrop : MonoBehaviour
 {
     [SerializeField]
-    private CombatSystem _combatSystem;
-    [SerializeField]
     private bool _isPlayer;
 
+
+    private CombatSystem _combatSystem;
+
+    private void Start()
+    {
+        _combatSystem = CombatSystem.Instance;
+    }
     public void ExecuteItemAction(ItemBrain item)
     {
         ObjetSO data = item.itemData;
