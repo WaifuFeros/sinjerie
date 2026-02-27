@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class Reward
 {
     public int gold = 10;
-    public List<ScriptableObject> items;
+    public List<ObjetSO> items;
     
 }
 
@@ -47,7 +47,7 @@ public class RewardSystem : MonoBehaviour
 
     public void Initialize()
     {
-        baseReward.items = new List<ScriptableObject>();
+        baseReward.items = new List<ObjetSO>();
 
     }
 
@@ -78,9 +78,23 @@ public class RewardSystem : MonoBehaviour
             if(Name == _Panel.GetChild(i).name)
             {
                 print("test");
+                if(_Panel.GetChild(i).GetComponent<Toggle>().isOn)
+                    ItemManager.Instance.SpawnItem(baseReward.items[i]);
                 Destroy(_Panel.GetChild(i).gameObject);
             }
             baseReward.items.Clear();
+        }
+    }
+
+    public void ShowRewards()
+    {
+        string Name = "Item(Clone)";
+        for (int i = 0; i < _Panel.childCount; i++)
+        {
+            print(_Panel.GetChild(i).name);
+            print(_Panel.GetChild(i).GetComponent<Toggle>().isOn);
+            if (_Panel.GetChild(i).GetComponent<Toggle>().isOn && Name == _Panel.GetChild(i).name)
+                print("vrai");
         }
     }
 
