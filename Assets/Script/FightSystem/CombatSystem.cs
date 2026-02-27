@@ -11,7 +11,6 @@ public class CombatSystem : MonoBehaviour
     [Header("Combat Settings")]
     [SerializeField] private RoomManager roomManager;
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
-    [SerializeField] private float shitDelay = 2f; // Fait caca tous les X secondes
 
     [Header("References")]
     [SerializeField] private PlayerStats _playerStats;
