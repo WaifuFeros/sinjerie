@@ -75,8 +75,13 @@ public class CombatSystem : MonoBehaviour
         // Ajout item dans l'inventaire du joueur
         for (int i = 0; i < _playerStats.stats.nbStartItem; i++)
         {
+            if (_playerStats.stats.Deck.Length == 0)
+                break;
             int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
             ObjetSO obj = _playerStats.stats.Deck[randomIndex];
+            var deckList = new List<ObjetSO>(_playerStats.stats.Deck);
+            deckList.RemoveAt(randomIndex);
+            _playerStats.stats.Deck = deckList.ToArray();
             _itemManager.SpawnItem(obj);
         }
 
@@ -191,9 +196,17 @@ public class CombatSystem : MonoBehaviour
         // pioche des items aléatoires à la fin du tour
         for (int i = 0; i < _playerStats.stats.nbItemPerTurn; i++)
         {
-            
+            if (_playerStats.stats.Deck.Length == 0)
+            {
+                print("############# tu n'as plus d'objet dans ton deck");
+                break;
+            }
             int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
             ObjetSO obj = _playerStats.stats.Deck[randomIndex];
+            var deckList = new List<ObjetSO>(_playerStats.stats.Deck);
+            deckList.RemoveAt(randomIndex);
+            _playerStats.stats.Deck = deckList.ToArray();
+
             _itemManager.SpawnItem(obj);
         }
     }

@@ -10,8 +10,8 @@ public class PlayerStatsData
     public int maxStamina = 5;
     public int staminaRegenPerTurn = 2;
     public int currentStamina;
-    public int nbStartItem = 8;
-    public int nbItemPerTurn = 2;
+    public int nbStartItem = 20;
+    public int nbItemPerTurn = 20;
 
     [Header("Level & Experience")]
     public int level = 1;
