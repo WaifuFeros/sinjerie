@@ -130,7 +130,7 @@ public class GameLoopManager : MonoBehaviour
 
         if (uiManager != null)
         {
-            uiManager.ShowVictoryPanel();
+            uiManager.ShowRewardPanel();
         }
 
         // Passer aux récompenses après un délai
@@ -149,9 +149,6 @@ public class GameLoopManager : MonoBehaviour
         {
             uiManager.ShowDefeatPanel();
         }
-
-        // Passer aux récompenses après un délai (même en cas de défaite, on peut donner des récompenses réduites)
-        StartCoroutine(DelayedRewardCollection(false));
     }
 
     /// <summary>
@@ -169,17 +166,6 @@ public class GameLoopManager : MonoBehaviour
     private void CollectRewards(bool victory)
     {
         Debug.Log("Récupération des récompenses");
-        currentState = GameState.CollectingRewards;
-
-        if (rewardSystem != null)
-        {
-            rewardSystem.GiveRewards(victory, currentRoomNumber, OnRewardsCollected);
-        }
-
-        if (uiManager != null)
-        {
-            uiManager.ShowRewardPanel();
-        }
     }
 
     /// <summary>
@@ -189,7 +175,6 @@ public class GameLoopManager : MonoBehaviour
     {
         Debug.Log("Récompenses collectées");
 
-        // Retour à "Nouvelle salle" (boucle)
         StartCoroutine(TransitionToNewRoom());
     }
 

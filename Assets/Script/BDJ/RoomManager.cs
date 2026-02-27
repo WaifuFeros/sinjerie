@@ -17,6 +17,7 @@ public class RoomManager : MonoBehaviour
 
     private GameObject currentRoom;
     private List<EnemySO> availableEnemyData = new List<EnemySO>();
+    public RewardSystem rewardSystem;
 
     public void Initialize(Action onLoadCompleted)
     {
@@ -69,6 +70,7 @@ public class RoomManager : MonoBehaviour
             {
                 enemyScript.SetDifficulty(roomNumber);
             }
+            rewardSystem.EnemySO = randomData;
         }
     }
 

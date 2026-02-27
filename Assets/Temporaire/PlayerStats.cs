@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 [System.Serializable]
@@ -46,7 +45,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     /// <summary>
-    /// Le joueur prend des dégâts
+    /// Le joueur prend des dï¿½gï¿½ts
     /// </summary>
     public void TakeDamage(int damage)
     {
@@ -64,13 +63,13 @@ public class PlayerStats : MonoBehaviour
     }
 
     /// <summary>
-    /// Ajoute de l'expérience et vérifie le level up
+    /// Ajoute de l'expï¿½rience et vï¿½rifie le level up
     /// </summary>
     public void AddExperience(int exp)
     {
         stats.experience += exp;
 
-        // Vérifier le level up
+        // Vï¿½rifier le level up
         while (stats.experience >= stats.experienceToNextLevel)
         {
             LevelUp();
@@ -78,7 +77,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     /// <summary>
-    /// Augmente le niveau du joueur et améliore ses stats
+    /// Augmente le niveau du joueur et amï¿½liore ses stats
     /// </summary>
     private void LevelUp()
     {
@@ -86,22 +85,22 @@ public class PlayerStats : MonoBehaviour
         stats.experience -= stats.experienceToNextLevel;
         stats.experienceToNextLevel = Mathf.RoundToInt(stats.experienceToNextLevel * 1.5f);
 
-        // Augmenter les stats (style Pokémon)
+        // Augmenter les stats (style Pokï¿½mon)
         int healthIncrease = Random.Range(15, 25);
         int attackIncrease = Random.Range(3, 7);
         int defenseIncrease = Random.Range(2, 5);
         int speedIncrease = Random.Range(2, 5);
 
         stats.maxHealth += healthIncrease;
-        stats.currentHealth = stats.maxHealth; // Soigne complètement au level up
+        stats.currentHealth = stats.maxHealth; // Soigne complï¿½tement au level up
 
         UpdateHealthBar();
         Debug.Log($" Level Up! Niveau {stats.level}");
-        Debug.Log($"Stats améliorées - PV: +{healthIncrease}, Attaque: +{attackIncrease}, Défense: +{defenseIncrease}, Vitesse: +{speedIncrease}");
+        Debug.Log($"Stats amï¿½liorï¿½es - PV: +{healthIncrease}, Attaque: +{attackIncrease}, Dï¿½fense: +{defenseIncrease}, Vitesse: +{speedIncrease}");
     }
 
     /// <summary>
-    /// Met à jour la barre de vie dans l'UI
+    /// Met ï¿½ jour la barre de vie dans l'UI
     /// </summary>
     private void UpdateHealthBar()
     {
@@ -123,7 +122,7 @@ public class PlayerStats : MonoBehaviour
         }
         return false;
     }
-    // Remet la stamina à son maximum
+    // Remet la stamina ï¿½ son maximum
     public void refillStamina()
     {
         stats.currentStamina = Mathf.Min(stats.currentStamina + stats.staminaRegenPerTurn, stats.maxStamina);

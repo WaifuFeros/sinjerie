@@ -12,4 +12,5 @@ public class EnemySO : ScriptableObject
     public int MaxStamina;
     public ObjetSO[] Items;
     public EnemyBehaviorSO behavior;
+    public int GoldReward;
 }

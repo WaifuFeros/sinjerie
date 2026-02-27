@@ -4,18 +4,36 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     [Header("Panels")]
-    [SerializeField] private GameObject roomPanel;
-    [SerializeField] private GameObject combatPanel;
-    [SerializeField] private GameObject victoryPanel;
-    [SerializeField] private GameObject defeatPanel;
-    [SerializeField] private GameObject rewardPanel;
+    [SerializeField] 
+    private GameObject roomPanel;
+ 
+    [SerializeField] 
+    private GameObject combatPanel;
+
+    [SerializeField] 
+    private GameObject victoryPanel;
+
+    [SerializeField] 
+    private GameObject rewardPanel;
+
+    [SerializeField] 
+    private GameObject defeatPanel;
+
 
     [Header("Combat UI")]
-    [SerializeField] private TextMeshProUGUI roomCounterText;
-    [SerializeField] private TextMeshProUGUI combatStatusText;
+    [SerializeField] 
+    private TextMeshProUGUI roomCounterText;
+
+    [SerializeField] 
+    private TextMeshProUGUI combatStatusText;
 
     [Header("References")]
-    [SerializeField] private CombatSystem combatSystem;
+    [SerializeField] 
+    private CombatSystem combatSystem;
+
+    [SerializeField]
+    private RewardSystem rewardSystem;
+
 
     private void Start()
     {
@@ -61,7 +79,11 @@ public class UIManager : MonoBehaviour
     {
         HideAllPanels();
         if (rewardPanel != null)
+        {
             rewardPanel.SetActive(true);
+            rewardSystem.AddToggle();
+
+        }
     }
 
     private void HideAllPanels()

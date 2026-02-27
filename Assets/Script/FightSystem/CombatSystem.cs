@@ -78,6 +78,7 @@ public class CombatSystem : MonoBehaviour
             if (_playerStats.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
                 break;
             int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
+            print ("Deck length : " + _playerStats.stats.Deck.Length);
             ObjetSO obj = _playerStats.stats.Deck[randomIndex];
             var deckList = new List<ObjetSO>(_playerStats.stats.Deck);
             deckList.RemoveAt(randomIndex);
@@ -151,13 +152,16 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private void CheckCombatEnd()
     {
+            print(_playerStats.stats.currentHealth);
+
         if (currentEnemy != null && currentEnemy.IsDead())
         {
-            EndCombat(true);
+            StartCoroutine(EndCombat(true));
+
         }
         else if (_playerStats.IsDead())
         {
-            EndCombat(false);
+            StartCoroutine(EndCombat(false));
         }
     }
 
