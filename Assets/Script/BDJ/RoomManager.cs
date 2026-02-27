@@ -70,7 +70,7 @@ public class RoomManager : MonoBehaviour
             {
                 enemyScript.SetDifficulty(roomNumber);
             }
-            rewardSystem._EnemySO = randomData;
+            rewardSystem.EnemySO = randomData;
         }
     }
 

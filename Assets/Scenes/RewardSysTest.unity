@@ -169,15 +169,16 @@ MonoBehaviour:
   baseReward:
     gold: 10
     items: []
-  _NumberOfToggle: 6
-  _NumberOfRewardToChoose: 3
+  NumberOfToggle: 6
+  NumberOfRewardToChoose: 3
   playerStats: {fileID: 888578474}
   _ToggleButton: {fileID: 1173677916944649377, guid: ee4dca0e79ac9a24ab7e87d0fcbf7279,
     type: 3}
   _ButtonValidate: {fileID: 167502322}
-  _Panel: {fileID: 2143226190}
   _Text: {fileID: 1662963436}
-  _EnemySO: {fileID: 0}
+  EnemySO: {fileID: 0}
+  Panel: {fileID: 2143226190}
+  ToggleAssignations: []
 --- !u!1 &143735322
 GameObject:
   m_ObjectHideFlags: 0

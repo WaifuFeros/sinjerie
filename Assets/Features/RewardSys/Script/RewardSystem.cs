@@ -22,11 +22,9 @@ public class RewardSystem : MonoBehaviour
     [SerializeField] 
     private Reward baseReward;
 
-    [SerializeField]
-    private int _NumberOfToggle;
+    public int NumberOfToggle;
 
-    [SerializeField]
-    private int _NumberOfRewardToChoose;
+    public int NumberOfRewardToChoose;
 
     [Header("References")]
     [SerializeField] private PlayerStats playerStats;
@@ -38,12 +36,13 @@ public class RewardSystem : MonoBehaviour
     private GameObject _ButtonValidate;
 
     [SerializeField]
-    private Transform _Panel;
-
-    [SerializeField]
     private TextMeshProUGUI _Text;
 
-    public EnemySO _EnemySO;
+    public EnemySO EnemySO;
+
+    public Transform Panel;
+
+    public List<ToggleAssignation> ToggleAssignations = new List<ToggleAssignation>();
 
     public void Initialize()
     {
@@ -54,49 +53,47 @@ public class RewardSystem : MonoBehaviour
     public void AddToggle()
     {
 
-        for (int i = 0; i < _NumberOfToggle; i++)
+        for (int i = 0; i < NumberOfToggle; i++)
         {
-            var indexAppendReward = Random.Range(0, _EnemySO.Items.Length);
-            GameObject toggle = Instantiate(_ToggleButton, _Panel);
+            var indexAppendReward = Random.Range(0, EnemySO.Items.Length);
+            GameObject toggle = Instantiate(_ToggleButton, Panel);
             ToggleAssignation toggleAssignation = toggle.GetComponent<ToggleAssignation>();
 
             // _enemySo récup items et les assignes au toggle
-            var valueItemReward = _EnemySO.Items[indexAppendReward];
+            var valueItemReward = EnemySO.Items[indexAppendReward];
             baseReward.items.Add(valueItemReward);
-            toggleAssignation.Initialized(valueItemReward);
+            toggleAssignation.Initialized(valueItemReward,this);
             print(baseReward.items[i].name);
+            print(baseReward.items.Count);
+            ToggleAssignations.Add(toggleAssignation);
         }
-        _Text.text = $"Choisissez {_NumberOfRewardToChoose} récompenses ";
+        _Text.text = $"Choisissez {NumberOfRewardToChoose} récompenses ";
     }
 
     public void ValidateChoice()
     {
-        _Panel.gameObject.SetActive(false);
-        for(int i = 0; i < _Panel.childCount; i++)
+        Panel.gameObject.SetActive(false);
+        for(int i = 0; i < ToggleAssignations.Count; i++)
         {
+            print(i + "pied bouche");
             string Name = "Item(Clone)";
-            if(Name == _Panel.GetChild(i).name)
+            if(Name == Panel.GetChild(i).name)
             {
-                print("test");
-                if(_Panel.GetChild(i).GetComponent<Toggle>().isOn)
-                    ItemManager.Instance.SpawnItem(baseReward.items[i]);
-                Destroy(_Panel.GetChild(i).gameObject);
             }
-            baseReward.items.Clear();
-        }
-    }
+                print("test");
+                if (ToggleAssignations[i].Toggle.isOn == true)
+                {
+                    ItemManager.Instance.SpawnItem(baseReward.items[i]);
+                    print(baseReward.items[i].name);
 
-    public void ShowRewards()
-    {
-        string Name = "Item(Clone)";
-        for (int i = 0; i < _Panel.childCount; i++)
-        {
-            print(_Panel.GetChild(i).name);
-            print(_Panel.GetChild(i).GetComponent<Toggle>().isOn);
-            if (_Panel.GetChild(i).GetComponent<Toggle>().isOn && Name == _Panel.GetChild(i).name)
-                print("vrai");
+                }
+
+                Destroy(ToggleAssignations[i].gameObject);
         }
+        baseReward.items.Clear();
+        ToggleAssignations.Clear();
     }
+    
 
     public void GiveRewards(bool victory, int roomNumber, System.Action onComplete)
     {
@@ -111,7 +108,7 @@ public class RewardSystem : MonoBehaviour
         reward.gold = baseReward.gold;
 
         //Gold que tu gagnes.
-        reward.gold = _EnemySO.GoldReward;
+        reward.gold = EnemySO.GoldReward;
         return reward;
     }
 }
