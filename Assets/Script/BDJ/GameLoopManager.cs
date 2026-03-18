@@ -147,6 +147,7 @@ public class GameLoopManager : MonoBehaviour
 
         if (uiManager != null)
         {
+            print("piedddddd");
             uiManager.ShowDefeatPanel();
         }
     }
