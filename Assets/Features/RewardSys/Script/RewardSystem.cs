@@ -82,22 +82,19 @@ public class RewardSystem : MonoBehaviour
         Panel.gameObject.SetActive(false);
         for(int i = 0; i < ToggleAssignations.Count; i++)
         {
-            string Name = "Item(Clone)";
-            if(Name == Panel.GetChild(i).name)
-            {
-            }
-                print("test");
                 if (ToggleAssignations[i].Toggle.isOn == true)
                 {
-                    ItemManager.Instance.SpawnItem(baseReward.items[i]);
+                    var deckList = new List<ObjetSO>(playerStats.stats.Deck);
+                    deckList.Add(baseReward.items[i]);
+                    playerStats.stats.Deck = deckList.ToArray();
                     print(baseReward.items[i].name);
-
                 }
 
                 Destroy(ToggleAssignations[i].gameObject);
         }
         baseReward.items.Clear();
         ToggleAssignations.Clear();
+        GameLoopManager.Instance.OnRewardsCollected();
     }
     
 

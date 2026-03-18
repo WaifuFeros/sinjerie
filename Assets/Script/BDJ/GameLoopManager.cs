@@ -188,7 +188,7 @@ public class GameLoopManager : MonoBehaviour
     /// <summary>
     /// Callback après collecte des récompenses
     /// </summary>
-    private void OnRewardsCollected()
+    public void OnRewardsCollected()
     {
         Debug.Log("Récompenses collectées");
 
