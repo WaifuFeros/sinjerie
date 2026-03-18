@@ -1938,6 +1938,7 @@ MonoBehaviour:
   _EncyclopediaButton: {fileID: 373351256}
   _StartButton: {fileID: 356959390}
   _LeftTheGameButtonButton: {fileID: 1364120740}
+  _gameSceneName: EnjminDiff
   _saveScript: {fileID: 740502573}
 --- !u!4 &935068643
 Transform:
