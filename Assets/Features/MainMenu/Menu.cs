@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private Button _EncyclopediaButton;
     [SerializeField] private Button _StartButton;
     [SerializeField] private Button _LeftTheGameButtonButton;
+    [SerializeField] private string _gameSceneName;
     public SaveScript _saveScript;
 
     private void Awake()
@@ -22,7 +23,7 @@ public class Menu : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("EnjminDiff");
+        SceneManager.LoadScene(_gameSceneName);
     }
 
     public void QuitGame()
