@@ -33,7 +33,7 @@ public class CombatSystem : MonoBehaviour
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
     private bool combatActive = false;
-    private bool isPlayerTurn = true;
+    public bool isPlayerTurn = true;
     private RoomManager roomManager;
     private ItemManager _itemManager;
     private void Awake()

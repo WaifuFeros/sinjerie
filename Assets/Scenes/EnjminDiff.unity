@@ -792,11 +792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eeece2872addfa439d56bc15d88107a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomManager: {fileID: 1591082693}
   enemyAttackDelay: 1
-  shitDelay: 2
   _playerStats: {fileID: 2031475722}
-  _itemManager: {fileID: 677603690}
   skipTurnButton: {fileID: 886044150}
   _canvasParent: {fileID: 710840574}
   _itemAnimPrefab: {fileID: 1330769031389707562, guid: 7d2ef08ee1909e644a9a125609496501,
@@ -804,6 +801,7 @@ MonoBehaviour:
   _enemyTransform: {fileID: 2134683396}
   _playerTransform: {fileID: 2058587210}
   _animationDuration: 0.8
+  isPlayerTurn: 1
 --- !u!4 &602860446
 Transform:
   m_ObjectHideFlags: 0
@@ -1008,8 +1006,6 @@ MonoBehaviour:
   defeatPanel: {fileID: 1270705396}
   roomCounterText: {fileID: 526112394}
   combatStatusText: {fileID: 0}
-  combatSystem: {fileID: 602860445}
-  rewardSystem: {fileID: 1465093501}
 --- !u!114 &710840576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2293,7 +2289,6 @@ MonoBehaviour:
   roomPrefabs: []
   enemySpawnPoint: {fileID: 897315857}
   enemy: {fileID: 851288017}
-  rewardSystem: {fileID: 1465093501}
 --- !u!4 &1591082694
 Transform:
   m_ObjectHideFlags: 0
@@ -2623,11 +2618,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26cf31d55eeac93429bae07ded7a444e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomManager: {fileID: 1591082693}
-  combatSystem: {fileID: 602860445}
-  rewardSystem: {fileID: 1465093501}
-  uiManager: {fileID: 710840575}
-  itemManager: {fileID: 677603690}
   currentState: 0
   currentRoomNumber: 0
 --- !u!1 &1854486083
@@ -2682,7 +2672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d834ee0131966f8468877df0d064d283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _combatSystem: {fileID: 602860445}
   _isPlayer: 0
 --- !u!114 &1854486086
 MonoBehaviour:
@@ -4265,7 +4254,7 @@ MonoBehaviour:
     maxStamina: 5
     staminaRegenPerTurn: 2
     currentStamina: 0
-    nbStartItem: 8
+    nbStartItem: 22
     nbItemPerTurn: 2
     level: 1
     experience: 0
@@ -4273,6 +4262,26 @@ MonoBehaviour:
     Deck:
     - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
     - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+    - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
     - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
     - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
   healthBar: {fileID: 2118088379}
@@ -4471,7 +4480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d834ee0131966f8468877df0d064d283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _combatSystem: {fileID: 602860445}
   _isPlayer: 1
 --- !u!114 &2058587212
 MonoBehaviour:

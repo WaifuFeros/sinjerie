@@ -11,7 +11,7 @@ public class GameDroppableActionController : GameDroppableZoneController<ItemBra
 
     protected override void onDropObject(GameDraggableObjectController draggable, PointerEventData eventData, bool isDropValid)
     {
-        if (verifyDraggable(draggable, out var itemBrain) && _playerStats.removeStamina(itemBrain.itemData.objetWeight))
+        if (verifyDraggable(draggable, out var itemBrain) && CombatSystem.Instance.isPlayerTurn && _playerStats.removeStamina(itemBrain.itemData.objetWeight))
         {
             OnDropItem.Invoke(itemBrain);
             Destroy(draggable.gameObject);
