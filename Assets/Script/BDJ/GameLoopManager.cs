@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -21,6 +22,9 @@ public class GameLoopManager : MonoBehaviour
 
     [Header("Room Settings")]
     [SerializeField] private int currentRoomNumber = 0;
+
+    [Header("Scene Settings")]
+    [SerializeField] private string _gameSceneName;
 
 
 
@@ -46,6 +50,11 @@ public class GameLoopManager : MonoBehaviour
     {
         // Commencer le jeu
         StartGame();
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(_gameSceneName);
     }
 
     /// <summary>

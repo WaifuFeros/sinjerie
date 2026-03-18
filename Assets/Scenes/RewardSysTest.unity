@@ -3492,6 +3492,7 @@ MonoBehaviour:
   _enemyTransform: {fileID: 143735323}
   _playerTransform: {fileID: 1704814110}
   _animationDuration: 0.8
+  isPlayerTurn: 1
 --- !u!1 &1834556309
 GameObject:
   m_ObjectHideFlags: 0
@@ -5220,9 +5221,9 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1733754581}
+  - {fileID: 1516513039}
   - {fileID: 1475506347}
   - {fileID: 920678144}
-  - {fileID: 866212725}
-  - {fileID: 1733754581}
   - {fileID: 888578476}
-  - {fileID: 1516513039}
+  - {fileID: 866212725}
