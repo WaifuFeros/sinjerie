@@ -49,7 +49,6 @@ public class ItemManager : MonoBehaviour
         ObjetSO randomData = availableItemData[randomIndex];
         SpawnItem(randomData);
     }
-
     public void SpawnItem(ObjetSO objetSO)
     {
         if (availableItemData.Count == 0 || !InventoryManager.Instance.HasEmptySlot())
@@ -71,7 +70,6 @@ public class ItemManager : MonoBehaviour
     {
         return activeItems;
     }
-
     public List<ItemBrain> GetItemsOfType(ObjetEffectType type)
     {
         List<ItemBrain> result = new List<ItemBrain>();
@@ -84,7 +82,6 @@ public class ItemManager : MonoBehaviour
         }
         return result;
     }
-
     public List<ItemBrain> GetRandomItems(int nb)
     {
         List<ItemBrain> result = new List<ItemBrain>();

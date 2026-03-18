@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public enum GameState
@@ -16,19 +17,19 @@ public class GameLoopManager : MonoBehaviour
 {
     public static GameLoopManager Instance { get; private set; }
 
-    [Header("Managers")]
-    [SerializeField] private RoomManager roomManager;
-    [SerializeField] private CombatSystem combatSystem;
-    [SerializeField] private RewardSystem rewardSystem;
-    [SerializeField] private UIManager uiManager;
-    [SerializeField] private ItemManager itemManager;
-
     [Header("Game State")]
     [SerializeField] private GameState currentState = GameState.Starting;
 
     [Header("Room Settings")]
     [SerializeField] private int currentRoomNumber = 0;
 
+
+
+    private CombatSystem combatSystem;
+    private RoomManager roomManager;
+    private RewardSystem rewardSystem;
+    private ItemManager itemManager;
+    private UIManager uiManager;
     private void Awake()
     {
         if (Instance == null)
@@ -56,7 +57,14 @@ public class GameLoopManager : MonoBehaviour
         currentState = GameState.Starting;
         currentRoomNumber = 0;
 
-        // Initialiser les systèmes
+        // Récup tout les Manager
+        combatSystem = CombatSystem.Instance;
+        roomManager = RoomManager.Instance;
+        rewardSystem = RewardSystem.Instance;
+        itemManager = ItemManager.Instance;
+        uiManager = UIManager.Instance;
+
+        // Initialiser tout les Manager
         roomManager.Initialize(() =>
         {
             itemManager.Initialize(() =>

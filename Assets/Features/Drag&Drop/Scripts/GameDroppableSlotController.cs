@@ -17,7 +17,6 @@ public class GameDroppableSlotController : GameDroppableZoneController<GameDragg
 
     protected override void onDropObject(GameDraggableObjectController draggable, PointerEventData eventData, bool isDropValid)
     {
-        Debug.Log($"{name} : {nameof(onDropObject)}");
         draggable.OnDrop(this, isDropValid);
 
         if (isDropValid)

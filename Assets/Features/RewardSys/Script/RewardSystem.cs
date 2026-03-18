@@ -17,6 +17,7 @@ public class Reward
 
 public class RewardSystem : MonoBehaviour
 {
+    public static RewardSystem Instance { get; private set; }
 
     [Header("Reward Settings")]
     [SerializeField] 
@@ -44,6 +45,12 @@ public class RewardSystem : MonoBehaviour
 
     public List<ToggleAssignation> ToggleAssignations = new List<ToggleAssignation>();
 
+
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
     public void Initialize()
     {
         baseReward.items = new List<ObjetSO>();
@@ -75,7 +82,6 @@ public class RewardSystem : MonoBehaviour
         Panel.gameObject.SetActive(false);
         for(int i = 0; i < ToggleAssignations.Count; i++)
         {
-            print(i + "pied bouche");
             string Name = "Item(Clone)";
             if(Name == Panel.GetChild(i).name)
             {

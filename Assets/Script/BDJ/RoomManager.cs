@@ -7,6 +7,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class RoomManager : MonoBehaviour
 {
+    public static RoomManager Instance { get; private set; }
+
     [Header("Room Settings")]
     [SerializeField] private Transform roomContainer;
     [SerializeField] private GameObject[] roomPrefabs; // Différents types de salles
@@ -17,8 +19,17 @@ public class RoomManager : MonoBehaviour
 
     private GameObject currentRoom;
     private List<EnemySO> availableEnemyData = new List<EnemySO>();
-    public RewardSystem rewardSystem;
+    private RewardSystem rewardSystem;
 
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
+    private void Start()
+    {
+        rewardSystem = RewardSystem.Instance;
+    }
     public void Initialize(Action onLoadCompleted)
     {
         Addressables.LoadAssetsAsync<EnemySO>("Enemy", null).Completed += handle =>

@@ -5,16 +5,18 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
+using UnityEditor.EditorTools;
 
 public class CombatSystem : MonoBehaviour
 {
+    public static CombatSystem Instance { get; private set; }
+
+
     [Header("Combat Settings")]
-    [SerializeField] private RoomManager roomManager;
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
 
     [Header("References")]
     [SerializeField] private PlayerStats _playerStats;
-    [SerializeField] private ItemManager _itemManager;
 
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
@@ -32,10 +34,19 @@ public class CombatSystem : MonoBehaviour
     private System.Action onDefeatCallback;
     private bool combatActive = false;
     private bool isPlayerTurn = true;
+    private RoomManager roomManager;
+    private ItemManager _itemManager;
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
 
     public void Initialize()
     {
         // Configurer le bouton de passage de tour
+        roomManager = RoomManager.Instance;
+        _itemManager = ItemManager.Instance;
         SetupSkipTurnButton();
     }
 
@@ -74,9 +85,13 @@ public class CombatSystem : MonoBehaviour
         // Ajout item dans l'inventaire du joueur
         for (int i = 0; i < _playerStats.stats.nbStartItem; i++)
         {
+            if (_playerStats.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
+                break;
             int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
-            print ("Deck length : " + _playerStats.stats.Deck.Length);
             ObjetSO obj = _playerStats.stats.Deck[randomIndex];
+            var deckList = new List<ObjetSO>(_playerStats.stats.Deck);
+            deckList.RemoveAt(randomIndex);
+            _playerStats.stats.Deck = deckList.ToArray();
             _itemManager.SpawnItem(obj);
         }
 
@@ -146,17 +161,10 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private void CheckCombatEnd()
     {
-            print(_playerStats.stats.currentHealth);
-
         if (currentEnemy != null && currentEnemy.IsDead())
-        {
             StartCoroutine(EndCombat(true));
-
-        }
         else if (_playerStats.IsDead())
-        {
             StartCoroutine(EndCombat(false));
-        }
     }
 
     /// <summary>
@@ -194,13 +202,20 @@ public class CombatSystem : MonoBehaviour
         // pioche des items aléatoires à la fin du tour
         for (int i = 0; i < _playerStats.stats.nbItemPerTurn; i++)
         {
-            
+            if (_playerStats.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
+            {
+                print("############# tu n'as plus d'objet dans ton deck");
+                break;
+            }
             int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
             ObjetSO obj = _playerStats.stats.Deck[randomIndex];
+            var deckList = new List<ObjetSO>(_playerStats.stats.Deck);
+            deckList.RemoveAt(randomIndex);
+            _playerStats.stats.Deck = deckList.ToArray();
+
             _itemManager.SpawnItem(obj);
         }
     }
-
     private IEnumerator AnimateItemThrow(ObjetSO item)
     {
         GameObject projectile = Instantiate(_itemAnimPrefab, _canvasParent);
