@@ -71,6 +71,9 @@ public class CombatSystem : MonoBehaviour
         combatActive = true;
         isPlayerTurn = true;
 
+        // Mettre la stamina au max
+        _playerStats.refillStamina();
+
         // Récupérer l'ennemi actuel
         if (roomManager != null)
         {

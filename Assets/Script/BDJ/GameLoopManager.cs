@@ -112,7 +112,7 @@ public class GameLoopManager : MonoBehaviour
         }
 
         // Attendre un peu avant de commencer le combat
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
 
         // Passer au combat
         StartCombat();
