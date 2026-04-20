@@ -17,9 +17,6 @@ public class GameLoopManager : MonoBehaviour
 {
     public static GameLoopManager Instance { get; private set; }
 
-    [Header("Game State")]
-    [SerializeField] private GameState currentState = GameState.Starting;
-
     [Header("Room Settings")]
     [SerializeField] private int currentRoomNumber = 0;
 
@@ -62,14 +59,13 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        currentState = GameState.Starting;
         currentRoomNumber = 0;
 
         // Récup tout les Manager
-        combatSystem = CombatSystem.Instance;
         roomManager = RoomManager.Instance;
-        rewardSystem = RewardSystem.Instance;
         itemManager = ItemManager.Instance;
+        combatSystem = CombatSystem.Instance;
+        rewardSystem = RewardSystem.Instance;
         uiManager = UIManager.Instance;
 
         // Initialiser tout les Manager
@@ -77,14 +73,16 @@ public class GameLoopManager : MonoBehaviour
         {
             itemManager.Initialize(() =>
             {
-                if (combatSystem != null)
-                    combatSystem.Initialize();
+                combatSystem.Initialize(() =>
+                {
+                    rewardSystem.Initialize(() =>
+                    {                         // Tout est prêt, passer à la première salle
+                        StartCoroutine(TransitionToNewRoom());
+                    });
 
-                if (rewardSystem != null)
-                    rewardSystem.Initialize();
+                });
+                    
             });
-            // Passer à la première salle
-            StartCoroutine(TransitionToNewRoom()); 
 
         });
     }
@@ -95,27 +93,19 @@ public class GameLoopManager : MonoBehaviour
     private IEnumerator TransitionToNewRoom()
     {
         currentRoomNumber++;
-        currentState = GameState.InRoom;
-
 
         // Générer une nouvelle salle
-        if (roomManager != null)
-        {
-            yield return StartCoroutine(roomManager.GenerateNewRoom(currentRoomNumber));
-        }
-
+        roomManager.GenerateNewRoom(currentRoomNumber);
         // Mettre à jour l'UI
-        if (uiManager != null)
-        {
-            uiManager.UpdateRoomCounter(currentRoomNumber);
-            uiManager.ShowRoomUI();
-        }
+        uiManager.UpdateRoomCounter(currentRoomNumber);
+        uiManager.ShowRoomUI();
 
         // Attendre un peu avant de commencer le combat
         //yield return new WaitForSeconds(1f);
 
         // Passer au combat
         StartCombat();
+        yield return null;
     }
 
     /// <summary>
@@ -123,17 +113,9 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void StartCombat()
     {
-        currentState = GameState.InCombat;
+        combatSystem.StartCombat(OnCombatVictory, OnCombatDefeat);
+        uiManager.ShowCombatUI();
 
-        if (combatSystem != null)
-        {
-            combatSystem.StartCombat(OnCombatVictory, OnCombatDefeat);
-        }
-
-        if (uiManager != null)
-        {
-            uiManager.ShowCombatUI();
-        }
     }
 
     /// <summary>
@@ -142,7 +124,6 @@ public class GameLoopManager : MonoBehaviour
     private void OnCombatVictory()
     {
         Debug.Log("Réussite - Combat gagné!");
-        currentState = GameState.Victory;
 
         if (uiManager != null)
         {
@@ -159,11 +140,9 @@ public class GameLoopManager : MonoBehaviour
     private void OnCombatDefeat()
     {
         Debug.Log("Défaite - Combat perdu!");
-        currentState = GameState.Defeat;
 
         if (uiManager != null)
         {
-            print("piedddddd");
             uiManager.ShowDefeatPanel();
         }
     }
@@ -193,11 +172,6 @@ public class GameLoopManager : MonoBehaviour
         Debug.Log("Récompenses collectées");
 
         StartCoroutine(TransitionToNewRoom());
-    }
-
-    public GameState GetCurrentState()
-    {
-        return currentState;
     }
 
     public int GetCurrentRoomNumber()

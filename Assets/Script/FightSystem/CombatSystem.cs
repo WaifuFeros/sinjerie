@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class CombatSystem : MonoBehaviour
 {
@@ -41,12 +42,13 @@ public class CombatSystem : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
-    public void Initialize()
+    public void Initialize(Action onLoadCompleted)
     {
         // Configurer le bouton de passage de tour
         roomManager = RoomManager.Instance;
         _itemManager = ItemManager.Instance;
         SetupSkipTurnButton();
+        onLoadCompleted?.Invoke();
     }
 
     ///<summary>

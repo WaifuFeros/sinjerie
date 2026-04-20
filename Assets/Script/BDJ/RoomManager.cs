@@ -42,7 +42,7 @@ public class RoomManager : MonoBehaviour
         };
     }
 
-    public IEnumerator GenerateNewRoom(int roomNumber)
+    public void GenerateNewRoom(int roomNumber)
     {
 
         // Détruire l'ancienne salle si elle existe
@@ -65,7 +65,6 @@ public class RoomManager : MonoBehaviour
         // Spawner un ennemi
         SpawnEnemy(roomNumber);
 
-        yield return new WaitForSeconds(0.5f);
     }
 
     private void SpawnEnemy(int roomNumber)
@@ -83,6 +82,7 @@ public class RoomManager : MonoBehaviour
             }
             rewardSystem.EnemySO = randomData;
         }
+
     }
 
     public GameObject GetEnemy()

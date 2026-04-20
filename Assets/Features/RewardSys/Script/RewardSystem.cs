@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -51,18 +52,19 @@ public class RewardSystem : MonoBehaviour
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
     }
-    public void Initialize()
+    public void Initialize(Action onLoadCompleted)
     {
         baseReward.items = new List<ObjetSO>();
-
+        onLoadCompleted?.Invoke();
     }
+
 
     public void AddToggle()
     {
 
         for (int i = 0; i < NumberOfToggle; i++)
         {
-            var indexAppendReward = Random.Range(0, EnemySO.Items.Length);
+            var indexAppendReward = UnityEngine.Random.Range(0, EnemySO.Items.Length);
             GameObject toggle = Instantiate(_ToggleButton, Panel);
             ToggleAssignation toggleAssignation = toggle.GetComponent<ToggleAssignation>();
 
@@ -70,8 +72,6 @@ public class RewardSystem : MonoBehaviour
             var valueItemReward = EnemySO.Items[indexAppendReward];
             baseReward.items.Add(valueItemReward);
             toggleAssignation.Initialized(valueItemReward,this);
-            print(baseReward.items[i].name);
-            print(baseReward.items.Count);
             ToggleAssignations.Add(toggleAssignation);
         }
         _Text.text = $"Choisissez {NumberOfRewardToChoose} récompenses ";
@@ -87,7 +87,6 @@ public class RewardSystem : MonoBehaviour
                     var deckList = new List<ObjetSO>(playerStats.stats.Deck);
                     deckList.Add(baseReward.items[i]);
                     playerStats.stats.Deck = deckList.ToArray();
-                    print(baseReward.items[i].name);
                 }
 
                 Destroy(ToggleAssignations[i].gameObject);
