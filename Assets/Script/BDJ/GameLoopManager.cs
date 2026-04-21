@@ -94,17 +94,17 @@ public class GameLoopManager : MonoBehaviour
     {
         currentRoomNumber++;
 
-        // Générer une nouvelle salle
-        roomManager.GenerateNewRoom(currentRoomNumber);
-        // Mettre à jour l'UI
-        uiManager.UpdateRoomCounter(currentRoomNumber);
-        uiManager.ShowRoomUI();
-
-        // Attendre un peu avant de commencer le combat
-        //yield return new WaitForSeconds(1f);
-
-        // Passer au combat
-        StartCombat();
+        // Générer une nouvelle salle (0 = normal, 1 = spécial)
+        int roomType = roomManager.GenerateNewRoom(currentRoomNumber);
+        
+        if (roomType == 0)
+        {
+            // Mettre à jour l'UI
+            uiManager.UpdateRoomCounter(currentRoomNumber);
+            uiManager.ShowRoomUI();
+            // Passer au combat
+            StartCombat();
+        }
         yield return null;
     }
 
@@ -167,10 +167,8 @@ public class GameLoopManager : MonoBehaviour
     /// <summary>
     /// Callback après collecte des récompenses
     /// </summary>
-    public void OnRewardsCollected()
+    public void ExitRoom()
     {
-        Debug.Log("Récompenses collectées");
-
         StartCoroutine(TransitionToNewRoom());
     }
 

@@ -11,10 +11,10 @@ public class RoomManager : MonoBehaviour
 
     [Header("Room Settings")]
     [SerializeField] private Transform roomContainer;
+    [SerializeField] private GameObject roomShop; // La salle de shop
     [SerializeField] private GameObject[] roomPrefabs; // Différents types de salles
 
     [Header("Enemy Spawn")]
-    [SerializeField] private Transform enemySpawnPoint;
     [SerializeField] private GameObject enemy;
 
     private GameObject currentRoom;
@@ -42,34 +42,37 @@ public class RoomManager : MonoBehaviour
         };
     }
 
-    public void GenerateNewRoom(int roomNumber)
+    // Retourne le type de salle (0 = normal, 1 = spécial)
+    public int GenerateNewRoom(int roomNumber)
     {
-
         // Détruire l'ancienne salle si elle existe
         if (currentRoom != null)
         {
             Destroy(currentRoom);
         }
 
-        // Choisir un prefab de salle aléatoire ou selon le numéro
-        GameObject roomToSpawn = roomPrefabs.Length > 0
-            ? roomPrefabs[roomNumber % roomPrefabs.Length]
-            : null;
-
-        if (roomToSpawn != null && roomContainer != null)
+        if ((roomNumber + 1) % 4 == 0) // room spécial
         {
+            GameObject roomToSpawn = roomPrefabs[UnityEngine.Random.Range(0,roomPrefabs.Length)];
             currentRoom = Instantiate(roomToSpawn, roomContainer.position, roomContainer.rotation);
             currentRoom.transform.SetParent(roomContainer);
+            return 1;
         }
-
-        // Spawner un ennemi
-        SpawnEnemy(roomNumber);
-
+        else if (roomNumber % 8888 == 0) // room shop
+        {
+            SpawnEnemy(roomNumber);
+            return 0;
+        }
+        else
+        {
+            SpawnEnemy(roomNumber);
+            return 0;
+        }
     }
 
     private void SpawnEnemy(int roomNumber)
     {
-        if (enemy != null && enemySpawnPoint != null)
+        if (enemy != null)
         {
             // Configurer l'ennemi selon le numéro de salle (difficulté progressive)
             Enemy enemyScript = enemy.GetComponent<Enemy>();

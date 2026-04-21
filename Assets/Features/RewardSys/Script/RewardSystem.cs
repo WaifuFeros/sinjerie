@@ -93,7 +93,7 @@ public class RewardSystem : MonoBehaviour
         }
         baseReward.items.Clear();
         ToggleAssignations.Clear();
-        GameLoopManager.Instance.OnRewardsCollected();
+        GameLoopManager.Instance.ExitRoom();
     }
     
 
