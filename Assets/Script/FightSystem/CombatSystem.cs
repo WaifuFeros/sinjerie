@@ -15,9 +15,6 @@ public class CombatSystem : MonoBehaviour
     [Header("Combat Settings")]
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
 
-    [Header("References")]
-    [SerializeField] private PlayerStats _playerStats;
-
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
@@ -36,6 +33,7 @@ public class CombatSystem : MonoBehaviour
     public bool isPlayerTurn = true;
     private RoomManager roomManager;
     private ItemManager _itemManager;
+    private PlayerManager _playerStats;
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -47,6 +45,7 @@ public class CombatSystem : MonoBehaviour
         // Configurer le bouton de passage de tour
         roomManager = RoomManager.Instance;
         _itemManager = ItemManager.Instance;
+        _playerStats = PlayerManager.Instance;
         SetupSkipTurnButton();
         onLoadCompleted?.Invoke();
     }

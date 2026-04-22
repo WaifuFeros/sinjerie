@@ -6,12 +6,10 @@ public class GameDroppableActionController : GameDroppableZoneController<ItemBra
 {
     public UnityEvent<ItemBrain> OnDropItem;
 
-    [SerializeField]
-    private PlayerStats _playerStats;
 
     protected override void onDropObject(GameDraggableObjectController draggable, PointerEventData eventData, bool isDropValid)
     {
-        if (verifyDraggable(draggable, out var itemBrain) && CombatSystem.Instance.isPlayerTurn && _playerStats.removeStamina(itemBrain.itemData.objetWeight))
+        if (verifyDraggable(draggable, out var itemBrain) && CombatSystem.Instance.isPlayerTurn && PlayerManager.Instance.removeStamina(itemBrain.itemData.objetWeight))
         {
             OnDropItem.Invoke(itemBrain);
             Destroy(draggable.gameObject);

@@ -33,6 +33,9 @@ public class UIManager : MonoBehaviour
     private CombatSystem combatSystem;
     private RewardSystem rewardSystem;
 
+    [Header("Player")]
+    [SerializeField] private TextMeshProUGUI goldUI;
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -116,6 +119,14 @@ public class UIManager : MonoBehaviour
         if (combatStatusText != null)
         {
             combatStatusText.text = message;
+        }
+    }
+
+    public void UpdateGoldUI(int goldAmount)
+    {
+        if (goldUI != null)
+        {
+            goldUI.text = goldAmount.ToString();
         }
     }
 }

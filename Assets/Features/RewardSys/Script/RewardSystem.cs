@@ -29,7 +29,6 @@ public class RewardSystem : MonoBehaviour
     public int NumberOfRewardToChoose;
 
     [Header("References")]
-    [SerializeField] private PlayerStats playerStats;
 
     [SerializeField]
     private GameObject _ToggleButton;
@@ -80,17 +79,21 @@ public class RewardSystem : MonoBehaviour
     public void ValidateChoice()
     {
         Panel.gameObject.SetActive(false);
-        for(int i = 0; i < ToggleAssignations.Count; i++)
+        // Donne les items
+        for (int i = 0; i < ToggleAssignations.Count; i++)
         {
                 if (ToggleAssignations[i].Toggle.isOn == true)
                 {
-                    var deckList = new List<ObjetSO>(playerStats.stats.Deck);
+                    var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
                     deckList.Add(baseReward.items[i]);
-                    playerStats.stats.Deck = deckList.ToArray();
+                    PlayerManager.Instance.stats.Deck = deckList.ToArray();
                 }
 
                 Destroy(ToggleAssignations[i].gameObject);
         }
+        // Donne les gold
+        PlayerManager.Instance.AddGold(EnemySO.GoldReward);
+
         baseReward.items.Clear();
         ToggleAssignations.Clear();
         GameLoopManager.Instance.ExitRoom();

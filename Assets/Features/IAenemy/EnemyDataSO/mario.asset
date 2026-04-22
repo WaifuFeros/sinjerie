@@ -23,4 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7c5b7f7ac7bd9ee4a978efddb7b8839b, type: 2}
   - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
   behavior: {fileID: 11400000, guid: 02513d192b5dc5840a3bb8dbf568eb56, type: 2}
-  GoldReward: 0
+  GoldReward: 15

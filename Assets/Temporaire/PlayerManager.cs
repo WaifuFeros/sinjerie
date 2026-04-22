@@ -12,19 +12,21 @@ public class PlayerStatsData
     public int nbStartItem = 20;
     public int nbItemPerTurn = 20;
 
-    [Header("Level & Experience")]
+    [Header("Extra")]
     public int level = 1;
     public int experience = 0;
     public int experienceToNextLevel = 100;
-
+    public int gold = 0;
 
     [Header("TEMPORAIRE")]
     [SerializeField] public ObjetSO[] Deck;
 
 }
 
-public class PlayerStats : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager Instance { get; private set; }
+
     [Header("Player Stats")]
     [SerializeField] public PlayerStatsData stats;
 
@@ -32,7 +34,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Slider healthBar;
     [SerializeField] private StaminaUIManager staminaUI;
 
-
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
 
     private void Start()
     {
@@ -129,7 +135,18 @@ public class PlayerStats : MonoBehaviour
         staminaUI.UpdateDisplay(stats.currentStamina);
     }
 
-
+    public void AddGold(int amount)
+    {
+        stats.gold += amount;
+        UIManager.Instance.UpdateGoldUI(stats.gold);
+        // + une anim de gain de piece
+    }
+    public void removeGold(int amount)
+    {
+        stats.gold -= amount;
+        UIManager.Instance.UpdateGoldUI(stats.gold);
+        // + une anim de perte de piece
+    }
 
 
     // Getters
