@@ -40,5 +40,5 @@ public class ObjetSO : ScriptableObject
     public ObjetEffectType objectType;
     public int objectEffect;
     public SpecialActionSO specialAction;
-    public ObjetRarity objetRarity;
+    public ObjetRarity Rarity;
 }

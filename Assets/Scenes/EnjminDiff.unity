@@ -1642,6 +1642,7 @@ MonoBehaviour:
     type: 3}
   itemParents: {fileID: 1969210022}
   activeItems: []
+  ItemsData: []
 --- !u!4 &677603691
 Transform:
   m_ObjectHideFlags: 0
@@ -3214,7 +3215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomContainer: {fileID: 398857956}
-  roomShop: {fileID: 0}
+  roomShop: {fileID: 7833640586931172554, guid: dfdfcf8807cd57047b199c64cb9df592,
+    type: 3}
   roomPrefabs:
   - {fileID: 7833640586931172554, guid: dc31695d5e035704aa4319067f368e71, type: 3}
   enemy: {fileID: 851288017}

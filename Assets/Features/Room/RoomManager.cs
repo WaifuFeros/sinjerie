@@ -51,17 +51,18 @@ public class RoomManager : MonoBehaviour
             Destroy(currentRoom);
         }
 
-        if ((roomNumber + 1) % 4 == 0) // room spécial
+        if ((roomNumber + 1) % 8 == 0) // room spécial
         {
             GameObject roomToSpawn = roomPrefabs[UnityEngine.Random.Range(0,roomPrefabs.Length)];
             currentRoom = Instantiate(roomToSpawn, roomContainer.position, roomContainer.rotation);
             currentRoom.transform.SetParent(roomContainer);
             return 1;
         }
-        else if (roomNumber % 8888 == 0) // room shop
+        else if ((roomNumber + 1) % 4 == 0) // room shop
         {
-            SpawnEnemy(roomNumber);
-            return 0;
+            currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);
+            currentRoom.transform.SetParent(roomContainer);
+            return 1;
         }
         else
         {

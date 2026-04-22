@@ -16,8 +16,8 @@ public class ItemManager : MonoBehaviour
     // Liste de tous les items
     public List<ItemBrain> activeItems = new List<ItemBrain>();
 
-    // Liste interne des SO chargés avec adressables
-    private List<ObjetSO> availableItemData = new List<ObjetSO>();
+    // Liste des Items SO
+    public List<ObjetSO> ItemsData = new List<ObjetSO>();
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class ItemManager : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                availableItemData.AddRange(handle.Result);
+                ItemsData.AddRange(handle.Result);
                 onLoadCompleted?.Invoke();
             }
         };
@@ -41,17 +41,17 @@ public class ItemManager : MonoBehaviour
 
     public void SpawnRandomItem()
     {
-        if (availableItemData.Count == 0)
+        if (ItemsData.Count == 0)
             return;
 
 
-        int randomIndex = UnityEngine.Random.Range(0, availableItemData.Count);
-        ObjetSO randomData = availableItemData[randomIndex];
+        int randomIndex = UnityEngine.Random.Range(0, ItemsData.Count);
+        ObjetSO randomData = ItemsData[randomIndex];
         SpawnItem(randomData);
     }
     public void SpawnItem(ObjetSO objetSO)
     {
-        if (availableItemData.Count == 0 || !InventoryManager.Instance.HasEmptySlot())
+        if (ItemsData.Count == 0 || !InventoryManager.Instance.HasEmptySlot())
             return;
 
         Vector3 position = new Vector3(transform.position.x, transform.position.y, 0f);

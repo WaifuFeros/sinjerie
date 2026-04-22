@@ -73,7 +73,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         itemIcon.sprite = itemData.objetSprite;
         descriptionText.text = itemData.objetDescription;
-        switch (itemData.objetRarity)
+        switch (itemData.Rarity)
         {
             case ObjetRarity.Common:
                 itemBackground.sprite = _communSprite;
