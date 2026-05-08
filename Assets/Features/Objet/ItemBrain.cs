@@ -22,12 +22,14 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     [SerializeField] private Animator smokeAnimator;
     [SerializeField] private float delayBeforeChange = 0.021f;
 
-    [Header("Asset Rarity")]
+    [Header("Asset")]
     [SerializeField] private Sprite _communSprite;
     [SerializeField] private Sprite _uncommonSprite;
     [SerializeField] private Sprite _rareSprite;
     [SerializeField] private Sprite _epicSprite;
     [SerializeField] private Sprite _lengendarySprite;
+    [SerializeField] private Sprite _healSprite;
+    [SerializeField] private Sprite _atkSprite;
 
     private RectTransform rectTransform;
     private Canvas canvas;
@@ -95,9 +97,9 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         effectImage.SetActive(true);
 
         if (itemData.objectType == ObjetEffectType.Heal)
-            effectImage.GetComponent<Image>().color = Color.red;
+            effectImage.GetComponent<Image>().sprite = _healSprite;
         else if (itemData.objectType == ObjetEffectType.Attack)
-            effectImage.GetComponent<Image>().color = Color.yellow;
+            effectImage.GetComponent<Image>().sprite = _atkSprite;
         else if (itemData.objectType == ObjetEffectType.Special)
             effectImage.SetActive(false);
 

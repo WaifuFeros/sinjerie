@@ -125,4 +125,5 @@ public class ItemManager : MonoBehaviour
             item.TriggerVisualUpdate();
         }
     }
+
 }
