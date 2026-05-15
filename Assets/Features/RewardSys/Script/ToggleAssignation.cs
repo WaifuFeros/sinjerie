@@ -8,7 +8,7 @@ public class ToggleAssignation : MonoBehaviour
 {
     public ObjetSO _Item;
 
-    public RewardSystem RewardSystem;
+    private RewardSystem RewardSystem;
 
     public Toggle Toggle;
 
@@ -21,7 +21,7 @@ public class ToggleAssignation : MonoBehaviour
         ItemImage.sprite = _Item.objetSprite;
     }
 
-    public void DesibleToggle() 
+    public void PressToggle() 
     { 
         int count = 0;
         foreach (var toggleAssignation in RewardSystem.ToggleAssignations)
@@ -30,19 +30,22 @@ public class ToggleAssignation : MonoBehaviour
                 count++;
         }
 
-        bool hasEnoughSelected = count >= RewardSystem.NumberOfRewardToChoose;
-        for (int i = 0; i < RewardSystem.ToggleAssignations.Count; i++)
+        bool hasEnoughSelected = count > RewardSystem.NumberOfRewardToChoose;
+        print("has enough selected : " + hasEnoughSelected);
+        print(Toggle.isOn);
+        if (!hasEnoughSelected && Toggle.isOn)
         {
-            if (hasEnoughSelected == true && RewardSystem.ToggleAssignations[i].Toggle.isOn == false)
-            {
-                //print(count);
-                RewardSystem.ToggleAssignations[i].Toggle.interactable = false;
-            }
-            else
-            {
-                RewardSystem.ToggleAssignations[i].Toggle.interactable = true;
-            }
+            print(_Item.objetName + " select");
+            transform.localScale = Vector3.one * 1.2f;
+            RewardSystem.ItemRewards.Add(_Item);
         }
+        else
+        {
+            print(_Item.objetName + " unselect");
+            transform.localScale = Vector3.one;
+            RewardSystem.ItemRewards.Remove(_Item);
+        }
+        
         //if (count >= RewardSystem.NumberOfRewardToChoose)
         //{
         //}
