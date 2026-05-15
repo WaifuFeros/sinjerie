@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPointerUpHandler
 {
@@ -95,7 +96,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         }
 
         effectImage.SetActive(true);
-
+        
         if (itemData.objectType == ObjetEffectType.Heal)
             effectImage.GetComponent<Image>().sprite = _healSprite;
         else if (itemData.objectType == ObjetEffectType.Attack)
