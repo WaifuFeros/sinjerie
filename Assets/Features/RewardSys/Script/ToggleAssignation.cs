@@ -7,13 +7,10 @@ using UnityEngine.UI;
 public class ToggleAssignation : MonoBehaviour
 {
     public ObjetSO _Item;
+    public Image ItemImage;
+    public bool IsSelected;
 
     private RewardSystem RewardSystem;
-
-    public Toggle Toggle;
-
-    public Image ItemImage;
-
     public void Initialized(ObjetSO itemsInToggle, RewardSystem rewardSystem)
     {
         _Item = itemsInToggle;
@@ -26,29 +23,25 @@ public class ToggleAssignation : MonoBehaviour
         int count = 0;
         foreach (var toggleAssignation in RewardSystem.ToggleAssignations)
         {
-            if (toggleAssignation.Toggle.isOn)
+            if (toggleAssignation.IsSelected)
                 count++;
         }
 
-        bool hasEnoughSelected = count > RewardSystem.NumberOfRewardToChoose;
-        print("has enough selected : " + hasEnoughSelected);
-        print(Toggle.isOn);
-        if (!hasEnoughSelected && Toggle.isOn)
+        bool hasEnoughSelected = count >= RewardSystem.NumberOfRewardToChoose;
+
+        if (!hasEnoughSelected && !IsSelected)
         {
             print(_Item.objetName + " select");
             transform.localScale = Vector3.one * 1.2f;
             RewardSystem.ItemRewards.Add(_Item);
+            IsSelected = true;
         }
         else
         {
             print(_Item.objetName + " unselect");
             transform.localScale = Vector3.one;
             RewardSystem.ItemRewards.Remove(_Item);
+            IsSelected = false;
         }
-        
-        //if (count >= RewardSystem.NumberOfRewardToChoose)
-        //{
-        //}
-        //count++;
     }
 }
