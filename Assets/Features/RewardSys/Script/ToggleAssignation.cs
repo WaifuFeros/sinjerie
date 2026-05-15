@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ToggleAssignation : MonoBehaviour
 {
@@ -18,8 +19,8 @@ public class ToggleAssignation : MonoBehaviour
         ItemImage.sprite = _Item.objetSprite;
     }
 
-    public void PressToggle() 
-    { 
+    public void PressToggle()
+    {
         int count = 0;
         foreach (var toggleAssignation in RewardSystem.ToggleAssignations)
         {
@@ -29,19 +30,26 @@ public class ToggleAssignation : MonoBehaviour
 
         bool hasEnoughSelected = count >= RewardSystem.NumberOfRewardToChoose;
 
-        if (!hasEnoughSelected && !IsSelected)
+        // Annule les anim en cours
+        transform.DOKill();
+        transform.localRotation = Quaternion.identity;
+
+
+        if (!IsSelected && !hasEnoughSelected)
         {
-            print(_Item.objetName + " select");
-            transform.localScale = Vector3.one * 1.2f;
+            transform.DOScale(Vector3.one * 1.4f, 0.2f).SetEase(Ease.OutBack);
             RewardSystem.ItemRewards.Add(_Item);
             IsSelected = true;
         }
-        else
+        else if (IsSelected)
         {
-            print(_Item.objetName + " unselect");
-            transform.localScale = Vector3.one;
+            transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
             RewardSystem.ItemRewards.Remove(_Item);
             IsSelected = false;
+        }
+        else
+        {
+            transform.DOPunchRotation(new Vector3(0, 0, 15f), 0.3f, 13, 1);
         }
     }
 }

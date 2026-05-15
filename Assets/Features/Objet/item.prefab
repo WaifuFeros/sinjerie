@@ -957,7 +957,7 @@ MonoBehaviour:
   _uncommonSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
   _rareSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
   _epicSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
+  _lengendarySprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
   _healSprite: {fileID: 21300000, guid: 69416dd45b48d8b4593c9d5c17312c41, type: 3}
   _atkSprite: {fileID: 21300000, guid: bde18a5e5ed228f46a792611f4eafe1e, type: 3}
 --- !u!114 &-1921863523013163353
