@@ -109,9 +109,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c3fa589f182da4fa625c52dbfa128c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Item: {fileID: 0}
-  Toggle: {fileID: 0}
-  ItemImage: {fileID: 2571635614689729761}
+  Item: {fileID: 0}
+  IsSelected: 0
+  _communSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
+  _uncommonSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
+  _rareSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
+  _epicSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
+  _lengendarySprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
+  _healSprite: {fileID: 21300000, guid: 69416dd45b48d8b4593c9d5c17312c41, type: 3}
+  _atkSprite: {fileID: 21300000, guid: bde18a5e5ed228f46a792611f4eafe1e, type: 3}
+  itemIcon: {fileID: 2571635614689729761}
+  itemBackground: {fileID: 575909164266554638}
+  effectImage: {fileID: 6925843985066383117}
+  effectText: {fileID: 7049701911995506328}
+  weightText: {fileID: 3509560572353063890}
 --- !u!1 &3938687245045438864
 GameObject:
   m_ObjectHideFlags: 0
