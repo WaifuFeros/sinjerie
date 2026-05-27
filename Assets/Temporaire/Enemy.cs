@@ -1,9 +1,4 @@
-using System;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.UIElements;
-
 
 public class Enemy : MonoBehaviour
 {
@@ -11,6 +6,12 @@ public class Enemy : MonoBehaviour
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
     [SerializeField] private UnityEngine.UI.Image _enemyImage;
+
+    [Header("WeatherEffect")]
+    public int FireCounter = 0;
+    public int FreezeCounter = 0;
+    public int SwetCounter = 0;
+    public int ParalyzeCounter = 0;
 
     public EnemySO EnemyStats;
 
@@ -21,21 +22,6 @@ public class Enemy : MonoBehaviour
         currentHealth = EnemyStats.MaxHealth;
         _enemyImage.sprite = EnemyStats.Sprite;
         UpdateHealthBar();
-    }
-
-    public void SetDifficulty(int roomNumber)
-    {
-        // Augmenter la difficulté selon le numéro de salle
-        /*
-        float difficultyMultiplier = 1f + (roomNumber * 0.2f);
-
-        stats.maxHealth = Mathf.RoundToInt(stats.maxHealth * difficultyMultiplier);
-        currentHealth = EnemyStats.MaxHealth;
-
-        UpdateHealthBar();
-
-        Debug.Log($"Ennemi configuré - PV: {EnemyStats.MaxHealth}");
-        */
     }
 
     public void TakeDamage(int damage)

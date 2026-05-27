@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Le joueur prend des d�g�ts
+    /// Le joueur prend des degats
     /// </summary>
     public void TakeDamage(int damage)
     {
@@ -69,7 +69,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Ajoute de l'exp�rience et v�rifie le level up
+    /// Ajoute de l'experience et verifie le level up
     /// </summary>
     public void AddExperience(int exp)
     {
@@ -91,14 +91,14 @@ public class PlayerManager : MonoBehaviour
         stats.experience -= stats.experienceToNextLevel;
         stats.experienceToNextLevel = Mathf.RoundToInt(stats.experienceToNextLevel * 1.5f);
 
-        // Augmenter les stats (style Pok�mon)
+        // Augmenter les stats (style Pokemon)
         int healthIncrease = Random.Range(15, 25);
         int attackIncrease = Random.Range(3, 7);
         int defenseIncrease = Random.Range(2, 5);
         int speedIncrease = Random.Range(2, 5);
 
         stats.maxHealth += healthIncrease;
-        stats.currentHealth = stats.maxHealth; // Soigne compl�tement au level up
+        stats.currentHealth = stats.maxHealth; // Soigne completement au level up
 
         UpdateHealthBar();
         Debug.Log($" Level Up! Niveau {stats.level}");
@@ -106,7 +106,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Met � jour la barre de vie dans l'UI
+    /// Met a jour la barre de vie dans l'UI
     /// </summary>
     private void UpdateHealthBar()
     {
@@ -128,7 +128,7 @@ public class PlayerManager : MonoBehaviour
         }
         return false;
     }
-    // Remet la stamina � son maximum
+    // Remet la stamina a son maximum
     public void refillStamina()
     {
         stats.currentStamina = Mathf.Min(stats.currentStamina + stats.staminaRegenPerTurn, stats.maxStamina);
