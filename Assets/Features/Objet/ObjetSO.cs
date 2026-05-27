@@ -9,7 +9,8 @@ public enum ObjetMaterialType
     Wood,
     Fire,
     Ice,
-    Water
+    Water,
+    Nothing
 }
 public enum ObjetEffectType
 {
