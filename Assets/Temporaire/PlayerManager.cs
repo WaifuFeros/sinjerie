@@ -35,10 +35,10 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private StaminaUIManager staminaUI;
 
     [Header("WeatherEffect")]
-    public int FireCounter = 0;
-    public int FreezeCounter = 0;
-    public int WetCounter = 0;
-    public int ParalyzeCounter = 0;
+    [SerializeField,HideInInspector] public int FireCounter = 0;
+    [SerializeField,HideInInspector] public int FreezeCounter = 0;
+    [SerializeField,HideInInspector] public int WetCounter = 0;
+    [SerializeField,HideInInspector] public int ParalyzeCounter = 0;
 
     private void Awake()
     {
