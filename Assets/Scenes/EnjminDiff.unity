@@ -1298,6 +1298,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAttackDelay: 1
   skipTurnButton: {fileID: 886044150}
+  _fireDuration: 4
+  _freezeDuration: 4
+  _paralyzeDuration: 4
+  _wetDuration: 4
+  _addFireDuration: 4
   _canvasParent: {fileID: 710840574}
   _itemAnimPrefab: {fileID: 1330769031389707562, guid: 7d2ef08ee1909e644a9a125609496501,
     type: 3}
@@ -1860,6 +1865,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2030078171}
   _enemyImage: {fileID: 2134683397}
+  FireCounter: 0
+  FreezeCounter: 0
+  WetCounter: 0
+  ParalyzeCounter: 0
   EnemyStats: {fileID: 0}
   currentHealth: 0
 --- !u!224 &851288019
@@ -5416,6 +5425,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   healthBar: {fileID: 2118088379}
   staminaUI: {fileID: 1058230610}
+  FireCounter: 0
+  FreezeCounter: 0
+  WetCounter: 0
+  ParalyzeCounter: 0
 --- !u!212 &2031475723
 SpriteRenderer:
   m_ObjectHideFlags: 0
