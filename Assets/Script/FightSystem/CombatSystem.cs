@@ -148,7 +148,7 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
-        _weatherEffect.OnFire();
+        _weatherEffect.OnFire(false);
         if (!combatActive || !isPlayerTurn)
         {
             return;
@@ -208,8 +208,8 @@ public class CombatSystem : MonoBehaviour
             yield return new WaitForSeconds(0.4f); // Petit délai entre les attaques
         }
 
-
         CheckCombatEnd();
+        _weatherEffect.OnFire(true);
 
         isPlayerTurn = true;
         SetupSkipTurnButtonInteractable(true);
@@ -311,8 +311,6 @@ public class CombatSystem : MonoBehaviour
     {
         if (isPlayer)
         {
-            Debug.Log("firecount joueur");
-
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
@@ -333,27 +331,27 @@ public class CombatSystem : MonoBehaviour
                     break;
             }
         }
-        Debug.Log("firecount");
-        switch (objet.objetMaterialType)
+        else
         {
-            case ObjetMaterialType.Fire:
-                currentEnemy.FireCounter = _fireDuration; // Applique l'effet de brulure
-                Debug.Log(currentEnemy.FireCounter);
-                Debug.Log(_fireDuration);
-                break;
-            case ObjetMaterialType.Ice:
-                currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                break;
-            case ObjetMaterialType.Water:
-                currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
-                break;
-            case ObjetMaterialType.Metal:
-                currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
-                break;
-            case ObjetMaterialType.Wood:
-                if (currentEnemy.FireCounter > 0)
-                    currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
-                break;
+            switch (objet.objetMaterialType)
+            {
+                case ObjetMaterialType.Fire:
+                    currentEnemy.FireCounter = _fireDuration; // Applique l'effet de brulure
+                    break;
+                case ObjetMaterialType.Ice:
+                    currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    break;
+                case ObjetMaterialType.Water:
+                    currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    break;
+                case ObjetMaterialType.Metal:
+                    currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                    break;
+                case ObjetMaterialType.Wood:
+                    if (currentEnemy.FireCounter > 0)
+                        currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                    break;
+            }
         }
     }
 }

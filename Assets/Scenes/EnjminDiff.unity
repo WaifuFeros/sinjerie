@@ -266,6 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 50895036}
   - component: {fileID: 50895037}
+  - component: {fileID: 50895038}
   m_Layer: 0
   m_Name: WeatherManager
   m_TagString: Untagged
@@ -304,7 +305,22 @@ MonoBehaviour:
   cityText: {fileID: 1222476}
   tempText: {fileID: 213580307}
   descText: {fileID: 1131440333}
+  temperature: 0
   apiKey: cab53e4ddd7d114609d442afdc97e4af
+--- !u!114 &50895038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50895035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a336f83c45531245898bab04b706d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 851288018}
+  weather: {fileID: 50895037}
 --- !u!1 &70327736
 GameObject:
   m_ObjectHideFlags: 0

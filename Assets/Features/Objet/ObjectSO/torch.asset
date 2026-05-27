@@ -15,9 +15,9 @@ MonoBehaviour:
   objetSprite: {fileID: 21300000, guid: bb4fce4e53c64d747a36213508565d18, type: 3}
   objetName: Torch
   objetDescription: A simple torch. It can set the opponet on fire
-  objetMatiralType: 6
+  objetMaterialType: 2
   objetWeight: 2
   objectType: 1
   objectEffect: 4
   specialAction: {fileID: 0}
-  objetRarity: 1
+  Rarity: 0

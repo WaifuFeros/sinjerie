@@ -10,7 +10,7 @@ public class WeatherManager : MonoBehaviour
     public TextMeshProUGUI cityText;
     public TextMeshProUGUI tempText;
     public TextMeshProUGUI descText;
-    [SerializeField] public float temperature;
+    [SerializeField, HideInInspector] public float temperature;
     //public TextMeshProUGUI coordText;
 
     public string apiKey = "cab53e4ddd7d114609d442afdc97e4af";

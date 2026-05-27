@@ -15,12 +15,20 @@ public class WeatherEffect : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
-    public void OnFire()
+    public void OnFire(bool isPlayer)
     {
-        if (enemy.FireCounter > 0)
+        if (enemy.FireCounter > 0 || PlayerManager.Instance.FireCounter > 0)
         {
-            enemy.TakeDamage(Convert.ToInt32(weather.temperature / 7));
-            enemy.FireCounter--;
+            if (!isPlayer)
+            {
+                enemy.TakeDamage(Convert.ToInt32(weather.temperature / 7));
+                enemy.FireCounter--;
+            }
+            else
+            {
+                PlayerManager.Instance.TakeDamage(Convert.ToInt32(weather.temperature / 7));
+                PlayerManager.Instance.FireCounter--;
+            }
             CombatSystem.Instance.CheckCombatEnd();
         }
     }
