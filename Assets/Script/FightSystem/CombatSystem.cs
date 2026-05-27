@@ -149,6 +149,7 @@ public class CombatSystem : MonoBehaviour
     private void OnSkipTurnButtonClicked()
     {
         _weatherEffect.OnFire(false);
+        _weatherEffect.OnWet(false);
         if (!combatActive || !isPlayerTurn)
         {
             return;
@@ -210,6 +211,7 @@ public class CombatSystem : MonoBehaviour
 
         CheckCombatEnd();
         _weatherEffect.OnFire(true);
+        _weatherEffect.OnWet(true);
 
         isPlayerTurn = true;
         SetupSkipTurnButtonInteractable(true);
@@ -353,5 +355,10 @@ public class CombatSystem : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void UPdateEffect()
+    {
+
     }
 }

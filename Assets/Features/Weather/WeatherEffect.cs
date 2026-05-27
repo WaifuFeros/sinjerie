@@ -41,11 +41,19 @@ public class WeatherEffect : MonoBehaviour
         }
     }
 
-    public void OnWet()
+    //todo ameliorer la logique demain
+    public void OnWet(bool isPlayer)
     {
-        if (enemy.WetCounter > 0)
+        if (enemy.WetCounter > 0 || PlayerManager.Instance.WetCounter > 0)
         {
-            //todo: Rendre l'ennemi moins vulnérable au feu
+            if (!PlayerManager.Instance && weather.effetMeteorologique == "Rain" )
+            {
+                enemy.FireCounter = 0;
+            }
+            else if (weather.effetMeteorologique == "Rain")
+            {
+                PlayerManager.Instance.FireCounter = 0;
+            }
         }
     }
 

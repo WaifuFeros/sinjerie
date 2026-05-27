@@ -11,6 +11,7 @@ public class WeatherManager : MonoBehaviour
     public TextMeshProUGUI tempText;
     public TextMeshProUGUI descText;
     [SerializeField, HideInInspector] public float temperature;
+    [SerializeField, HideInInspector] public string effetMeteorologique;
     //public TextMeshProUGUI coordText;
 
     public string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
@@ -44,7 +45,8 @@ public class WeatherManager : MonoBehaviour
 
         Debug.Log("Requête météo réussie, récupération des données...");
         WeatherData data = JsonUtility.FromJson<WeatherData>(request.downloadHandler.text);
-        temperature = data.main.temp;
+        temperature = data.main.temp; //save temperature for use in weather effect
+        effetMeteorologique = data.weather[0].main; //save weather effect for use in weather effect system
 
         cityText.text = data.name;
         tempText.text = $"{data.main.temp:F1} °C";
