@@ -10,6 +10,7 @@ public class WeatherManager : MonoBehaviour
     public TextMeshProUGUI cityText;
     public TextMeshProUGUI tempText;
     public TextMeshProUGUI descText;
+    [SerializeField] public float temperature;
     //public TextMeshProUGUI coordText;
 
     public string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
@@ -43,6 +44,7 @@ public class WeatherManager : MonoBehaviour
 
         Debug.Log("Requête météo réussie, récupération des données...");
         WeatherData data = JsonUtility.FromJson<WeatherData>(request.downloadHandler.text);
+        temperature = data.main.temp;
 
         cityText.text = data.name;
         tempText.text = $"{data.main.temp:F1} °C";

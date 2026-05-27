@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
     [SerializeField] private UnityEngine.UI.Image _enemyImage;
 
     [Header("WeatherEffect")]
-    [SerializeField, HideInInspector] public int FireCounter = 0;
+    [SerializeField] public int FireCounter = 0;
     [SerializeField, HideInInspector] public int FreezeCounter = 0;
     [SerializeField, HideInInspector] public int WetCounter = 0;
     [SerializeField, HideInInspector] public int ParalyzeCounter = 0;
@@ -16,6 +15,7 @@ public class Enemy : MonoBehaviour
     public EnemySO EnemyStats;
 
     public int currentHealth;
+
     public void Initialize(EnemySO stats)
     {
         FireCounter = 0;

@@ -52,6 +52,7 @@ public class CombatSystem : MonoBehaviour
         _roomManager = RoomManager.Instance;
         _itemManager = ItemManager.Instance;
         _playerStats = PlayerManager.Instance;
+        _weatherEffect = WeatherEffect.Instance;
         SetupSkipTurnButton();
         onLoadCompleted?.Invoke();
     }
@@ -310,6 +311,8 @@ public class CombatSystem : MonoBehaviour
     {
         if (isPlayer)
         {
+            Debug.Log("firecount joueur");
+
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
@@ -330,10 +333,13 @@ public class CombatSystem : MonoBehaviour
                     break;
             }
         }
+        Debug.Log("firecount");
         switch (objet.objetMaterialType)
         {
             case ObjetMaterialType.Fire:
                 currentEnemy.FireCounter = _fireDuration; // Applique l'effet de brulure
+                Debug.Log(currentEnemy.FireCounter);
+                Debug.Log(_fireDuration);
                 break;
             case ObjetMaterialType.Ice:
                 currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel

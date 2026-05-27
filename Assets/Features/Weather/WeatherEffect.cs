@@ -4,19 +4,49 @@ using UnityEngine;
 
 public class WeatherEffect : MonoBehaviour
 {
-    [Header("Settings Effect")]
-    [SerializeField] private float _fireResistance;
-    [SerializeField] private int _fireDamage;
+    public static WeatherEffect Instance { get; private set; }
 
-    private Enemy enemy;
-    private Main main; //Class Main de Weather Manager
+    [SerializeField] private Enemy enemy;
+    [SerializeField] private WeatherManager weather;
+
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
+
     public void OnFire()
     {
-        if(enemy.FireCounter > 0)
+        if (enemy.FireCounter > 0)
         {
-            enemy.TakeDamage(Convert.ToInt32(main.temp/7));
+            enemy.TakeDamage(Convert.ToInt32(weather.temperature / 7));
             enemy.FireCounter--;
             CombatSystem.Instance.CheckCombatEnd();
+        }
+    }
+
+    public void OnFreeze()
+    {
+        if (enemy.FreezeCounter > 0)
+        {
+            //TODO: Geler l'ennemi ou lui faire sauter un tour)
+        }
+    }
+
+    public void OnWet()
+    {
+        if (enemy.WetCounter > 0)
+        {
+            //todo: Rendre l'ennemi moins vulnérable au feu
+        }
+    }
+
+
+    public void OnParalyze()
+    {
+        if (enemy.ParalyzeCounter > 0)
+        {
+            //todo: possibilité de faire sauter un tour à l'ennemi
         }
     }
 }

@@ -35,7 +35,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private StaminaUIManager staminaUI;
 
     [Header("WeatherEffect")]
-    [SerializeField,HideInInspector] public int FireCounter = 0;
+    [SerializeField] public int FireCounter = 0;
     [SerializeField,HideInInspector] public int FreezeCounter = 0;
     [SerializeField,HideInInspector] public int WetCounter = 0;
     [SerializeField,HideInInspector] public int ParalyzeCounter = 0;
