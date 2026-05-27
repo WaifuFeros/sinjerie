@@ -16,6 +16,13 @@ public class CombatSystem : MonoBehaviour
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
+    [Header("Duration Effect Settings")]
+    [SerializeField] private int _fireDuration;
+    [SerializeField] private int _freezeDuration;
+    [SerializeField] private int _paralyzeDuration;
+    [SerializeField] private int _wetDuration;
+    [SerializeField] private int _addFireDuration;
+
 
     [Header("Animation References")]
     [SerializeField] private Transform _canvasParent;
@@ -29,9 +36,10 @@ public class CombatSystem : MonoBehaviour
     private System.Action onDefeatCallback;
     private bool combatActive = false;
     public bool isPlayerTurn = true;
-    private RoomManager roomManager;
+    private RoomManager _roomManager;
     private ItemManager _itemManager;
     private PlayerManager _playerStats;
+    private WeatherEffect _weatherEffect;
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -41,7 +49,7 @@ public class CombatSystem : MonoBehaviour
     public void Initialize(Action onLoadCompleted)
     {
         // Configurer le bouton de passage de tour
-        roomManager = RoomManager.Instance;
+        _roomManager = RoomManager.Instance;
         _itemManager = ItemManager.Instance;
         _playerStats = PlayerManager.Instance;
         SetupSkipTurnButton();
@@ -74,9 +82,9 @@ public class CombatSystem : MonoBehaviour
         _playerStats.refillStamina();
 
         // Récupérer l'ennemi actuel
-        if (roomManager != null)
+        if (_roomManager != null)
         {
-            GameObject enemyObj = roomManager.GetEnemy();
+            GameObject enemyObj = _roomManager.GetEnemy();
             if (enemyObj != null)
             {
                 currentEnemy = enemyObj.GetComponent<Enemy>();
@@ -105,6 +113,7 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive)
             return;
         _playerStats.TakeDamage(attack.objectEffect);
+        CheckItemEffect(attack, true);
         CheckCombatEnd();
     }
     public void HealPlayer(ObjetSO healItem)
@@ -112,6 +121,7 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive)
             return;
         _playerStats.Heal(healItem.objectEffect);
+        CheckItemEffect(healItem, true);
         CheckCombatEnd();
     }
 
@@ -120,6 +130,7 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive || currentEnemy == null)
             return;
         currentEnemy.TakeDamage(attack.objectEffect);
+        CheckItemEffect(attack, false);
         CheckCombatEnd();
     }
     public void HealEnemy(ObjetSO healItem)
@@ -127,6 +138,7 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive || currentEnemy == null)
             return;
         currentEnemy.Heal(healItem.objectEffect);
+        CheckItemEffect(healItem, false);
         CheckCombatEnd();
     }
 
@@ -135,6 +147,7 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
+        _weatherEffect.OnFire();
         if (!combatActive || !isPlayerTurn)
         {
             return;
@@ -160,7 +173,7 @@ public class CombatSystem : MonoBehaviour
     /// <summary>
     /// Vérifie les conditions de fin de combat après un délai
     /// </summary>
-    private void CheckCombatEnd()
+    public void CheckCombatEnd()
     {
         if (currentEnemy != null && currentEnemy.IsDead())
             StartCoroutine(EndCombat(true));
@@ -257,6 +270,10 @@ public class CombatSystem : MonoBehaviour
     }
     private IEnumerator EndCombat(bool victory)
     {
+        _playerStats.FireCounter = 0;
+        _playerStats.FreezeCounter = 0;
+        _playerStats.WetCounter = 0;
+        _playerStats.ParalyzeCounter = 0;
         combatActive = false;
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
@@ -286,5 +303,51 @@ public class CombatSystem : MonoBehaviour
     public Enemy GetCurrentEnemy()
     {
         return currentEnemy;
+    }
+
+
+    private void CheckItemEffect(ObjetSO objet, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            switch (objet.objetMaterialType)
+            {
+                case ObjetMaterialType.Fire:
+                    _playerStats.FireCounter = _fireDuration; // Applique l'effet de brulure
+                    break;
+                case ObjetMaterialType.Ice:
+                    _playerStats.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    break;
+                case ObjetMaterialType.Water:
+                    _playerStats.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    break;
+                case ObjetMaterialType.Metal:
+                    _playerStats.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                    break;
+                case ObjetMaterialType.Wood:
+                    if (_playerStats.FireCounter > 0)
+                        _playerStats.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                    break;
+            }
+        }
+        switch (objet.objetMaterialType)
+        {
+            case ObjetMaterialType.Fire:
+                currentEnemy.FireCounter = _fireDuration; // Applique l'effet de brulure
+                break;
+            case ObjetMaterialType.Ice:
+                currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                break;
+            case ObjetMaterialType.Water:
+                currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
+                break;
+            case ObjetMaterialType.Metal:
+                currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                break;
+            case ObjetMaterialType.Wood:
+                if (currentEnemy.FireCounter > 0)
+                    currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                break;
+        }
     }
 }

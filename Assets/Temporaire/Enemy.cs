@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     [Header("WeatherEffect")]
     public int FireCounter = 0;
     public int FreezeCounter = 0;
-    public int SwetCounter = 0;
+    public int WetCounter = 0;
     public int ParalyzeCounter = 0;
 
     public EnemySO EnemyStats;
@@ -18,6 +18,10 @@ public class Enemy : MonoBehaviour
     public int currentHealth;
     public void Initialize(EnemySO stats)
     {
+        FireCounter = 0;
+        FreezeCounter = 0;
+        WetCounter = 0;
+        ParalyzeCounter = 0;
         EnemyStats = stats;
         currentHealth = EnemyStats.MaxHealth;
         _enemyImage.sprite = EnemyStats.Sprite;
@@ -43,6 +47,7 @@ public class Enemy : MonoBehaviour
 
     private void UpdateHealthBar()
     {
+        
         if (healthBar != null)
         {
             healthBar.value = (float)currentHealth / EnemyStats.MaxHealth;

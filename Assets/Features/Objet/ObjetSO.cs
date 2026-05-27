@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ObjetMatiralType
+public enum ObjetMaterialType
 {
     Metal,
     Wood,
-    Plastic,
-    Glass,
-    Stone,
-    Organic,
-    fire
+    Fire,
+    Ice,
+    Water
 }
 public enum ObjetEffectType
 {
@@ -35,7 +33,7 @@ public class ObjetSO : ScriptableObject
     public Sprite objetSprite;
     public string objetName;
     public string objetDescription;
-    public ObjetMatiralType objetMatiralType;
+    public ObjetMaterialType objetMaterialType;
     public int objetWeight;
     public ObjetEffectType objectType;
     public int objectEffect;

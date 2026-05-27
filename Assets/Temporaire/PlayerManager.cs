@@ -34,6 +34,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Slider healthBar;
     [SerializeField] private StaminaUIManager staminaUI;
 
+    [Header("WeatherEffect")]
+    public int FireCounter = 0;
+    public int FreezeCounter = 0;
+    public int WetCounter = 0;
+    public int ParalyzeCounter = 0;
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
