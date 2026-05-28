@@ -145,6 +145,7 @@ public class CombatSystem : MonoBehaviour
 
     /// <summary>
     /// Appelé quand le bouton de passage de tour est cliqué
+    /// faire un meilleur sys de fin de tour pour joueur pour adapt effect.
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
@@ -158,6 +159,20 @@ public class CombatSystem : MonoBehaviour
         SetupSkipTurnButtonInteractable(false);
         _playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
         // l'ennemis attack
+        if(_weatherEffect.OnParalyze(false))
+        {
+            Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+            return;
+        }
+        else if (_weatherEffect.OnFreeze(false))
+        {
+            Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+            return;
+        }
         StartCoroutine(EnemyAttackSequence());
     }
 
@@ -185,6 +200,7 @@ public class CombatSystem : MonoBehaviour
 
     /// <summary>
     /// Séquence d'attaque de l'ennemi
+    /// Reprendre toute la fonction pour respecter poids item cote ennemi. + faire un meilleur sys de fin de tour pour IA.
     /// </summary>
     private IEnumerator EnemyAttackSequence()
     {
@@ -212,9 +228,7 @@ public class CombatSystem : MonoBehaviour
         CheckCombatEnd();
         _weatherEffect.OnFire(true);
         _weatherEffect.OnWet(true);
-
-        isPlayerTurn = true;
-        SetupSkipTurnButtonInteractable(true);
+       
 
         // pioche des items aléatoires à la fin du tour
         for (int i = 0; i < _playerStats.stats.nbItemPerTurn; i++)
@@ -231,6 +245,22 @@ public class CombatSystem : MonoBehaviour
             _playerStats.stats.Deck = deckList.ToArray();
 
             _itemManager.SpawnItem(obj);
+        }
+
+        if (!_weatherEffect.OnParalyze(true))
+        {
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+        }
+        else if (!_weatherEffect.OnFreeze(true))
+        {
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+        }
+        else
+        {
+            Debug.Log("Le joueur est paralysé et ne peut pas attaquer ce tour !");
+            StartCoroutine(EnemyAttackSequence()); // Lancer le tour de l'ennemi
         }
     }
     private IEnumerator AnimateItemThrow(ObjetSO item)

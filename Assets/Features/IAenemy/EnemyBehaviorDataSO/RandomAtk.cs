@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Behavior/RandomAtk")]

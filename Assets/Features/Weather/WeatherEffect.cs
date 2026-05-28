@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,53 +17,69 @@ public class WeatherEffect : MonoBehaviour
     }
 
     public void OnFire(bool isPlayer)
-    {
-        if (enemy.FireCounter > 0 || PlayerManager.Instance.FireCounter > 0)
-        {
-            if (!isPlayer)
-            {
-                enemy.TakeDamage(Convert.ToInt32(weather.temperature / 7));
-                enemy.FireCounter--;
-            }
-            else
-            {
-                PlayerManager.Instance.TakeDamage(Convert.ToInt32(weather.temperature / 7));
-                PlayerManager.Instance.FireCounter--;
-            }
-            CombatSystem.Instance.CheckCombatEnd();
-        }
+    {  
+       if (!isPlayer && enemy.FireCounter > 0)
+       {
+           enemy.TakeDamage(Convert.ToInt32(weather.temperature / 7));
+           enemy.FireCounter--;
+       }
+       else if (PlayerManager.Instance.FireCounter > 0)
+       {
+           PlayerManager.Instance.TakeDamage(Convert.ToInt32(weather.temperature / 7));
+           PlayerManager.Instance.FireCounter--;
+       }
+       CombatSystem.Instance.CheckCombatEnd();
+       
     }
 
-    public void OnFreeze()
+    public bool OnFreeze(bool isPlayer)
     {
-        if (enemy.FreezeCounter > 0)
+        if (!isPlayer && enemy.FreezeCounter > 0)
         {
-            //TODO: Geler l'ennemi ou lui faire sauter un tour)
+            enemy.FreezeCounter--;
+            return true; //ennemi gele, il saute son tour
         }
+        else if (PlayerManager.Instance.FreezeCounter > 0)
+        {
+            PlayerManager.Instance.FreezeCounter--;
+            return true; //player gele, il saute son tour
+        }
+        return false;
     }
 
-    //todo ameliorer la logique demain
+    //todo weather.effetMeteorologique == "Rain" dans nouvelle fonction dans combatSys.
     public void OnWet(bool isPlayer)
-    {
-        if (enemy.WetCounter > 0 || PlayerManager.Instance.WetCounter > 0)
+    {   
+        if (!isPlayer && enemy.WetCounter > 0)
         {
-            if (!PlayerManager.Instance && weather.effetMeteorologique == "Rain" )
-            {
-                enemy.FireCounter = 0;
-            }
-            else if (weather.effetMeteorologique == "Rain")
-            {
-                PlayerManager.Instance.FireCounter = 0;
-            }
+            enemy.FireCounter = 0;
+        }
+        else if (PlayerManager.Instance.WetCounter > 0)
+        {
+            PlayerManager.Instance.FireCounter = 0;
         }
     }
 
 
-    public void OnParalyze()
+    public bool OnParalyze(bool isPlayer)
     {
-        if (enemy.ParalyzeCounter > 0)
+        int paralyze = UnityEngine.Random.Range(0, 100);
+        if (!isPlayer && enemy.ParalyzeCounter > 0 )
         {
-            //todo: possibilité de faire sauter un tour à l'ennemi
+            if (paralyze <= 25)
+            {
+                return true; //ennemi paralysé, il saute son tour
+            }
+            enemy.ParalyzeCounter--;
         }
+        else if (PlayerManager.Instance.ParalyzeCounter > 0)
+        {
+            if (paralyze <= 25)
+            {
+                return true; //player paralysé, il saute son tour
+            }
+            PlayerManager.Instance.ParalyzeCounter--;
+        }
+        return false;
     }
 }
