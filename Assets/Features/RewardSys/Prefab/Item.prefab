@@ -111,11 +111,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 0}
   IsSelected: 0
-  _communSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
-  _rareSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
-  _epicSprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 07576aae39ac7cd47aa84a4658cb997e, type: 3}
+  _communSprite: {fileID: 21300000, guid: 67d7f697860ed294297b8e570df3d5b3, type: 3}
+  _uncommonSprite: {fileID: 21300000, guid: 7d5dbc6b1081cd4498d44626fcbb84a4, type: 3}
+  _rareSprite: {fileID: 21300000, guid: addce85b734dfb14688ef1fb2fd38bbe, type: 3}
+  _epicSprite: {fileID: 21300000, guid: 5684c6d12fc6ea740ae540028981fdfe, type: 3}
+  _lengendarySprite: {fileID: 21300000, guid: 62a6d2dd612f75048b65e76e21494fcd, type: 3}
   _healSprite: {fileID: 21300000, guid: 69416dd45b48d8b4593c9d5c17312c41, type: 3}
   _atkSprite: {fileID: 21300000, guid: bde18a5e5ed228f46a792611f4eafe1e, type: 3}
   itemIcon: {fileID: 2571635614689729761}
