@@ -1315,13 +1315,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAttackDelay: 1
   skipTurnButton: {fileID: 886044150}
-  _fireDuration: 4
-  _freezeDuration: 4
+  _fireDuration: 1
+  _freezeDuration: 0
   _paralyzeDuration: 4
   _wetDuration: 4
   _addFireDuration: 4
-  _playerIsFreeze: 0
-  _ennemiIsFreeze: 0
   _damageThunder: 0
   _isThunder: 0
   _canvasParent: {fileID: 710840574}

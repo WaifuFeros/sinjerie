@@ -18,12 +18,10 @@ public class CombatSystem : MonoBehaviour
 
     [Header(" Effect Settings")]
     [SerializeField] private int _fireDuration;
-    [SerializeField] private int _freezeDuration;
+    //[SerializeField] private int _freezeDuration;
     [SerializeField] private int _paralyzeDuration;
     [SerializeField] private int _wetDuration;
     [SerializeField] private int _addFireDuration;
-    [SerializeField] private int _playerIsFreeze;
-    [SerializeField] private int _ennemiIsFreeze;
     [SerializeField] private int _damageThunder;
     [SerializeField] bool _isThunder = false;
 
@@ -174,7 +172,7 @@ public class CombatSystem : MonoBehaviour
             SetupSkipTurnButtonInteractable(true);
             return;
         }
-        else if (_weatherEffect.OnFreeze(false,_ennemiIsFreeze))
+        else if (_weatherEffect.OnFreeze(false))
         {
             Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
             isPlayerTurn = true;
@@ -260,7 +258,7 @@ public class CombatSystem : MonoBehaviour
             isPlayerTurn = true;
             SetupSkipTurnButtonInteractable(true);
         }
-        else if (!_weatherEffect.OnFreeze(true,_playerIsFreeze))
+        else if (!_weatherEffect.OnFreeze(true))
         {
             isPlayerTurn = true;
             SetupSkipTurnButtonInteractable(true);
@@ -353,22 +351,31 @@ public class CombatSystem : MonoBehaviour
         {
             switch (objet.objetMaterialType)
             {
+                //a reprendre la logique du feu car impression que prog deguelasse (il est 5h zebi j'ai plus de cerveau) mais normalement c'est fonctionnelle mais immonde
                 case ObjetMaterialType.Fire:
-                    _playerStats.FireCounter = _fireDuration; // Applique l'effet de brulure
-                    if (_playerIsFreeze > 0)
+                    // Applique l'effet de brulure
+                    if (_playerStats.FireCounter == 0)
                     {
-                        _playerIsFreeze -= 1; // Réduit le compteur de gel de l'ennemi
+                        _playerStats.FireCounter = _fireDuration;
+                        if(_playerStats.FreezeCounter > 0)
+                            _playerStats.FreezeCounter -= 1;
+                    }
+                    else if (_playerStats.FireCounter > 0)
+                    {
+                        _playerStats.FireCounter += 1; //a valider avec viktor pour eviter les abus de prolongation de brulure
+                        if (_playerStats.FreezeCounter > 0)
+                            _playerStats.FreezeCounter -= 1;
                     }
                     break;
                 case ObjetMaterialType.Ice:
-                    _playerStats.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                    _playerIsFreeze += 1;
+                    //_playerStats.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    _playerStats.FreezeCounter += 1;
                     break;
                 case ObjetMaterialType.Water:
-                    _playerStats.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    _playerStats.WetCounter = _wetDuration; // Applique l'effet de mouille si jamais probleme de compteur, regarder fix du feu.
                     break;
                 case ObjetMaterialType.Metal:
-                    _playerStats.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                    _playerStats.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
                     _weatherEffect.Thunder(isPlayer, _isThunder, _damageThunder);
                     break;
                 case ObjetMaterialType.Wood:
@@ -382,15 +389,22 @@ public class CombatSystem : MonoBehaviour
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
-                    currentEnemy.FireCounter = _fireDuration; // Applique l'effet de brulure
-                    if (_ennemiIsFreeze > 0)
-                    { 
-                        _ennemiIsFreeze -=1; // Réduit le compteur de gel de l'ennemi
+                    if (currentEnemy.FireCounter == 0)
+                    {
+                        currentEnemy.FireCounter = _fireDuration;
+                        if (currentEnemy.FreezeCounter > 0)
+                            currentEnemy.FreezeCounter -= 1;
+                    }
+                    else if (currentEnemy.FireCounter > 0)
+                    {
+                        currentEnemy.FireCounter += 1; //a valider avec viktor pour eviter les abus de prolongation de brulure
+                        if (currentEnemy.FreezeCounter > 0)
+                            currentEnemy.FreezeCounter -= 1;
                     }
                     break;
                 case ObjetMaterialType.Ice:
-                    currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                    _ennemiIsFreeze += 1;
+                    //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    currentEnemy.FreezeCounter += 1;
                     break;
                 case ObjetMaterialType.Water:
                     currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
@@ -419,8 +433,7 @@ public class CombatSystem : MonoBehaviour
         }
         else if (weather.effetMeteorologique == "Snow")
         {
-            currentEnemy.FreezeCounter = _freezeDuration;
-            _playerStats.FreezeCounter = _freezeDuration;
+            //todo trouver un truc
         }
         else if (weather.effetMeteorologique == "Mist" || weather.effetMeteorologique == "Drizzle")
         {

@@ -32,25 +32,23 @@ public class WeatherEffect : MonoBehaviour
        
     }
 
-    public bool OnFreeze(bool isPlayer, int isFreeze)
+    public bool OnFreeze(bool isPlayer)
     {
         if (!isPlayer && enemy.FreezeCounter > 0)
         {
-            enemy.FreezeCounter--;
             enemy.WetCounter = 0;
-            if (isFreeze >= 3)
+            if (enemy.FreezeCounter >= 3)
             {
-                isFreeze = 0;
+                enemy.FreezeCounter = 0;
                 return true; //ennemi gele
             }
         }
         else if (PlayerManager.Instance.FreezeCounter > 0)
         {
-            PlayerManager.Instance.FreezeCounter--;
             PlayerManager.Instance.WetCounter = 0;
-            if (isFreeze >= 3)
+            if (PlayerManager.Instance.FreezeCounter >= 3)
             {
-                isFreeze = 0;
+                PlayerManager.Instance.FreezeCounter = 0;
                 return true; //player gele
             }
         }
@@ -77,7 +75,7 @@ public class WeatherEffect : MonoBehaviour
         {
             if (paralyze <= 25)
             {
-                return true; //ennemi paralysé, il saute son tour
+                return true; //ennemi paralyse, il saute son tour
             }
             enemy.ParalyzeCounter--;
         }
@@ -85,7 +83,7 @@ public class WeatherEffect : MonoBehaviour
         {
             if (paralyze <= 25)
             {
-                return true; //player paralysé, il saute son tour
+                return true; //player paralyse, il saute son tour
             }
             PlayerManager.Instance.ParalyzeCounter--;
         }
