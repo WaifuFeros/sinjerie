@@ -169,7 +169,7 @@ public class CombatSystem : MonoBehaviour
         // l'ennemis attack
         if(_weatherEffect.OnParalyze(false))
         {
-            Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            Debug.Log("aaaaaaaaaaaL'ennemi est paralysé et ne peut pas attaquer ce tour !");
             isPlayerTurn = true;
             SetupSkipTurnButtonInteractable(true);
             return;

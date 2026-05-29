@@ -7,10 +7,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Image _enemyImage;
 
     [Header("WeatherEffect")]
-    [SerializeField,HideInInspector] public int FireCounter = 0;
-    [SerializeField,HideInInspector] public int FreezeCounter = 0;
-    [SerializeField,HideInInspector] public int WetCounter = 0;
-    [SerializeField,HideInInspector] public int ParalyzeCounter = 0;
+    [SerializeField] public int FireCounter = 0;
+    [SerializeField] public int FreezeCounter = 0;
+    [SerializeField] public int WetCounter = 0;
+    [SerializeField] public int ParalyzeCounter = 0;
 
     public EnemySO EnemyStats;
 

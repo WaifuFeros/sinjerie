@@ -38,7 +38,7 @@ public class WeatherEffect : MonoBehaviour
         {
             enemy.FreezeCounter--;
             enemy.WetCounter = 0;
-            if (isFreeze >= 1)
+            if (isFreeze >= 3)
             {
                 isFreeze = 0;
                 return true; //ennemi gele
