@@ -372,7 +372,12 @@ public class CombatSystem : MonoBehaviour
                     _playerStats.FreezeCounter += 1;
                     break;
                 case ObjetMaterialType.Water:
-                    _playerStats.WetCounter = _wetDuration; // Applique l'effet de mouille si jamais probleme de compteur, regarder fix du feu.
+                    if (_playerStats.WetCounter == 0) 
+                    { 
+                        _playerStats.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    }
+                    else if (_playerStats.WetCounter > 0)
+                        _playerStats.WetCounter += 1; // Applique l'effet de mouille +1 round..
                     break;
                 case ObjetMaterialType.Metal:
                     _playerStats.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
@@ -407,7 +412,12 @@ public class CombatSystem : MonoBehaviour
                     currentEnemy.FreezeCounter += 1;
                     break;
                 case ObjetMaterialType.Water:
-                    currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    if (currentEnemy.WetCounter == 0)
+                    {
+                        currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    }
+                    else if (_playerStats.WetCounter > 0)
+                        _playerStats.WetCounter += 1; // Applique l'effet de mouille +1 round..
                     break;
                 case ObjetMaterialType.Metal:
                     currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
