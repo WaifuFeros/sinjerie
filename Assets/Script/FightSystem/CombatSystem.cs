@@ -3,9 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using UnityEngine.UIElements;
-using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
+
 
 public class CombatSystem : MonoBehaviour
 {
@@ -17,6 +15,13 @@ public class CombatSystem : MonoBehaviour
 
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
+
+    [Header("Duration Effect Settings")]
+    [SerializeField] private int _fireDuration;
+    [SerializeField] private int _freezeDuration;
+    [SerializeField] private int _paralyzeDuration;
+    [SerializeField] private int _wetDuration;
+    [SerializeField] private int _addFireDuration;
 
 
     [Header("Animation References")]
@@ -31,9 +36,10 @@ public class CombatSystem : MonoBehaviour
     private System.Action onDefeatCallback;
     private bool combatActive = false;
     public bool isPlayerTurn = true;
-    private RoomManager roomManager;
+    private RoomManager _roomManager;
     private ItemManager _itemManager;
     private PlayerManager _playerStats;
+    private WeatherEffect _weatherEffect;
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -43,9 +49,10 @@ public class CombatSystem : MonoBehaviour
     public void Initialize(Action onLoadCompleted)
     {
         // Configurer le bouton de passage de tour
-        roomManager = RoomManager.Instance;
+        _roomManager = RoomManager.Instance;
         _itemManager = ItemManager.Instance;
         _playerStats = PlayerManager.Instance;
+        _weatherEffect = WeatherEffect.Instance;
         SetupSkipTurnButton();
         onLoadCompleted?.Invoke();
     }
@@ -76,9 +83,9 @@ public class CombatSystem : MonoBehaviour
         _playerStats.refillStamina();
 
         // Récupérer l'ennemi actuel
-        if (roomManager != null)
+        if (_roomManager != null)
         {
-            GameObject enemyObj = roomManager.GetEnemy();
+            GameObject enemyObj = _roomManager.GetEnemy();
             if (enemyObj != null)
             {
                 currentEnemy = enemyObj.GetComponent<Enemy>();
@@ -107,6 +114,7 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive)
             return;
         _playerStats.TakeDamage(attack.objectEffect);
+        CheckItemEffect(attack, true);
         CheckCombatEnd();
     }
     public void HealPlayer(ObjetSO healItem)
@@ -114,6 +122,7 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive)
             return;
         _playerStats.Heal(healItem.objectEffect);
+        CheckItemEffect(healItem, true);
         CheckCombatEnd();
     }
 
@@ -122,6 +131,7 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive || currentEnemy == null)
             return;
         currentEnemy.TakeDamage(attack.objectEffect);
+        CheckItemEffect(attack, false);
         CheckCombatEnd();
     }
     public void HealEnemy(ObjetSO healItem)
@@ -129,14 +139,18 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive || currentEnemy == null)
             return;
         currentEnemy.Heal(healItem.objectEffect);
+        CheckItemEffect(healItem, false);
         CheckCombatEnd();
     }
 
     /// <summary>
     /// Appelé quand le bouton de passage de tour est cliqué
+    /// faire un meilleur sys de fin de tour pour joueur pour adapt effect.
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
+        _weatherEffect.OnFire(false);
+        _weatherEffect.OnWet(false);
         if (!combatActive || !isPlayerTurn)
         {
             return;
@@ -145,6 +159,20 @@ public class CombatSystem : MonoBehaviour
         SetupSkipTurnButtonInteractable(false);
         _playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
         // l'ennemis attack
+        if(_weatherEffect.OnParalyze(false))
+        {
+            Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+            return;
+        }
+        else if (_weatherEffect.OnFreeze(false))
+        {
+            Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+            return;
+        }
         StartCoroutine(EnemyAttackSequence());
     }
 
@@ -162,7 +190,7 @@ public class CombatSystem : MonoBehaviour
     /// <summary>
     /// Vérifie les conditions de fin de combat après un délai
     /// </summary>
-    private void CheckCombatEnd()
+    public void CheckCombatEnd()
     {
         if (currentEnemy != null && currentEnemy.IsDead())
             StartCoroutine(EndCombat(true));
@@ -172,6 +200,7 @@ public class CombatSystem : MonoBehaviour
 
     /// <summary>
     /// Séquence d'attaque de l'ennemi
+    /// Reprendre toute la fonction pour respecter poids item cote ennemi. + faire un meilleur sys de fin de tour pour IA.
     /// </summary>
     private IEnumerator EnemyAttackSequence()
     {
@@ -196,11 +225,10 @@ public class CombatSystem : MonoBehaviour
             yield return new WaitForSeconds(0.4f); // Petit délai entre les attaques
         }
 
-
         CheckCombatEnd();
-
-        isPlayerTurn = true;
-        SetupSkipTurnButtonInteractable(true);
+        _weatherEffect.OnFire(true);
+        _weatherEffect.OnWet(true);
+       
 
         // pioche des items aléatoires à la fin du tour
         for (int i = 0; i < _playerStats.stats.nbItemPerTurn; i++)
@@ -217,6 +245,22 @@ public class CombatSystem : MonoBehaviour
             _playerStats.stats.Deck = deckList.ToArray();
 
             _itemManager.SpawnItem(obj);
+        }
+
+        if (!_weatherEffect.OnParalyze(true))
+        {
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+        }
+        else if (!_weatherEffect.OnFreeze(true))
+        {
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+        }
+        else
+        {
+            Debug.Log("Le joueur est paralysé et ne peut pas attaquer ce tour !");
+            StartCoroutine(EnemyAttackSequence()); // Lancer le tour de l'ennemi
         }
     }
     private IEnumerator AnimateItemThrow(ObjetSO item)
@@ -259,6 +303,10 @@ public class CombatSystem : MonoBehaviour
     }
     private IEnumerator EndCombat(bool victory)
     {
+        _playerStats.FireCounter = 0;
+        _playerStats.FreezeCounter = 0;
+        _playerStats.WetCounter = 0;
+        _playerStats.ParalyzeCounter = 0;
         combatActive = false;
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
@@ -288,5 +336,59 @@ public class CombatSystem : MonoBehaviour
     public Enemy GetCurrentEnemy()
     {
         return currentEnemy;
+    }
+
+
+    private void CheckItemEffect(ObjetSO objet, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            switch (objet.objetMaterialType)
+            {
+                case ObjetMaterialType.Fire:
+                    _playerStats.FireCounter = _fireDuration; // Applique l'effet de brulure
+                    break;
+                case ObjetMaterialType.Ice:
+                    _playerStats.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    break;
+                case ObjetMaterialType.Water:
+                    _playerStats.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    break;
+                case ObjetMaterialType.Metal:
+                    _playerStats.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                    break;
+                case ObjetMaterialType.Wood:
+                    if (_playerStats.FireCounter > 0)
+                        _playerStats.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                    break;
+            }
+        }
+        else
+        {
+            switch (objet.objetMaterialType)
+            {
+                case ObjetMaterialType.Fire:
+                    currentEnemy.FireCounter = _fireDuration; // Applique l'effet de brulure
+                    break;
+                case ObjetMaterialType.Ice:
+                    currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    break;
+                case ObjetMaterialType.Water:
+                    currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    break;
+                case ObjetMaterialType.Metal:
+                    currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                    break;
+                case ObjetMaterialType.Wood:
+                    if (currentEnemy.FireCounter > 0)
+                        currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                    break;
+            }
+        }
+    }
+
+    private void UPdateEffect()
+    {
+
     }
 }

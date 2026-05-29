@@ -80,10 +80,6 @@ public class RoomManager : MonoBehaviour
             int randomIndex = UnityEngine.Random.Range(0, availableEnemyData.Count);
             EnemySO randomData = availableEnemyData[randomIndex];
             enemyScript.Initialize(randomData);
-            if (enemyScript != null)
-            {
-                enemyScript.SetDifficulty(roomNumber);
-            }
             rewardSystem.EnemySO = randomData;
         }
 

@@ -266,6 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 50895036}
   - component: {fileID: 50895037}
+  - component: {fileID: 50895038}
   m_Layer: 0
   m_Name: WeatherManager
   m_TagString: Untagged
@@ -304,7 +305,22 @@ MonoBehaviour:
   cityText: {fileID: 1222476}
   tempText: {fileID: 213580307}
   descText: {fileID: 1131440333}
+  temperature: 0
   apiKey: cab53e4ddd7d114609d442afdc97e4af
+--- !u!114 &50895038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50895035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a336f83c45531245898bab04b706d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 851288018}
+  weather: {fileID: 50895037}
 --- !u!1 &70327736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,6 +1314,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAttackDelay: 1
   skipTurnButton: {fileID: 886044150}
+  _fireDuration: 4
+  _freezeDuration: 4
+  _paralyzeDuration: 4
+  _wetDuration: 4
+  _addFireDuration: 4
   _canvasParent: {fileID: 710840574}
   _itemAnimPrefab: {fileID: 1330769031389707562, guid: 7d2ef08ee1909e644a9a125609496501,
     type: 3}
@@ -1860,6 +1881,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2030078171}
   _enemyImage: {fileID: 2134683397}
+  FireCounter: 0
+  FreezeCounter: 0
+  WetCounter: 0
+  ParalyzeCounter: 0
   EnemyStats: {fileID: 0}
   currentHealth: 0
 --- !u!224 &851288019
@@ -5416,6 +5441,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   healthBar: {fileID: 2118088379}
   staminaUI: {fileID: 1058230610}
+  FireCounter: 0
+  FreezeCounter: 0
+  WetCounter: 0
+  ParalyzeCounter: 0
 --- !u!212 &2031475723
 SpriteRenderer:
   m_ObjectHideFlags: 0
