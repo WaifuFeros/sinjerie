@@ -56,6 +56,9 @@ public class PlayerManager : MonoBehaviour
         staminaUI.UpdateDisplay(stats.currentStamina);
     }
 
+
+
+
     /// <summary>
     /// Le joueur prend des degats
     /// </summary>

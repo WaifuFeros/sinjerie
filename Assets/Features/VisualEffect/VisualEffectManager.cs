@@ -18,6 +18,8 @@ public class VisualEffectManager : MonoBehaviour
     [SerializeField] private GameObject _waterParticlePrefab;
 
 
+
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -26,8 +28,14 @@ public class VisualEffectManager : MonoBehaviour
 
     public void AddEffect(GameObject targetGO, ParticleEffectType particleType)
     {
-        if (targetGO == null)
+        if (targetGO == null) return;
+
+        // VERIFICATION : Si le targetGO a déjà un ParticleSystem dans ses enfants, on arrête.
+        if (targetGO.GetComponentInChildren<ParticleSystem>() != null)
+        {
+            Debug.LogWarning($"{targetGO.name} a déjà un effet de particules actif.");
             return;
+        }
 
         GameObject _particlePrefab = null;
         switch (particleType)
@@ -48,7 +56,6 @@ public class VisualEffectManager : MonoBehaviour
         {
             ps.Play();
         }
-
     }
 
     public void RemoveEffect(GameObject particleGO)

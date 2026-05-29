@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using static VisualEffectManager;
 
 
 public class CombatSystem : MonoBehaviour
@@ -31,6 +32,11 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private Transform _enemyTransform;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _animationDuration = 0.8f;
+
+
+    [Header("Tempo")]
+    [SerializeField] private GameObject _playerhead;
+    [SerializeField] private GameObject _ennemyhead;
 
     private Enemy currentEnemy;
     private System.Action onVictoryCallback;
@@ -354,15 +360,10 @@ public class CombatSystem : MonoBehaviour
                 //a reprendre la logique du feu car impression que prog deguelasse (il est 5h zebi j'ai plus de cerveau) mais normalement c'est fonctionnelle mais immonde
                 case ObjetMaterialType.Fire:
                     // Applique l'effet de brulure
-                    if (_playerStats.FireCounter == 0)
+                    if (_playerStats.WetCounter == 0)
                     {
-                        _playerStats.FireCounter = _fireDuration;
-                        if(_playerStats.FreezeCounter > 0)
-                            _playerStats.FreezeCounter -= 1;
-                    }
-                    else if (_playerStats.FireCounter > 0)
-                    {
-                        _playerStats.FireCounter += 1; //a valider avec viktor pour eviter les abus de prolongation de brulure
+                        _playerStats.FireCounter += _fireDuration;
+                        VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Fire);
                         if (_playerStats.FreezeCounter > 0)
                             _playerStats.FreezeCounter -= 1;
                     }
@@ -394,15 +395,10 @@ public class CombatSystem : MonoBehaviour
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
-                    if (currentEnemy.FireCounter == 0)
+                    if (currentEnemy.WetCounter == 0)
                     {
                         currentEnemy.FireCounter = _fireDuration;
-                        if (currentEnemy.FreezeCounter > 0)
-                            currentEnemy.FreezeCounter -= 1;
-                    }
-                    else if (currentEnemy.FireCounter > 0)
-                    {
-                        currentEnemy.FireCounter += 1; //a valider avec viktor pour eviter les abus de prolongation de brulure
+                        VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Fire);
                         if (currentEnemy.FreezeCounter > 0)
                             currentEnemy.FreezeCounter -= 1;
                     }

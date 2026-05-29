@@ -1327,6 +1327,8 @@ MonoBehaviour:
   _enemyTransform: {fileID: 2134683396}
   _playerTransform: {fileID: 2058587210}
   _animationDuration: 0.8
+  _playerhead: {fileID: 2058587209}
+  _ennemyhead: {fileID: 2134683395}
   isPlayerTurn: 1
   weather: {fileID: 50895037}
 --- !u!4 &602860446
@@ -2282,7 +2284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: "Prendre les r\xE9compenses"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3427,7 +3429,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1607031819
 MonoBehaviour:
@@ -6104,7 +6106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.03901694, b: 0, a: 1}
+  m_Color: {r: 0.40293694, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
