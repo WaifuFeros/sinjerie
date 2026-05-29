@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5131256369526487175}
   - component: {fileID: 1263086025516854248}
   m_Layer: 0
-  m_Name: FireParticule
+  m_Name: WaterParticule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -670,7 +670,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: -1, z: 0}
+    m_Position: {x: 0, y: 1, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 8, y: 8, z: 1}
     placementMode: 0
@@ -1548,7 +1548,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: -1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4777,7 +4777,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 916e6123faaf55046ab3fa6423b918be, type: 2}
+  - {fileID: 2100000, guid: c73a9fad82ca8dd4490eb5a1c23b467f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
