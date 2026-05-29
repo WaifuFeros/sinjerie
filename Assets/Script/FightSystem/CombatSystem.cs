@@ -16,13 +16,16 @@ public class CombatSystem : MonoBehaviour
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
-    [Header("Duration Effect Settings")]
+    [Header(" Effect Settings")]
     [SerializeField] private int _fireDuration;
     [SerializeField] private int _freezeDuration;
     [SerializeField] private int _paralyzeDuration;
     [SerializeField] private int _wetDuration;
     [SerializeField] private int _addFireDuration;
-
+    [SerializeField] private int _playerIsFreeze;
+    [SerializeField] private int _ennemiIsFreeze;
+    [SerializeField] private int _damageThunder;
+    [SerializeField] bool _isThunder = false;
 
     [Header("Animation References")]
     [SerializeField] private Transform _canvasParent;
@@ -40,6 +43,8 @@ public class CombatSystem : MonoBehaviour
     private ItemManager _itemManager;
     private PlayerManager _playerStats;
     private WeatherEffect _weatherEffect;
+    [SerializeField] private WeatherManager weather;
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -91,6 +96,8 @@ public class CombatSystem : MonoBehaviour
                 currentEnemy = enemyObj.GetComponent<Enemy>();
             }
         }
+
+        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille au debut du combat
 
         // Ajout item dans l'inventaire du joueur
         for (int i = 0; i < _playerStats.stats.nbStartItem; i++)
@@ -149,6 +156,7 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
+        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour du joueur
         _weatherEffect.OnFire(false);
         _weatherEffect.OnWet(false);
         if (!combatActive || !isPlayerTurn)
@@ -166,7 +174,7 @@ public class CombatSystem : MonoBehaviour
             SetupSkipTurnButtonInteractable(true);
             return;
         }
-        else if (_weatherEffect.OnFreeze(false))
+        else if (_weatherEffect.OnFreeze(false,_ennemiIsFreeze))
         {
             Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
             isPlayerTurn = true;
@@ -228,7 +236,7 @@ public class CombatSystem : MonoBehaviour
         CheckCombatEnd();
         _weatherEffect.OnFire(true);
         _weatherEffect.OnWet(true);
-       
+        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour de l'ennemi
 
         // pioche des items aléatoires à la fin du tour
         for (int i = 0; i < _playerStats.stats.nbItemPerTurn; i++)
@@ -252,7 +260,7 @@ public class CombatSystem : MonoBehaviour
             isPlayerTurn = true;
             SetupSkipTurnButtonInteractable(true);
         }
-        else if (!_weatherEffect.OnFreeze(true))
+        else if (!_weatherEffect.OnFreeze(true,_playerIsFreeze))
         {
             isPlayerTurn = true;
             SetupSkipTurnButtonInteractable(true);
@@ -347,15 +355,21 @@ public class CombatSystem : MonoBehaviour
             {
                 case ObjetMaterialType.Fire:
                     _playerStats.FireCounter = _fireDuration; // Applique l'effet de brulure
+                    if (_playerIsFreeze > 0)
+                    {
+                        _playerIsFreeze -= 1; // Réduit le compteur de gel de l'ennemi
+                    }
                     break;
                 case ObjetMaterialType.Ice:
                     _playerStats.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    _playerIsFreeze += 1;
                     break;
                 case ObjetMaterialType.Water:
                     _playerStats.WetCounter = _wetDuration; // Applique l'effet de mouille
                     break;
                 case ObjetMaterialType.Metal:
                     _playerStats.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                    _weatherEffect.Thunder(isPlayer, _isThunder, _damageThunder);
                     break;
                 case ObjetMaterialType.Wood:
                     if (_playerStats.FireCounter > 0)
@@ -369,15 +383,22 @@ public class CombatSystem : MonoBehaviour
             {
                 case ObjetMaterialType.Fire:
                     currentEnemy.FireCounter = _fireDuration; // Applique l'effet de brulure
+                    if (_ennemiIsFreeze > 0)
+                    { 
+                        _ennemiIsFreeze -=1; // Réduit le compteur de gel de l'ennemi
+                    }
                     break;
                 case ObjetMaterialType.Ice:
                     currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    _ennemiIsFreeze += 1;
                     break;
                 case ObjetMaterialType.Water:
                     currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
                     break;
                 case ObjetMaterialType.Metal:
                     currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                    _weatherEffect.Thunder(!isPlayer,_isThunder, _damageThunder);
+
                     break;
                 case ObjetMaterialType.Wood:
                     if (currentEnemy.FireCounter > 0)
@@ -387,8 +408,27 @@ public class CombatSystem : MonoBehaviour
         }
     }
 
-    private void UPdateEffect()
+    // Verifie si il pleut pour appliquer l'effet de mouille au debut du combat et a la fin de chaque tour
+    private void MeteoCheck()
     {
+        if (weather.effetMeteorologique == "Rain")
+        {
+            currentEnemy.WetCounter = _wetDuration;
+            _playerStats.WetCounter = _wetDuration;
+        }
+        else if (weather.effetMeteorologique == "Snow")
+        {
+            currentEnemy.FreezeCounter = _freezeDuration;
+            _playerStats.FreezeCounter = _freezeDuration;
+        }
+        else if (weather.effetMeteorologique == "Mist" || weather.effetMeteorologique == "Drizzle")
+        {
 
+            //todo faire un sys qui cache les recompense
+        }
+        else if (weather.effetMeteorologique == "Thunderstorm")
+        {
+            _isThunder = true;
+        }
     }
 }

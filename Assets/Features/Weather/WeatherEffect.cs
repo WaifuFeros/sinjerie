@@ -8,7 +8,7 @@ public class WeatherEffect : MonoBehaviour
     public static WeatherEffect Instance { get; private set; }
 
     [SerializeField] private Enemy enemy;
-    [SerializeField] private WeatherManager weather;
+    [SerializeField, HideInInspector] private WeatherManager weather;
 
     private void Awake()
     {
@@ -32,22 +32,31 @@ public class WeatherEffect : MonoBehaviour
        
     }
 
-    public bool OnFreeze(bool isPlayer)
+    public bool OnFreeze(bool isPlayer, int isFreeze)
     {
         if (!isPlayer && enemy.FreezeCounter > 0)
         {
             enemy.FreezeCounter--;
-            return true; //ennemi gele, il saute son tour
+            enemy.WetCounter = 0;
+            if (isFreeze >= 1)
+            {
+                isFreeze = 0;
+                return true; //ennemi gele
+            }
         }
         else if (PlayerManager.Instance.FreezeCounter > 0)
         {
             PlayerManager.Instance.FreezeCounter--;
-            return true; //player gele, il saute son tour
+            PlayerManager.Instance.WetCounter = 0;
+            if (isFreeze >= 3)
+            {
+                isFreeze = 0;
+                return true; //player gele
+            }
         }
         return false;
     }
 
-    //todo weather.effetMeteorologique == "Rain" dans nouvelle fonction dans combatSys.
     public void OnWet(bool isPlayer)
     {   
         if (!isPlayer && enemy.WetCounter > 0)
@@ -81,5 +90,17 @@ public class WeatherEffect : MonoBehaviour
             PlayerManager.Instance.ParalyzeCounter--;
         }
         return false;
+    }
+
+    public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
+    {
+        if (isThunder && !isPlayer)
+        {
+            enemy.TakeDamage(damageThunder);
+        }
+        else if (isThunder && isPlayer)
+        {
+            PlayerManager.Instance.TakeDamage(damageThunder);
+        }
     }
 }
