@@ -252,11 +252,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6754598237630842420, guid: 7e566fc6dd46fbf4db93621927403ba6,
-        type: 3}
-      propertyPath: gpsManager
-      value: 
-      objectReference: {fileID: 4265215304535683444}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -268,18 +263,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 655495273944498451}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6099543184983951143 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6754598237630842420, guid: 7e566fc6dd46fbf4db93621927403ba6,
-    type: 3}
-  m_PrefabInstance: {fileID: 655495273944498451}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e8e70ec5512bdd4fb8eb29655519a04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &853101292240729009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -428,18 +411,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1847418324995773182}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4265215304535683444 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2491141045686051722, guid: 06ef45eeb24177b4988f39a923969ded,
-    type: 3}
-  m_PrefabInstance: {fileID: 1847418324995773182}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 285272aa45e2fa44990636fe2f6089f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2988302546445617009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -670,11 +641,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8645190218317517349}
     m_Modifications:
-    - target: {fileID: 3418754424508100850, guid: a9582fd89e8354d4abdf353bfb07a978,
-        type: 3}
-      propertyPath: weather
-      value: 
-      objectReference: {fileID: 6099543184983951143}
     - target: {fileID: 4282001470115977650, guid: a9582fd89e8354d4abdf353bfb07a978,
         type: 3}
       propertyPath: m_LocalPosition.x

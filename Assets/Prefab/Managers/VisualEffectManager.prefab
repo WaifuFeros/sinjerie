@@ -47,4 +47,5 @@ MonoBehaviour:
   _uiRootContainer: {fileID: 0}
   _fireParticlePrefab: {fileID: 6072495273595165902, guid: a53caa5882fbf0b488a26251c179bc6a,
     type: 3}
-  _waterParticlePrefab: {fileID: 0}
+  _waterParticlePrefab: {fileID: 6072495273595165902, guid: 9ddb1b7c339e60c4a80c893ec67743b9,
+    type: 3}
