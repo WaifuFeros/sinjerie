@@ -66,16 +66,11 @@ public class VisualEffectManager : MonoBehaviour
             return;
         }
 
-        // On récupère le Transform standard
         Transform targetTransform = _uiRootContainer.transform;
-
-        // On stoppe le shake précédent pour éviter les conflits
         targetTransform.DOKill(true);
 
-        // On applique le shake sur la position locale du GameObject vide
         targetTransform.DOShakePosition(duration, strength, vibrato, 90f, false, true)
             .OnComplete(() => {
-                // Remise à zéro parfaite à la fin du Tween
                 targetTransform.localPosition = Vector3.zero;
             });
     }
