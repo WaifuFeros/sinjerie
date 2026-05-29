@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
-  m_Name: heal kit
+  m_Name: Congelateur
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 21300000, guid: a2b9aa90e3ec36749afd7cac31507120, type: 3}
-  objetName: Heal Kit
-  objetDescription: Can heal !
-  objetMaterialType: 5
-  objetWeight: 3
+  objetSprite: {fileID: 0}
+  objetName: "Cong\xE9lateur"
+  objetDescription: "un froid proche du z\xE9ro absolu se d\xE9gage de l'objet"
+  objetMaterialType: 0
+  objetWeight: 6
   objectType: 0
-  objectEffect: 6
+  objectEffect: 9
   specialAction: {fileID: 0}
-  Rarity: 1
+  Rarity: 4
