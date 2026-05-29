@@ -382,7 +382,7 @@ public class CombatSystem : MonoBehaviour
                     break;
                 case ObjetMaterialType.Metal:
                     _playerStats.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
-                    _weatherEffect.Thunder(isPlayer, _isThunder, _damageThunder);
+                    _weatherEffect.Thunder(isPlayer, weather.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
                     break;
                 case ObjetMaterialType.Wood:
                     if (_playerStats.FireCounter > 0)
@@ -417,7 +417,7 @@ public class CombatSystem : MonoBehaviour
                     break;
                 case ObjetMaterialType.Metal:
                     currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
-                    _weatherEffect.Thunder(!isPlayer,_isThunder, _damageThunder);
+                    _weatherEffect.Thunder(isPlayer, weather.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
 
                     break;
                 case ObjetMaterialType.Wood:
@@ -431,21 +431,21 @@ public class CombatSystem : MonoBehaviour
     // Verifie si il pleut pour appliquer l'effet de mouille au debut du combat et a la fin de chaque tour
     private void MeteoCheck()
     {
-        if (weather.effetMeteorologique == "Rain")
+        if (weather.effetMeteorologique == GameWeatherType.Rain)
         {
             currentEnemy.WetCounter = _wetDuration;
             _playerStats.WetCounter = _wetDuration;
         }
-        else if (weather.effetMeteorologique == "Snow")
+        else if (weather.effetMeteorologique == GameWeatherType.Snow)
         {
             //todo trouver un truc
         }
-        else if (weather.effetMeteorologique == "Mist" || weather.effetMeteorologique == "Drizzle")
+        else if (weather.effetMeteorologique == GameWeatherType.Mist)
         {
 
             //todo faire un sys qui cache les recompense
         }
-        else if (weather.effetMeteorologique == "Thunderstorm")
+        else if (weather.effetMeteorologique == GameWeatherType.Thunderstorm)
         {
             _isThunder = true;
         }
