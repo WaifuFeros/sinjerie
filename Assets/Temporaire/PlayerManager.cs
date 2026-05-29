@@ -61,6 +61,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void TakeDamage(int damage)
     {
+        VisualEffectManager.Instance.ShakeUI(0.3f, 20f, 15);
         stats.currentHealth -= damage;
         UpdateHealthBar();
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class VisualEffectManager : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class VisualEffectManager : MonoBehaviour
         Water,
     }
 
-
+    [SerializeField] private RectTransform _uiRootContainer;
     [SerializeField] private GameObject _fireParticlePrefab;
     [SerializeField] private GameObject _waterParticlePrefab;
 
@@ -55,5 +56,21 @@ public class VisualEffectManager : MonoBehaviour
         if (particleGO == null) return;
         Destroy(particleGO);
 
+    }
+
+    public void ShakeUI(float duration = 0.5f, float strength = 15f, int vibrato = 10)
+    {
+        Debug.Log("ShakeUI called with duration: " + duration + ", strength: " + strength + ", vibrato: " + vibrato);
+        if (_uiRootContainer == null) return;
+
+        Debug.Log("ShakeUI called with duratioezgzegzegegzegzen: " + duration + ", strength: " + strength + ", vibrato: " + vibrato);
+        // On stoppe le shake précédent au cas où
+        _uiRootContainer.DOKill(true);
+
+        _uiRootContainer.DOShakePosition(duration, strength, vibrato, 90f, false, true)
+            .OnComplete(() => {
+                // Sécurité : On force la remise à zéro locale pour éviter que l'UI reste décalée
+                _uiRootContainer.localPosition = Vector3.zero;
+            });
     }
 }

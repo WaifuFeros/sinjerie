@@ -1896,6 +1896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a99b24c2066dd49bf2df033a646663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uiRootContainer: {fileID: 710840574}
   _fireParticlePrefab: {fileID: 6072495273595165902, guid: a53caa5882fbf0b488a26251c179bc6a,
     type: 3}
   _waterParticlePrefab: {fileID: 0}
