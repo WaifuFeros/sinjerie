@@ -13,7 +13,7 @@ public class VisualEffectManager : MonoBehaviour
         Water,
     }
 
-    [SerializeField] private RectTransform _uiRootContainer;
+    [SerializeField] private GameObject _uiRootContainer;
     [SerializeField] private GameObject _fireParticlePrefab;
     [SerializeField] private GameObject _waterParticlePrefab;
 
@@ -60,17 +60,23 @@ public class VisualEffectManager : MonoBehaviour
 
     public void ShakeUI(float duration = 0.5f, float strength = 15f, int vibrato = 10)
     {
-        Debug.Log("ShakeUI called with duration: " + duration + ", strength: " + strength + ", vibrato: " + vibrato);
-        if (_uiRootContainer == null) return;
+        if (_uiRootContainer == null)
+        {
+            Debug.LogWarning("ShakeUI : Aucun GameObject parent assigné !");
+            return;
+        }
 
-        Debug.Log("ShakeUI called with duratioezgzegzegegzegzen: " + duration + ", strength: " + strength + ", vibrato: " + vibrato);
-        // On stoppe le shake précédent au cas où
-        _uiRootContainer.DOKill(true);
+        // On récupère le Transform standard
+        Transform targetTransform = _uiRootContainer.transform;
 
-        _uiRootContainer.DOShakePosition(duration, strength, vibrato, 90f, false, true)
+        // On stoppe le shake précédent pour éviter les conflits
+        targetTransform.DOKill(true);
+
+        // On applique le shake sur la position locale du GameObject vide
+        targetTransform.DOShakePosition(duration, strength, vibrato, 90f, false, true)
             .OnComplete(() => {
-                // Sécurité : On force la remise à zéro locale pour éviter que l'UI reste décalée
-                _uiRootContainer.localPosition = Vector3.zero;
+                // Remise à zéro parfaite à la fin du Tween
+                targetTransform.localPosition = Vector3.zero;
             });
     }
 }

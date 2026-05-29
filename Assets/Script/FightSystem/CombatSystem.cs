@@ -411,6 +411,7 @@ public class CombatSystem : MonoBehaviour
     // Verifie si il pleut pour appliquer l'effet de mouille au debut du combat et a la fin de chaque tour
     private void MeteoCheck()
     {
+        return;
         if (weather.effetMeteorologique == "Rain")
         {
             currentEnemy.WetCounter = _wetDuration;
