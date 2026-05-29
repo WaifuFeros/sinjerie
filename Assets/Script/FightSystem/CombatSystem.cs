@@ -381,7 +381,7 @@ public class CombatSystem : MonoBehaviour
                     break;
                 case ObjetMaterialType.Metal:
                     _playerStats.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
-                    _weatherEffect.Thunder(isPlayer, _isThunder, _damageThunder);
+                    _weatherEffect.Thunder(isPlayer, weather.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
                     break;
                 case ObjetMaterialType.Wood:
                     if (_playerStats.FireCounter > 0)
@@ -421,7 +421,7 @@ public class CombatSystem : MonoBehaviour
                     break;
                 case ObjetMaterialType.Metal:
                     currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
-                    _weatherEffect.Thunder(!isPlayer,_isThunder, _damageThunder);
+                    _weatherEffect.Thunder(isPlayer, weather.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
 
                     break;
                 case ObjetMaterialType.Wood:
@@ -449,7 +449,7 @@ public class CombatSystem : MonoBehaviour
 
             //todo faire un sys qui cache les recompense
         }
-        else if (weather.effetMeteorologique == GameWeatherType.Mist)
+        else if (weather.effetMeteorologique == GameWeatherType.Thunderstorm)
         {
             _isThunder = true;
         }

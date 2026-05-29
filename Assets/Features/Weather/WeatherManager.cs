@@ -1,25 +1,32 @@
 using System;
 using System.Collections;
-using System.Runtime.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class WeatherManager : MonoBehaviour
 {
+    public static WeatherManager Instance { get; private set; }
+
     public GPSManager gpsManager;
 
     public TextMeshProUGUI cityText;
     public TextMeshProUGUI tempText;
     public TextMeshProUGUI descText;
-    [SerializeField, HideInInspector] public float temperature;
-    [SerializeField, HideInInspector] public GameWeatherType effetMeteorologique;
+    [SerializeField, ReadOnlyField] public float temperature;
+    [SerializeField, ReadOnlyField] public GameWeatherType effetMeteorologique;
     public bool LockWeather { get; set; } = false;
     //public TextMeshProUGUI coordText;
 
     public WeatherConversionData[] conversionData;
 
     public string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
+
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(this); }
+    }
 
     void Start()
     {
@@ -83,6 +90,29 @@ public class WeatherManager : MonoBehaviour
 
         return weatherType;
     }
+
+    #region Debug
+
+    public void SetWeatherByType(GameWeatherType type)
+    {
+        foreach (var item in conversionData)
+        {
+            if (item.asType == type)
+            {
+                effetMeteorologique = item.asType;
+                descText.text = effetMeteorologique.ToString();
+                return;
+            }
+        }
+    }
+
+    public void SetTemperature(float temperature)
+    {
+        this.temperature = temperature;
+        tempText.text = $"{this.temperature:F1} °C";
+    }
+
+    #endregion
 }
 
 [System.Serializable]
