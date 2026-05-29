@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Runtime.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,8 +13,11 @@ public class WeatherManager : MonoBehaviour
     public TextMeshProUGUI tempText;
     public TextMeshProUGUI descText;
     [SerializeField, HideInInspector] public float temperature;
-    [SerializeField, HideInInspector] public string effetMeteorologique;
+    [SerializeField, HideInInspector] public GameWeatherType effetMeteorologique;
+    public bool LockWeather { get; set; } = false;
     //public TextMeshProUGUI coordText;
+
+    public WeatherConversionData[] conversionData;
 
     public string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
 
@@ -24,6 +29,9 @@ public class WeatherManager : MonoBehaviour
 
     IEnumerator GetWeather()
     {
+        if (LockWeather)
+            yield break;
+
         Debug.Log("Coroutine GetWeather démarrée, attente GPS...");
         yield return new WaitUntil(() => gpsManager != null && gpsManager.gpsReady);
         Debug.Log("GPS prêt ! Latitude: " + gpsManager.latitude + ", Longitude: " + gpsManager.longitude);
@@ -46,12 +54,34 @@ public class WeatherManager : MonoBehaviour
         Debug.Log("Requête météo réussie, récupération des données...");
         WeatherData data = JsonUtility.FromJson<WeatherData>(request.downloadHandler.text);
         temperature = data.main.temp; //save temperature for use in weather effect
-        effetMeteorologique = data.weather[0].main; //save weather effect for use in weather effect system
+        //effetMeteorologique = data.weather[0].main; //save weather effect for use in weather effect system
+        effetMeteorologique = convertWeatherStateToGameWeather(data.weather[0].main);
 
         cityText.text = data.name;
         tempText.text = $"{data.main.temp:F1} °C";
         descText.text = data.weather[0].main;
         //coordText.text = $"{gpsManager.latitude:F4}, {gpsManager.longitude:F4}";
+    }
+
+    private GameWeatherType convertWeatherStateToGameWeather(string stateString)
+    {
+        GameWeatherType weatherType = GameWeatherType.ClearSky;
+        for (int i = 0; i < conversionData.Length; i++)
+        {
+            if (conversionData[i].weatherMain == stateString)
+            {
+                weatherType = conversionData[i].asType;
+                break;
+            }
+            else if (conversionData[i].isDefault)
+            {
+                weatherType = conversionData[i].asType;
+            }
+        }
+
+        Debug.Log($"{stateString} => {weatherType.ToString()}");
+
+        return weatherType;
     }
 }
 
@@ -73,4 +103,21 @@ public class Main
 public class Weather
 {
     public string main;
+}
+
+public enum GameWeatherType
+{
+    ClearSky,
+    Rain,
+    Mist,
+    Thunderstorm,
+    Snow
+}
+
+[Serializable]
+public class WeatherConversionData
+{
+    public string weatherMain;
+    public GameWeatherType asType;
+    public bool isDefault;
 }
