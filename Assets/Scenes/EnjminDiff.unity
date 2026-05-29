@@ -306,6 +306,7 @@ MonoBehaviour:
   tempText: {fileID: 213580307}
   descText: {fileID: 1131440333}
   temperature: 0
+  effetMeteorologique: 
   apiKey: cab53e4ddd7d114609d442afdc97e4af
 --- !u!114 &50895038
 MonoBehaviour:
@@ -1848,8 +1849,56 @@ Transform:
   - {fileID: 50895036}
   - {fileID: 542112500}
   - {fileID: 2031475724}
+  - {fileID: 838506695}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &838506694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 838506695}
+  - component: {fileID: 838506696}
+  m_Layer: 0
+  m_Name: VisualEffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &838506695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838506694}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 766016419}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &838506696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838506694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a99b24c2066dd49bf2df033a646663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fireParticlePrefab: {fileID: 6072495273595165902, guid: a53caa5882fbf0b488a26251c179bc6a,
+    type: 3}
+  _waterParticlePrefab: {fileID: 0}
 --- !u!1 &851288017
 GameObject:
   m_ObjectHideFlags: 0
