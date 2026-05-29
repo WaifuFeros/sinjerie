@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class ItemToBuy : MonoBehaviour
 {
