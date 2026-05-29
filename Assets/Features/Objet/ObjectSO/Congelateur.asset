@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 0}
   objetName: "Cong\xE9lateur"
   objetDescription: "un froid proche du z\xE9ro absolu se d\xE9gage de l'objet"
-  objetMaterialType: 0
+  objetMaterialType: 4
   objetWeight: 6
   objectType: 0
   objectEffect: 9

@@ -9,6 +9,7 @@ public enum ObjetMaterialType
     Wood,
     Fire,
     Ice,
+    PerfectIce,
     Water,
     Nothing
 }

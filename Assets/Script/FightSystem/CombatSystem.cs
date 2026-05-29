@@ -379,6 +379,9 @@ public class CombatSystem : MonoBehaviour
                     if (PlayerManager.Instance.FireCounter > 0)
                         PlayerManager.Instance.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
                     break;
+                case ObjetMaterialType.PerfectIce:
+                    PlayerManager.Instance.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
+                    break;
             }
         }
         else
@@ -414,6 +417,9 @@ public class CombatSystem : MonoBehaviour
                 case ObjetMaterialType.Wood:
                     if (currentEnemy.FireCounter > 0)
                         currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    currentEnemy.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
                     break;
             }
         }
