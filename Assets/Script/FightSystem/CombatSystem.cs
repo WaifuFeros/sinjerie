@@ -421,11 +421,14 @@ public class CombatSystem : MonoBehaviour
                 case ObjetMaterialType.PerfectIce:
                     currentEnemy.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
                     break;
+                case ObjetMaterialType.Electricity:
+                    currentEnemy.ParalyzeCounter += 1;
+                    break;
             }
         }
     }
 
-    // Verifie si il pleut pour appliquer l'effet de mouille au debut du combat et a la fin de chaque tour
+    // Verifie les effets météorologiques au début et à la fin de chaque tour pour appliquer les effets correspondants
     private void MeteoCheck()
     {
         if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Rain)

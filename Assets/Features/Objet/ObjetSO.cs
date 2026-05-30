@@ -10,6 +10,7 @@ public enum ObjetMaterialType
     Fire,
     Ice,
     PerfectIce,
+    Electricity,
     Water,
     Nothing
 }

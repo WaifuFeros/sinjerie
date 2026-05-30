@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
-  m_Name: TastyCrousty
+  m_Name: Tazer
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 0}
-  objetName: TastyCrousty
-  objetDescription: "Il n'a pas l'air p\xE9rim\xE9"
+  objetName: Taze
+  objetDescription: "Un boitier venant d'un autre temps qui produit de l'electricit\xE9"
   objetMaterialType: 5
-  objetWeight: 2
-  objectType: 0
-  objectEffect: 2
+  objetWeight: 4
+  objectType: 1
+  objectEffect: 6
   specialAction: {fileID: 0}
-  Rarity: 0
+  Rarity: 3
