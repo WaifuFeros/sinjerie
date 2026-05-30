@@ -55,6 +55,12 @@ public class WeatherEffect : MonoBehaviour
         return false;
     }
 
+    public void isSnowing() 
+    {
+        PlayerManager.Instance.stats.currentStamina -= 2;
+        //voir avec viktor quand il m'aura repondu sur discord
+    }
+
     public void OnWet(bool isPlayer)
     {   
         if (!isPlayer && enemy.WetCounter > 0)

@@ -419,7 +419,7 @@ public class CombatSystem : MonoBehaviour
                         currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
                     break;
                 case ObjetMaterialType.PerfectIce:
-                    currentEnemy.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
+                    currentEnemy.FreezeCounter += 2; 
                     break;
                 case ObjetMaterialType.Electricity:
                     currentEnemy.ParalyzeCounter += 1;
@@ -438,7 +438,7 @@ public class CombatSystem : MonoBehaviour
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Snow)
         {
-            //todo trouver un truc
+            WeatherEffect.Instance.isSnowing();
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Mist)
         {
