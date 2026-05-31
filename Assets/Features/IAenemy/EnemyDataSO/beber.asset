@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 091ed4e23cd509645b59a769b5e5d219, type: 3}
   m_Name: beber
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 4ccdf5f8c73d5534394de287a6c149bf, type: 3}
+  Sprite: {fileID: 21300000, guid: 27017b68cbcf09544a76bc35fbe0ff80, type: 3}
   Name: Beber
   Description: C'est un singe
   MaxHealth: 10
