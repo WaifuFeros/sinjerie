@@ -429,12 +429,26 @@ public class CombatSystem : MonoBehaviour
     }
 
     // Verifie les effets météorologiques au début et à la fin de chaque tour pour appliquer les effets correspondants
-    private void MeteoCheck()
+    public void MeteoCheck(bool isDebug = false)
     {
         if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Rain)
         {
-            currentEnemy.WetCounter = _wetDuration;
-            PlayerManager.Instance.WetCounter = _wetDuration;
+            if (!isDebug)
+            {
+                currentEnemy.WetCounter = _wetDuration;
+                PlayerManager.Instance.WetCounter = _wetDuration;
+            }
+            else
+            {
+                if (currentEnemy.WetCounter <= 0)
+                {
+                    currentEnemy.WetCounter = _wetDuration;
+                }
+                if (PlayerManager.Instance.WetCounter <= 0)
+                {
+                    PlayerManager.Instance.WetCounter = _wetDuration;
+                }
+            }
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Snow)
         {
