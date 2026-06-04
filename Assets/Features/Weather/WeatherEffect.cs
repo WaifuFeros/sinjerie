@@ -9,33 +9,27 @@ public class WeatherEffect : MonoBehaviour
 
     [SerializeField] private Enemy enemy;
     [SerializeField, HideInInspector] private WeatherManager weather;
-    private int _enemyMaxStamine;
+
 
     private void Awake()
     {
-        _enemyMaxStamine = enemy.EnemyStats.MaxStamina;
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
     }
 
     public void OnFire(bool isPlayer)
     {
-        if (enemy.EnemyStats.MaxStamina != _enemyMaxStamine)
-        {
-            enemy.EnemyStats.MaxStamina = _enemyMaxStamine;
-            PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina;
-        }
         if (!isPlayer && enemy.FireCounter > 0)
-       {
+        {
            enemy.TakeDamage(Convert.ToInt32(weather.temperature / 7));
            enemy.FireCounter--;
-       }
-       else if (PlayerManager.Instance.FireCounter > 0)
-       {
+        }
+        else if (PlayerManager.Instance.FireCounter > 0)
+        {
            PlayerManager.Instance.TakeDamage(Convert.ToInt32(weather.temperature / 7));
            PlayerManager.Instance.FireCounter--;
-       }
-       CombatSystem.Instance.CheckCombatEnd();
+        }
+        CombatSystem.Instance.CheckCombatEnd();
        
     }
 
@@ -70,11 +64,6 @@ public class WeatherEffect : MonoBehaviour
 
     public void OnWet(bool isPlayer)
     {
-        if (enemy.EnemyStats.MaxStamina != _enemyMaxStamine)
-        {
-            enemy.EnemyStats.MaxStamina = _enemyMaxStamine;
-            PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina;
-        }
         if (!isPlayer && enemy.WetCounter > 0)
         {
             enemy.FireCounter = 0;
@@ -88,11 +77,6 @@ public class WeatherEffect : MonoBehaviour
 
     public bool OnParalyze(bool isPlayer)
     {
-        if (enemy.EnemyStats.MaxStamina != _enemyMaxStamine)
-        {
-            enemy.EnemyStats.MaxStamina = _enemyMaxStamine;
-            PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina;
-        }
         int paralyze = UnityEngine.Random.Range(0, 100);
         if (!isPlayer && enemy.ParalyzeCounter > 0 )
         {
@@ -115,11 +99,6 @@ public class WeatherEffect : MonoBehaviour
 
     public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
     {
-        if(enemy.EnemyStats.MaxStamina != _enemyMaxStamine)
-        {
-            enemy.EnemyStats.MaxStamina = _enemyMaxStamine;
-            PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina;
-        }
         if (isThunder && !isPlayer)
         {
             enemy.TakeDamage(damageThunder);

@@ -1,8 +1,9 @@
-using System.Collections;
-using UnityEngine;
-using System;
-using System.Collections.Generic;
 using DG.Tweening;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 using static VisualEffectManager;
 
 
@@ -24,7 +25,6 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private int _wetDuration;
     [SerializeField] private int _addFireDuration;
     [SerializeField] private int _damageThunder;
-    [SerializeField] bool _isThunder = false;
 
     [Header("Animation References")]
     [SerializeField] private Transform _canvasParent;
@@ -41,11 +41,13 @@ public class CombatSystem : MonoBehaviour
     private Enemy currentEnemy;
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
+    private int _enemyMaxStamina;
     private bool combatActive = false;
     public bool isPlayerTurn = true;
 
     private void Awake()
     {
+        _enemyMaxStamina = currentEnemy.EnemyStats.MaxStamina;
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
     }
@@ -442,12 +444,15 @@ public class CombatSystem : MonoBehaviour
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Mist)
         {
-
             //todo faire un sys qui cache les recompense
         }
-        else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+        if(WeatherManager.Instance.effetMeteorologique != GameWeatherType.Snow)
         {
-            _isThunder = true;
+            if (currentEnemy.EnemyStats.MaxStamina != _enemyMaxStamina)
+            {
+                currentEnemy.EnemyStats.MaxStamina = _enemyMaxStamina;
+                PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina;
+            }
         }
     }
 }
