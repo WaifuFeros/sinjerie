@@ -8,6 +8,7 @@ public class DebugController : MonoBehaviour
 {
     public GameObject debugPanel;
     public TMP_Dropdown weatherDropdown;
+    public TMP_InputField temperatureInputField;
 
     private List<GameWeatherType> weatherList;
 
@@ -19,6 +20,7 @@ public class DebugController : MonoBehaviour
     public void OpenDebug()
     {
         InitWeatherDropdown();
+        InitTemperature();
         debugPanel.SetActive(true);
     }
 
@@ -36,9 +38,15 @@ public class DebugController : MonoBehaviour
         weatherDropdown.AddOptions(weatherList.Select(x => x.ToString()).ToList());
     }
 
+    public void InitTemperature()
+    {
+        temperatureInputField.SetTextWithoutNotify(WeatherManager.Instance.temperature.ToString());
+    }
+
     public void SetWeather(int index)
     {
         WeatherManager.Instance.SetWeatherByType(weatherList[index]);
+        CombatSystem.Instance.MeteoCheck(true);
     }
 
     public void SetWeatherLock(bool value)
