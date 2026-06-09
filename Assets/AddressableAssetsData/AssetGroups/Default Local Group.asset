@@ -29,8 +29,38 @@ MonoBehaviour:
     m_SerializedLabels:
     - Enemy
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1922c64f124679c4eb1fd30d69eb759f
+    m_Address: "Assets/Features/Objet/ObjectSO/Gla\xE7on.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b7063bdc0a5f46408c7c115062d0f60
+    m_Address: Assets/Features/Objet/ObjectSO/glace.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1fb73396d959f564f8377bbdef3fae3e
+    m_Address: "Assets/Features/Objet/ObjectSO/F\xE9e.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 202fbd53f487f364aa533a4ebe908b87
+    m_Address: Assets/Features/Objet/ObjectSO/Casserole.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2189040e6dd943a48af681ed39a0dd1a
     m_Address: Assets/Features/Objet/ObjectSO/weight to one.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 291f732214b1d48498e0bbe7fd37450e
+    m_Address: Assets/Features/Objet/ObjectSO/SceauDeau.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
@@ -41,11 +71,41 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 339490779a92aa048bf26dc55d8771a5
+    m_Address: Assets/Features/Objet/ObjectSO/Ramen.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 39aa3a2d8d50a7a48874982575d9efb9
     m_Address: Assets/Features/IAenemy/EnemySO/beber.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3de7df18b0736e64db5af12212917e58
+    m_Address: Assets/Features/Objet/ObjectSO/SangDeLicorne.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4be525e346d5e894da147c28bb5d8c27
+    m_Address: Assets/Features/Objet/ObjectSO/Pringles.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5020cfe67d6343b40baf1c3249feb520
+    m_Address: Assets/Features/Objet/ObjectSO/PocheFroide.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 600e3565089aec84fbb7d71cc73719ec
+    m_Address: Assets/Features/Objet/ObjectSO/Four.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 660dbaf783506f94c91a55198006a2cf
     m_Address: Assets/Features/Objet/ObjectSO/rock.asset
@@ -59,8 +119,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 857e1776262ed8a46b7a77aa772f78eb
+    m_Address: Assets/Features/Objet/ObjectSO/PapierToilette.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 868b49fe578a609459929659800dea7b
+    m_Address: Assets/Features/Objet/ObjectSO/Chaise.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8853d16ccc8f687489ce34377a2b5a37
+    m_Address: Assets/Features/Objet/ObjectSO/Chaussures.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c328fd249b3f444b93552af4224f8f6
     m_Address: Assets/Features/Objet/ObjectSO/heal potion.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0cbff3bb2e03ec4995742c67bcd28de
+    m_Address: Assets/Features/Objet/ObjectSO/TastyCrousty.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
@@ -71,8 +155,50 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9e76fffa00d6b743b5f3c0b596dfdf5
+    m_Address: Assets/Features/Objet/ObjectSO/Couronne.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1782ff0266c66a47acc4902c675932a
+    m_Address: Assets/Features/Objet/ObjectSO/Congelateur.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c55c76fd672ea174fb12f0e62044694d
     m_Address: Assets/Features/Objet/ObjectSO/sword.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c718e095ff2be1f42866a38b5eb4f8f7
+    m_Address: Assets/Features/Objet/ObjectSO/Bandage.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cda912efc7296234e85547b44aaecc63
+    m_Address: Assets/Features/Objet/ObjectSO/Pomme.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e39ac38057e9cc144ae1b469c8daf3fa
+    m_Address: Assets/Features/Objet/ObjectSO/Tazer.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9cf4aed8ac5b9e4f81c40a95634f792
+    m_Address: Assets/Features/Objet/ObjectSO/Frigo.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd6c4bfad975f9b4182ecf282e60b927
+    m_Address: Assets/Features/Objet/ObjectSO/PierrePhilosophale.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items

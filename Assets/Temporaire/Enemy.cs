@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     public EnemySO EnemyStats;
 
     public int currentHealth;
+    public int currentStaminaMax;
 
     public void Initialize(EnemySO stats)
     {
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
         EnemyStats = stats;
         currentHealth = EnemyStats.MaxHealth;
         _enemyImage.sprite = EnemyStats.Sprite;
+        currentStaminaMax = EnemyStats.MaxStamina;
         UpdateHealthBar();
     }
 

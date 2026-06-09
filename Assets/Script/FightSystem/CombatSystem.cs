@@ -41,13 +41,11 @@ public class CombatSystem : MonoBehaviour
     private Enemy currentEnemy;
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
-    private int _enemyMaxStamina;
     private bool combatActive = false;
     public bool isPlayerTurn = true;
 
     private void Awake()
     {
-        _enemyMaxStamina = currentEnemy.EnemyStats.MaxStamina;
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
     }
@@ -214,9 +212,9 @@ public class CombatSystem : MonoBehaviour
         ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(
             currentEnemy.EnemyStats.Items,
             currentEnemy.currentHealth,
-            currentEnemy.EnemyStats.MaxStamina
+            currentEnemy.currentStaminaMax
         );
-
+        currentEnemy.currentStaminaMax = currentEnemy.EnemyStats.MaxStamina; // Reset stamina max pour l'effet snow
         foreach (ObjetSO item in chosenItems)
         {
             // Animation
@@ -459,14 +457,6 @@ public class CombatSystem : MonoBehaviour
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Mist)
         {
             //todo faire un sys qui cache les recompense
-        }
-        if(WeatherManager.Instance.effetMeteorologique != GameWeatherType.Snow)
-        {
-            if (currentEnemy.EnemyStats.MaxStamina != _enemyMaxStamina)
-            {
-                currentEnemy.EnemyStats.MaxStamina = _enemyMaxStamina;
-                PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina;
-            }
         }
     }
 }
