@@ -454,9 +454,5 @@ public class CombatSystem : MonoBehaviour
         {
             WeatherEffect.Instance.isSnowing();
         }
-        else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Mist)
-        {
-            //todo faire un sys qui cache les recompense
-        }
     }
 }

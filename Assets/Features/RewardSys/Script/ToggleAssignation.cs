@@ -20,11 +20,13 @@ public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerE
     [SerializeField] private Sprite _lengendarySprite;
     [SerializeField] private Sprite _healSprite;
     [SerializeField] private Sprite _atkSprite;
+    [SerializeField] private Sprite _itemHide;
 
     [Header("UI")]
     [SerializeField] private Image itemIcon;
     [SerializeField] private Image itemBackground;
     [SerializeField] private GameObject effectImage;
+    [SerializeField] private GameObject weightImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
 
@@ -35,35 +37,46 @@ public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerE
         RewardSystem = rewardSystem;
 
         // Ajoute les visuels
-        itemIcon.sprite = Item.objetSprite;
-        switch (Item.Rarity)
-        {
-            case ObjetRarity.Common:
-                itemBackground.sprite = _communSprite;
-                break;
-            case ObjetRarity.Uncommon:
-                itemBackground.sprite = _uncommonSprite;
-                break;
-            case ObjetRarity.Rare:
-                itemBackground.sprite = _rareSprite;
-                break;
-            case ObjetRarity.Epic:
-                itemBackground.sprite = _epicSprite;
-                break;
-            case ObjetRarity.Legendary:
-                itemBackground.sprite = _lengendarySprite;
-                break;
-        }
-        effectImage.SetActive(true);
-        if (Item.objectType == ObjetEffectType.Heal)
-            effectImage.GetComponent<Image>().sprite = _healSprite;
-        else if (Item.objectType == ObjetEffectType.Attack)
-            effectImage.GetComponent<Image>().sprite = _atkSprite;
-        else if (Item.objectType == ObjetEffectType.Special)
-            effectImage.SetActive(false);
+        if (WeatherManager.Instance.effetMeteorologique != GameWeatherType.Mist) {
+            itemIcon.sprite = Item.objetSprite;
+            switch (Item.Rarity)
+            {
+                case ObjetRarity.Common:
+                    itemBackground.sprite = _communSprite;
+                    break;
+                case ObjetRarity.Uncommon:
+                    itemBackground.sprite = _uncommonSprite;
+                    break;
+                case ObjetRarity.Rare:
+                    itemBackground.sprite = _rareSprite;
+                    break;
+                case ObjetRarity.Epic:
+                    itemBackground.sprite = _epicSprite;
+                    break;
+                case ObjetRarity.Legendary:
+                    itemBackground.sprite = _lengendarySprite;
+                    break;
+            }
+            effectImage.SetActive(true);
+            if (Item.objectType == ObjetEffectType.Heal)
+                effectImage.GetComponent<Image>().sprite = _healSprite;
+            else if (Item.objectType == ObjetEffectType.Attack)
+                effectImage.GetComponent<Image>().sprite = _atkSprite;
+            else if (Item.objectType == ObjetEffectType.Special)
+                effectImage.SetActive(false);
 
-        effectText.text = Item.objectEffect.ToString();
-        weightText.text = Item.objetWeight.ToString();
+            effectText.text = Item.objectEffect.ToString();
+            weightText.text = Item.objetWeight.ToString();
+        }
+        else
+        {
+            // Affiche une icone de brouillard
+            itemIcon.gameObject.SetActive(false);
+            effectImage.SetActive(false);
+            weightImage.SetActive(false);
+
+            itemBackground.sprite = _itemHide;
+        }
     }
 
     public void PressToggle()
