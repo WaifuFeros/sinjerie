@@ -17,9 +17,6 @@ public class VisualEffectManager : MonoBehaviour
     [SerializeField] private GameObject _fireParticlePrefab;
     [SerializeField] private GameObject _waterParticlePrefab;
 
-
-
-
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -30,11 +27,12 @@ public class VisualEffectManager : MonoBehaviour
     {
         if (targetGO == null) return;
 
-        // VERIFICATION : Si le targetGO a déjà un ParticleSystem dans ses enfants, on arrête.
-        if (targetGO.GetComponentInChildren<ParticleSystem>() != null)
+        // VERIFICATION : Si le targetGO a déjà un ParticleSystem dans ses enfants on le supprime
+        ParticleSystem existingPS = targetGO.GetComponentInChildren<ParticleSystem>();
+        if (existingPS != null)
         {
-            Debug.LogWarning($"{targetGO.name} a déjà un effet de particules actif.");
-            return;
+            existingPS.gameObject.SetActive(false);
+            Destroy(existingPS.gameObject);
         }
 
         GameObject _particlePrefab = null;
@@ -47,6 +45,8 @@ public class VisualEffectManager : MonoBehaviour
                 _particlePrefab = _waterParticlePrefab;
                 break;
         }
+
+        if (_particlePrefab == null) return;
 
         GameObject spawnedParticle = Instantiate(_particlePrefab, targetGO.transform.position, targetGO.transform.rotation);
         spawnedParticle.transform.SetParent(targetGO.transform);
@@ -62,7 +62,6 @@ public class VisualEffectManager : MonoBehaviour
     {
         if (particleGO == null) return;
         Destroy(particleGO);
-
     }
 
     public void ShakeUI(float duration = 0.5f, float strength = 15f, int vibrato = 10)

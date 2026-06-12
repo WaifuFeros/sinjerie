@@ -364,6 +364,7 @@ public class CombatSystem : MonoBehaviour
                     PlayerManager.Instance.FreezeCounter += 1;
                     break;
                 case ObjetMaterialType.Water:
+                    VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Water);
                     if (PlayerManager.Instance.WetCounter == 0) 
                     { 
                         PlayerManager.Instance.WetCounter = _wetDuration; // Applique l'effet de mouille
@@ -402,6 +403,7 @@ public class CombatSystem : MonoBehaviour
                     currentEnemy.FreezeCounter += 1;
                     break;
                 case ObjetMaterialType.Water:
+                    VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
                     if (currentEnemy.WetCounter == 0)
                     {
                         currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
