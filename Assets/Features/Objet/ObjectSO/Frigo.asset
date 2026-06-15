@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: Frigo
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
+  objetSprite: {fileID: 21300000, guid: 7aafb84e6a23ffe4793303a21e6dcee3, type: 3}
   objetName: Frigo
   objetDescription: "un vieux frigo qui d\xE9gage un air frais sp\xE9ciale"
   objetMaterialType: 3

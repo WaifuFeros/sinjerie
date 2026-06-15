@@ -5956,6 +5956,77 @@ PrefabInstance:
       propertyPath: staminaUI
       value: 
       objectReference: {fileID: 1058230610}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.size
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: c718e095ff2be1f42866a38b5eb4f8f7,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: 868b49fe578a609459929659800dea7b,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[11]
+      value: 
+      objectReference: {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[12]
+      value: 
+      objectReference: {fileID: 11400000, guid: 600e3565089aec84fbb7d71cc73719ec,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[13]
+      value: 
+      objectReference: {fileID: 11400000, guid: e9cf4aed8ac5b9e4f81c40a95634f792,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[14]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1922c64f124679c4eb1fd30d69eb759f,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[15]
+      value: 
+      objectReference: {fileID: 11400000, guid: cda912efc7296234e85547b44aaecc63,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[16]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3de7df18b0736e64db5af12212917e58,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[17]
+      value: 
+      objectReference: {fileID: 11400000, guid: cda912efc7296234e85547b44aaecc63,
+        type: 2}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: stats.Deck.Array.data[18]
+      value: 
+      objectReference: {fileID: 11400000, guid: cda912efc7296234e85547b44aaecc63,
+        type: 2}
     - target: {fileID: 7305757815109641315, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: Panel

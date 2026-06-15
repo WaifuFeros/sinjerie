@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: Four
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
+  objetSprite: {fileID: 21300000, guid: 0a84a6278498be1429b4d25c11c7bf9f, type: 3}
   objetName: Four
   objetDescription: Ancien four de Satan
   objetMaterialType: 2

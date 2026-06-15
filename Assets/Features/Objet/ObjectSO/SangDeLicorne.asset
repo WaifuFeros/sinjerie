@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: SangDeLicorne
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
+  objetSprite: {fileID: 21300000, guid: 19cc72642e7f5b1429fd341184cf5b9e, type: 3}
   objetName: Sang de licorne
   objetDescription: on raconte qu'il peut rallonger la vie
   objetMaterialType: 5

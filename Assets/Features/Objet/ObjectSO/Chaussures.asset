@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: Chaussures
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
+  objetSprite: {fileID: 21300000, guid: b9084af0b84e45748a8a14891167311e, type: 3}
   objetName: Chaussures
   objetDescription: Des chaussures
   objetMaterialType: 5
