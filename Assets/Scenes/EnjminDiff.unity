@@ -6114,6 +6114,12 @@ PrefabInstance:
       objectReference: {fileID: 2058587209}
     - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
+      propertyPath: dataStorage
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c66f717fc50a28409593ad2b9b1a309,
+        type: 2}
+    - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
       propertyPath: _canvasParent
       value: 
       objectReference: {fileID: 710840574}

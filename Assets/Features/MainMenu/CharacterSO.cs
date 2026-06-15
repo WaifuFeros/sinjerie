@@ -9,5 +9,5 @@ public class CharacterSO : ScriptableObject
     public string characterName;
     public string characterDescription;
     public int price;
-    public List<ObjetSO> objets;
+    public ObjetSO[] startDeck;
 }

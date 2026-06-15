@@ -38,6 +38,9 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private GameObject _playerhead;
     [SerializeField] private GameObject _ennemyhead;
 
+    [Header("Data Storage")]
+    [SerializeField] private SelectedCharacterData dataStorage;
+
     private Enemy currentEnemy;
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
@@ -54,6 +57,10 @@ public class CombatSystem : MonoBehaviour
     {
         // Configurer le bouton de passage de tour
         SetupSkipTurnButton();
+        if (dataStorage.selectedCharacter != null)
+        {
+            PlayerManager.Instance.stats.Deck = dataStorage.selectedCharacter.startDeck;
+        }
         onLoadCompleted?.Invoke();
     }
 

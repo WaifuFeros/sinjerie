@@ -16,10 +16,13 @@ MonoBehaviour:
   characterName: Sinj
   characterDescription: Un sinj
   price: 0
-  objets:
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+  startDeck:
+  - {fileID: 11400000, guid: c718e095ff2be1f42866a38b5eb4f8f7, type: 2}
+  - {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5, type: 2}
+  - {fileID: 11400000, guid: 202fbd53f487f364aa533a4ebe908b87, type: 2}
+  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
+  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
+  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
+  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
+  - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}
+  - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}

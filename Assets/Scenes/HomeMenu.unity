@@ -3470,6 +3470,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 059f07d0df7053841b9c14ccfa906d3f, type: 2}
   characterPrefab: {fileID: 3162358337384565786, guid: 47c10ee26da9716489c2321007d372fd,
     type: 3}
+  dataStorage: {fileID: 11400000, guid: 1c66f717fc50a28409593ad2b9b1a309, type: 2}
   characterSelection: {fileID: 1990708403}
   leftButton: {fileID: 194236915}
   rightButton: {fileID: 345071296}
