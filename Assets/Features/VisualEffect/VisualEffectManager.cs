@@ -116,7 +116,7 @@ public class VisualEffectManager : MonoBehaviour
         iconTransform.DOScale(new Vector3(0.8f, 1.2f, 1f), duration * 0.3f)
             .SetLoops(2, LoopType.Yoyo);
         Color originalColor = Color.white;
-        iconImage.DOColor(new Color(0.3f, 1f, 0.3f), duration * 0.5f)
+        iconImage.DOColor(new Color(0.5f, 0.9f, 0.5f), duration * 0.5f)
             .OnComplete(() =>
             {
                 iconImage.DOColor(originalColor, duration * 0.5f);
