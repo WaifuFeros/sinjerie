@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     }
     public void Heal(int heal)
     {
+        VisualEffectManager.Instance.EnemyHeal();
         currentHealth = Mathf.Min(EnemyStats.MaxHealth, currentHealth + heal);
         UpdateHealthBar();
     }
