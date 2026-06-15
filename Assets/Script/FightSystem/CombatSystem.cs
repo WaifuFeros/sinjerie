@@ -34,7 +34,7 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private float _animationDuration = 0.8f;
 
 
-    [Header("Tempo")]
+    [Header("UI")]
     [SerializeField] private GameObject _playerhead;
     [SerializeField] private GameObject _ennemyhead;
 
@@ -60,6 +60,7 @@ public class CombatSystem : MonoBehaviour
         if (dataStorage.selectedCharacter != null)
         {
             PlayerManager.Instance.stats.Deck = dataStorage.selectedCharacter.startDeck;
+            _playerhead.GetComponent<UnityEngine.UI.Image>().sprite = dataStorage.selectedCharacter.characterSprite;
         }
         onLoadCompleted?.Invoke();
     }
