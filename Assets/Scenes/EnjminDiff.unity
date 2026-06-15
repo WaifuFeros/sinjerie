@@ -5923,6 +5923,11 @@ PrefabInstance:
       objectReference: {fileID: 969955303}
     - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
+      propertyPath: _enemyIcon
+      value: 
+      objectReference: {fileID: 2134683395}
+    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
       propertyPath: _uiRootContainer
       value: 
       objectReference: {fileID: 1178827169}

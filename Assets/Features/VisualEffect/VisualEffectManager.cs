@@ -13,9 +13,16 @@ public class VisualEffectManager : MonoBehaviour
         Water,
     }
 
+    [Header("UI")]
     [SerializeField] private GameObject _uiRootContainer;
+    [SerializeField] private GameObject _enemyIcon;
+
+
+    [Header("Prefab")]
     [SerializeField] private GameObject _fireParticlePrefab;
     [SerializeField] private GameObject _waterParticlePrefab;
+
+
 
     private void Awake()
     {
@@ -79,5 +86,23 @@ public class VisualEffectManager : MonoBehaviour
             .OnComplete(() => {
                 targetTransform.localPosition = Vector3.zero;
             });
+    }
+    public void EnemyTakeDamage()
+    {
+        Transform iconTransform = _enemyIcon.transform;
+        UnityEngine.UI.Image iconImage = _enemyIcon.GetComponent<UnityEngine.UI.Image>();
+        iconTransform.DOKill(true);
+        if (iconImage != null) iconImage.DOKill(true);
+        float duration = 0.3f;
+        iconTransform.DOShakePosition(duration, strength: 20f, vibrato: 15);
+        iconTransform.DOScale(new Vector3(1.2f, 0.8f, 1f), duration * 0.3f) 
+            .SetLoops(2, LoopType.Yoyo); 
+        Color originalColor = Color.white;
+        iconImage.DOColor(Color.red, duration * 0.2f)
+            .OnComplete(() =>
+            {
+                iconImage.DOColor(originalColor, duration * 0.8f);
+            });
+        
     }
 }

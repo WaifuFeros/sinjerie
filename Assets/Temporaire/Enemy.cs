@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        VisualEffectManager.Instance.EnemyTakeDamage();
         currentHealth = Mathf.Max(0, currentHealth - damage);
         UpdateHealthBar();
     }
