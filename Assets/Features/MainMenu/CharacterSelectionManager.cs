@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CharacterSelectionManager : MonoBehaviour
 {
     [SerializeField] private List<CharacterSO> characterList;
     [SerializeField] private GameObject characterPrefab;
+    [SerializeField] private GameObject itemPrefab;
 
     [Header("Data Storage")]
     [SerializeField] private SelectedCharacterData dataStorage;
@@ -16,6 +18,8 @@ public class CharacterSelectionManager : MonoBehaviour
     [SerializeField] private RectTransform characterSelection;
     [SerializeField] private Button leftButton;
     [SerializeField] private Button rightButton;
+    [SerializeField] private TextMeshProUGUI CharacterName;
+    [SerializeField] private GameObject listItemInfo;
 
     [Header("Settings")]
     [SerializeField] private float transitionSpeed = 10f;
@@ -93,6 +97,8 @@ public class CharacterSelectionManager : MonoBehaviour
         if (dataStorage != null && characterList.Count > 0)
         {
             dataStorage.selectedCharacter = characterList[currentCharacterIndex];
+            CharacterName.text = characterList[currentCharacterIndex].characterName;
+            UpdateItemInfoPanel(characterList[currentCharacterIndex].startDeck);
         }
     }
 
@@ -118,4 +124,21 @@ public class CharacterSelectionManager : MonoBehaviour
             spawnedCanvasGroups[i].alpha = alpha;
         }
     }
+
+
+    private void UpdateItemInfoPanel(ObjetSO[] startDeck)
+    {
+        foreach (Transform child in listItemInfo.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if (startDeck == null || startDeck.Length == 0) return;
+        foreach (ObjetSO objet in startDeck)
+        {
+            GameObject newItem = Instantiate(itemPrefab, listItemInfo.transform);
+            newItem.GetComponent<ItemBrainOnlyInfo>().itemData = objet;
+        }
+    }
+
 }
