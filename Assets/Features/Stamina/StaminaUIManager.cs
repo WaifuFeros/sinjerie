@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class StaminaUIManager : MonoBehaviour
 {
+    public static StaminaUIManager Instance { get; private set; }
+
+
     [Header("Settings")]
     public GameObject staminaPointPrefab;
     public Sprite fullStaminaSprite;
@@ -11,6 +14,11 @@ public class StaminaUIManager : MonoBehaviour
 
     private List<Image> staminaPoints = new List<Image>();
 
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
 
     public void SetupStamina(int maxStamina)
     {

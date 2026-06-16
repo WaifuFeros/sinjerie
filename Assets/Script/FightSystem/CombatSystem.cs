@@ -41,7 +41,7 @@ public class CombatSystem : MonoBehaviour
     [Header("Data Storage")]
     [SerializeField] private SelectedCharacterData dataStorage;
 
-    private Enemy currentEnemy;
+    public Enemy currentEnemy;
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
     private bool combatActive = false;
