@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20db00e050e8af3468f068240bdb1123, type: 3}
-  m_Name: New Weight To One
+  m_Script: {fileID: 11500000, guid: 38d191ba223485749864d40ec94ca84d, type: 3}
+  m_Name: New Plume
   m_EditorClassIdentifier: 

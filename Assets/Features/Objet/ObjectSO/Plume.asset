@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
-  m_Name: weight to one
+  m_Name: Plume
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 21300000, guid: d990c5243f5aab44390a630b10fd1074, type: 3}
-  objetName: Weight to one
-  objetDescription: Set the weight of all the items to 1.
-  objetMaterialType: 5
-  objetWeight: 4
+  objetSprite: {fileID: 21300000, guid: 3c0c99512c6831141a37d375545f80b0, type: 3}
+  objetName: Plume
+  objetDescription: "Met le poid de 3 objets al\xE9atoir \xE0 0"
+  objetMaterialType: 7
+  objetWeight: 3
   objectType: 2
   objectEffect: 0
-  specialAction: {fileID: 11400000, guid: eccce83ced86adf4c8c5439065221c62, type: 2}
-  Rarity: 3
+  specialAction: {fileID: 11400000, guid: ac8e3464e60f03e4da8bec6f78f60582, type: 2}
+  Rarity: 1
