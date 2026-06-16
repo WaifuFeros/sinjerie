@@ -125,6 +125,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7cebe4567aa1fd84f919e8ef108da7e3
+    m_Address: Assets/Features/Objet/ObjectSO/Plume.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 857e1776262ed8a46b7a77aa772f78eb
     m_Address: Assets/Features/Objet/ObjectSO/PapierToilette.asset
     m_ReadOnly: 0
@@ -232,6 +238,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f83d64cab45b74348ae3fad5e11ea37b
+    m_Address: Assets/Features/Objet/ObjectSO/helium.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd6c4bfad975f9b4182ecf282e60b927
     m_Address: Assets/Features/Objet/ObjectSO/PierrePhilosophale.asset
