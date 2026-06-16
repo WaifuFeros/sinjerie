@@ -23,12 +23,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 131c7b082b0024945855716183c22b11
-    m_Address: Assets/Features/IAenemy/EnemySO/mario.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Enemy
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1922c64f124679c4eb1fd30d69eb759f
     m_Address: "Assets/Features/Objet/ObjectSO/Gla\xE7on.asset"
     m_ReadOnly: 0
@@ -58,6 +52,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 226ccfc825510824c89d1b6af4df5c7b
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 7.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 291f732214b1d48498e0bbe7fd37450e
     m_Address: Assets/Features/Objet/ObjectSO/SceauDeau.asset
@@ -89,12 +89,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4be525e346d5e894da147c28bb5d8c27
-    m_Address: Assets/Features/Objet/ObjectSO/Pringles.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Items
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5020cfe67d6343b40baf1c3249feb520
     m_Address: Assets/Features/Objet/ObjectSO/PocheFroide.asset
     m_ReadOnly: 0
@@ -112,6 +106,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66f1e1f5b2004af4d99c66f5aec2783b
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b89e32f8671add4c919d3520fff837e
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 8.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c5b7f7ac7bd9ee4a978efddb7b8839b
     m_Address: Assets/Features/Objet/ObjectSO/heal kit.asset
@@ -143,6 +149,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ea544c8f5798ef4b8835d2fd9488254
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a0cbff3bb2e03ec4995742c67bcd28de
     m_Address: Assets/Features/Objet/ObjectSO/TastyCrousty.asset
     m_ReadOnly: 0
@@ -160,6 +172,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be4185223eb37b64eb58a9cd3b9c46e5
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c1782ff0266c66a47acc4902c675932a
     m_Address: Assets/Features/Objet/ObjectSO/Congelateur.asset
@@ -185,17 +203,35 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7e2a2057ff8144498c6c89d9d67a744
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e39ac38057e9cc144ae1b469c8daf3fa
     m_Address: Assets/Features/Objet/ObjectSO/Tazer.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e46112519e8ef434e8e692a1e6f5acde
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e9cf4aed8ac5b9e4f81c40a95634f792
     m_Address: Assets/Features/Objet/ObjectSO/Frigo.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eda51830738855b41ba26b41e0112034
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd6c4bfad975f9b4182ecf282e60b927
     m_Address: Assets/Features/Objet/ObjectSO/PierrePhilosophale.asset

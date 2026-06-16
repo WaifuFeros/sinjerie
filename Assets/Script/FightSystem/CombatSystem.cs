@@ -60,6 +60,7 @@ public class CombatSystem : MonoBehaviour
         if (dataStorage.selectedCharacter != null)
         {
             PlayerManager.Instance.stats.Deck = dataStorage.selectedCharacter.startDeck;
+            print("hey");
             _playerhead.GetComponent<UnityEngine.UI.Image>().sprite = dataStorage.selectedCharacter.characterSprite;
         }
         onLoadCompleted?.Invoke();

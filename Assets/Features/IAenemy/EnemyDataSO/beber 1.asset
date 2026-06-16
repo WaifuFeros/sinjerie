@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 091ed4e23cd509645b59a769b5e5d219, type: 3}
+  m_Name: beber 1
+  m_EditorClassIdentifier: 
+  Sprite: {fileID: 21300000, guid: 64ae649b2295bf24198e534984d8fb9d, type: 3}
+  Name: Beber
+  Description: C'est un singe
+  MaxHealth: 10
+  MaxStamina: 6
+  Items:
+  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
+  - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
+  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
+  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+  behavior: {fileID: 11400000, guid: 02513d192b5dc5840a3bb8dbf568eb56, type: 2}
+  GoldReward: 10
