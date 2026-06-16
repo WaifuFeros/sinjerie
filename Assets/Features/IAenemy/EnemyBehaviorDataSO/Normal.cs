@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enemy/Behavior/Normal")]
 public class Normal : EnemyBehaviorSO
 {
-    public override ObjetSO[] ChooseItem(ObjetSO[] objs, int health, int stamina)
+    public override ObjetSO[] ChooseItem(ObjetSO[] objs, int MaxHealth, int health, int stamina)
     {
         List<ObjetSO> chosenItems = new List<ObjetSO>();
         int staminaAvailable = stamina;
@@ -29,7 +29,7 @@ public class Normal : EnemyBehaviorSO
         foreach (var obj in objs)
         {
             ObjetSO selecObj;
-            if (Random.Range(0, 6)<= 2)
+            if (Random.Range(0, 7)<= 3)
                 selecObj = atkItems[Random.Range(0, atkItems.Count)];
             else
                 selecObj = healItems[Random.Range(0, healItems.Count)];

@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enemy/Behavior/Peureux")]
 public class Peureux : EnemyBehaviorSO
 {
-    public override ObjetSO[] ChooseItem(ObjetSO[] objs, int health, int stamina)
+    public override ObjetSO[] ChooseItem(ObjetSO[] objs, int MaxHealth, int health, int stamina)
     {
         List<ObjetSO> chosenItems = new List<ObjetSO>();
         int staminaAvailable = stamina;

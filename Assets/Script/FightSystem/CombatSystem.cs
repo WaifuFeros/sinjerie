@@ -220,6 +220,7 @@ public class CombatSystem : MonoBehaviour
 
         ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(
             currentEnemy.EnemyStats.Items,
+            currentEnemy.EnemyStats.MaxHealth,
             currentEnemy.currentHealth,
             currentEnemy.currentStaminaMax
         );
