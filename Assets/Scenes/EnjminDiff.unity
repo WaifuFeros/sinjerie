@@ -1861,7 +1861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2030078171}
-  _enemyImage: {fileID: 2134683397}
+  EnemyImage: {fileID: 2134683397}
   FireCounter: 0
   FreezeCounter: 0
   WetCounter: 0

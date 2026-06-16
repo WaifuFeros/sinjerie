@@ -35,7 +35,7 @@ public class CombatSystem : MonoBehaviour
 
 
     [Header("UI")]
-    [SerializeField] private GameObject _playerhead;
+    [SerializeField] public GameObject _playerhead;
     [SerializeField] private GameObject _ennemyhead;
 
     [Header("Data Storage")]
@@ -443,22 +443,11 @@ public class CombatSystem : MonoBehaviour
     {
         if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Rain)
         {
-            if (!isDebug)
-            {
-                currentEnemy.WetCounter = _wetDuration;
-                PlayerManager.Instance.WetCounter = _wetDuration;
-            }
-            else
-            {
-                if (currentEnemy.WetCounter <= 0)
-                {
-                    currentEnemy.WetCounter = _wetDuration;
-                }
-                if (PlayerManager.Instance.WetCounter <= 0)
-                {
-                    PlayerManager.Instance.WetCounter = _wetDuration;
-                }
-            }
+            currentEnemy.WetCounter = _wetDuration;
+            PlayerManager.Instance.WetCounter = _wetDuration;
+            VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Water);
+            VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
+
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Snow)
         {

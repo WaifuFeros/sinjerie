@@ -23,11 +23,15 @@ public class WeatherEffect : MonoBehaviour
         {
            enemy.TakeDamage(Convert.ToInt32(weather.temperature / 7));
            enemy.FireCounter--;
+            if (enemy.FireCounter == 0)
+                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
         }
         else if (PlayerManager.Instance.FireCounter > 0)
         {
            PlayerManager.Instance.TakeDamage(Convert.ToInt32(weather.temperature / 7));
            PlayerManager.Instance.FireCounter--;
+            if (PlayerManager.Instance.FireCounter == 0)
+                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
         }
         CombatSystem.Instance.CheckCombatEnd();
        
@@ -67,10 +71,16 @@ public class WeatherEffect : MonoBehaviour
         if (!isPlayer && enemy.WetCounter > 0)
         {
             enemy.FireCounter = 0;
+            enemy.WetCounter -= 1;
+            if (enemy.WetCounter == 0)
+                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
         }
         else if (PlayerManager.Instance.WetCounter > 0)
         {
             PlayerManager.Instance.FireCounter = 0;
+            PlayerManager.Instance.WetCounter -= 1;
+            if (PlayerManager.Instance.WetCounter == 0)
+                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
         }
     }
 

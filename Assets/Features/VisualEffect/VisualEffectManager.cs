@@ -68,7 +68,15 @@ public class VisualEffectManager : MonoBehaviour
     public void RemoveEffect(GameObject particleGO)
     {
         if (particleGO == null) return;
-        Destroy(particleGO);
+        foreach (Transform child in particleGO.transform)
+        {
+            ParticleSystem ps = child.GetComponentInChildren<ParticleSystem>();
+            if (ps != null)
+            {
+                Destroy(child.gameObject);
+                break;
+            }
+        }
     }
 
     public void ShakeUI(float duration = 0.5f, float strength = 15f, int vibrato = 10)

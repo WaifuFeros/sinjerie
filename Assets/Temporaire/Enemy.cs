@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
-    [SerializeField] private UnityEngine.UI.Image _enemyImage;
+    [SerializeField] public UnityEngine.UI.Image EnemyImage;
 
     [Header("WeatherEffect")]
     [SerializeField] public int FireCounter = 0;
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
         ParalyzeCounter = 0;
         EnemyStats = stats;
         currentHealth = EnemyStats.MaxHealth;
-        _enemyImage.sprite = EnemyStats.Sprite;
+        EnemyImage.sprite = EnemyStats.Sprite;
         currentStaminaMax = EnemyStats.MaxStamina;
         UpdateHealthBar();
     }
