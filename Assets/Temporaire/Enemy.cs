@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
         currentHealth = EnemyStats.MaxHealth;
         EnemyImage.sprite = EnemyStats.Sprite;
         currentStaminaMax = EnemyStats.MaxStamina;
+        VisualEffectManager.Instance.RemoveEffect(EnemyImage.gameObject);
         UpdateHealthBar();
     }
 
