@@ -118,7 +118,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Met a jour la barre de vie dans l'UI
     /// </summary>
-    private void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         if (healthBar != null)
         {
