@@ -167,6 +167,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aebd80c23b799924ba98bcf7ffb098c6
+    m_Address: Assets/Features/Objet/ObjectSO/Adrenaline.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b8f4ce4483de4da4587b51ca19194c4b
     m_Address: Assets/Features/Objet/ObjectSO/Echange type.asset
     m_ReadOnly: 0
@@ -209,11 +215,23 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1930c27e415e0748890c48d70c85eff
+    m_Address: Assets/Features/Objet/ObjectSO/Tirelire.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d7e2a2057ff8144498c6c89d9d67a744
     m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 6.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e29c8c03bea93df4cb07e3e536afb15b
+    m_Address: Assets/Features/Objet/ObjectSO/piece.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e39ac38057e9cc144ae1b469c8daf3fa
     m_Address: Assets/Features/Objet/ObjectSO/Tazer.asset
