@@ -91,13 +91,17 @@ public class UIManager : MonoBehaviour
 
     public void ShowRewardPanel()
     {
-        HideAllPanels();
-        if (rewardPanel != null)
+        TransitionManager.Instance.TransitionWithAction(() =>
         {
-            rewardPanel.SetActive(true);
-            rewardSystem.AddToggle();
+            HideAllPanels();
+            if (rewardPanel != null)
+            {
+                rewardPanel.SetActive(true);
+                rewardSystem.AddToggle();
 
-        }
+            }
+        });
+        
     }
     public void ShowBananaRewardPanel()
     {
