@@ -22,7 +22,21 @@ public class Menu : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene(_gameSceneName);
+        TransitionManager.Instance.TransitionWithAction(() => {
+            SceneManager.sceneLoaded += OnGameSceneLoaded;
+            SceneManager.LoadScene(_gameSceneName, LoadSceneMode.Additive);
+
+        });
+    }
+
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == _gameSceneName)
+        {
+            SceneManager.SetActiveScene(scene);
+            SceneManager.sceneLoaded -= OnGameSceneLoaded;
+            SceneManager.UnloadSceneAsync("HomeMenu");
+        }
     }
 
     public void OpenEncyclopedia()
