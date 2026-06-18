@@ -15,6 +15,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     [SerializeField] private Image itemBackground;
     [SerializeField] private GameObject descritptionPanel;
     [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField, Min(0)] private float descriptionPressTime;
     [SerializeField] private GameObject effectImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
@@ -128,7 +129,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     }
     private IEnumerator WaitAndShowDescription()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(descriptionPressTime);
         if (!isDragging) descritptionPanel.SetActive(true);
     }
     private void StopLongPress()
@@ -141,6 +142,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     {
         isDragging = true;
         base.BeginDrag(mousePosition);
+        StopLongPress();
     }
 
     public override void EndDrag()

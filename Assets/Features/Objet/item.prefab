@@ -948,6 +948,7 @@ MonoBehaviour:
   itemBackground: {fileID: 6214382334856560422}
   descritptionPanel: {fileID: 4528362203757219954}
   descriptionText: {fileID: 1015543030912156428}
+  descriptionPressTime: 0.75
   effectImage: {fileID: 606718359362830057}
   effectText: {fileID: 3134645131967731897}
   weightText: {fileID: 589202801167609858}

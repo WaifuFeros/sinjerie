@@ -10,11 +10,18 @@ public class Menu : MonoBehaviour
     [SerializeField] private Button _ParametresButton;
     [SerializeField] private Button _EncyclopediaButton;
     [SerializeField] private Button _StartButton;
+    [SelectScene]
     [SerializeField] private string _gameSceneName;
     public SaveScript _saveScript;
 
+    [SelectScene]
+    public string transitionScene;
+
     private void Awake()
     {
+        if (!string.IsNullOrWhiteSpace(transitionScene))
+            SceneManager.LoadScene(transitionScene, LoadSceneMode.Additive);
+
         if (_saveScript != null)
         {
             _saveScript.LoadInfo();

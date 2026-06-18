@@ -18,12 +18,12 @@ MonoBehaviour:
   MaxHealth: 13
   MaxStamina: 6
   Items:
-  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
+  - {fileID: 11400000, guid: cda912efc7296234e85547b44aaecc63, type: 2}
+  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
+  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
+  - {fileID: 11400000, guid: 7c5b7f7ac7bd9ee4a978efddb7b8839b, type: 2}
   - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
   - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   behavior: {fileID: 11400000, guid: 8dd97b475dbe4ed40be874b0527f04b9, type: 2}
   GoldReward: 10

@@ -21,6 +21,7 @@ public class GameLoopManager : MonoBehaviour
     [SerializeField] private int currentRoomNumber = 0;
 
     [Header("Scene Settings")]
+    [SelectScene]
     [SerializeField] private string _gameSceneName;
 
 

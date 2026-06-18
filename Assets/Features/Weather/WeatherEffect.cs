@@ -8,7 +8,6 @@ public class WeatherEffect : MonoBehaviour
     public static WeatherEffect Instance { get; private set; }
 
     [SerializeField] private Enemy enemy;
-    [SerializeField, HideInInspector] private WeatherManager weather;
 
 
     private void Awake()
@@ -21,14 +20,14 @@ public class WeatherEffect : MonoBehaviour
     {
         if (!isPlayer && enemy.FireCounter > 0)
         {
-           enemy.TakeDamage(Convert.ToInt32(weather.temperature / 7));
+           enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
            enemy.FireCounter--;
             if (enemy.FireCounter == 0)
                 VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
         }
         else if (PlayerManager.Instance.FireCounter > 0)
         {
-           PlayerManager.Instance.TakeDamage(Convert.ToInt32(weather.temperature / 7));
+           PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
            PlayerManager.Instance.FireCounter--;
             if (PlayerManager.Instance.FireCounter == 0)
                 VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
