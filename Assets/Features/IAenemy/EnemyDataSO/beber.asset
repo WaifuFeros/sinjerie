@@ -27,4 +27,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
   GoldReward: 10
-  IsBoss: 1
+  IsBoss: 0
