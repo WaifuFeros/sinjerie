@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0bb71cb8b396794d9e62d6ad4892573, type: 3}
-  m_Name: New Venere
+  m_Script: {fileID: 11500000, guid: 855b385ca177bbe4abec8e8f4fbbbb25, type: 3}
+  m_Name: Random Atk
   m_EditorClassIdentifier: 

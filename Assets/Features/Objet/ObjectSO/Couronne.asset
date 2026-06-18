@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 21300000, guid: 1bade73470a866e44b3fdba9b114ef23, type: 3}
   objetName: Couronne
   objetDescription: 'Couronne en or '
-  objetMaterialType: 0
+  objetMaterialType: 1
   objetWeight: 3
   objectType: 1
   objectEffect: 4

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 091ed4e23cd509645b59a769b5e5d219, type: 3}
-  m_Name: beber 1
+  m_Name: Berserker
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 64ae649b2295bf24198e534984d8fb9d, type: 3}
-  Name: Beber
+  Sprite: {fileID: 21300000, guid: 1f054c1739dc1bb4c85c716c8f8a2ce8, type: 3}
+  Name: Berserker
   Description: C'est un singe
-  MaxHealth: 10
-  MaxStamina: 6
+  MaxHealth: 12
+  MaxStamina: 8
   Items:
   - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
   - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
+  behavior: {fileID: 11400000, guid: 7cb011597c9f9e3499d7f8cdaf320fad, type: 2}
   GoldReward: 10
-  IsBoss: 1
+  IsBoss: 0
+  IsActive: 1

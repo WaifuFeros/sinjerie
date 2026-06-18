@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 091ed4e23cd509645b59a769b5e5d219, type: 3}
-  m_Name: beber 3
+  m_Name: AllRounder
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 607e786970a020f47a23e49a7b2b8ad4, type: 3}
-  Name: Beber
+  Sprite: {fileID: 21300000, guid: 27017b68cbcf09544a76bc35fbe0ff80, type: 3}
+  Name: AllRounder
   Description: C'est un singe
-  MaxHealth: 10
+  MaxHealth: 15
   MaxStamina: 6
   Items:
   - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
+  behavior: {fileID: 11400000, guid: 8389fa72f05913241b3b64bf79e950f4, type: 2}
   GoldReward: 10
-  IsBoss: 1
+  IsBoss: 0
+  IsActive: 1

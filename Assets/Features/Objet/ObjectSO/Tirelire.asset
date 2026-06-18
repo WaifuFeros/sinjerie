@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 21300000, guid: 12cc89f09d7e92a4292ee457bf37eead, type: 3}
   objetName: Tirelire
   objetDescription: "Donne de l'or en \xE9change de vie"
-  objetMaterialType: 7
+  objetMaterialType: 0
   objetWeight: 3
   objectType: 2
   objectEffect: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 0}
   objetName: Pierre Philosophale
   objetDescription: "une pierre d'un rouge \xE9clatant au propri\xE9t\xE9 inconnue"
-  objetMaterialType: 5
+  objetMaterialType: 0
   objetWeight: 10
   objectType: 0
   objectEffect: 20

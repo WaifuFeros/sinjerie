@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 0}
   objetName: Taze
   objetDescription: "Un boitier venant d'un autre temps qui produit de l'electricit\xE9"
-  objetMaterialType: 5
+  objetMaterialType: 6
   objetWeight: 4
   objectType: 1
   objectEffect: 6

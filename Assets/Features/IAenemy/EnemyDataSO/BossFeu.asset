@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 091ed4e23cd509645b59a769b5e5d219, type: 3}
-  m_Name: beber 2
+  m_Name: BossFeu
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 2a1dcb0c2bd10b741a040a2eacbe744d, type: 3}
-  Name: Beber
+  Sprite: {fileID: 21300000, guid: 1419398091bf6f644946eec9f484dd1b, type: 3}
+  Name: Boss Feu
   Description: C'est un singe
   MaxHealth: 10
   MaxStamina: 6
@@ -28,3 +28,4 @@ MonoBehaviour:
   behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
   GoldReward: 10
   IsBoss: 1
+  IsActive: 1

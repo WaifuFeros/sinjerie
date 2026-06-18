@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 0}
   objetName: Ramen
   objetDescription: "un d\xE9licieux ramen plein d'\xE9nergie"
-  objetMaterialType: 5
+  objetMaterialType: 0
   objetWeight: 3
   objectType: 0
   objectEffect: 4

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 091ed4e23cd509645b59a769b5e5d219, type: 3}
-  m_Name: beber 7
+  m_Name: Tank
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 1419398091bf6f644946eec9f484dd1b, type: 3}
-  Name: Beber
+  Sprite: {fileID: 21300000, guid: 2a1dcb0c2bd10b741a040a2eacbe744d, type: 3}
+  Name: Tank
   Description: C'est un singe
-  MaxHealth: 10
-  MaxStamina: 6
+  MaxHealth: 25
+  MaxStamina: 4
   Items:
   - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
   - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
+  behavior: {fileID: 11400000, guid: 7cb011597c9f9e3499d7f8cdaf320fad, type: 2}
   GoldReward: 10
-  IsBoss: 1
+  IsBoss: 0
+  IsActive: 1

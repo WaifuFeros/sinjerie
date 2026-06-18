@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum ObjetMaterialType
 {
+    None,
     Metal,
     Wood,
     Fire,
@@ -12,7 +13,6 @@ public enum ObjetMaterialType
     PerfectIce,
     Electricity,
     Water,
-    Nothing
 }
 public enum ObjetEffectType
 {

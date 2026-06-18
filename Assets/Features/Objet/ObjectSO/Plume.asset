@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 21300000, guid: 3c0c99512c6831141a37d375545f80b0, type: 3}
   objetName: Plume
   objetDescription: "Met le poid de 3 objets al\xE9atoir \xE0 0"
-  objetMaterialType: 7
+  objetMaterialType: 0
   objetWeight: 3
   objectType: 2
   objectEffect: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 0}
   objetName: Poche de froid
   objetDescription: pratique pour les traumatismes
-  objetMaterialType: 3
+  objetMaterialType: 4
   objetWeight: 2
   objectType: 0
   objectEffect: 3

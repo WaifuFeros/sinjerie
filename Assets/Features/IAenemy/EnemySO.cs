@@ -14,4 +14,6 @@ public class EnemySO : ScriptableObject
     public EnemyBehaviorSO behavior;
     public int GoldReward;
     public bool IsBoss;
+
+    public bool IsActive;
 }

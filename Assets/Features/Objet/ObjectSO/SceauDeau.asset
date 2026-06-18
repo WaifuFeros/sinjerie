@@ -15,9 +15,9 @@ MonoBehaviour:
   objetSprite: {fileID: 0}
   objetName: Sceau d'eau
   objetDescription: un simple sceau rempli d'eau
-  objetMaterialType: 4
-  objetWeight: 2
+  objetMaterialType: 7
+  objetWeight: 3
   objectType: 1
-  objectEffect: 2
+  objectEffect: 5
   specialAction: {fileID: 0}
   Rarity: 1

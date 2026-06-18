@@ -15,9 +15,9 @@ MonoBehaviour:
   objetSprite: {fileID: 21300000, guid: 0a84a6278498be1429b4d25c11c7bf9f, type: 3}
   objetName: Four
   objetDescription: Ancien four de Satan
-  objetMaterialType: 2
+  objetMaterialType: 3
   objetWeight: 5
-  objectType: 0
+  objectType: 1
   objectEffect: 12
   specialAction: {fileID: 0}
   Rarity: 4

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -35,7 +36,7 @@ public class RoomManager : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                availableEnemyData.AddRange(handle.Result);
+                availableEnemyData.AddRange(handle.Result.Where(x => x.IsActive));
                 onLoadCompleted?.Invoke();
             }
         };
