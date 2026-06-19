@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -5,9 +6,6 @@ using UnityEngine.UI;
 
 public class EncyclopediaPanel : MonoBehaviour
 {
-    [Header("Database")]
-    public ObjetDatabase database;
-
     [Header("UI List")]
     public Transform contentParent;
     public GameObject entryPrefab;
@@ -25,17 +23,26 @@ public class EncyclopediaPanel : MonoBehaviour
 
     void Populate()
     {
-        // Tri par rareté (Common → Legendary)
-        var sortedList = database.allObjects
-            .OrderBy(o => o.Rarity)
-            .ToList();
-
-        foreach (var obj in sortedList)
+        Debug.Log("Encyclopedia populate");
+        Debug.Log(ItemManager.Instance);
+        ItemManager.Instance.WaitForItemDatabaseInitialization(() =>
         {
-            var entryObj = Instantiate(entryPrefab, contentParent);
-            var entry = entryObj.GetComponent<ObjetEntry>();
-            entry.Setup(obj, this);
-        }
+            Debug.Log("Encyclopedia populate complete");
+            // Tri par rareté (Common → Legendary)
+            var sortedList = new List<ObjetSO>(ItemManager.Instance.ItemsData)
+                .OrderBy(o => o.Rarity)
+                .ToList();
+
+            Debug.Log(sortedList.Count);
+
+            foreach (var obj in sortedList)
+            {
+                Debug.Log("Spawn item Encyclopedia");
+                var entryObj = Instantiate(entryPrefab, contentParent);
+                var entry = entryObj.GetComponent<ObjetEntry>();
+                entry.Setup(obj, this);
+            }
+        });
     }
 
     public void ShowDetails(ObjetSO obj)

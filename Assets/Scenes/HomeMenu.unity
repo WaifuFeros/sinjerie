@@ -2214,7 +2214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1091458871}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
@@ -3914,7 +3914,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3fa0015d391b64e92b696d55579d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  database: {fileID: 11400000, guid: 8eb43c17052a13f4ebd6990ef824ef63, type: 2}
   contentParent: {fileID: 1091458871}
   entryPrefab: {fileID: 1964708398829810119, guid: 1b55c9cea604f064fbccfb50bf79a829,
     type: 3}
@@ -4709,7 +4708,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 123016279}
   m_HandleRect: {fileID: 123016278}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

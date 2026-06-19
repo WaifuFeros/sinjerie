@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -32,22 +31,24 @@ public class ItemManager : MonoBehaviour
 
     private void Start()
     {
-        Initialize(() =>
-        {
-            _databaseState = ItemDataBaseInizializationState.Initialized;
-        });
+        Initialize(null);
     }
 
     public void Initialize(Action onLoadCompleted)
     {
+        if (_databaseState == ItemDataBaseInizializationState.Initializing)
+            return;
+
         _databaseState = ItemDataBaseInizializationState.Initializing;
-        _onLoadItemsCompleteEvent = onLoadCompleted;
+        _onLoadItemsCompleteEvent += onLoadCompleted;
         Addressables.LoadAssetsAsync<ObjetSO>("Items", null).Completed += handle =>
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 ItemsData.AddRange(handle.Result);
+                _databaseState = ItemDataBaseInizializationState.Initialized;
                 _onLoadItemsCompleteEvent?.Invoke();
+                _onLoadItemsCompleteEvent = null;
             }
         };
 
@@ -55,14 +56,16 @@ public class ItemManager : MonoBehaviour
 
     public void WaitForItemDatabaseInitialization(Action onLoadCompleted)
     {
+        Debug.Log(_databaseState);
         switch (_databaseState)
         {
             default:
             case ItemDataBaseInizializationState.NotInizialized:
+                Debug.Log("Do Initialize");
                 Initialize(onLoadCompleted);
                 break;
             case ItemDataBaseInizializationState.Initializing:
-                _onLoadItemsCompleteEvent = onLoadCompleted;
+                _onLoadItemsCompleteEvent += onLoadCompleted;
                 break;
             case ItemDataBaseInizializationState.Initialized:
                 onLoadCompleted?.Invoke();
