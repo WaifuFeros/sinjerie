@@ -1844,6 +1844,8 @@ MonoBehaviour:
   effectText: {fileID: 152319276742218442}
   weightText: {fileID: 48766440881278121}
   priceText: {fileID: 6464549548700044660}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -4113,6 +4115,8 @@ MonoBehaviour:
   effectText: {fileID: 746879110837516877}
   weightText: {fileID: 5166546789555317380}
   priceText: {fileID: 4323768736495979406}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -4292,6 +4296,8 @@ MonoBehaviour:
   effectText: {fileID: 3753285263560637515}
   weightText: {fileID: 3689473476536920876}
   priceText: {fileID: 7657991083336158298}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -4605,6 +4611,8 @@ MonoBehaviour:
   effectText: {fileID: 6762828813757757915}
   weightText: {fileID: 3469855529342632607}
   priceText: {fileID: 7804964624283171662}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -4630,6 +4638,59 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!1 &2468098930925391985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8657184459780006091}
+  - component: {fileID: 2436083907591651064}
+  m_Layer: 0
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8657184459780006091
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2468098930925391985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8230653569873886134}
+  - {fileID: 413327784858002179}
+  - {fileID: 5232966752945244820}
+  m_Father: {fileID: 7642182323019132799}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2436083907591651064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2468098930925391985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3feb2280348f7614db13703f6876394c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fit: 2
+  _update: 0
 --- !u!1 &2574010833840568155
 GameObject:
   m_ObjectHideFlags: 0
@@ -4788,6 +4849,8 @@ MonoBehaviour:
   effectText: {fileID: 4142567898050501383}
   weightText: {fileID: 2760207372043285917}
   priceText: {fileID: 8357412796335406457}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -5255,6 +5318,8 @@ MonoBehaviour:
   effectText: {fileID: 883850509193460329}
   weightText: {fileID: 5420277932552939066}
   priceText: {fileID: 2529761786275276684}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -5782,6 +5847,8 @@ MonoBehaviour:
   effectText: {fileID: 1420743839186932561}
   weightText: {fileID: 4962438131641788206}
   priceText: {fileID: 8979137768773152630}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -7242,6 +7309,8 @@ MonoBehaviour:
   effectText: {fileID: 1614440782836712880}
   weightText: {fileID: 5763685093590375534}
   priceText: {fileID: 8279579351262551089}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -7500,6 +7569,8 @@ MonoBehaviour:
   effectText: {fileID: 4855168857894678029}
   weightText: {fileID: 218142844030760048}
   priceText: {fileID: 2505590495332403064}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -8115,6 +8186,8 @@ MonoBehaviour:
   effectText: {fileID: 1447004064807449095}
   weightText: {fileID: 6834363346657925778}
   priceText: {fileID: 4064423231926265081}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -11030,6 +11103,8 @@ MonoBehaviour:
   effectText: {fileID: 357733331860627988}
   weightText: {fileID: 2880248501565559599}
   priceText: {fileID: 4689930422838267267}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -11213,6 +11288,8 @@ MonoBehaviour:
   effectText: {fileID: 7047538799288734107}
   weightText: {fileID: 6848535034056564823}
   priceText: {fileID: 8077801593713268406}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -11739,6 +11816,8 @@ MonoBehaviour:
   effectText: {fileID: 8455057066359371152}
   weightText: {fileID: 8675590906950096641}
   priceText: {fileID: 5588868064197304853}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -12462,6 +12541,8 @@ MonoBehaviour:
   effectText: {fileID: 4858420542918404485}
   weightText: {fileID: 8349044454224243984}
   priceText: {fileID: 2124078989368086175}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -12720,6 +12801,8 @@ MonoBehaviour:
   effectText: {fileID: 6695962547911972691}
   weightText: {fileID: 6153606397530814739}
   priceText: {fileID: 850023016393434432}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -13415,6 +13498,8 @@ MonoBehaviour:
   effectText: {fileID: 8850193169007600973}
   weightText: {fileID: 9152467025803338456}
   priceText: {fileID: 3153834815936978736}
+  _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
   _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
   _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
@@ -14513,6 +14598,7 @@ GameObject:
   - component: {fileID: 7642182323019132799}
   - component: {fileID: 7586495708985436000}
   - component: {fileID: 1868747428865172343}
+  - component: {fileID: 7814010319411779409}
   m_Layer: 0
   m_Name: shop
   m_TagString: Untagged
@@ -14532,15 +14618,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8230653569873886134}
-  - {fileID: 413327784858002179}
-  - {fileID: 5232966752945244820}
+  - {fileID: 8657184459780006091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000000040513}
-  m_SizeDelta: {x: 2768.4473, y: 1983}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7586495708985436000
 CanvasRenderer:
@@ -14580,6 +14664,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7814010319411779409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7833640586931172554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3feb2280348f7614db13703f6876394c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fit: 1
+  _update: 0
 --- !u!1 &7860475898587274669
 GameObject:
   m_ObjectHideFlags: 0
@@ -15313,7 +15411,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8426568761993772448}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15334,7 +15432,7 @@ RectTransform:
   - {fileID: 6004848074934195337}
   - {fileID: 5459435133386553170}
   - {fileID: 2896463999732045192}
-  m_Father: {fileID: 7642182323019132799}
+  m_Father: {fileID: 8657184459780006091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -16603,7 +16701,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7642182323019132799}
+    m_TransformParent: {fileID: 8657184459780006091}
     m_Modifications:
     - target: {fileID: 6058263645842255709, guid: f53f0f7b6a762d84d809fb1616723842,
         type: 3}
@@ -16757,7 +16855,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7642182323019132799}
+    m_TransformParent: {fileID: 8657184459780006091}
     m_Modifications:
     - target: {fileID: 1350629785395079888, guid: 757889da734cf98419485a553d54e33b,
         type: 3}
@@ -16822,17 +16920,17 @@ PrefabInstance:
     - target: {fileID: 1350629785395079888, guid: 757889da734cf98419485a553d54e33b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1350629785395079888, guid: 757889da734cf98419485a553d54e33b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1350629785395079888, guid: 757889da734cf98419485a553d54e33b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1350629785395079888, guid: 757889da734cf98419485a553d54e33b,
         type: 3}

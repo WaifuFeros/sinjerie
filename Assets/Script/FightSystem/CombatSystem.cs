@@ -98,7 +98,7 @@ public class CombatSystem : MonoBehaviour
     /// <summary>
     /// Démarre un combat
     /// </summary>
-    public void StartCombat(System.Action onVictory, System.Action onDefeat)
+    public void StartCombat(System.Action onVictory, System.Action onDefeat, bool addDelayToItemSpawn = false)
     {
         onVictoryCallback = onVictory;
         onDefeatCallback = onDefeat;
@@ -121,6 +121,16 @@ public class CombatSystem : MonoBehaviour
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille au debut du combat
 
         // Ajout item dans l'inventaire du joueur
+        StartCoroutine(AddItemsToPlayerInventory(addDelayToItemSpawn ? 0.25f : 0));
+
+        SetupSkipTurnButtonInteractable(true);
+
+    }
+
+    private IEnumerator AddItemsToPlayerInventory(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
         for (int i = 0; i < PlayerManager.Instance.stats.nbStartItem; i++)
         {
             if (PlayerManager.Instance.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
@@ -132,9 +142,6 @@ public class CombatSystem : MonoBehaviour
             PlayerManager.Instance.stats.Deck = deckList.ToArray();
             ItemManager.Instance.SpawnItem(obj);
         }
-
-        SetupSkipTurnButtonInteractable(true);
-
     }
 
     public void AttackPlayer(ObjetSO attack)

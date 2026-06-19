@@ -72,12 +72,12 @@ public class RoomManager : MonoBehaviour
                 return roomType;
             case RoomType.Shop:
                 currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);
-                currentRoom.transform.SetParent(roomContainer);
+                currentRoom.transform.SetParent(roomContainer, false);
                 return roomType;
             case RoomType.Special:
                 GameObject roomToSpawn = roomPrefabs[UnityEngine.Random.Range(0, roomPrefabs.Length)];
                 currentRoom = Instantiate(roomToSpawn, roomContainer.position, roomContainer.rotation);
-                currentRoom.transform.SetParent(roomContainer);
+                currentRoom.transform.SetParent(roomContainer, false);
                 return roomType;
         }
     }
