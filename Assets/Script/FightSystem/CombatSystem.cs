@@ -458,9 +458,11 @@ public class CombatSystem : MonoBehaviour
                         PlayerManager.Instance.WetCounter += 1; // Applique l'effet de mouille +1 round..
                     break;
                 case ObjetMaterialType.Metal:
-                    currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
-                    WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
-
+                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+                    {
+                        currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                    }
                     break;
                 case ObjetMaterialType.Wood:
                     if (currentEnemy.FireCounter > 0)
