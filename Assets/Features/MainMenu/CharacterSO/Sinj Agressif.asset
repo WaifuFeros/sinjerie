@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6f5e24c9612ad84180440ba0cf3b8f4, type: 3}
-  m_Name: Sinj
+  m_Name: Sinj Agressif
   m_EditorClassIdentifier: 
   characterSprite: {fileID: 21300000, guid: d55708a58e12da94ba6f5593756f501d, type: 3}
-  characterName: Sinj
-  characterDescription: Un sinj
+  characterName: Sinj Agressif
+  characterDescription: Agressif
   price: 0
   startDeck:
-  - {fileID: 11400000, guid: c718e095ff2be1f42866a38b5eb4f8f7, type: 2}
-  - {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5, type: 2}
-  - {fileID: 11400000, guid: 202fbd53f487f364aa533a4ebe908b87, type: 2}
   - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
   - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
-  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
-  - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}
-  - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}
-  - {fileID: 11400000, guid: 600e3565089aec84fbb7d71cc73719ec, type: 2}
   - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+  - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+  - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+  - {fileID: 11400000, guid: 1922c64f124679c4eb1fd30d69eb759f, type: 2}
+  - {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5, type: 2}
+  - {fileID: 11400000, guid: c1782ff0266c66a47acc4902c675932a, type: 2}
+  - {fileID: 11400000, guid: e9cf4aed8ac5b9e4f81c40a95634f792, type: 2}
+  - {fileID: 11400000, guid: 600e3565089aec84fbb7d71cc73719ec, type: 2}

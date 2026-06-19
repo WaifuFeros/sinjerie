@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6f5e24c9612ad84180440ba0cf3b8f4, type: 3}
-  m_Name: Sinjedeux
+  m_Name: Test Sinjedeux
   m_EditorClassIdentifier: 
   characterSprite: {fileID: 21300000, guid: 3c0c99512c6831141a37d375545f80b0, type: 3}
   characterName: Sinjedeux
