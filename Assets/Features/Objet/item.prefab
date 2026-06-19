@@ -834,10 +834,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4887853503184978234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 140, y: 140}
+  m_SizeDelta: {x: -30, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &95422923443289690
 CanvasRenderer:
@@ -948,8 +948,8 @@ MonoBehaviour:
   itemBackground: {fileID: 6214382334856560422}
   descritptionPanel: {fileID: 4528362203757219954}
   descriptionText: {fileID: 1015543030912156428}
-  descriptionPressTime: 0.75
-  effectImage: {fileID: 606718359362830057}
+  descriptionPressTime: 0.5
+  effectImage: {fileID: 8229670100182393962}
   effectText: {fileID: 3134645131967731897}
   weightText: {fileID: 589202801167609858}
   smokeAnimator: {fileID: 6366638186658251795}

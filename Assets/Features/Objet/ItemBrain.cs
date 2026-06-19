@@ -16,7 +16,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     [SerializeField] private GameObject descritptionPanel;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField, Min(0)] private float descriptionPressTime;
-    [SerializeField] private GameObject effectImage;
+    [SerializeField] private Image effectImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
 
@@ -96,14 +96,14 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
                 break;
         }
 
-        effectImage.SetActive(true);
-        
+        effectImage.gameObject.SetActive(true);
+
         if (itemData.objectType == ObjetEffectType.Heal)
-            effectImage.GetComponent<Image>().sprite = _healSprite;
+            effectImage.sprite = _healSprite;
         else if (itemData.objectType == ObjetEffectType.Attack)
-            effectImage.GetComponent<Image>().sprite = _atkSprite;
+            effectImage.sprite = _atkSprite;
         else if (itemData.objectType == ObjetEffectType.Special)
-            effectImage.SetActive(false);
+            effectImage.gameObject.SetActive(false);
 
         effectText.text = itemData.objectEffect.ToString();
         weightText.text = itemData.objetWeight.ToString();
@@ -130,12 +130,13 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     private IEnumerator WaitAndShowDescription()
     {
         yield return new WaitForSeconds(descriptionPressTime);
-        if (!isDragging) descritptionPanel.SetActive(true);
+        //if (!isDragging) descritptionPanel.SetActive(true);
+        DescriptionManager.Instance.DisplayDescription(itemData);
     }
     private void StopLongPress()
     {
         if (longPressCoroutine != null) StopCoroutine(longPressCoroutine);
-        descritptionPanel.SetActive(false);
+        //descritptionPanel.SetActive(false);
     }
 
     public override void BeginDrag(Vector3 mousePosition)

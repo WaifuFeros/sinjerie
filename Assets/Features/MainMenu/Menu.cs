@@ -15,12 +15,12 @@ public class Menu : MonoBehaviour
     public SaveScript _saveScript;
 
     [SelectScene]
-    public string transitionScene;
+    public string managersScene;
 
     private void Awake()
     {
-        if (!string.IsNullOrWhiteSpace(transitionScene))
-            SceneManager.LoadScene(transitionScene, LoadSceneMode.Additive);
+        if (!string.IsNullOrWhiteSpace(managersScene))
+            SceneManager.LoadScene(managersScene, LoadSceneMode.Additive);
 
         if (_saveScript != null)
         {

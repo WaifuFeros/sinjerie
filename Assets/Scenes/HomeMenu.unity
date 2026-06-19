@@ -1360,7 +1360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &523285004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2761,7 +2761,7 @@ MonoBehaviour:
   _StartButton: {fileID: 356959390}
   _gameSceneName: EnjminDiff
   _saveScript: {fileID: 740502573}
-  transitionScene: Transition
+  managersScene: Managers
 --- !u!4 &935068643
 Transform:
   m_ObjectHideFlags: 0
