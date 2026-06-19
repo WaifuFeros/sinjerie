@@ -32,6 +32,8 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private Transform _enemyTransform;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _animationDuration = 0.8f;
+    [SerializeField] private float _highlightSkipButtonSize = 1.2f;
+    [SerializeField] private float _highlightSkipButtonTime = 0.2f;
 
 
     [Header("UI")]
@@ -47,10 +49,25 @@ public class CombatSystem : MonoBehaviour
     private bool combatActive = false;
     public bool isPlayerTurn = true;
 
+    private RectTransform _skipButtonRectTransform;
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
+
+        _skipButtonRectTransform = skipTurnButton.GetComponent<RectTransform>();
+    }
+
+    private void Start()
+    {
+        PlayerManager.Instance.OnStaminaUpdateEvent += CheckItemsAvailable;
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.Kill(_skipButtonRectTransform);
+        PlayerManager.Instance.OnStaminaUpdateEvent -= CheckItemsAvailable;
     }
 
     public void Initialize(Action onLoadCompleted)
@@ -160,6 +177,8 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
+        StopHighlightSkipTurnButton();
+
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour du joueur
         WeatherEffect.Instance.OnFire(false);
         WeatherEffect.Instance.OnWet(false);
@@ -341,6 +360,23 @@ public class CombatSystem : MonoBehaviour
         yield break;
     }
 
+    private void HighlightSkipTurnButton()
+    {
+        var startingScale = _skipButtonRectTransform.localScale;
+        _skipButtonRectTransform.DOScale(_highlightSkipButtonSize, _highlightSkipButtonTime)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetTarget(_skipButtonRectTransform)
+            .OnKill(() =>
+            {
+                _skipButtonRectTransform.localScale = startingScale;
+            });
+    }
+
+    private void StopHighlightSkipTurnButton()
+    {
+        DOTween.Kill(_skipButtonRectTransform);
+    }
+
     public bool IsCombatActive()
     {
         return combatActive;
@@ -422,9 +458,11 @@ public class CombatSystem : MonoBehaviour
                         PlayerManager.Instance.WetCounter += 1; // Applique l'effet de mouille +1 round..
                     break;
                 case ObjetMaterialType.Metal:
-                    currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
-                    WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
-
+                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+                    {
+                        currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                    }
                     break;
                 case ObjetMaterialType.Wood:
                     if (currentEnemy.FireCounter > 0)
@@ -455,5 +493,28 @@ public class CombatSystem : MonoBehaviour
         {
             WeatherEffect.Instance.isSnowing();
         }
+    }
+
+    private void CheckItemsAvailable()
+    {
+        var allItems = ItemManager.Instance.GetAllItems();
+
+        if (allItems == null || allItems.Count == 0)
+        {
+            StopHighlightSkipTurnButton();
+            return;
+        }
+
+        int lowestStaminaConsuption = int.MaxValue;
+        foreach (var item in allItems)
+        {
+            if (item.itemData.objetWeight < lowestStaminaConsuption)
+                lowestStaminaConsuption = item.itemData.objetWeight;
+        }
+
+        if (lowestStaminaConsuption > PlayerManager.Instance.stats.currentStamina)
+            HighlightSkipTurnButton();
+        else
+            StopHighlightSkipTurnButton();
     }
 }

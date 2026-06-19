@@ -24,13 +24,6 @@ public class GameLoopManager : MonoBehaviour
     [SelectScene]
     [SerializeField] private string _gameSceneName;
 
-
-
-    private CombatSystem combatSystem;
-    private RoomManager roomManager;
-    private RewardSystem rewardSystem;
-    private ItemManager itemManager;
-    private UIManager uiManager;
     private void Awake()
     {
         if (Instance == null)
@@ -62,21 +55,14 @@ public class GameLoopManager : MonoBehaviour
     {
         currentRoomNumber = 0;
 
-        // Récup tout les Manager
-        roomManager = RoomManager.Instance;
-        itemManager = ItemManager.Instance;
-        combatSystem = CombatSystem.Instance;
-        rewardSystem = RewardSystem.Instance;
-        uiManager = UIManager.Instance;
-
         // Initialiser tout les Manager
-        roomManager.Initialize(() =>
+        RoomManager.Instance.Initialize(() =>
         {
-            itemManager.Initialize(() =>
+            ItemManager.Instance.WaitForItemDatabaseInitialization(() =>
             {
-                combatSystem.Initialize(() =>
+                CombatSystem.Instance.Initialize(() =>
                 {
-                    rewardSystem.Initialize(() =>
+                    RewardSystem.Instance.Initialize(() =>
                     {                         // Tout est prêt, passer à la première salle
                         StartCoroutine(TransitionToNewRoom());
                     });
@@ -96,13 +82,13 @@ public class GameLoopManager : MonoBehaviour
         currentRoomNumber++;
 
         // Générer une nouvelle salle (0 = normal, 1 = spécial)
-        int roomType = roomManager.GenerateNewRoom(currentRoomNumber);
+        RoomType roomType = RoomManager.Instance.GenerateNewRoom(currentRoomNumber);
         
-        if (roomType == 0)
+        if (roomType == RoomType.Enemy || roomType == RoomType.Boss)
         {
             // Mettre à jour l'UI
-            uiManager.UpdateRoomCounter(currentRoomNumber);
-            uiManager.ShowRoomUI();
+            UIManager.Instance.UpdateRoomCounter(currentRoomNumber);
+            UIManager.Instance.ShowRoomUI();
             // Passer au combat
             StartCombat();
         }
@@ -114,8 +100,8 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void StartCombat()
     {
-        combatSystem.StartCombat(OnCombatVictory, OnCombatDefeat);
-        uiManager.ShowCombatUI();
+        CombatSystem.Instance.StartCombat(OnCombatVictory, OnCombatDefeat);
+        UIManager.Instance.ShowCombatUI();
 
     }
 
@@ -127,9 +113,9 @@ public class GameLoopManager : MonoBehaviour
         Debug.Log("Réussite - Combat gagné!");
 
         if (CombatSystem.Instance.currentEnemy.EnemyStats.IsBoss)
-            uiManager.ShowBananaRewardPanel();
+            UIManager.Instance.ShowBananaRewardPanel();
         else
-            uiManager.ShowRewardPanel();
+            UIManager.Instance.ShowRewardPanel();
         
 
         
@@ -140,7 +126,7 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     private void OnCombatDefeat()
     {
-        uiManager.ShowDefeatPanel();
+        UIManager.Instance.ShowDefeatPanel();
 
     }
 

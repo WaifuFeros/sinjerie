@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class PlayerStatsData
@@ -27,6 +29,9 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
+    public Action OnStaminaUpdateEvent;
+    public Action OnGoldUpdateEvent;
+ 
     [Header("Player Stats")]
     [SerializeField] public PlayerStatsData stats;
 
@@ -56,8 +61,10 @@ public class PlayerManager : MonoBehaviour
         staminaUI.UpdateDisplay(stats.currentStamina);
     }
 
-
-
+    private void OnDestroy()
+    {
+        OnStaminaUpdateEvent = null;
+    }
 
     /// <summary>
     /// Le joueur prend des degats
@@ -134,27 +141,32 @@ public class PlayerManager : MonoBehaviour
         {
             stats.currentStamina -= nb;
             staminaUI.UpdateDisplay(stats.currentStamina);
+            OnStaminaUpdateEvent?.Invoke();
             return true;
         }
         return false;
     }
     // Remet la stamina a son maximum
-    public void refillStamina()
+    public void refillStamina(int staminaPenaly = 0)
     {
-        stats.currentStamina = Mathf.Min(stats.currentStamina + stats.staminaRegenPerTurn, stats.maxStamina);
+        int staminaToRegen = Mathf.Max(stats.staminaRegenPerTurn - staminaPenaly, 0);
+        stats.currentStamina = Mathf.Min(stats.currentStamina + staminaToRegen, stats.maxStamina);
         staminaUI.UpdateDisplay(stats.currentStamina);
+        OnStaminaUpdateEvent?.Invoke();
     }
 
     public void AddGold(int amount)
     {
         stats.gold += amount;
-        UIManager.Instance.UpdateGoldUI(stats.gold);
+        OnGoldUpdateEvent?.Invoke();
+        //UIManager.Instance.UpdateGoldUI(stats.gold);
         // + une anim de gain de piece
     }
     public void removeGold(int amount)
     {
         stats.gold -= amount;
-        UIManager.Instance.UpdateGoldUI(stats.gold);
+        OnGoldUpdateEvent?.Invoke();
+        //UIManager.Instance.UpdateGoldUI(stats.gold);
         // + une anim de perte de piece
     }
 
