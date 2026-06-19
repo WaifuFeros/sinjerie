@@ -62,6 +62,7 @@ public class WeatherEffect : MonoBehaviour
     public void isSnowing() 
     {
         PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina - 2;
+        PlayerManager.Instance.OnStaminaUpdateEvent?.Invoke();
         enemy.currentStaminaMax = enemy.EnemyStats.MaxStamina - 2;
     }
 

@@ -19,6 +19,8 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     [SerializeField] private Image effectImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
+    [SerializeField] private Color invalidWeightTextColor = Color.red;
+    [SerializeField] private Color invalidWeightImagesColor = new Color(0.3f, 0.3f, 0.3f, 1f);
 
     [Header("Smoke Effect")]
     [SerializeField] private Animator smokeAnimator;
@@ -40,6 +42,8 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     private Coroutine updateCoroutine;
     private bool isDragging;
 
+    private Color _weightTextBaseColor;
+
     void Start()
     {
         name = $"Item: {itemData.objetName}";
@@ -50,6 +54,16 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
         descritptionPanel.SetActive(false);
+
+        _weightTextBaseColor = weightText.color;
+        PlayerManager.Instance.OnStaminaUpdateEvent += UpdateWeightVisual;
+    }
+
+    private void UpdateWeightVisual()
+    {
+        weightText.color = PlayerManager.Instance.stats.currentStamina >= itemData.objetWeight ? _weightTextBaseColor : invalidWeightTextColor;
+        itemIcon.color = PlayerManager.Instance.stats.currentStamina >= itemData.objetWeight ? Color.white : invalidWeightImagesColor;
+        itemBackground.color = PlayerManager.Instance.stats.currentStamina >= itemData.objetWeight ? Color.white : invalidWeightImagesColor;
     }
 
     public void TriggerVisualUpdate()
@@ -107,6 +121,8 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         effectText.text = itemData.objectEffect.ToString();
         weightText.text = itemData.objetWeight.ToString();
+
+        UpdateWeightVisual();
     }
 
     public void InitItem(ObjetSO data)
@@ -159,6 +175,8 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         if (ItemManager.Instance != null)
             ItemManager.Instance.activeItems.Remove(this);
+
+        PlayerManager.Instance.OnStaminaUpdateEvent -= UpdateWeightVisual;
 
         if (itemData != null) Destroy(itemData);
     }

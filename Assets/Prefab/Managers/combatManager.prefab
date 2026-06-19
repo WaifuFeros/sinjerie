@@ -51,12 +51,16 @@ MonoBehaviour:
   _wetDuration: 4
   _addFireDuration: 4
   _damageThunder: 1000
-  _isThunder: 0
   _canvasParent: {fileID: 0}
   _itemAnimPrefab: {fileID: 1330769031389707562, guid: 7d2ef08ee1909e644a9a125609496501,
     type: 3}
   _enemyTransform: {fileID: 0}
   _playerTransform: {fileID: 0}
   _animationDuration: 0.8
+  _highlightSkipButtonSize: 1.2
+  _highlightSkipButtonTime: 0.5
+  _playerhead: {fileID: 0}
+  _ennemyhead: {fileID: 0}
+  dataStorage: {fileID: 0}
+  currentEnemy: {fileID: 0}
   isPlayerTurn: 1
-  weather: {fileID: 0}
