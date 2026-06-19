@@ -36,12 +36,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] 
     private TextMeshProUGUI combatStatusText;
 
-    private CombatSystem combatSystem;
-    private RewardSystem rewardSystem;
-
-    [Header("Player")]
-    [SerializeField] private TextMeshProUGUI goldUI;
-
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -49,8 +43,6 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        combatSystem = CombatSystem.Instance;
-        rewardSystem = RewardSystem.Instance;
         // Masquer tous les panels au démarrage
         HideAllPanels();
     }
@@ -97,8 +89,7 @@ public class UIManager : MonoBehaviour
             if (rewardPanel != null)
             {
                 rewardPanel.SetActive(true);
-                rewardSystem.AddToggle();
-
+                RewardSystem.Instance.AddToggle();
             }
         });
         
@@ -198,14 +189,6 @@ public class UIManager : MonoBehaviour
         if (combatStatusText != null)
         {
             combatStatusText.text = message;
-        }
-    }
-
-    public void UpdateGoldUI(int goldAmount)
-    {
-        if (goldUI != null)
-        {
-            goldUI.text = goldAmount.ToString();
         }
     }
 }

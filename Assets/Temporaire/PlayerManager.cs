@@ -30,6 +30,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
 
     public Action OnStaminaUpdateEvent;
+    public Action OnGoldUpdateEvent;
  
     [Header("Player Stats")]
     [SerializeField] public PlayerStatsData stats;
@@ -157,13 +158,15 @@ public class PlayerManager : MonoBehaviour
     public void AddGold(int amount)
     {
         stats.gold += amount;
-        UIManager.Instance.UpdateGoldUI(stats.gold);
+        OnGoldUpdateEvent?.Invoke();
+        //UIManager.Instance.UpdateGoldUI(stats.gold);
         // + une anim de gain de piece
     }
     public void removeGold(int amount)
     {
         stats.gold -= amount;
-        UIManager.Instance.UpdateGoldUI(stats.gold);
+        OnGoldUpdateEvent?.Invoke();
+        //UIManager.Instance.UpdateGoldUI(stats.gold);
         // + une anim de perte de piece
     }
 
