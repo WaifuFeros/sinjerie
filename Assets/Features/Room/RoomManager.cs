@@ -14,11 +14,14 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private GameObject roomShop; // La salle de shop
     [SerializeField] private GameObject[] roomPrefabs; // Différents types de salles
 
+    [SerializeField] private RoomType[] _roomsLoop;
+
     [Header("Enemy Spawn")]
     [SerializeField] private GameObject enemy;
 
     private GameObject currentRoom;
     private List<EnemySO> availableEnemyData = new List<EnemySO>();
+    private List<EnemySO> availableBossData = new List<EnemySO>();
     private RewardSystem rewardSystem;
 
     private void Awake()
@@ -36,14 +39,15 @@ public class RoomManager : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                availableEnemyData.AddRange(handle.Result.Where(x => x.IsActive));
+                availableEnemyData.AddRange(handle.Result.Where(x => x.IsActive && !x.IsBoss));
+                availableBossData.AddRange(handle.Result.Where(x => x.IsActive && x.IsBoss));
                 onLoadCompleted?.Invoke();
             }
         };
     }
 
     // Retourne le type de salle (0 = normal, 1 = spécial)
-    public int GenerateNewRoom(int roomNumber)
+    public RoomType GenerateNewRoom(int roomNumber)
     {
         // Détruire l'ancienne salle si elle existe
         if (currentRoom != null)
@@ -51,27 +55,34 @@ public class RoomManager : MonoBehaviour
             Destroy(currentRoom);
         }
 
-        if ((roomNumber + 1) % 8 == 0) // room spécial
+        int roomNumberMod = (roomNumber - 1) % _roomsLoop.Length;
+
+        RoomType roomType = _roomsLoop[roomNumberMod];
+        Debug.Log($"{roomNumber} | {roomNumberMod} | {roomType}");
+
+        switch (roomType)
         {
-            GameObject roomToSpawn = roomPrefabs[UnityEngine.Random.Range(0,roomPrefabs.Length)];
-            currentRoom = Instantiate(roomToSpawn, roomContainer.position, roomContainer.rotation);
-            currentRoom.transform.SetParent(roomContainer);
-            return 1;
-        }
-        else if ((roomNumber + 1) % 4 == 0) // room shop
-        {
-            currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);
-            currentRoom.transform.SetParent(roomContainer);
-            return 1;
-        }
-        else
-        {
-            SpawnEnemy(roomNumber);
-            return 0;
+            default:
+            case RoomType.None:
+            case RoomType.Enemy:
+                SpawnEnemy(false);
+                return roomType;
+            case RoomType.Boss:
+                SpawnEnemy(false);
+                return roomType;
+            case RoomType.Shop:
+                currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);
+                currentRoom.transform.SetParent(roomContainer);
+                return roomType;
+            case RoomType.Special:
+                GameObject roomToSpawn = roomPrefabs[UnityEngine.Random.Range(0, roomPrefabs.Length)];
+                currentRoom = Instantiate(roomToSpawn, roomContainer.position, roomContainer.rotation);
+                currentRoom.transform.SetParent(roomContainer);
+                return roomType;
         }
     }
 
-    private void SpawnEnemy(int roomNumber)
+    private void SpawnEnemy(bool isBoss)
     {
         if (enemy != null)
         {
@@ -89,4 +100,15 @@ public class RoomManager : MonoBehaviour
     {
         return enemy;
     }
+
+
+}
+
+public enum RoomType
+{
+    None,
+    Enemy,
+    Boss,
+    Shop,
+    Special,
 }

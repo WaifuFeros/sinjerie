@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class ItemToBuy : MonoBehaviour
 {
-
-    private PlayerManager player = PlayerManager.Instance;
     private int price;
     private ObjetSO itemToBuySO;
 
@@ -19,6 +17,8 @@ public class ItemToBuy : MonoBehaviour
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
     [SerializeField] private TextMeshProUGUI priceText;
+    [SerializeField] private Color _notEnoughMoneyTextColor = Color.red;
+    [SerializeField] private Color _notEnoughMoneyImageColor = new Color(0.3f, 0.3f, 0.3f, 1f);
 
     [Header("Asset Rarity")]
     [SerializeField] private Sprite _communSprite;
@@ -27,8 +27,12 @@ public class ItemToBuy : MonoBehaviour
     [SerializeField] private Sprite _epicSprite;
     [SerializeField] private Sprite _lengendarySprite;
 
-    void Awake()
+    private Color _priceTextBaseColor;
+
+    void Start()
     {
+        _priceTextBaseColor = priceText.color;
+
         // Choisi la rareté et le prix et applique l'affichage de la rareté
         int itemChoiceNb = Random.Range(0, 100);
         ObjetRarity itemRarity;
@@ -78,22 +82,37 @@ public class ItemToBuy : MonoBehaviour
         effectText.text = itemToBuySO.objectEffect.ToString();
         weightText.text = itemToBuySO.objetWeight.ToString();
         priceText.text = price.ToString();
+        UpdatePriceColor();
+
+        PlayerManager.Instance.OnGoldUpdateEvent += UpdatePriceColor;
     }
 
+    private void OnDestroy()
+    {
+        PlayerManager.Instance.OnGoldUpdateEvent -= UpdatePriceColor;
+    }
 
     public void BuyItem()
     {
-        if (player.stats.gold >= price)
+        if (PlayerManager.Instance.stats.gold >= price)
         {
             // Ajoute l'item au deck du joueur et retire l'or
-            player.removeGold(price);
+            PlayerManager.Instance.removeGold(price);
             var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
             deckList.Add(itemToBuySO);
-            player.stats.Deck = deckList.ToArray();
+            PlayerManager.Instance.stats.Deck = deckList.ToArray();
 
             // Affichage
             GetComponent<Button>().interactable = false;
             item.SetActive(false);
         }
+    }
+
+    private void UpdatePriceColor()
+    {
+        bool hasEnoughMoney = PlayerManager.Instance.stats.gold >= price;
+        priceText.color = hasEnoughMoney ? _priceTextBaseColor : _notEnoughMoneyTextColor;
+        itemIcon.color = hasEnoughMoney ? Color.white : _notEnoughMoneyImageColor;
+        itemBackground.color = hasEnoughMoney ? Color.white : _notEnoughMoneyImageColor;
     }
 }

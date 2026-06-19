@@ -50,7 +50,7 @@ MonoBehaviour:
   _paralyzeDuration: 4
   _wetDuration: 4
   _addFireDuration: 4
-  _damageThunder: 1000
+  _damageThunder: 5
   _canvasParent: {fileID: 0}
   _itemAnimPrefab: {fileID: 1330769031389707562, guid: 7d2ef08ee1909e644a9a125609496501,
     type: 3}
