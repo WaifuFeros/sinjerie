@@ -58,7 +58,7 @@ public class GameLoopManager : MonoBehaviour
         // Initialiser tout les Manager
         RoomManager.Instance.Initialize(() =>
         {
-            ItemManager.Instance.Initialize(() =>
+            ItemManager.Instance.WaitForItemDatabaseInitialization(() =>
             {
                 CombatSystem.Instance.Initialize(() =>
                 {

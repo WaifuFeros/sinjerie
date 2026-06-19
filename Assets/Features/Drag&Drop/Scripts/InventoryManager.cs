@@ -7,6 +7,8 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
 
+    public Transform itemsParent;
+
     private List<GameDroppableSlotController> _slots;
 
     private void Awake()

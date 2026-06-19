@@ -9,10 +9,10 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance { get; private set; }
 
+    public bool DataBaseInitialized => _databaseState == ItemDataBaseInizializationState.Initialized;
+
     [Header("Configuration")]
     [SerializeField] private GameObject itemPrefab;
-
-    [SerializeField] private Transform itemParents;
 
     // Liste de tous les items
     public List<ItemBrain> activeItems = new List<ItemBrain>();
@@ -20,31 +20,60 @@ public class ItemManager : MonoBehaviour
     // Liste des Items SO
     public List<ObjetSO> ItemsData = new List<ObjetSO>();
 
+    private ItemDataBaseInizializationState _databaseState = ItemDataBaseInizializationState.NotInizialized;
+
+    private Action _onLoadItemsCompleteEvent;
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
     }
 
+    private void Start()
+    {
+        Initialize(() =>
+        {
+            _databaseState = ItemDataBaseInizializationState.Initialized;
+        });
+    }
 
     public void Initialize(Action onLoadCompleted)
     {
+        _databaseState = ItemDataBaseInizializationState.Initializing;
+        _onLoadItemsCompleteEvent = onLoadCompleted;
         Addressables.LoadAssetsAsync<ObjetSO>("Items", null).Completed += handle =>
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 ItemsData.AddRange(handle.Result);
-                onLoadCompleted?.Invoke();
+                _onLoadItemsCompleteEvent?.Invoke();
             }
         };
 
     }
 
+    public void WaitForItemDatabaseInitialization(Action onLoadCompleted)
+    {
+        switch (_databaseState)
+        {
+            default:
+            case ItemDataBaseInizializationState.NotInizialized:
+                Initialize(onLoadCompleted);
+                break;
+            case ItemDataBaseInizializationState.Initializing:
+                _onLoadItemsCompleteEvent = onLoadCompleted;
+                break;
+            case ItemDataBaseInizializationState.Initialized:
+                onLoadCompleted?.Invoke();
+                break;
+        }
+    }
+
     public void SpawnRandomItem()
     {
-        if (ItemsData.Count == 0)
+        if (!DataBaseInitialized || ItemsData.Count == 0)
             return;
-
 
         int randomIndex = UnityEngine.Random.Range(0, ItemsData.Count);
         ObjetSO randomData = ItemsData[randomIndex];
@@ -52,12 +81,15 @@ public class ItemManager : MonoBehaviour
     }
     public void SpawnItem(ObjetSO objetSO)
     {
-        if (ItemsData.Count == 0 || !InventoryManager.Instance.HasEmptySlot())
+        if (!DataBaseInitialized
+            || InventoryManager.Instance == null
+            || !InventoryManager.Instance.HasEmptySlot()
+            || ItemsData.Count == 0)
             return;
 
         Vector3 position = new Vector3(transform.position.x, transform.position.y, 0f);
 
-        ItemBrain newItemBrain = Instantiate(itemPrefab, position, Quaternion.identity, itemParents).GetComponent<ItemBrain>();
+        ItemBrain newItemBrain = Instantiate(itemPrefab, position, Quaternion.identity, InventoryManager.Instance.itemsParent).GetComponent<ItemBrain>();
 
         newItemBrain.InitItem(objetSO);
         activeItems.Add(newItemBrain);
@@ -125,5 +157,12 @@ public class ItemManager : MonoBehaviour
             item.itemData.objectEffect = Effect;
             item.TriggerVisualUpdate();
         }
+    }
+
+    internal enum ItemDataBaseInizializationState
+    {
+        NotInizialized,
+        Initializing,
+        Initialized
     }
 }
