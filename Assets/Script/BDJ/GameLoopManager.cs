@@ -45,7 +45,10 @@ public class GameLoopManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        SceneManager.LoadScene(_gameSceneName);
+        TransitionManager.Instance.TransitionWithAction(() =>
+        {
+            SceneLoadManager.Instance.LoadSceneAsActive(_gameSceneName);
+        });
     }
 
     /// <summary>
@@ -64,7 +67,7 @@ public class GameLoopManager : MonoBehaviour
                 {
                     RewardSystem.Instance.Initialize(() =>
                     {                         // Tout est prêt, passer à la première salle
-                        StartCoroutine(TransitionToNewRoom());
+                        StartCoroutine(TransitionToNewRoom(true));
                     });
 
                 });
@@ -77,7 +80,7 @@ public class GameLoopManager : MonoBehaviour
     /// <summary>
     /// Étape 2: Nouvelle salle
     /// </summary>
-    private IEnumerator TransitionToNewRoom()
+    private IEnumerator TransitionToNewRoom(bool addDelayToItemSpawn = false)
     {
         currentRoomNumber++;
 
@@ -90,7 +93,7 @@ public class GameLoopManager : MonoBehaviour
             UIManager.Instance.UpdateRoomCounter(currentRoomNumber);
             UIManager.Instance.ShowRoomUI();
             // Passer au combat
-            StartCombat();
+            StartCombat(addDelayToItemSpawn);
         }
         yield return null;
     }
@@ -98,9 +101,9 @@ public class GameLoopManager : MonoBehaviour
     /// <summary>
     /// Étape 3: Ennemi - Démarrage du combat
     /// </summary>
-    public void StartCombat()
+    public void StartCombat(bool addDelayToItemSpawn = false)
     {
-        CombatSystem.Instance.StartCombat(OnCombatVictory, OnCombatDefeat);
+        CombatSystem.Instance.StartCombat(OnCombatVictory, OnCombatDefeat, addDelayToItemSpawn);
         UIManager.Instance.ShowCombatUI();
 
     }

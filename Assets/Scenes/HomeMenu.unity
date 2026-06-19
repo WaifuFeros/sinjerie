@@ -5403,8 +5403,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterList:
-  - {fileID: 11400000, guid: 38f01eb820be83e4ab06d34af066c5d6, type: 2}
-  - {fileID: 11400000, guid: 059f07d0df7053841b9c14ccfa906d3f, type: 2}
+  - {fileID: 11400000, guid: 3de129d9ff954404db81dcaec3a43d65, type: 2}
+  - {fileID: 11400000, guid: 8fbb5bc09020301498a68be003b015be, type: 2}
+  - {fileID: 11400000, guid: 1edf5721c8246ce43a92225c7e11c24d, type: 2}
   - {fileID: 11400000, guid: 38f01eb820be83e4ab06d34af066c5d6, type: 2}
   - {fileID: 11400000, guid: 059f07d0df7053841b9c14ccfa906d3f, type: 2}
   characterPrefab: {fileID: 3162358337384565786, guid: 47c10ee26da9716489c2321007d372fd,
