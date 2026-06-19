@@ -46,7 +46,7 @@ public class DescriptionWindow : MonoBehaviour
         if (item == null)
             return;
 
-        _nameText.text = item.name;
+        _nameText.text = item.objetName;
         _descriptionText.text = item.objetDescription;
         _itemImage.sprite = item.objetSprite;
 

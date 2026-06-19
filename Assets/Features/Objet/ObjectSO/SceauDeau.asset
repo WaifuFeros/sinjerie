@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SceauDeau
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 0}
-  objetName: Sceau d'eau
+  objetName: Seau d'eau
   objetDescription: un simple sceau rempli d'eau
   objetMaterialType: 7
   objetWeight: 3

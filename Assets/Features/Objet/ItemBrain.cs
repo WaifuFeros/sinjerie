@@ -137,10 +137,12 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        StaminaUIManager.Instance.DisplayStaminaPreview(PlayerManager.Instance.stats.currentStamina, itemData.objetWeight);
         longPressCoroutine = StartCoroutine(WaitAndShowDescription());
     }
     public void OnPointerUp(PointerEventData eventData)
     {
+        StaminaUIManager.Instance.HideStaminaPreview();
         StopLongPress();
     }
     private IEnumerator WaitAndShowDescription()

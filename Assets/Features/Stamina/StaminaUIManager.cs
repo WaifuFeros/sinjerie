@@ -1,18 +1,14 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class StaminaUIManager : MonoBehaviour
 {
     public static StaminaUIManager Instance { get; private set; }
 
-
     [Header("Settings")]
     public GameObject staminaPointPrefab;
-    public Sprite fullStaminaSprite;
-    public Sprite emptyStaminaSprite;
 
-    private List<Image> staminaPoints = new List<Image>();
+    private List<StaminaPoint> staminaPoints = new List<StaminaPoint>();
 
     private void Awake()
     {
@@ -30,7 +26,7 @@ public class StaminaUIManager : MonoBehaviour
         for (int i = 0; i < maxStamina; i++)
         {
             GameObject newPoint = Instantiate(staminaPointPrefab, transform);
-            Image staminaImage = newPoint.GetComponent<Image>();
+            StaminaPoint staminaImage = newPoint.GetComponent<StaminaPoint>();
             staminaPoints.Add(staminaImage);
         }
     }
@@ -40,10 +36,45 @@ public class StaminaUIManager : MonoBehaviour
     {
         for (int i = 0; i < staminaPoints.Count; i++)
         {
-            if (i < currentStamina)
-                staminaPoints[i].sprite = fullStaminaSprite;
-            else
-                staminaPoints[i].sprite = emptyStaminaSprite;
+            staminaPoints[i].SetStamina(i < currentStamina);
+        }
+    }
+
+    public void DisplayStaminaPreview(int currentStamina, int neededStamina)
+    {
+        bool isEnough = currentStamina >= neededStamina;
+
+        int startingPoint = 0;
+        if (isEnough)
+            startingPoint = currentStamina - neededStamina;
+
+        if (isEnough)
+        {
+            for (int i = 0; i < staminaPoints.Count; i++)
+            {
+                if (i < startingPoint || i >= currentStamina)
+                    staminaPoints[i].HideOutline();
+                else
+                    staminaPoints[i].DisplayOutline(isEnough);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < staminaPoints.Count; i++)
+            {
+                if (i < neededStamina)
+                    staminaPoints[i].DisplayOutline(isEnough);
+                else
+                    staminaPoints[i].HideOutline();
+            }
+        }
+    }
+
+    public void HideStaminaPreview()
+    {
+        for (int i = 0; i < staminaPoints.Count; i++)
+        {
+            staminaPoints[i].HideOutline();
         }
     }
 }
