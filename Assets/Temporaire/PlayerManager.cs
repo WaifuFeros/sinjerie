@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class PlayerStatsData
@@ -27,12 +29,20 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
+    public Action OnStaminaUpdateEvent;
+ 
     [Header("Player Stats")]
     [SerializeField] public PlayerStatsData stats;
 
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
     [SerializeField] private StaminaUIManager staminaUI;
+
+    [Header("WeatherEffect")]
+    [SerializeField,HideInInspector] public int FireCounter = 0;
+    [SerializeField,HideInInspector] public int FreezeCounter = 0;
+    [SerializeField,HideInInspector] public int WetCounter = 0;
+    [SerializeField,HideInInspector] public int ParalyzeCounter = 0;
 
     private void Awake()
     {
@@ -50,11 +60,17 @@ public class PlayerManager : MonoBehaviour
         staminaUI.UpdateDisplay(stats.currentStamina);
     }
 
+    private void OnDestroy()
+    {
+        OnStaminaUpdateEvent = null;
+    }
+
     /// <summary>
-    /// Le joueur prend des d�g�ts
+    /// Le joueur prend des degats
     /// </summary>
     public void TakeDamage(int damage)
     {
+        VisualEffectManager.Instance.ShakeUI(0.3f, 20f, 15);
         stats.currentHealth -= damage;
         UpdateHealthBar();
     }
@@ -69,7 +85,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Ajoute de l'exp�rience et v�rifie le level up
+    /// Ajoute de l'experience et verifie le level up
     /// </summary>
     public void AddExperience(int exp)
     {
@@ -91,14 +107,14 @@ public class PlayerManager : MonoBehaviour
         stats.experience -= stats.experienceToNextLevel;
         stats.experienceToNextLevel = Mathf.RoundToInt(stats.experienceToNextLevel * 1.5f);
 
-        // Augmenter les stats (style Pok�mon)
+        // Augmenter les stats (style Pokemon)
         int healthIncrease = Random.Range(15, 25);
         int attackIncrease = Random.Range(3, 7);
         int defenseIncrease = Random.Range(2, 5);
         int speedIncrease = Random.Range(2, 5);
 
         stats.maxHealth += healthIncrease;
-        stats.currentHealth = stats.maxHealth; // Soigne compl�tement au level up
+        stats.currentHealth = stats.maxHealth; // Soigne completement au level up
 
         UpdateHealthBar();
         Debug.Log($" Level Up! Niveau {stats.level}");
@@ -106,9 +122,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Met � jour la barre de vie dans l'UI
+    /// Met a jour la barre de vie dans l'UI
     /// </summary>
-    private void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         if (healthBar != null)
         {
@@ -124,15 +140,18 @@ public class PlayerManager : MonoBehaviour
         {
             stats.currentStamina -= nb;
             staminaUI.UpdateDisplay(stats.currentStamina);
+            OnStaminaUpdateEvent?.Invoke();
             return true;
         }
         return false;
     }
-    // Remet la stamina � son maximum
-    public void refillStamina()
+    // Remet la stamina a son maximum
+    public void refillStamina(int staminaPenaly = 0)
     {
-        stats.currentStamina = Mathf.Min(stats.currentStamina + stats.staminaRegenPerTurn, stats.maxStamina);
+        int staminaToRegen = Mathf.Max(stats.staminaRegenPerTurn - staminaPenaly, 0);
+        stats.currentStamina = Mathf.Min(stats.currentStamina + staminaToRegen, stats.maxStamina);
         staminaUI.UpdateDisplay(stats.currentStamina);
+        OnStaminaUpdateEvent?.Invoke();
     }
 
     public void AddGold(int amount)

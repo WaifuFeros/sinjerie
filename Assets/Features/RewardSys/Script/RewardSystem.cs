@@ -8,21 +8,12 @@ using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 
-[System.Serializable]
-public class Reward
-{
-    public int gold = 10;
-    public List<ObjetSO> items;
-    
-}
 
 public class RewardSystem : MonoBehaviour
 {
     public static RewardSystem Instance { get; private set; }
 
     [Header("Reward Settings")]
-    [SerializeField] 
-    private Reward baseReward;
 
     public int NumberOfToggle;
 
@@ -45,6 +36,8 @@ public class RewardSystem : MonoBehaviour
 
     public List<ToggleAssignation> ToggleAssignations = new List<ToggleAssignation>();
 
+    public List<ObjetSO> ItemRewards = new List<ObjetSO>();
+
 
     private void Awake()
     {
@@ -53,7 +46,6 @@ public class RewardSystem : MonoBehaviour
     }
     public void Initialize(Action onLoadCompleted)
     {
-        baseReward.items = new List<ObjetSO>();
         onLoadCompleted?.Invoke();
     }
 
@@ -69,7 +61,6 @@ public class RewardSystem : MonoBehaviour
 
             // _enemySo récup items et les assignes au toggle
             var valueItemReward = EnemySO.Items[indexAppendReward];
-            baseReward.items.Add(valueItemReward);
             toggleAssignation.Initialized(valueItemReward,this);
             ToggleAssignations.Add(toggleAssignation);
         }
@@ -78,42 +69,28 @@ public class RewardSystem : MonoBehaviour
 
     public void ValidateChoice()
     {
-        Panel.gameObject.SetActive(false);
-        // Donne les items
-        for (int i = 0; i < ToggleAssignations.Count; i++)
-        {
-                if (ToggleAssignations[i].Toggle.isOn == true)
-                {
-                    var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
-                    deckList.Add(baseReward.items[i]);
-                    PlayerManager.Instance.stats.Deck = deckList.ToArray();
-                }
+        TransitionManager.Instance.TransitionWithAction(() => {
+            Panel.gameObject.SetActive(false);
+            // Donne les items
+            for (int i = 0; i < ItemRewards.Count; i++)
+            {
+                var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
+                deckList.Add(ItemRewards[i]);
+                PlayerManager.Instance.stats.Deck = deckList.ToArray();
+            }
+            // Donne les gold
+            PlayerManager.Instance.AddGold(EnemySO.GoldReward);
 
+            // Réinitialise le système de récompense pour la prochaine fois
+            for (int i = 0; i < ToggleAssignations.Count; i++)
+            {
                 Destroy(ToggleAssignations[i].gameObject);
-        }
-        // Donne les gold
-        PlayerManager.Instance.AddGold(EnemySO.GoldReward);
-
-        baseReward.items.Clear();
-        ToggleAssignations.Clear();
-        GameLoopManager.Instance.ExitRoom();
+            }
+            ItemRewards.Clear();
+            ToggleAssignations.Clear();
+            GameLoopManager.Instance.ExitRoom();
+        });
     }
     
 
-    public void GiveRewards(bool victory, int roomNumber, System.Action onComplete)
-    {
-        Reward reward = CalculateRewards();
-    }
-
-    private Reward CalculateRewards()
-    {
-        Reward reward = new Reward();
-
-        ////Base reward
-        reward.gold = baseReward.gold;
-
-        //Gold que tu gagnes.
-        reward.gold = EnemySO.GoldReward;
-        return reward;
-    }
 }

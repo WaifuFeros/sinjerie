@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 21300000, guid: 1c97fddff86817e468333c41c911f513, type: 3}
   objetName: Stone
   objetDescription: It's just a little rock.
-  objetMatiralType: 4
+  objetMaterialType: 0
   objetWeight: 4
   objectType: 1
   objectEffect: 7

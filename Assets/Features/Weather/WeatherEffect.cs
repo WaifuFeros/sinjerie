@@ -1,0 +1,121 @@
+using System;
+using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class WeatherEffect : MonoBehaviour
+{
+    public static WeatherEffect Instance { get; private set; }
+
+    [SerializeField] private Enemy enemy;
+
+
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
+
+    public void OnFire(bool isPlayer)
+    {
+        if (!isPlayer && enemy.FireCounter > 0)
+        {
+           enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+           enemy.FireCounter--;
+            if (enemy.FireCounter == 0)
+                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+        }
+        else if (PlayerManager.Instance.FireCounter > 0)
+        {
+           PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+           PlayerManager.Instance.FireCounter--;
+            if (PlayerManager.Instance.FireCounter == 0)
+                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+        }
+        CombatSystem.Instance.CheckCombatEnd();
+       
+    }
+
+    public bool OnFreeze(bool isPlayer)
+    {
+        if (!isPlayer && enemy.FreezeCounter > 0)
+        {
+            enemy.WetCounter = 0;
+            if (enemy.FreezeCounter >= 3)
+            {
+                enemy.FreezeCounter = 0;
+                return true; //ennemi gele
+            }
+        }
+        else if (PlayerManager.Instance.FreezeCounter > 0)
+        {
+            PlayerManager.Instance.WetCounter = 0;
+            if (PlayerManager.Instance.FreezeCounter >= 3)
+            {
+                PlayerManager.Instance.FreezeCounter = 0;
+                return true; //player gele
+            }
+        }
+        return false;
+    }
+    //a tester :)
+    public void isSnowing() 
+    {
+        PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina - 2;
+        PlayerManager.Instance.OnStaminaUpdateEvent?.Invoke();
+        enemy.currentStaminaMax = enemy.EnemyStats.MaxStamina - 2;
+    }
+
+    public void OnWet(bool isPlayer)
+    {
+        if (!isPlayer && enemy.WetCounter > 0)
+        {
+            enemy.FireCounter = 0;
+            enemy.WetCounter -= 1;
+            if (enemy.WetCounter == 0)
+                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+        }
+        else if (PlayerManager.Instance.WetCounter > 0)
+        {
+            PlayerManager.Instance.FireCounter = 0;
+            PlayerManager.Instance.WetCounter -= 1;
+            if (PlayerManager.Instance.WetCounter == 0)
+                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+        }
+    }
+
+
+    public bool OnParalyze(bool isPlayer)
+    {
+        int paralyze = UnityEngine.Random.Range(0, 100);
+        if (!isPlayer && enemy.ParalyzeCounter > 0 )
+        {
+            if (paralyze <= 25)
+            {
+                return true; //ennemi paralyse, il saute son tour
+            }
+            enemy.ParalyzeCounter--;
+        }
+        else if (PlayerManager.Instance.ParalyzeCounter > 0)
+        {
+            if (paralyze <= 25)
+            {
+                return true; //player paralyse, il saute son tour
+            }
+            PlayerManager.Instance.ParalyzeCounter--;
+        }
+        return false;
+    }
+
+    public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
+    {
+        if (isThunder && !isPlayer)
+        {
+            enemy.TakeDamage(damageThunder);
+        }
+        else if (isThunder && isPlayer)
+        {
+            PlayerManager.Instance.TakeDamage(damageThunder);
+        }
+    }
+}

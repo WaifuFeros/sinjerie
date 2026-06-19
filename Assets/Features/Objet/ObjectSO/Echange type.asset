@@ -16,7 +16,7 @@ MonoBehaviour:
   objetName: Echange item type
   objetDescription: All attack items become heal items and all heal items become
     attack items.
-  objetMatiralType: 0
+  objetMaterialType: 0
   objetWeight: 3
   objectType: 2
   objectEffect: 0

@@ -21,6 +21,7 @@ public class GameLoopManager : MonoBehaviour
     [SerializeField] private int currentRoomNumber = 0;
 
     [Header("Scene Settings")]
+    [SelectScene]
     [SerializeField] private string _gameSceneName;
 
 
@@ -125,13 +126,13 @@ public class GameLoopManager : MonoBehaviour
     {
         Debug.Log("Réussite - Combat gagné!");
 
-        if (uiManager != null)
-        {
+        if (CombatSystem.Instance.currentEnemy.EnemyStats.IsBoss)
+            uiManager.ShowBananaRewardPanel();
+        else
             uiManager.ShowRewardPanel();
-        }
+        
 
-        // Passer aux récompenses après un délai
-        StartCoroutine(DelayedRewardCollection(true));
+        
     }
 
     /// <summary>
@@ -139,30 +140,10 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     private void OnCombatDefeat()
     {
-        Debug.Log("Défaite - Combat perdu!");
+        uiManager.ShowDefeatPanel();
 
-        if (uiManager != null)
-        {
-            uiManager.ShowDefeatPanel();
-        }
     }
 
-    /// <summary>
-    /// Délai avant de collecter les récompenses
-    /// </summary>
-    private IEnumerator DelayedRewardCollection(bool victory)
-    {
-        yield return new WaitForSeconds(2f);
-        CollectRewards(victory);
-    }
-
-    /// <summary>
-    /// Étape 5: Récupère les récompenses
-    /// </summary>
-    private void CollectRewards(bool victory)
-    {
-        Debug.Log("Récupération des récompenses");
-    }
 
     /// <summary>
     /// Callback après collecte des récompenses

@@ -1,6 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -36,7 +36,7 @@ public class RoomManager : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                availableEnemyData.AddRange(handle.Result);
+                availableEnemyData.AddRange(handle.Result.Where(x => x.IsActive));
                 onLoadCompleted?.Invoke();
             }
         };
@@ -80,10 +80,6 @@ public class RoomManager : MonoBehaviour
             int randomIndex = UnityEngine.Random.Range(0, availableEnemyData.Count);
             EnemySO randomData = availableEnemyData[randomIndex];
             enemyScript.Initialize(randomData);
-            if (enemyScript != null)
-            {
-                enemyScript.SetDifficulty(roomNumber);
-            }
             rewardSystem.EnemySO = randomData;
         }
 

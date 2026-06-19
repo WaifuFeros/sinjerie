@@ -10,12 +10,18 @@ public class Menu : MonoBehaviour
     [SerializeField] private Button _ParametresButton;
     [SerializeField] private Button _EncyclopediaButton;
     [SerializeField] private Button _StartButton;
-    [SerializeField] private Button _LeftTheGameButtonButton;
+    [SelectScene]
     [SerializeField] private string _gameSceneName;
     public SaveScript _saveScript;
 
+    [SelectScene]
+    public string managersScene;
+
     private void Awake()
     {
+        if (!string.IsNullOrWhiteSpace(managersScene))
+            SceneManager.LoadScene(managersScene, LoadSceneMode.Additive);
+
         if (_saveScript != null)
         {
             _saveScript.LoadInfo();
@@ -23,12 +29,21 @@ public class Menu : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene(_gameSceneName);
+        TransitionManager.Instance.TransitionWithAction(() => {
+            SceneManager.sceneLoaded += OnGameSceneLoaded;
+            SceneManager.LoadScene(_gameSceneName, LoadSceneMode.Additive);
+
+        });
     }
 
-    public void QuitGame()
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Application.Quit();
+        if (scene.name == _gameSceneName)
+        {
+            SceneManager.SetActiveScene(scene);
+            SceneManager.sceneLoaded -= OnGameSceneLoaded;
+            SceneManager.UnloadSceneAsync("HomeMenu");
+        }
     }
 
     public void OpenEncyclopedia()
@@ -36,7 +51,6 @@ public class Menu : MonoBehaviour
         _EncyclopediaPanel.SetActive(true);
         _ParametresButton.gameObject.SetActive(false);
         _StartButton.gameObject.SetActive(false);
-        _LeftTheGameButtonButton.gameObject.SetActive(false);
         _EncyclopediaButton.gameObject.SetActive(false);
     }
 
@@ -45,7 +59,6 @@ public class Menu : MonoBehaviour
         _EncyclopediaPanel.SetActive(false);
         _ParametresButton.gameObject.SetActive(true);
         _StartButton.gameObject.SetActive(true);
-        _LeftTheGameButtonButton.gameObject.SetActive(true);
         _EncyclopediaButton.gameObject.SetActive(true);
 
     }
@@ -55,7 +68,6 @@ public class Menu : MonoBehaviour
         _ParametresPanel.SetActive(true);
         _ParametresButton.gameObject.SetActive(false);
         _StartButton.gameObject.SetActive(false);
-        _LeftTheGameButtonButton.gameObject.SetActive(false);
         _EncyclopediaButton.gameObject.SetActive(false);
     }
 
@@ -64,7 +76,6 @@ public class Menu : MonoBehaviour
         _ParametresPanel.SetActive(false);
         _ParametresButton.gameObject.SetActive(true);
         _StartButton.gameObject.SetActive(true);
-        _LeftTheGameButtonButton.gameObject.SetActive(true);
         _EncyclopediaButton.gameObject.SetActive(true);
     }
 }

@@ -13,4 +13,7 @@ public class EnemySO : ScriptableObject
     public ObjetSO[] Items;
     public EnemyBehaviorSO behavior;
     public int GoldReward;
+    public bool IsBoss;
+
+    public bool IsActive;
 }

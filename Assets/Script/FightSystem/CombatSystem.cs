@@ -1,11 +1,11 @@
-using System.Collections;
-using UnityEngine;
-using System;
-using System.Collections.Generic;
 using DG.Tweening;
-using UnityEngine.UIElements;
-using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
+using static VisualEffectManager;
+
 
 public class CombatSystem : MonoBehaviour
 {
@@ -18,6 +18,13 @@ public class CombatSystem : MonoBehaviour
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
+    [Header(" Effect Settings")]
+    [SerializeField] private int _fireDuration;
+    //[SerializeField] private int _freezeDuration;
+    [SerializeField] private int _paralyzeDuration;
+    [SerializeField] private int _wetDuration;
+    [SerializeField] private int _addFireDuration;
+    [SerializeField] private int _damageThunder;
 
     [Header("Animation References")]
     [SerializeField] private Transform _canvasParent;
@@ -25,28 +32,54 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private Transform _enemyTransform;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _animationDuration = 0.8f;
+    [SerializeField] private float _highlightSkipButtonSize = 1.2f;
+    [SerializeField] private float _highlightSkipButtonTime = 0.2f;
 
-    private Enemy currentEnemy;
+
+    [Header("UI")]
+    [SerializeField] public GameObject _playerhead;
+    [SerializeField] private GameObject _ennemyhead;
+
+    [Header("Data Storage")]
+    [SerializeField] private SelectedCharacterData dataStorage;
+
+    public Enemy currentEnemy;
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
     private bool combatActive = false;
     public bool isPlayerTurn = true;
-    private RoomManager roomManager;
-    private ItemManager _itemManager;
-    private PlayerManager _playerStats;
+
+    private RectTransform _skipButtonRectTransform;
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
+
+        _skipButtonRectTransform = skipTurnButton.GetComponent<RectTransform>();
+    }
+
+    private void Start()
+    {
+        PlayerManager.Instance.OnStaminaUpdateEvent += CheckItemsAvailable;
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.Kill(_skipButtonRectTransform);
+        PlayerManager.Instance.OnStaminaUpdateEvent -= CheckItemsAvailable;
     }
 
     public void Initialize(Action onLoadCompleted)
     {
         // Configurer le bouton de passage de tour
-        roomManager = RoomManager.Instance;
-        _itemManager = ItemManager.Instance;
-        _playerStats = PlayerManager.Instance;
         SetupSkipTurnButton();
+        if (dataStorage.selectedCharacter != null)
+        {
+            PlayerManager.Instance.stats.Deck = dataStorage.selectedCharacter.startDeck;
+            print("hey");
+            _playerhead.GetComponent<UnityEngine.UI.Image>().sprite = dataStorage.selectedCharacter.characterSprite;
+        }
         onLoadCompleted?.Invoke();
     }
 
@@ -73,29 +106,31 @@ public class CombatSystem : MonoBehaviour
         isPlayerTurn = true;
 
         // Mettre la stamina au max
-        _playerStats.refillStamina();
+        PlayerManager.Instance.refillStamina();
 
         // Récupérer l'ennemi actuel
-        if (roomManager != null)
+        if (RoomManager.Instance != null)
         {
-            GameObject enemyObj = roomManager.GetEnemy();
+            GameObject enemyObj = RoomManager.Instance.GetEnemy();
             if (enemyObj != null)
             {
                 currentEnemy = enemyObj.GetComponent<Enemy>();
             }
         }
 
+        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille au debut du combat
+
         // Ajout item dans l'inventaire du joueur
-        for (int i = 0; i < _playerStats.stats.nbStartItem; i++)
+        for (int i = 0; i < PlayerManager.Instance.stats.nbStartItem; i++)
         {
-            if (_playerStats.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
+            if (PlayerManager.Instance.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
                 break;
-            int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
-            ObjetSO obj = _playerStats.stats.Deck[randomIndex];
-            var deckList = new List<ObjetSO>(_playerStats.stats.Deck);
+            int randomIndex = UnityEngine.Random.Range(0, PlayerManager.Instance.stats.Deck.Length);
+            ObjetSO obj = PlayerManager.Instance.stats.Deck[randomIndex];
+            var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
             deckList.RemoveAt(randomIndex);
-            _playerStats.stats.Deck = deckList.ToArray();
-            _itemManager.SpawnItem(obj);
+            PlayerManager.Instance.stats.Deck = deckList.ToArray();
+            ItemManager.Instance.SpawnItem(obj);
         }
 
         SetupSkipTurnButtonInteractable(true);
@@ -106,14 +141,16 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive)
             return;
-        _playerStats.TakeDamage(attack.objectEffect);
+        PlayerManager.Instance.TakeDamage(attack.objectEffect);
+        CheckItemEffect(attack, true);
         CheckCombatEnd();
     }
     public void HealPlayer(ObjetSO healItem)
     {
         if (!combatActive)
             return;
-        _playerStats.Heal(healItem.objectEffect);
+        PlayerManager.Instance.Heal(healItem.objectEffect);
+        CheckItemEffect(healItem, true);
         CheckCombatEnd();
     }
 
@@ -122,6 +159,7 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive || currentEnemy == null)
             return;
         currentEnemy.TakeDamage(attack.objectEffect);
+        CheckItemEffect(attack, false);
         CheckCombatEnd();
     }
     public void HealEnemy(ObjetSO healItem)
@@ -129,22 +167,43 @@ public class CombatSystem : MonoBehaviour
         if (!combatActive || currentEnemy == null)
             return;
         currentEnemy.Heal(healItem.objectEffect);
+        CheckItemEffect(healItem, false);
         CheckCombatEnd();
     }
 
     /// <summary>
     /// Appelé quand le bouton de passage de tour est cliqué
+    /// faire un meilleur sys de fin de tour pour joueur pour adapt effect.
     /// </summary>
     private void OnSkipTurnButtonClicked()
     {
+        StopHighlightSkipTurnButton();
+
+        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour du joueur
+        WeatherEffect.Instance.OnFire(false);
+        WeatherEffect.Instance.OnWet(false);
         if (!combatActive || !isPlayerTurn)
         {
             return;
         }
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
-        _playerStats.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
+        PlayerManager.Instance.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
         // l'ennemis attack
+        if(WeatherEffect.Instance.OnParalyze(false))
+        {
+            Debug.Log("aaaaaaaaaaaL'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+            return;
+        }
+        else if (WeatherEffect.Instance.OnFreeze(false))
+        {
+            Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+            return;
+        }
         StartCoroutine(EnemyAttackSequence());
     }
 
@@ -162,16 +221,17 @@ public class CombatSystem : MonoBehaviour
     /// <summary>
     /// Vérifie les conditions de fin de combat après un délai
     /// </summary>
-    private void CheckCombatEnd()
+    public void CheckCombatEnd()
     {
         if (currentEnemy != null && currentEnemy.IsDead())
             StartCoroutine(EndCombat(true));
-        else if (_playerStats.IsDead())
+        else if (PlayerManager.Instance.IsDead())
             StartCoroutine(EndCombat(false));
     }
 
     /// <summary>
     /// Séquence d'attaque de l'ennemi
+    /// Reprendre toute la fonction pour respecter poids item cote ennemi. + faire un meilleur sys de fin de tour pour IA.
     /// </summary>
     private IEnumerator EnemyAttackSequence()
     {
@@ -179,10 +239,11 @@ public class CombatSystem : MonoBehaviour
 
         ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(
             currentEnemy.EnemyStats.Items,
+            currentEnemy.EnemyStats.MaxHealth,
             currentEnemy.currentHealth,
-            currentEnemy.EnemyStats.MaxStamina
+            currentEnemy.currentStaminaMax
         );
-
+        currentEnemy.currentStaminaMax = currentEnemy.EnemyStats.MaxStamina; // Reset stamina max pour l'effet snow
         foreach (ObjetSO item in chosenItems)
         {
             // Animation
@@ -196,27 +257,42 @@ public class CombatSystem : MonoBehaviour
             yield return new WaitForSeconds(0.4f); // Petit délai entre les attaques
         }
 
-
         CheckCombatEnd();
-
-        isPlayerTurn = true;
-        SetupSkipTurnButtonInteractable(true);
+        WeatherEffect.Instance.OnFire(true);
+        WeatherEffect.Instance.OnWet(true);
+        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour de l'ennemi
 
         // pioche des items aléatoires à la fin du tour
-        for (int i = 0; i < _playerStats.stats.nbItemPerTurn; i++)
+        for (int i = 0; i < PlayerManager.Instance.stats.nbItemPerTurn; i++)
         {
-            if (_playerStats.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
+            if (PlayerManager.Instance.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
             {
                 print("############# tu n'as plus d'objet dans ton deck");
                 break;
             }
-            int randomIndex = UnityEngine.Random.Range(0, _playerStats.stats.Deck.Length);
-            ObjetSO obj = _playerStats.stats.Deck[randomIndex];
-            var deckList = new List<ObjetSO>(_playerStats.stats.Deck);
+            int randomIndex = UnityEngine.Random.Range(0, PlayerManager.Instance.stats.Deck.Length);
+            ObjetSO obj = PlayerManager.Instance.stats.Deck[randomIndex];
+            var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
             deckList.RemoveAt(randomIndex);
-            _playerStats.stats.Deck = deckList.ToArray();
+            PlayerManager.Instance.stats.Deck = deckList.ToArray();
 
-            _itemManager.SpawnItem(obj);
+            ItemManager.Instance.SpawnItem(obj);
+        }
+
+        if (!WeatherEffect.Instance.OnParalyze(true))
+        {
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+        }
+        else if (!WeatherEffect.Instance.OnFreeze(true))
+        {
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+        }
+        else
+        {
+            Debug.Log("Le joueur est paralysé et ne peut pas attaquer ce tour !");
+            StartCoroutine(EnemyAttackSequence()); // Lancer le tour de l'ennemi
         }
     }
     private IEnumerator AnimateItemThrow(ObjetSO item)
@@ -259,6 +335,10 @@ public class CombatSystem : MonoBehaviour
     }
     private IEnumerator EndCombat(bool victory)
     {
+        PlayerManager.Instance.FireCounter = 0;
+        PlayerManager.Instance.FreezeCounter = 0;
+        PlayerManager.Instance.WetCounter = 0;
+        PlayerManager.Instance.ParalyzeCounter = 0;
         combatActive = false;
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
@@ -280,6 +360,23 @@ public class CombatSystem : MonoBehaviour
         yield break;
     }
 
+    private void HighlightSkipTurnButton()
+    {
+        var startingScale = _skipButtonRectTransform.localScale;
+        _skipButtonRectTransform.DOScale(_highlightSkipButtonSize, _highlightSkipButtonTime)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetTarget(_skipButtonRectTransform)
+            .OnKill(() =>
+            {
+                _skipButtonRectTransform.localScale = startingScale;
+            });
+    }
+
+    private void StopHighlightSkipTurnButton()
+    {
+        DOTween.Kill(_skipButtonRectTransform);
+    }
+
     public bool IsCombatActive()
     {
         return combatActive;
@@ -288,5 +385,134 @@ public class CombatSystem : MonoBehaviour
     public Enemy GetCurrentEnemy()
     {
         return currentEnemy;
+    }
+
+
+    private void CheckItemEffect(ObjetSO objet, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            switch (objet.objetMaterialType)
+            {
+                //a reprendre la logique du feu car impression que prog deguelasse (il est 5h zebi j'ai plus de cerveau) mais normalement c'est fonctionnelle mais immonde
+                case ObjetMaterialType.Fire:
+                    // Applique l'effet de brulure
+                    if (PlayerManager.Instance.WetCounter == 0)
+                    {
+                        PlayerManager.Instance.FireCounter += _fireDuration;
+                        VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Fire);
+                        if (PlayerManager.Instance.FreezeCounter > 0)
+                            PlayerManager.Instance.FreezeCounter -= 1;
+                    }
+                    break;
+                case ObjetMaterialType.Ice:
+                    //PlayerManager.Instance.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    PlayerManager.Instance.FreezeCounter += 1;
+                    break;
+                case ObjetMaterialType.Water:
+                    VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Water);
+                    if (PlayerManager.Instance.WetCounter == 0) 
+                    { 
+                        PlayerManager.Instance.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    }
+                    else if (PlayerManager.Instance.WetCounter > 0)
+                        PlayerManager.Instance.WetCounter += 1; // Applique l'effet de mouille +1 round..
+                    break;
+                case ObjetMaterialType.Metal:
+                    PlayerManager.Instance.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
+                    WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                    break;
+                case ObjetMaterialType.Wood:
+                    if (PlayerManager.Instance.FireCounter > 0)
+                        PlayerManager.Instance.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    PlayerManager.Instance.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
+                    break;
+            }
+        }
+        else
+        {
+            switch (objet.objetMaterialType)
+            {
+                case ObjetMaterialType.Fire:
+                    if (currentEnemy.WetCounter == 0)
+                    {
+                        currentEnemy.FireCounter = _fireDuration;
+                        VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Fire);
+                        if (currentEnemy.FreezeCounter > 0)
+                            currentEnemy.FreezeCounter -= 1;
+                    }
+                    break;
+                case ObjetMaterialType.Ice:
+                    //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    currentEnemy.FreezeCounter += 1;
+                    break;
+                case ObjetMaterialType.Water:
+                    VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
+                    if (currentEnemy.WetCounter == 0)
+                    {
+                        currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
+                    }
+                    else if (PlayerManager.Instance.WetCounter > 0)
+                        PlayerManager.Instance.WetCounter += 1; // Applique l'effet de mouille +1 round..
+                    break;
+                case ObjetMaterialType.Metal:
+                    currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                    WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+
+                    break;
+                case ObjetMaterialType.Wood:
+                    if (currentEnemy.FireCounter > 0)
+                        currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    currentEnemy.FreezeCounter += 2; 
+                    break;
+                case ObjetMaterialType.Electricity:
+                    currentEnemy.ParalyzeCounter += 1;
+                    break;
+            }
+        }
+    }
+
+    // Verifie les effets météorologiques au début et à la fin de chaque tour pour appliquer les effets correspondants
+    public void MeteoCheck(bool isDebug = false)
+    {
+        if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Rain)
+        {
+            currentEnemy.WetCounter = _wetDuration;
+            PlayerManager.Instance.WetCounter = _wetDuration;
+            VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Water);
+            VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
+
+        }
+        else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Snow)
+        {
+            WeatherEffect.Instance.isSnowing();
+        }
+    }
+
+    private void CheckItemsAvailable()
+    {
+        var allItems = ItemManager.Instance.GetAllItems();
+
+        if (allItems == null || allItems.Count == 0)
+        {
+            StopHighlightSkipTurnButton();
+            return;
+        }
+
+        int lowestStaminaConsuption = int.MaxValue;
+        foreach (var item in allItems)
+        {
+            if (item.itemData.objetWeight < lowestStaminaConsuption)
+                lowestStaminaConsuption = item.itemData.objetWeight;
+        }
+
+        if (lowestStaminaConsuption > PlayerManager.Instance.stats.currentStamina)
+            HighlightSkipTurnButton();
+        else
+            StopHighlightSkipTurnButton();
     }
 }
