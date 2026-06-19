@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
 
     private void Awake()
     {
-        if (!string.IsNullOrWhiteSpace(managersScene))
+        if (!string.IsNullOrWhiteSpace(managersScene) && SceneLoadManager.IsManagerSceneLoaded == false)
             SceneManager.LoadScene(managersScene, LoadSceneMode.Additive);
 
         if (_saveScript != null)
@@ -30,21 +30,22 @@ public class Menu : MonoBehaviour
     public void StartGame()
     {
         TransitionManager.Instance.TransitionWithAction(() => {
-            SceneManager.sceneLoaded += OnGameSceneLoaded;
-            SceneManager.LoadScene(_gameSceneName, LoadSceneMode.Additive);
+            SceneLoadManager.Instance.LoadSceneAsActive(_gameSceneName);
+            //SceneManager.sceneLoaded += OnGameSceneLoaded;
+            //SceneManager.LoadScene(_gameSceneName, LoadSceneMode.Additive);
 
         });
     }
 
-    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == _gameSceneName)
-        {
-            SceneManager.SetActiveScene(scene);
-            SceneManager.sceneLoaded -= OnGameSceneLoaded;
-            SceneManager.UnloadSceneAsync("HomeMenu");
-        }
-    }
+    //private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    //{
+    //    if (scene.name == _gameSceneName)
+    //    {
+    //        SceneManager.SetActiveScene(scene);
+    //        SceneManager.sceneLoaded -= OnGameSceneLoaded;
+    //        SceneManager.UnloadSceneAsync("HomeMenu");
+    //    }
+    //}
 
     public void OpenEncyclopedia()
     {
