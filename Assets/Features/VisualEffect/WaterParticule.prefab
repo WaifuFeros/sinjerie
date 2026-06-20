@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1263086025516854248}
   - component: {fileID: 6246666887172661212}
   - component: {fileID: 2837087394529371834}
+  - component: {fileID: 4896111317391302261}
   m_Layer: 0
   m_Name: WaterParticule
   m_TagString: Untagged
@@ -4880,3 +4881,48 @@ MonoBehaviour:
   m_UseCustomView: 0
   m_CustomViewSize: 10
   m_TimeScaleMultiplier: 1
+--- !u!114 &4896111317391302261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072495273595165902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05db28023da02a34082b525fa60c7ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDisplayVisualEffect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5131256369526487175}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onHideVisualEffect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5131256369526487175}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTriggerBurst:
+    m_PersistentCalls:
+      m_Calls: []

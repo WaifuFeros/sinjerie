@@ -58,7 +58,6 @@ public class RoomManager : MonoBehaviour
         int roomNumberMod = (roomNumber - 1) % _roomsLoop.Length;
 
         RoomType roomType = _roomsLoop[roomNumberMod];
-        Debug.Log($"{roomNumber} | {roomNumberMod} | {roomType}");
 
         switch (roomType)
         {

@@ -1,7 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class VisualEffectManager : MonoBehaviour
 {
@@ -13,16 +13,22 @@ public class VisualEffectManager : MonoBehaviour
         Water,
     }
 
+    [System.Serializable]
+    internal struct ParticleEffectPair
+    {
+        public ParticleEffectType type;
+        public GameObject prefab;
+    }
+
     [Header("UI")]
     [SerializeField] private GameObject _uiRootContainer;
     [SerializeField] private GameObject _enemyIcon;
 
 
     [Header("Prefab")]
-    [SerializeField] private GameObject _fireParticlePrefab;
-    [SerializeField] private GameObject _waterParticlePrefab;
+    [SerializeField] private ParticleEffectPair[] _particles;
 
-
+    private Dictionary<(GameObject gameObject, ParticleEffectType type), VisualEffect> _visualEffectDictionary = new Dictionary<(GameObject, ParticleEffectType), VisualEffect>();
 
     private void Awake()
     {
@@ -32,51 +38,56 @@ public class VisualEffectManager : MonoBehaviour
 
     public void AddEffect(GameObject targetGO, ParticleEffectType particleType)
     {
-        if (targetGO == null) return;
+        if (targetGO == null)
+            return;
 
-        // VERIFICATION : Si le targetGO a déjà un ParticleSystem dans ses enfants on le supprime
-        ParticleSystem existingPS = targetGO.GetComponentInChildren<ParticleSystem>();
-        if (existingPS != null)
+        VisualEffect effect = null;
+        if (_visualEffectDictionary.TryGetValue((targetGO, particleType), out effect))
         {
-            existingPS.gameObject.SetActive(false);
-            Destroy(existingPS.gameObject);
+            effect.SetActive(true);
         }
-
-        GameObject _particlePrefab = null;
-        switch (particleType)
+        else
         {
-            case ParticleEffectType.Fire:
-                _particlePrefab = _fireParticlePrefab;
-                break;
-            case ParticleEffectType.Water:
-                _particlePrefab = _waterParticlePrefab;
-                break;
-        }
-
-        if (_particlePrefab == null) return;
-
-        GameObject spawnedParticle = Instantiate(_particlePrefab, targetGO.transform.position, targetGO.transform.rotation);
-        spawnedParticle.transform.SetParent(targetGO.transform);
-
-        ParticleSystem ps = spawnedParticle.GetComponent<ParticleSystem>();
-        if (ps != null)
-        {
-            ps.Play();
+            effect = SpawnVisualEffect(particleType, targetGO.transform);
+            if (effect != null)
+            {
+                _visualEffectDictionary.Add((targetGO, particleType), effect);
+                effect.SetActive(true);
+            }
         }
     }
 
-    public void RemoveEffect(GameObject particleGO)
+    public void RemoveEffect(GameObject targetGO, ParticleEffectType particleType)
     {
-        if (particleGO == null) return;
-        foreach (Transform child in particleGO.transform)
+        if (targetGO == null)
+            return;
+
+        if (_visualEffectDictionary.TryGetValue((targetGO, particleType), out VisualEffect effect))
         {
-            ParticleSystem ps = child.GetComponentInChildren<ParticleSystem>();
-            if (ps != null)
-            {
-                Destroy(child.gameObject);
-                break;
-            }
+            effect.SetActive(false);
+            Debug.Log("Removed effect", effect);
         }
+    }
+
+    public void RemoveAllEffects(GameObject targetGO)
+    {
+        if (targetGO == null)
+            return;
+
+        foreach (var item in _visualEffectDictionary)
+        {
+            if (item.Key.gameObject == targetGO)
+                item.Value.SetActive(false);
+        }
+    }
+
+    public void TriggerBurst(GameObject targetGO, ParticleEffectType type)
+    {
+        if (targetGO == null)
+            return;
+
+        if (_visualEffectDictionary.TryGetValue((targetGO, type), out VisualEffect effect))
+            effect.TriggerBurst();
     }
 
     public void ShakeUI(float duration = 0.5f, float strength = 15f, int vibrato = 10)
@@ -130,5 +141,16 @@ public class VisualEffectManager : MonoBehaviour
                 iconImage.DOColor(originalColor, duration * 0.5f);
             });
         
+    }
+
+    private VisualEffect SpawnVisualEffect(ParticleEffectType type, Transform parent)
+    {
+        foreach (var item in _particles)
+        {
+            if (item.type == type)
+                return Instantiate(item.prefab, parent.position, parent.rotation, parent).GetComponent<VisualEffect>();
+        }
+
+        return null;
     }
 }
