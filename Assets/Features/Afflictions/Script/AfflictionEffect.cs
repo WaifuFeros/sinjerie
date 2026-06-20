@@ -6,33 +6,30 @@ using UnityEngine.UI;
 
 public class AfflictionEffect : MonoBehaviour
 {
-    public static AfflictionEffect Instance;
-
     [SerializeField] private Image _fireImage;
     [SerializeField] private TextMeshProUGUI _fireCountText;
 
     [SerializeField] private Image _wetImage;
     [SerializeField] private TextMeshProUGUI _wetCountText;
 
-    [SerializeField] private Image _paralyzeImage;
+    [SerializeField] private Image _paralizeImage;
     [SerializeField] private TextMeshProUGUI _paralizeCountText;
 
     [SerializeField] private Image _freezeImage;
     [SerializeField] private TextMeshProUGUI _freezeCountText;
 
-    private void Awake()
+    public void UpdateVisuals(int fireCounter, int wetCounter, int paralizeCounter, int freezeCounter)
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            return;
-        }
+        _fireImage.gameObject.SetActive(fireCounter > 0);
+        _fireCountText.text = fireCounter.ToString();
 
-        Destroy(gameObject);
-    }
+        _wetImage.gameObject.SetActive(wetCounter > 0);
+        _wetCountText.text = wetCounter.ToString();
 
-    public void UpdatePlayerVisual()
-    {
+        _paralizeImage.gameObject.SetActive(paralizeCounter > 0);
+        _paralizeCountText.text = paralizeCounter.ToString();
 
+        _freezeImage.gameObject.SetActive(freezeCounter > 0);
+        _freezeCountText.text = freezeCounter.ToString();
     }
 }

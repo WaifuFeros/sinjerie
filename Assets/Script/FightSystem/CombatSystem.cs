@@ -346,6 +346,7 @@ public class CombatSystem : MonoBehaviour
         PlayerManager.Instance.FreezeCounter = 0;
         PlayerManager.Instance.WetCounter = 0;
         PlayerManager.Instance.ParalyzeCounter = 0;
+        PlayerManager.Instance.UpdateAfflictionIcons();
         combatActive = false;
         isPlayerTurn = false;
         SetupSkipTurnButtonInteractable(false);
@@ -437,6 +438,7 @@ public class CombatSystem : MonoBehaviour
                     PlayerManager.Instance.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
                     break;
             }
+            PlayerManager.Instance.UpdateAfflictionIcons();
         }
         else
         {
@@ -461,8 +463,8 @@ public class CombatSystem : MonoBehaviour
                     {
                         currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
                     }
-                    else if (PlayerManager.Instance.WetCounter > 0)
-                        PlayerManager.Instance.WetCounter += 1; // Applique l'effet de mouille +1 round..
+                    else if (currentEnemy.WetCounter > 0)
+                        currentEnemy.WetCounter += 1; // Applique l'effet de mouille +1 round..
                     break;
                 case ObjetMaterialType.Metal:
                     if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
@@ -482,6 +484,7 @@ public class CombatSystem : MonoBehaviour
                     currentEnemy.ParalyzeCounter += 1;
                     break;
             }
+            currentEnemy.UpdateAfflictionIcons();
         }
     }
 
@@ -492,9 +495,11 @@ public class CombatSystem : MonoBehaviour
         {
             currentEnemy.WetCounter = _wetDuration;
             PlayerManager.Instance.WetCounter = _wetDuration;
+
             VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Water);
             VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
-
+            PlayerManager.Instance.UpdateAfflictionIcons();
+            currentEnemy.UpdateAfflictionIcons();
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Snow)
         {
