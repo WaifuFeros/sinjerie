@@ -38,6 +38,7 @@ public class PlayerManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
     [SerializeField] private StaminaUIManager staminaUI;
+    [SerializeField] private AfflictionEffect afflictionEffect;
 
     [Header("WeatherEffect")]
     [SerializeField,HideInInspector] public int FireCounter = 0;
@@ -59,6 +60,8 @@ public class PlayerManager : MonoBehaviour
         UpdateHealthBar();
         staminaUI.SetupStamina(stats.maxStamina);
         staminaUI.UpdateDisplay(stats.currentStamina);
+
+        UpdateAfflictionIcons();
     }
 
     private void OnDestroy()
@@ -181,5 +184,10 @@ public class PlayerManager : MonoBehaviour
     public PlayerStatsData GetStats()
     {
         return stats;
+    }
+
+    public void UpdateAfflictionIcons()
+    {
+        afflictionEffect.UpdateVisuals(FireCounter, WetCounter, ParalyzeCounter, FreezeCounter);
     }
 }

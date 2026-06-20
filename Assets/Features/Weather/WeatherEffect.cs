@@ -1,6 +1,4 @@
 using System;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeatherEffect : MonoBehaviour
@@ -18,44 +16,63 @@ public class WeatherEffect : MonoBehaviour
 
     public void OnFire(bool isPlayer)
     {
-        if (!isPlayer && enemy.FireCounter > 0)
+        if (isPlayer)
         {
-           enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-           enemy.FireCounter--;
-            if (enemy.FireCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+            if (PlayerManager.Instance.FireCounter > 0)
+            {
+               PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+               PlayerManager.Instance.FireCounter--;
+                if (PlayerManager.Instance.FireCounter == 0)
+                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+            }
         }
-        else if (PlayerManager.Instance.FireCounter > 0)
+        else
         {
-           PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-           PlayerManager.Instance.FireCounter--;
-            if (PlayerManager.Instance.FireCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+            if (enemy.FireCounter > 0)
+            {
+               enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+               enemy.FireCounter--;
+                if (enemy.FireCounter == 0)
+                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+            }
         }
+        
+        PlayerManager.Instance.UpdateAfflictionIcons();
+        enemy.UpdateAfflictionIcons();
         CombatSystem.Instance.CheckCombatEnd();
-       
     }
 
     public bool OnFreeze(bool isPlayer)
     {
-        if (!isPlayer && enemy.FreezeCounter > 0)
+        if (isPlayer)
         {
-            enemy.WetCounter = 0;
-            if (enemy.FreezeCounter >= 3)
+            if (PlayerManager.Instance.FreezeCounter > 0)
             {
-                enemy.FreezeCounter = 0;
-                return true; //ennemi gele
+                PlayerManager.Instance.WetCounter = 0;
+                if (PlayerManager.Instance.FreezeCounter >= 3)
+                {
+                    PlayerManager.Instance.FreezeCounter = 0;
+                    PlayerManager.Instance.UpdateAfflictionIcons();
+                    return true; //player gele
+                }
             }
         }
-        else if (PlayerManager.Instance.FreezeCounter > 0)
+        else
         {
-            PlayerManager.Instance.WetCounter = 0;
-            if (PlayerManager.Instance.FreezeCounter >= 3)
+            if (enemy.FreezeCounter > 0)
             {
-                PlayerManager.Instance.FreezeCounter = 0;
-                return true; //player gele
+                enemy.WetCounter = 0;
+                if (enemy.FreezeCounter >= 3)
+                {
+                    enemy.FreezeCounter = 0;
+                    enemy.UpdateAfflictionIcons();
+                    return true; //ennemi gele
+                }
             }
         }
+
+        PlayerManager.Instance.UpdateAfflictionIcons();
+        enemy.UpdateAfflictionIcons();
         return false;
     }
     //a tester :)
@@ -68,54 +85,71 @@ public class WeatherEffect : MonoBehaviour
 
     public void OnWet(bool isPlayer)
     {
-        if (!isPlayer && enemy.WetCounter > 0)
+        if (isPlayer)
         {
-            enemy.FireCounter = 0;
-            enemy.WetCounter -= 1;
-            if (enemy.WetCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+            if (PlayerManager.Instance.WetCounter > 0)
+            {
+                PlayerManager.Instance.FireCounter = 0;
+                PlayerManager.Instance.WetCounter -= 1;
+                if (PlayerManager.Instance.WetCounter == 0)
+                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+            }
         }
-        else if (PlayerManager.Instance.WetCounter > 0)
+        else
         {
-            PlayerManager.Instance.FireCounter = 0;
-            PlayerManager.Instance.WetCounter -= 1;
-            if (PlayerManager.Instance.WetCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+            if (enemy.WetCounter > 0)
+            {
+                enemy.FireCounter = 0;
+                enemy.WetCounter -= 1;
+                if (enemy.WetCounter == 0)
+                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+            }
         }
+
+        PlayerManager.Instance.UpdateAfflictionIcons();
+        enemy.UpdateAfflictionIcons();
     }
 
 
     public bool OnParalyze(bool isPlayer)
     {
         int paralyze = UnityEngine.Random.Range(0, 100);
-        if (!isPlayer && enemy.ParalyzeCounter > 0 )
+        if (isPlayer)
         {
-            if (paralyze <= 25)
+            if (PlayerManager.Instance.ParalyzeCounter > 0)
             {
-                return true; //ennemi paralyse, il saute son tour
+                PlayerManager.Instance.ParalyzeCounter--;
+                PlayerManager.Instance.UpdateAfflictionIcons();
+                if (paralyze <= 25)
+                {
+                    return true; //player paralyse, il saute son tour
+                }
             }
-            enemy.ParalyzeCounter--;
         }
-        else if (PlayerManager.Instance.ParalyzeCounter > 0)
+        else
         {
-            if (paralyze <= 25)
+            if (enemy.ParalyzeCounter > 0)
             {
-                return true; //player paralyse, il saute son tour
+                enemy.ParalyzeCounter--;
+                enemy.UpdateAfflictionIcons();
+                if (paralyze <= 25)
+                {
+                    return true; //ennemi paralyse, il saute son tour
+                }
             }
-            PlayerManager.Instance.ParalyzeCounter--;
         }
+        
         return false;
     }
 
     public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
     {
-        if (isThunder && !isPlayer)
-        {
-            enemy.TakeDamage(damageThunder);
-        }
-        else if (isThunder && isPlayer)
-        {
+        if (!isThunder)
+            return;
+
+        if (isPlayer)
             PlayerManager.Instance.TakeDamage(damageThunder);
-        }
+        else
+            enemy.TakeDamage(damageThunder);
     }
 }

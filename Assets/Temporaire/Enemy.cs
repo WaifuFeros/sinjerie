@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
     [SerializeField] public UnityEngine.UI.Image EnemyImage;
+    [SerializeField] private AfflictionEffect afflictionEffect;
 
     [Header("WeatherEffect")]
     [SerializeField] public int FireCounter = 0;
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour
         currentStaminaMax = EnemyStats.MaxStamina;
         VisualEffectManager.Instance.RemoveEffect(EnemyImage.gameObject);
         UpdateHealthBar();
+        UpdateAfflictionIcons();
     }
 
     public void TakeDamage(int damage)
@@ -62,5 +64,10 @@ public class Enemy : MonoBehaviour
     public EnemySO GetStats()
     {
         return EnemyStats;
+    }
+
+    public void UpdateAfflictionIcons()
+    {
+        afflictionEffect.UpdateVisuals(FireCounter, WetCounter, ParalyzeCounter, FreezeCounter);
     }
 }

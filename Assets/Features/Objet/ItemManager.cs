@@ -13,11 +13,20 @@ public class ItemManager : MonoBehaviour
     [Header("Configuration")]
     [SerializeField] private GameObject itemPrefab;
 
+    [Header("Asset")]
+    [SerializeField] private Sprite _communSprite;
+    [SerializeField] private Sprite _uncommonSprite;
+    [SerializeField] private Sprite _rareSprite;
+    [SerializeField] private Sprite _epicSprite;
+    [SerializeField] private Sprite _lengendarySprite;
+    [SerializeField] private Sprite _healSprite;
+    [SerializeField] private Sprite _atkSprite;
+
     // Liste de tous les items
-    public List<ItemBrain> activeItems = new List<ItemBrain>();
+    public List<ItemBrain> activeItems { get; private set; } = new List<ItemBrain>();
 
     // Liste des Items SO
-    public List<ObjetSO> ItemsData = new List<ObjetSO>();
+    public List<ObjetSO> ItemsDatabase { get; private set; } = new List<ObjetSO>();
 
     private ItemDataBaseInizializationState _databaseState = ItemDataBaseInizializationState.NotInizialized;
 
@@ -45,7 +54,7 @@ public class ItemManager : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                ItemsData.AddRange(handle.Result);
+                ItemsDatabase.AddRange(handle.Result);
                 _databaseState = ItemDataBaseInizializationState.Initialized;
                 _onLoadItemsCompleteEvent?.Invoke();
                 _onLoadItemsCompleteEvent = null;
@@ -75,11 +84,11 @@ public class ItemManager : MonoBehaviour
 
     public void SpawnRandomItem()
     {
-        if (!DataBaseInitialized || ItemsData.Count == 0)
+        if (!DataBaseInitialized || ItemsDatabase.Count == 0)
             return;
 
-        int randomIndex = UnityEngine.Random.Range(0, ItemsData.Count);
-        ObjetSO randomData = ItemsData[randomIndex];
+        int randomIndex = UnityEngine.Random.Range(0, ItemsDatabase.Count);
+        ObjetSO randomData = ItemsDatabase[randomIndex];
         SpawnItem(randomData);
     }
     public void SpawnItem(ObjetSO objetSO)
@@ -87,7 +96,7 @@ public class ItemManager : MonoBehaviour
         if (!DataBaseInitialized
             || InventoryManager.Instance == null
             || !InventoryManager.Instance.HasEmptySlot()
-            || ItemsData.Count == 0)
+            || ItemsDatabase.Count == 0)
             return;
 
         Vector3 position = new Vector3(transform.position.x, transform.position.y, 0f);
@@ -159,6 +168,41 @@ public class ItemManager : MonoBehaviour
         {
             item.itemData.objectEffect = Effect;
             item.TriggerVisualUpdate();
+        }
+    }
+
+    public Sprite GetRaritySprite(ObjetRarity rarity)
+    {
+        switch (rarity)
+        {
+            default:
+            case ObjetRarity.Common:
+                return _communSprite;
+            case ObjetRarity.Uncommon:
+                return _uncommonSprite;
+            case ObjetRarity.Rare:
+                return _rareSprite;
+            case ObjetRarity.Epic:
+                return _epicSprite;
+            case ObjetRarity.Legendary:
+                return _lengendarySprite;
+        }
+    }
+
+    public bool GetObjetTypeSprite(ObjetEffectType type, out Sprite result)
+    {
+        switch (type)
+        {
+            default:
+            case ObjetEffectType.Attack:
+                result = _atkSprite;
+                return true;
+            case ObjetEffectType.Heal:
+                result = _healSprite;
+                return true;
+            case ObjetEffectType.Special:
+                result = null;
+                return false;
         }
     }
 
