@@ -31,8 +31,8 @@ public class ItemWiggleDOTween : MonoBehaviour
 
         wiggleTween = rect.DOShakeAnchorPos(
             duration: 1f,
-            strength: new Vector2(10f, 10f),
-            vibrato: 20,
+            strength: new Vector2(5f, 5f),
+            vibrato: 10,
             randomness: 90,
             snapping: false,
             fadeOut: true
@@ -46,8 +46,6 @@ public class ItemWiggleDOTween : MonoBehaviour
             wiggleTween.Kill();
             wiggleTween = null;
         }
-
-        rect.anchoredPosition = Vector2.zero;
     }
 
     public void SetWiggle(bool state)

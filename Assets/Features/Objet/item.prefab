@@ -814,6 +814,7 @@ GameObject:
   - component: {fileID: 4045041718213290110}
   - component: {fileID: 95422923443289690}
   - component: {fileID: 8057034763559363972}
+  - component: {fileID: 3567540623687512713}
   m_Layer: 5
   m_Name: icon
   m_TagString: Untagged
@@ -878,6 +879,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3567540623687512713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7465461060997720557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5321efef4ab9ddf4ab59eaa57e0595c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsWiggling: 0
 --- !u!1 &8316754013918109564
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,7 +904,6 @@ GameObject:
   - component: {fileID: 1180166681716107607}
   - component: {fileID: 8329407780790162148}
   - component: {fileID: -1921863523013163353}
-  - component: {fileID: 122911824924402182}
   m_Layer: 5
   m_Name: item
   m_TagString: Untagged
@@ -971,16 +984,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 6214382334856560422}
   _useRaycastTargetVariable: 1
---- !u!114 &122911824924402182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8316754013918109564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5321efef4ab9ddf4ab59eaa57e0595c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsWiggling: 0

@@ -1998,6 +1998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2030078171}
   EnemyImage: {fileID: 2134683397}
+  afflictionEffect: {fileID: 0}
   FireCounter: 0
   FreezeCounter: 0
   WetCounter: 0
@@ -3351,7 +3352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1464619165
 MonoBehaviour:
   m_ObjectHideFlags: 0
