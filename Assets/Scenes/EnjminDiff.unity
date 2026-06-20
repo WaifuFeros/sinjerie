@@ -537,6 +537,8 @@ GameObject:
   - component: {fileID: 154187825}
   - component: {fileID: 154187824}
   - component: {fileID: 154187823}
+  - component: {fileID: 154187827}
+  - component: {fileID: 154187828}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -662,6 +664,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &154187827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154187822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1153992167
+      Data2: 1077798968
+      Data3: 1647071392
+      Data4: 1034548362
+    Path: event:/SwitchWeather
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params:
+  - Name: Weather
+    Value: 0
+  - Name: Snow
+    Value: 0
+  - Name: Storm
+    Value: 0
+  - Name: Sun
+    Value: 0
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &154187828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154187822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c95da50b27d1054ba7420f968642c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeather: 0
 --- !u!1 &213580304
 GameObject:
   m_ObjectHideFlags: 0
