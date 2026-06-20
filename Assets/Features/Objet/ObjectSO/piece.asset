@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 5c76b3d09a2051541a5612c1531116dd, type: 3}
   objetName: Torch
-  objetDescription: A simple torch. It can set the opponet on fire
+  objetDescription: une simple torch qui peut bruler vos adversaires
   objetMaterialType: 0
   objetWeight: 2
   objectType: 2

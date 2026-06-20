@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 0}
   objetName: TastyCrousty
-  objetDescription: "Il n'a pas l'air p\xE9rim\xE9"
+  objetDescription: "un plat m\xE9diocre... Il vous redonnera tout de m\xEAme de
+    la vie"
   objetMaterialType: 0
   objetWeight: 2
   objectType: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 2ca664425121dbe4bb3325d19ad50e45, type: 3}
   objetName: "Gla\xE7on"
-  objetDescription: "un Gla\xE7on"
+  objetDescription: "un Gla\xE7on tr\xE8s froid qui peut geler l'ennemis"
   objetMaterialType: 4
   objetWeight: 2
   objectType: 1
