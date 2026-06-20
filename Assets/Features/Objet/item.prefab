@@ -890,7 +890,7 @@ GameObject:
   - component: {fileID: 1180166681716107607}
   - component: {fileID: 8329407780790162148}
   - component: {fileID: -1921863523013163353}
-  - component: {fileID: 5753403859342146267}
+  - component: {fileID: 122911824924402182}
   m_Layer: 5
   m_Name: item
   m_TagString: Untagged
@@ -957,13 +957,6 @@ MonoBehaviour:
   invalidWeightImagesColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   smokeAnimator: {fileID: 6366638186658251795}
   delayBeforeChange: 0.021
-  _communSprite: {fileID: 21300000, guid: 67d7f697860ed294297b8e570df3d5b3, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: 7d5dbc6b1081cd4498d44626fcbb84a4, type: 3}
-  _rareSprite: {fileID: 21300000, guid: addce85b734dfb14688ef1fb2fd38bbe, type: 3}
-  _epicSprite: {fileID: 21300000, guid: 5684c6d12fc6ea740ae540028981fdfe, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 62a6d2dd612f75048b65e76e21494fcd, type: 3}
-  _healSprite: {fileID: 21300000, guid: 69416dd45b48d8b4593c9d5c17312c41, type: 3}
-  _atkSprite: {fileID: 21300000, guid: bde18a5e5ed228f46a792611f4eafe1e, type: 3}
 --- !u!114 &-1921863523013163353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,7 +971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 6214382334856560422}
   _useRaycastTargetVariable: 1
---- !u!114 &5753403859342146267
+--- !u!114 &122911824924402182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
