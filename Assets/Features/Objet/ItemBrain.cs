@@ -49,8 +49,8 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         _weightTextBaseColor = weightText.color;
         PlayerManager.Instance.OnStaminaUpdateEvent += UpdateWeightVisual;
-        wiggle = gameObject.AddComponent<ItemWiggleDOTween>();
-        wiggle.enabled = true;
+        //wiggle = gameObject.AddComponent<ItemWiggleDOTween>();
+        //wiggle.enabled = true;
     }
 
     private void UpdateWeightVisual()
