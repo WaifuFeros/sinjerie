@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{dad3e3ae-13de-4820-bcbd-9a3ceecba67e}">
+		<property name="name">
+			<value>Sun</value>
+		</property>
+		<relationship name="folder">
+			<destination>{2a104c9c-c4e1-4c1c-9001-4e99a0477438}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{5dd98b5a-6dd5-444a-bbce-cb78250861d2}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{5dd98b5a-6dd5-444a-bbce-cb78250861d2}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
