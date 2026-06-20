@@ -8,6 +8,9 @@ public class FakeAdPlayer : MonoBehaviour
 
     void Start()
     {
+        player.audioOutputMode = VideoAudioOutputMode.AudioSource;
+        player.SetTargetAudioSource(0, GetComponent<AudioSource>());
+
         PlayRandomAd();
     }
 
