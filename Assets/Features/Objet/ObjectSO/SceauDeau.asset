@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SceauDeau
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 0}
-  objetName: Seau d'eau
-  objetDescription: un simple sceau rempli d'eau
+  objetName: Sceau d'eau
+  objetDescription: "Un sceau d'eau, attention l'eau \xE7a mouille !"
   objetMaterialType: 7
   objetWeight: 3
   objectType: 1

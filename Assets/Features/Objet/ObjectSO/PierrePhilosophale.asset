@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 0}
   objetName: Pierre Philosophale
-  objetDescription: "une pierre d'un rouge \xE9clatant au propri\xE9t\xE9 inconnue"
+  objetDescription: on raconte que cette pierre redonne la vie
   objetMaterialType: 0
   objetWeight: 10
   objectType: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 0a84a6278498be1429b4d25c11c7bf9f, type: 3}
   objetName: Four
-  objetDescription: Ancien four de Satan
+  objetDescription: Ancien four de Satan qui brulera vos ennemies
   objetMaterialType: 3
   objetWeight: 5
   objectType: 1
