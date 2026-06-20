@@ -2,12 +2,16 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Unity.Collections.AllocatorManager;
 
 public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager Instance { get; private set; }
 
     [SerializeField] private Animator transitionAnimator;
+    [SerializeField] private GameObject blocker;
+
+    private bool _lockTransition;
 
     private void Awake()
     {
@@ -22,6 +26,11 @@ public class TransitionManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        blocker.SetActive(false);
+    }
+
     public void PlayClosing()
     {
         transitionAnimator.SetTrigger("Close");
@@ -34,17 +43,24 @@ public class TransitionManager : MonoBehaviour
 
     public void TransitionWithAction(Action action)
     {
+        //if (_lockTransition)
+        //    return;
+
         StartCoroutine(RoutineTransition(action));
     }
 
     private IEnumerator RoutineTransition(Action action)
     {
+        blocker.SetActive(true);
+        _lockTransition = true;
         PlayClosing();
         yield return StartCoroutine(WaitEndTransition());
         action.Invoke();
         yield return new WaitForSeconds(0.1f);
         PlayOpening();
         yield return StartCoroutine(WaitEndTransition());
+        _lockTransition = false;
+        blocker.SetActive(false);
     }
 
     private IEnumerator WaitEndTransition()
