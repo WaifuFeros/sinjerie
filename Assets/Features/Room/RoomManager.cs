@@ -16,9 +16,6 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField] private RoomType[] _roomsLoop;
 
-    [Header("Enemy Spawn")]
-    [SerializeField] private GameObject enemy;
-
     private GameObject currentRoom;
     private List<EnemySO> availableEnemyData = new List<EnemySO>();
     private List<EnemySO> availableBossData = new List<EnemySO>();
@@ -83,24 +80,12 @@ public class RoomManager : MonoBehaviour
 
     private void SpawnEnemy(bool isBoss)
     {
-        if (enemy != null)
-        {
-            // Configurer l'ennemi selon le numéro de salle (difficulté progressive)
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            int randomIndex = UnityEngine.Random.Range(0, availableEnemyData.Count);
-            EnemySO randomData = availableEnemyData[randomIndex];
-            enemyScript.Initialize(randomData);
-            rewardSystem.EnemySO = randomData;
-        }
-
+        // Configurer l'ennemi selon le numéro de salle (difficulté progressive)
+        int randomIndex = UnityEngine.Random.Range(0, availableEnemyData.Count);
+        EnemySO randomData = availableEnemyData[randomIndex];
+        CombatSystem.Instance.Enemy.Initialize(randomData);
+        rewardSystem.EnemySO = randomData;
     }
-
-    public GameObject GetEnemy()
-    {
-        return enemy;
-    }
-
-
 }
 
 public enum RoomType

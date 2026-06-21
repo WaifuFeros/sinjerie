@@ -67,7 +67,7 @@ public class GameLoopManager : MonoBehaviour
                 {
                     RewardSystem.Instance.Initialize(() =>
                     {                         // Tout est prêt, passer à la première salle
-                        StartCoroutine(TransitionToNewRoom(true));
+                        TransitionToNewRoom(true);
                     });
 
                 });
@@ -80,22 +80,24 @@ public class GameLoopManager : MonoBehaviour
     /// <summary>
     /// Étape 2: Nouvelle salle
     /// </summary>
-    private IEnumerator TransitionToNewRoom(bool addDelayToItemSpawn = false)
+    private void TransitionToNewRoom(bool addDelayToItemSpawn = false)
     {
         currentRoomNumber++;
 
-        // Générer une nouvelle salle (0 = normal, 1 = spécial)
-        RoomType roomType = RoomManager.Instance.GenerateNewRoom(currentRoomNumber);
-        
-        if (roomType == RoomType.Enemy || roomType == RoomType.Boss)
+        WeatherManager.Instance.UpdateWeather(() =>
         {
-            // Mettre à jour l'UI
-            UIManager.Instance.UpdateRoomCounter(currentRoomNumber);
-            UIManager.Instance.ShowRoomUI();
-            // Passer au combat
-            StartCombat(addDelayToItemSpawn);
-        }
-        yield return null;
+            // Générer une nouvelle salle (0 = normal, 1 = spécial)
+            RoomType roomType = RoomManager.Instance.GenerateNewRoom(currentRoomNumber);
+
+            if (roomType == RoomType.Enemy || roomType == RoomType.Boss)
+            {
+                // Mettre à jour l'UI
+                UIManager.Instance.UpdateRoomCounter(currentRoomNumber);
+                UIManager.Instance.ShowRoomUI();
+                // Passer au combat
+                StartCombat(addDelayToItemSpawn);
+            }
+        });
     }
 
     /// <summary>
@@ -115,7 +117,7 @@ public class GameLoopManager : MonoBehaviour
     {
         Debug.Log("Réussite - Combat gagné!");
 
-        if (CombatSystem.Instance.currentEnemy.EnemyStats.IsBoss)
+        if (CombatSystem.Instance.Enemy.EnemyStats.IsBoss)
             UIManager.Instance.ShowBananaRewardPanel();
         else
             UIManager.Instance.ShowRewardPanel();
@@ -139,7 +141,7 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void ExitRoom()
     {
-        StartCoroutine(TransitionToNewRoom());
+        TransitionToNewRoom();
     }
 
     public int GetCurrentRoomNumber()

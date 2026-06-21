@@ -251,7 +251,7 @@ public class ItemManager : MonoBehaviour
 
     private ObjetMaterialType GetEnemyElementType()
     {
-        var enemy = WeatherEffect.Instance.enemy;
+        var enemy = CombatSystem.Instance.Enemy;
 
         if (enemy == null)
             return ObjetMaterialType.None;

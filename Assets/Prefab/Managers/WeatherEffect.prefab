@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1964275201710797449}
-  - component: {fileID: 2491141045686051722}
+  - component: {fileID: 7084242477264621924}
   m_Layer: 0
-  m_Name: GPSManager
+  m_Name: WeatherEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2491141045686051722
+--- !u!114 &7084242477264621924
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,13 +41,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3986334592183974415}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 285272aa45e2fa44990636fe2f6089f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a336f83c45531245898bab04b706d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionText: {fileID: 0}
-  latitude: 0
-  longitude: 0
-  gpsReady: 0
-  simulateInEditor: 1
-  editorLatitude: 45.6484
-  editorLongitude: 0.1562

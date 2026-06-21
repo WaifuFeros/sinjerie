@@ -7783,6 +7783,16 @@ PrefabInstance:
       propertyPath: _playerTransform
       value: 
       objectReference: {fileID: 2058587210}
+    - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: <Enemy>k__BackingField
+      value: 
+      objectReference: {fileID: 851288018}
+    - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: <currentEnemy>k__BackingField
+      value: 
+      objectReference: {fileID: 851288018}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

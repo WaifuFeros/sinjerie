@@ -120,7 +120,7 @@ public class VisualEffectManager : MonoBehaviour
     }
     public void EnemyTakeDamage()
     {
-        Image iconImage = CombatSystem.Instance.currentEnemy.enemyHead;
+        Image iconImage = CombatSystem.Instance.Enemy.enemyHead;
         Transform iconTransform = iconImage.transform;
         iconTransform.DOKill(true);
         if (iconImage != null) iconImage.DOKill(true);
@@ -139,7 +139,7 @@ public class VisualEffectManager : MonoBehaviour
 
     public void EnemyHeal()
     {
-        Image iconImage = CombatSystem.Instance.currentEnemy.enemyHead;
+        Image iconImage = CombatSystem.Instance.Enemy.enemyHead;
         Transform iconTransform = iconImage.transform;
         iconTransform.DOKill(true);
         if (iconImage != null) iconImage.DOKill(true);
