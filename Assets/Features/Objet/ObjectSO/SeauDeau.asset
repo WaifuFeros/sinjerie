@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
-  m_Name: SceauDeau
+  m_Name: SeauDeau
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
-  objetName: Sceau d'eau
+  objetSprite: {fileID: 21300000, guid: 4c596fba2b7d3a0489eaed416f1dae83, type: 3}
+  objetName: Seau d'eau
   objetDescription: "Un sceau d'eau, attention l'eau \xE7a mouille !"
   objetMaterialType: 7
   objetWeight: 3
