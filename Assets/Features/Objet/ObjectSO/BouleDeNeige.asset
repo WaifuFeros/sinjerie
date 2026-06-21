@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: BouleDeNeige
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
+  objetSprite: {fileID: 21300000, guid: 8e4548de21d6d7f44bc0cc6a330668fe, type: 3}
   objetName: Boule de neige
   objetDescription: 
   objetMaterialType: 4

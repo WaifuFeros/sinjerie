@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: Ramen
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
+  objetSprite: {fileID: 21300000, guid: 16cca0b2e9236c94682329dd347b1511, type: 3}
   objetName: Ramen
   objetDescription: Le meilleurs plat du monde pour se soigner
   objetMaterialType: 0

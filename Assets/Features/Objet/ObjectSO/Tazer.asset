@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: Tazer
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
-  objetName: Taze
+  objetSprite: {fileID: 21300000, guid: 0fcdb2243a56c8b4c8ac4cf9d2df96b5, type: 3}
+  objetName: Taser
   objetDescription: "Un boitier venant d'un autre temps qui produit de l'electricit\xE9"
   objetMaterialType: 6
   objetWeight: 2

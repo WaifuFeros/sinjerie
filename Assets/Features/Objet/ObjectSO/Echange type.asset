@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: Echange type
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 21300000, guid: dabf3cb3aa52d8f4fa1013ec77a7f0e0, type: 3}
-  objetName: Echange item type
+  objetSprite: {fileID: 21300000, guid: 4b4298a6b45775346b6acfb9e77f9b55, type: 3}
+  objetName: Baguette magique
   objetDescription: Tous les objets d'attaque deviennent des objets de soins, et
     tous les objets de soins deviennent des objets d'attaque.
   objetMaterialType: 0
