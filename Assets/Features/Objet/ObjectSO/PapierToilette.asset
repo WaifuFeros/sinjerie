@@ -15,7 +15,7 @@ MonoBehaviour:
   objetSprite: {fileID: 21300000, guid: 1fbc2a9e2711a99448877fe823139125, type: 3}
   objetName: Papier toilette
   objetDescription: combustible qui peut alimenter le feu
-  objetMaterialType: 0
+  objetMaterialType: 2
   objetWeight: 1
   objectType: 0
   objectEffect: 0

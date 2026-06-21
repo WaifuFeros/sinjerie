@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class WeatherEffect : MonoBehaviour
@@ -14,7 +15,7 @@ public class WeatherEffect : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
-    public void OnFire(bool isPlayer)
+    public IEnumerator OnFire(bool isPlayer)
     {
         if (isPlayer)
         {
@@ -25,6 +26,8 @@ public class WeatherEffect : MonoBehaviour
                 PlayerManager.Instance.FireCounter--;
                 if (PlayerManager.Instance.FireCounter == 0)
                     VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead, VisualEffectManager.ParticleEffectType.Fire);
+
+                yield return new WaitForSeconds(1);
             }
         }
         else
@@ -36,6 +39,8 @@ public class WeatherEffect : MonoBehaviour
                 enemy.FireCounter--;
                 if (enemy.FireCounter == 0)
                     VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+
+                yield return new WaitForSeconds(1);
             }
         }
         
@@ -142,6 +147,20 @@ public class WeatherEffect : MonoBehaviour
         }
         
         return false;
+    }
+
+    public IEnumerator PlayParalyzeAnimation()
+    {
+        VisualEffectManager.Instance.TriggerBurst(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    public IEnumerator PlayFrozenAnimation()
+    {
+        VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+
+        yield return new WaitForSeconds(1f);
     }
 
     public void Thunder(bool isPlayer,bool isThunder, int damageThunder)

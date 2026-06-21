@@ -11,6 +11,8 @@ public class VisualEffectManager : MonoBehaviour
     {
         Fire,
         Water,
+        Paralyze,
+        Freeze
     }
 
     [System.Serializable]
@@ -87,7 +89,18 @@ public class VisualEffectManager : MonoBehaviour
             return;
 
         if (_visualEffectDictionary.TryGetValue((targetGO, type), out VisualEffect effect))
+        {
             effect.TriggerBurst();
+        }
+        else
+        {
+            var newEffect = SpawnVisualEffect(type, targetGO.transform);
+            if (newEffect != null)
+            {
+                _visualEffectDictionary.Add((targetGO, type), newEffect);
+                newEffect.TriggerBurst();
+            }
+        }
     }
 
     public void ShakeUI(float duration = 0.5f, float strength = 15f, int vibrato = 10)

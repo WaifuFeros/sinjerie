@@ -185,6 +185,9 @@ public class CombatSystem : MonoBehaviour
     {
         StopHighlightSkipTurnButton();
 
+        StartCoroutine(EndPlayerTurnSequence());
+        return;
+
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour du joueur
         WeatherEffect.Instance.OnFire(false);
         WeatherEffect.Instance.OnWet(false);
@@ -211,6 +214,39 @@ public class CombatSystem : MonoBehaviour
             return;
         }
         StartCoroutine(EnemyAttackSequence());
+    }
+
+    private IEnumerator EndPlayerTurnSequence()
+    {
+        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour du joueur
+        yield return WeatherEffect.Instance.OnFire(false);
+        WeatherEffect.Instance.OnWet(false);
+        if (!combatActive || !isPlayerTurn)
+        {
+            yield break;
+        }
+        isPlayerTurn = false;
+        SetupSkipTurnButtonInteractable(false);
+        PlayerManager.Instance.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
+        // l'ennemis attack
+        if (WeatherEffect.Instance.OnParalyze(false))
+        {
+            Debug.Log("aaaaaaaaaaaL'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            yield return WeatherEffect.Instance.PlayParalyzeAnimation();
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+            yield break;
+        }
+        else if (WeatherEffect.Instance.OnFreeze(false))
+        {
+            Debug.Log("L'ennemi est gelé et ne peut pas attaquer ce tour !");
+            yield return WeatherEffect.Instance.PlayFrozenAnimation();
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+            yield break;
+        }
+
+        yield return EnemyAttackSequence();
     }
 
     /// <summary>
@@ -264,7 +300,7 @@ public class CombatSystem : MonoBehaviour
         }
 
         CheckCombatEnd();
-        WeatherEffect.Instance.OnFire(true);
+        yield return WeatherEffect.Instance.OnFire(true);
         WeatherEffect.Instance.OnWet(true);
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour de l'ennemi
 
@@ -412,10 +448,6 @@ public class CombatSystem : MonoBehaviour
                             PlayerManager.Instance.FreezeCounter -= 1;
                     }
                     break;
-                case ObjetMaterialType.Ice:
-                    //PlayerManager.Instance.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                    PlayerManager.Instance.FreezeCounter += 1;
-                    break;
                 case ObjetMaterialType.Water:
                     VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Water);
                     if (PlayerManager.Instance.WetCounter == 0) 
@@ -425,16 +457,26 @@ public class CombatSystem : MonoBehaviour
                     else if (PlayerManager.Instance.WetCounter > 0)
                         PlayerManager.Instance.WetCounter += 1; // Applique l'effet de mouille +1 round..
                     break;
+                case ObjetMaterialType.Ice:
+                    //PlayerManager.Instance.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    PlayerManager.Instance.FreezeCounter += 1;
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    PlayerManager.Instance.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
+                    break;
                 case ObjetMaterialType.Metal:
-                    PlayerManager.Instance.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
-                    WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+                    {
+                        PlayerManager.Instance.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
+                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                    }
                     break;
                 case ObjetMaterialType.Wood:
                     if (PlayerManager.Instance.FireCounter > 0)
                         PlayerManager.Instance.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
                     break;
-                case ObjetMaterialType.PerfectIce:
-                    PlayerManager.Instance.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
+                case ObjetMaterialType.Electricity:
+                    PlayerManager.Instance.ParalyzeCounter += 1;
                     break;
             }
             PlayerManager.Instance.UpdateAfflictionIcons();
@@ -452,10 +494,6 @@ public class CombatSystem : MonoBehaviour
                             currentEnemy.FreezeCounter -= 1;
                     }
                     break;
-                case ObjetMaterialType.Ice:
-                    //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                    currentEnemy.FreezeCounter += 1;
-                    break;
                 case ObjetMaterialType.Water:
                     VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
                     if (currentEnemy.WetCounter == 0)
@@ -464,6 +502,13 @@ public class CombatSystem : MonoBehaviour
                     }
                     else if (currentEnemy.WetCounter > 0)
                         currentEnemy.WetCounter += 1; // Applique l'effet de mouille +1 round..
+                    break;
+                case ObjetMaterialType.Ice:
+                    //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
+                    currentEnemy.FreezeCounter += 1;
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    currentEnemy.FreezeCounter += 2; 
                     break;
                 case ObjetMaterialType.Metal:
                     if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
@@ -475,9 +520,6 @@ public class CombatSystem : MonoBehaviour
                 case ObjetMaterialType.Wood:
                     if (currentEnemy.FireCounter > 0)
                         currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
-                    break;
-                case ObjetMaterialType.PerfectIce:
-                    currentEnemy.FreezeCounter += 2; 
                     break;
                 case ObjetMaterialType.Electricity:
                     currentEnemy.ParalyzeCounter += 1;
