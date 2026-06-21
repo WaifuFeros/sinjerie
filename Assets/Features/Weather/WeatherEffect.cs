@@ -50,7 +50,7 @@ public class WeatherEffect : MonoBehaviour
         enemy.UpdateAfflictionIcons();
         CombatSystem.Instance.CheckCombatEnd();
 
-        RefreshItemReactions(); 
+        //RefreshItemReactions(); 
     }
 
     public bool OnFreeze(bool isPlayer)
@@ -89,7 +89,7 @@ public class WeatherEffect : MonoBehaviour
         PlayerManager.Instance.UpdateAfflictionIcons();
         enemy.UpdateAfflictionIcons();
 
-        RefreshItemReactions(); 
+        //RefreshItemReactions();
 
         return result;
     }
@@ -101,7 +101,7 @@ public class WeatherEffect : MonoBehaviour
 
         enemy.currentStaminaMax = enemy.EnemyStats.MaxStamina - 2;
 
-        RefreshItemReactions(); 
+        //RefreshItemReactions();
     }
 
     public void OnWet(bool isPlayer)
@@ -162,7 +162,7 @@ public class WeatherEffect : MonoBehaviour
             }
         }
 
-        RefreshItemReactions(); 
+        //RefreshItemReactions();
 
         return result;
     }
@@ -177,6 +177,6 @@ public class WeatherEffect : MonoBehaviour
         else
             enemy.TakeDamage(damageThunder);
 
-        RefreshItemReactions(); 
+        //RefreshItemReactions();
     }
 }

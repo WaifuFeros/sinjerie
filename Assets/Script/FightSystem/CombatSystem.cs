@@ -449,13 +449,18 @@ public class CombatSystem : MonoBehaviour
                     {
                         currentEnemy.FireCounter = _fireDuration;
                         VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Fire);
+                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                         if (currentEnemy.FreezeCounter > 0)
                             currentEnemy.FreezeCounter -= 1;
+                            ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+
+
                     }
                     break;
                 case ObjetMaterialType.Ice:
                     //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
                     currentEnemy.FreezeCounter += 1;
+                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.Water:
                     VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
@@ -470,18 +475,22 @@ public class CombatSystem : MonoBehaviour
                     if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
                     {
                         currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                         WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
                     }
                     break;
                 case ObjetMaterialType.Wood:
                     if (currentEnemy.FireCounter > 0)
                         currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.PerfectIce:
-                    currentEnemy.FreezeCounter += 2; 
+                    currentEnemy.FreezeCounter += 2;
+                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.Electricity:
                     currentEnemy.ParalyzeCounter += 1;
+                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
             }
             currentEnemy.UpdateAfflictionIcons();
