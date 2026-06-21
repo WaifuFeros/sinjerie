@@ -963,13 +963,12 @@ MonoBehaviour:
   itemBackground: {fileID: 6214382334856560422}
   descritptionPanel: {fileID: 4528362203757219954}
   descriptionText: {fileID: 1015543030912156428}
-  descriptionPressTime: 0.5
   effectImage: {fileID: 8229670100182393962}
   effectText: {fileID: 3134645131967731897}
   weightText: {fileID: 589202801167609858}
   invalidWeightTextColor: {r: 1, g: 0, b: 0, a: 1}
   invalidWeightImagesColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  description: {fileID: 0}
+  description: {fileID: 9001939699521270500}
   smokeAnimator: {fileID: 6366638186658251795}
   delayBeforeChange: 0.021
 --- !u!114 &-1921863523013163353
@@ -998,4 +997,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c3852a64a3b02243b3bbfe927d1cc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  descriptionPressTime: 0.5
