@@ -48,11 +48,13 @@ MonoBehaviour:
   skipTurnButton: {fileID: 0}
   _initialFireDuration: 3
   _subsequentFireDuration: 1
-  _woodAddFireDuration: 3
+  _woodOnFireAddDuration: 1
+  _iceOnFireLoseDuration: 1
   _initialWetDuration: 3
   _subsequentWetDuration: 1
   _freezeDuration: 1
   _perfectIceFreezeDuration: 2
+  _fireOnIceLoseDuration: 1
   freezeProcThreshold: 3
   _metalParalyzeDuration: 4
   _electricityParalyzeDuration: 1
@@ -64,5 +66,3 @@ MonoBehaviour:
   _highlightSkipButtonSize: 1.2
   _highlightSkipButtonTime: 0.5
   dataStorage: {fileID: 0}
-  currentEnemy: {fileID: 0}
-  isPlayerTurn: 1

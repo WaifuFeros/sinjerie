@@ -6,17 +6,20 @@ public class WeatherEffect : MonoBehaviour
 {
     public static WeatherEffect Instance { get; private set; }
 
-    [SerializeField] public Enemy enemy;
-
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
     }
 
+    private void Start()
+    {
+        CombatSystem.Instance.Enemy.OnAfflictionUpdateEvent += RefreshItemReactions;
+    }
+
     private void RefreshItemReactions()
     {
-        if (enemy == null)
+        if (CombatSystem.Instance.Enemy == null)
             return;
 
         ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
@@ -28,7 +31,7 @@ public class WeatherEffect : MonoBehaviour
         {
             if (PlayerManager.Instance.FireCounter > 0)
             {
-                PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+                PlayerManager.Instance.TakeDamage(FireDamage());
                 PlayerManager.Instance.FireCounter--;
                 VisualEffectManager.Instance.TriggerBurst(PlayerManager.Instance.playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
 
@@ -37,11 +40,11 @@ public class WeatherEffect : MonoBehaviour
         }
         else
         {
-            if (enemy.FireCounter > 0)
+            if (CombatSystem.Instance.Enemy.FireCounter > 0)
             {
-                enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-                VisualEffectManager.Instance.TriggerBurst(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
-                enemy.FireCounter--;
+                CombatSystem.Instance.Enemy.TakeDamage(FireDamage());
+                CombatSystem.Instance.Enemy.FireCounter--;
+                VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
 
                 yield return new WaitForSeconds(1);
             }
@@ -54,38 +57,26 @@ public class WeatherEffect : MonoBehaviour
 
     public bool OnFreeze(bool isPlayer)
     {
-        bool result = false;
-
         if (isPlayer)
         {
             if (PlayerManager.Instance.FreezeCounter > 0)
             {
-                PlayerManager.Instance.WetCounter = 0;
-
                 if (PlayerManager.Instance.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
-                {
-                    //PlayerManager.Instance.FreezeCounter = 0;
-                    result = true; 
-                }
+                    return true;
             }
         }
         else
         {
-            if (enemy.FreezeCounter > 0)
+            if (CombatSystem.Instance.Enemy.FreezeCounter > 0)
             {
-                enemy.WetCounter = 0;
-
-                if (enemy.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
-                {
-                    //enemy.FreezeCounter = 0;
-                    result = true; 
-                }
+                if (CombatSystem.Instance.Enemy.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
+                    return true; 
             }
         }
 
         //RefreshItemReactions();
 
-        return result;
+        return false;
     }
 
     public void isSnowing()
@@ -93,7 +84,7 @@ public class WeatherEffect : MonoBehaviour
         PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina - 2;
         PlayerManager.Instance.OnStaminaUpdateEvent?.Invoke();
 
-        enemy.currentStaminaMax = enemy.EnemyStats.MaxStamina - 2;
+        CombatSystem.Instance.Enemy.currentStaminaMax = CombatSystem.Instance.Enemy.EnemyStats.MaxStamina - 2;
 
         //RefreshItemReactions();
     }
@@ -110,10 +101,10 @@ public class WeatherEffect : MonoBehaviour
         }
         else
         {
-            if (enemy.WetCounter > 0)
+            if (CombatSystem.Instance.Enemy.WetCounter > 0)
             {
-                enemy.FireCounter = 0;
-                enemy.WetCounter--;
+                CombatSystem.Instance.Enemy.FireCounter = 0;
+                CombatSystem.Instance.Enemy.WetCounter--;
             }
         }
     }
@@ -135,9 +126,9 @@ public class WeatherEffect : MonoBehaviour
         }
         else
         {
-            if (enemy.ParalyzeCounter > 0)
+            if (CombatSystem.Instance.Enemy.ParalyzeCounter > 0)
             {
-                enemy.ParalyzeCounter--;
+                CombatSystem.Instance.Enemy.ParalyzeCounter--;
 
                 if (paralyze <= 25)
                     result = true; 
@@ -151,18 +142,18 @@ public class WeatherEffect : MonoBehaviour
 
     public IEnumerator PlayParalyzeAnimation()
     {
-        VisualEffectManager.Instance.TriggerBurst(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+        VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
 
         yield return new WaitForSeconds(1f);
     }
 
     public IEnumerator PlayFrozenAnimation()
     {
-        VisualEffectManager.Instance.TriggerBurst(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
 
         yield return new WaitForSeconds(1f);
 
-        VisualEffectManager.Instance.RemoveEffect(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
     }
 
     public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
@@ -173,8 +164,13 @@ public class WeatherEffect : MonoBehaviour
         if (isPlayer)
             PlayerManager.Instance.TakeDamage(damageThunder);
         else
-            enemy.TakeDamage(damageThunder);
+            CombatSystem.Instance.Enemy.TakeDamage(damageThunder);
 
         //RefreshItemReactions();
+    }
+
+    public int FireDamage()
+    {
+        return Convert.ToInt32(WeatherManager.Instance.temperature / 7);
     }
 }

@@ -4,16 +4,18 @@ using TMPro;
 
 public class GPSManager : MonoBehaviour
 {
-    public TextMeshProUGUI positionText;
-
-    public float latitude;
-    public float longitude;
-    public bool gpsReady = false;
+    public float Latitude { get; private set; }
+    public float Longitude { get; private set; }
+    public bool GPSReady { get; private set; } = false;
 
     [Header("EDITOR DEBUG")]
-    public bool simulateInEditor = true;
-    public float editorLatitude = 45.6484f;   // Angoulême
-    public float editorLongitude = 0.1562f;
+    [SerializeField] private bool simulateInEditor = true;
+    // Position de base : Angoulême
+    [SerializeField] private float editorLatitude = 45.6484f;
+    [SerializeField] private float editorLongitude = 0.1562f;
+
+    [Space]
+    [SerializeField] private TextMeshProUGUI positionText;
 
     IEnumerator Start()
     {
@@ -22,13 +24,13 @@ public class GPSManager : MonoBehaviour
         {
             Debug.Log("GPS SIMULÉ (Editor)");
 
-            latitude = editorLatitude;
-            longitude = editorLongitude;
-            gpsReady = true;
+            Latitude = editorLatitude;
+            Longitude = editorLongitude;
+            GPSReady = true;
 
             if (positionText != null)
                 positionText.text =
-                    $"EDITOR GPS\nLat:{latitude:F4} Lon:{longitude:F4}";
+                    $"EDITOR GPS\nLat:{Latitude:F4} Lon:{Longitude:F4}";
 
             yield break;
         }
@@ -66,11 +68,11 @@ public class GPSManager : MonoBehaviour
             yield break;
         }
 
-        latitude = Input.location.lastData.latitude;
-        longitude = Input.location.lastData.longitude;
-        gpsReady = true;
+        Latitude = Input.location.lastData.latitude;
+        Longitude = Input.location.lastData.longitude;
+        GPSReady = true;
 
-        SetText($"Lat:{latitude:F4} Lon:{longitude:F4}");
+        SetText($"Lat:{Latitude:F4} Lon:{Longitude:F4}");
     }
 
     void SetText(string msg)

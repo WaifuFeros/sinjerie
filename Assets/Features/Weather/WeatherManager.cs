@@ -7,20 +7,25 @@ using UnityEngine.Networking;
 public class WeatherManager : MonoBehaviour
 {
     public static WeatherManager Instance { get; private set; }
-
-    public GPSManager gpsManager;
-
-    public TextMeshProUGUI cityText;
-    public TextMeshProUGUI tempText;
-    public TextMeshProUGUI descText;
-    [SerializeField, ReadOnlyField] public float temperature;
-    [SerializeField, ReadOnlyField] public GameWeatherType effetMeteorologique;
+    public float temperature { get; private set; }
+    public GameWeatherType effetMeteorologique { get; private set; }
     public bool LockWeather { get; set; } = false;
-    //public TextMeshProUGUI coordText;
+
+    [SerializeField] private GPSManager gpsManager;
+    [SerializeField, Min(0)] private float weatherUpdateInterval;
 
     public WeatherConversionData[] conversionData;
 
-    public string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
+    [Header("Debug")]
+    [SerializeField] private TextMeshProUGUI cityText;
+    [SerializeField] private TextMeshProUGUI tempText;
+    [SerializeField] private TextMeshProUGUI descText;
+
+    [SerializeField, ReadOnlyField] private string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
+
+    private DateTime _lastSaveTime;
+
+    private readonly string TIME_STAMP_SAVE_KEY = "weather_time_stamp_save_key";
 
     private void Awake()
     {
@@ -30,22 +35,34 @@ public class WeatherManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start() appelé : lancement de la coroutine GetWeather");
-        StartCoroutine(GetWeather());
+        LoadTimeStamp();
+        //Debug.Log("Start() appelé : lancement de la coroutine GetWeather");
+        //StartCoroutine(GetWeather());
     }
 
-    IEnumerator GetWeather()
+    public void UpdateWeather(Action onLoadComplete)
+    {
+        if (LockWeather)
+            return;
+
+        if (DateTime.UtcNow > _lastSaveTime.AddSeconds(weatherUpdateInterval))
+            StartCoroutine(GetWeatherRequest(onLoadComplete));
+        else
+            onLoadComplete?.Invoke();
+    }
+
+    private IEnumerator GetWeatherRequest(Action onLoadComplete)
     {
         if (LockWeather)
             yield break;
 
         Debug.Log("Coroutine GetWeather démarrée, attente GPS...");
-        yield return new WaitUntil(() => gpsManager != null && gpsManager.gpsReady);
-        Debug.Log("GPS prêt ! Latitude: " + gpsManager.latitude + ", Longitude: " + gpsManager.longitude);
+        yield return new WaitUntil(() => gpsManager != null && gpsManager.GPSReady);
+        Debug.Log("GPS prêt ! Latitude: " + gpsManager.Latitude + ", Longitude: " + gpsManager.Longitude);
 
         string url =
             $"https://api.openweathermap.org/data/2.5/weather?" +
-            $"lat={gpsManager.latitude}&lon={gpsManager.longitude}" +
+            $"lat={gpsManager.Latitude}&lon={gpsManager.Longitude}" +
             $"&appid={apiKey}&units=metric&lang=fr";
 
         UnityWebRequest request = UnityWebRequest.Get(url);
@@ -64,11 +81,12 @@ public class WeatherManager : MonoBehaviour
         //effetMeteorologique = data.weather[0].main; //save weather effect for use in weather effect system
         effetMeteorologique = convertWeatherStateToGameWeather(data.weather[0].main);
 
-        cityText.text = data.name;
-        tempText.text = $"{data.main.temp:F1} °C";
-        descText.text = data.weather[0].main;
-        ItemManager.Instance.UpdateAllReactions(effetMeteorologique);
+        DisplayDebug(data.name, data.main.temp, data.weather[0].main);
+        ItemManager.Instance.UpdateAllReactions(effetMeteorologique); // to move
         //coordText.text = $"{gpsManager.latitude:F4}, {gpsManager.longitude:F4}";
+
+        SaveTimeStamp();
+        onLoadComplete?.Invoke();
     }
 
     private GameWeatherType convertWeatherStateToGameWeather(string stateString)
@@ -87,12 +105,17 @@ public class WeatherManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"{stateString} => {weatherType.ToString()}");
-
         return weatherType;
     }
 
     #region Debug
+
+    private void DisplayDebug(string city, float temperature, string description)
+    {
+        cityText?.SetText(city);
+        tempText?.SetText($"{temperature:F1} °C");
+        descText?.SetText(description);
+    }
 
     public void SetWeatherByType(GameWeatherType type)
     {
@@ -114,41 +137,87 @@ public class WeatherManager : MonoBehaviour
     }
 
     #endregion
-}
 
-[System.Serializable]
-public class WeatherData
-{
-    public string name;
-    public Main main;
-    public Weather[] weather;
-}
+    #region Save time stamp logic
 
-[System.Serializable]
-public class Main
-{
-    public float temp;
-}
+    [Serializable]
+    internal struct WeatherSaveTimeStampFormat
+    {
+        public string dateTime;
+        public float temperature;
+        public GameWeatherType weatherType;
 
-[System.Serializable]
-public class Weather
-{
-    public string main;
+        public WeatherSaveTimeStampFormat(DateTime time, float temp, GameWeatherType type)
+        {
+            dateTime = time.ToString("o");
+            temperature = temp;
+            weatherType = type;
+        }
+    }
+
+    private void SaveTimeStamp()
+    {
+        _lastSaveTime = DateTime.UtcNow;
+        string json = JsonUtility.ToJson(new WeatherSaveTimeStampFormat(_lastSaveTime, temperature, effetMeteorologique));
+        PlayerPrefs.SetString(TIME_STAMP_SAVE_KEY, JsonUtility.ToJson(new WeatherSaveTimeStampFormat(_lastSaveTime, temperature, effetMeteorologique)));
+        PlayerPrefs.Save();
+    }
+
+    private void LoadTimeStamp()
+    {
+        if (PlayerPrefs.HasKey(TIME_STAMP_SAVE_KEY))
+        {
+            WeatherSaveTimeStampFormat save = JsonUtility.FromJson<WeatherSaveTimeStampFormat>(PlayerPrefs.GetString(TIME_STAMP_SAVE_KEY));
+            _lastSaveTime = DateTime.Parse(save.dateTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            temperature = save.temperature;
+            effetMeteorologique = save.weatherType;
+        }
+        else
+        {
+            UpdateWeather(null);
+        }
+    }
+
+    #endregion
+
+    #region Api Request classes
+
+    [System.Serializable]
+    internal class WeatherData
+    {
+        public string name;
+        public Main main;
+        public Weather[] weather;
+    }
+
+    [System.Serializable]
+    internal class Main
+    {
+        public float temp;
+    }
+
+    [System.Serializable]
+    internal class Weather
+    {
+        public string main;
+    }
+
+    [Serializable]
+    public class WeatherConversionData
+    {
+        public string weatherMain;
+        public GameWeatherType asType;
+        public bool isDefault;
+    }
+
+    #endregion
 }
 
 public enum GameWeatherType
-{
-    ClearSky,
-    Rain,
-    Mist,
-    Thunderstorm,
-    Snow
-}
-
-[Serializable]
-public class WeatherConversionData
-{
-    public string weatherMain;
-    public GameWeatherType asType;
-    public bool isDefault;
-}
+        {
+            ClearSky,
+            Rain,
+            Mist,
+            Thunderstorm,
+            Snow
+        }

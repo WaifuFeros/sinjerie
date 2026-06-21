@@ -9,7 +9,7 @@ public class Piece : SpecialActionSO
         if (Random.Range(0, 2) == 0)
             PlayerManager.Instance.TakeDamage(10);
         else
-            CombatSystem.Instance.currentEnemy.TakeDamage(15);
+            CombatSystem.Instance.Enemy.TakeDamage(15);
         CombatSystem.Instance.CheckCombatEnd();
     }
 }

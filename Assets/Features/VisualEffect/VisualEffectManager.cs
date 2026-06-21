@@ -66,7 +66,6 @@ public class VisualEffectManager : MonoBehaviour
         if (_visualEffectDictionary.TryGetValue((targetGO, particleType), out VisualEffect effect))
         {
             effect.SetActive(false);
-            Debug.Log("Removed effect", effect);
         }
     }
 
@@ -120,7 +119,7 @@ public class VisualEffectManager : MonoBehaviour
     }
     public void EnemyTakeDamage()
     {
-        Image iconImage = CombatSystem.Instance.currentEnemy.enemyHead;
+        Image iconImage = CombatSystem.Instance.Enemy.enemyHead;
         Transform iconTransform = iconImage.transform;
         iconTransform.DOKill(true);
         if (iconImage != null) iconImage.DOKill(true);
@@ -139,7 +138,7 @@ public class VisualEffectManager : MonoBehaviour
 
     public void EnemyHeal()
     {
-        Image iconImage = CombatSystem.Instance.currentEnemy.enemyHead;
+        Image iconImage = CombatSystem.Instance.Enemy.enemyHead;
         Transform iconTransform = iconImage.transform;
         iconTransform.DOKill(true);
         if (iconImage != null) iconImage.DOKill(true);

@@ -32,13 +32,15 @@ public class CombatSystem : MonoBehaviour
     [Header(" Effect Settings")]
     [SerializeField] private int _initialFireDuration;
     [SerializeField] private int _subsequentFireDuration;
-    [SerializeField] private int _woodAddFireDuration;
+    [SerializeField] private int _woodOnFireAddDuration;
+    [SerializeField] private int _iceOnFireLoseDuration;
     [Space]
     [SerializeField] private int _initialWetDuration;
     [SerializeField] private int _subsequentWetDuration;
     [Space]
     [SerializeField] private int _freezeDuration;
     [SerializeField] private int _perfectIceFreezeDuration;
+    [SerializeField] private int _fireOnIceLoseDuration;
     public int freezeProcThreshold;
     [Space]
     [SerializeField] private int _metalParalyzeDuration;
@@ -55,7 +57,7 @@ public class CombatSystem : MonoBehaviour
     [Header("Data Storage")]
     [SerializeField] private SelectedCharacterData dataStorage;
 
-    public Enemy currentEnemy { get; set; }
+    [field: SerializeField] public Enemy Enemy { get; private set; }
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
     private bool combatActive = false;
@@ -119,14 +121,14 @@ public class CombatSystem : MonoBehaviour
         PlayerManager.Instance.refillStamina();
 
         // Récupérer l'ennemi actuel
-        if (RoomManager.Instance != null)
-        {
-            GameObject enemyObj = RoomManager.Instance.GetEnemy();
-            if (enemyObj != null)
-            {
-                currentEnemy = enemyObj.GetComponent<Enemy>();
-            }
-        }
+        //if (RoomManager.Instance != null)
+        //{
+        //    GameObject enemyObj = RoomManager.Instance.GetEnemy();
+        //    if (enemyObj != null)
+        //    {
+        //        currentEnemy = enemyObj.GetComponent<Enemy>();
+        //    }
+        //}
 
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille au debut du combat
 
@@ -175,19 +177,20 @@ public class CombatSystem : MonoBehaviour
 
     public void AttackEnemy(ObjetSO attack)
     {
-        if (!combatActive || currentEnemy == null)
+        if (!combatActive || Enemy == null)
             return;
         RuntimeManager.PlayOneShot(hitSound);
-        currentEnemy.TakeDamage(attack.objectEffect);
+        Enemy.TakeDamage(attack.objectEffect);
         CheckItemEffect(attack, false);
         CheckCombatEnd();
     }
     public void HealEnemy(ObjetSO healItem)
     {
-        if (!combatActive || currentEnemy == null)
+        if (!combatActive || Enemy == null)
             return;
+
         RuntimeManager.PlayOneShot(healSound);
-        currentEnemy.Heal(healItem.objectEffect);
+        Enemy.Heal(healItem.objectEffect);
         CheckItemEffect(healItem, false);
         CheckCombatEnd();
     }
@@ -258,7 +261,7 @@ public class CombatSystem : MonoBehaviour
             yield return WeatherEffect.Instance.PlayFrozenAnimation();
             isPlayerTurn = true;
             SetupSkipTurnButtonInteractable(true);
-            currentEnemy.FreezeCounter = 0;
+            Enemy.FreezeCounter = 0;
             yield break;
         }
 
@@ -281,7 +284,7 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     public void CheckCombatEnd()
     {
-        if (currentEnemy != null && currentEnemy.IsDead())
+        if (Enemy != null && Enemy.IsDead())
             StartCoroutine(EndCombat(true));
         else if (PlayerManager.Instance.IsDead())
             StartCoroutine(EndCombat(false));
@@ -295,13 +298,13 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive) yield break;
 
-        ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(
-            currentEnemy.EnemyStats.Items,
-            currentEnemy.EnemyStats.MaxHealth,
-            currentEnemy.currentHealth,
-            currentEnemy.currentStaminaMax
+        ObjetSO[] chosenItems = Enemy.EnemyStats.behavior.ChooseItem(
+            Enemy.EnemyStats.Items,
+            Enemy.EnemyStats.MaxHealth,
+            Enemy.currentHealth,
+            Enemy.currentStaminaMax
         );
-        currentEnemy.currentStaminaMax = currentEnemy.EnemyStats.MaxStamina; // Reset stamina max pour l'effet snow
+        Enemy.currentStaminaMax = Enemy.EnemyStats.MaxStamina; // Reset stamina max pour l'effet snow
         foreach (ObjetSO item in chosenItems)
         {
             // Animation
@@ -357,15 +360,15 @@ public class CombatSystem : MonoBehaviour
     private IEnumerator AnimateItemThrow(ObjetSO item)
     {
         GameObject projectile = Instantiate(_itemAnimPrefab, _canvasParent);
-        projectile.transform.position = currentEnemy.enemyHead.transform.position;
+        projectile.transform.position = Enemy.enemyHead.transform.position;
         projectile.GetComponent<UnityEngine.UI.Image>().sprite = item.objetSprite;
 
-        Vector3 startPos = currentEnemy.enemyHead.transform.position;
+        Vector3 startPos = Enemy.enemyHead.transform.position;
         Sequence throwSequence = DOTween.Sequence();
 
         if (item.objectType == ObjetEffectType.Heal)
         {
-            Vector3 endPos = currentEnemy.enemyHead.transform.position;
+            Vector3 endPos = Enemy.enemyHead.transform.position;
             Vector3 midPoint = startPos + new Vector3(0, 350f, 0); // Petit décalage X pour la courbe
             Vector3[] path = new Vector3[] { startPos, midPoint, endPos };
 
@@ -455,45 +458,36 @@ public class CombatSystem : MonoBehaviour
                     // Applique l'effet de brulure
                     if (PlayerManager.Instance.WetCounter == 0)
                     {
-                        PlayerManager.Instance.FireCounter += _initialFireDuration;
+                        PlayerManager.Instance.FireCounter += PlayerManager.Instance.FireCounter > 0 ? _subsequentFireDuration : _initialFireDuration;
                         if (PlayerManager.Instance.FreezeCounter > 0)
-                            PlayerManager.Instance.FreezeCounter -= 1;
-                    }
-                    break;
-                case ObjetMaterialType.Water:
-                    if (PlayerManager.Instance.WetCounter == 0) 
-                    { 
-                        PlayerManager.Instance.WetCounter = _initialWetDuration; // Applique l'effet de mouille
-                    }
-                    else if (PlayerManager.Instance.WetCounter > 0)
-                        PlayerManager.Instance.WetCounter += _subsequentWetDuration; // Applique l'effet de mouille +1 round..
-                    PlayerManager.Instance.FireCounter--;
-                    break;
-                case ObjetMaterialType.Ice:
-                    RuntimeManager.PlayOneShot(iceSound);
-                    PlayerManager.Instance.FreezeCounter += _freezeDuration;
-                    PlayerManager.Instance.FireCounter -= 1;
-                    break;
-                case ObjetMaterialType.PerfectIce:
-                    RuntimeManager.PlayOneShot(iceSound);
-                    PlayerManager.Instance.FreezeCounter += _perfectIceFreezeDuration;
-                    PlayerManager.Instance.FireCounter -= 1;
-                    break;
-                case ObjetMaterialType.Metal:
-                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
-                    {
-                        RuntimeManager.PlayOneShot(paralyzeSound);
-                        PlayerManager.Instance.ParalyzeCounter = _metalParalyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
-                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                            PlayerManager.Instance.FreezeCounter -= _fireOnIceLoseDuration;
                     }
                     break;
                 case ObjetMaterialType.Wood:
                     if (PlayerManager.Instance.FireCounter > 0)
-                        PlayerManager.Instance.FireCounter += _woodAddFireDuration; // Prolonge l'effet de brulure
+                        PlayerManager.Instance.FireCounter += _woodOnFireAddDuration;
+                    break;
+                case ObjetMaterialType.Water:
+                    PlayerManager.Instance.WetCounter += PlayerManager.Instance.WetCounter > 0 ? _subsequentWetDuration : _initialWetDuration;
+                    PlayerManager.Instance.FireCounter = 0;
+                    break;
+                case ObjetMaterialType.Ice:
+                    PlayerManager.Instance.FreezeCounter += _freezeDuration;
+                    PlayerManager.Instance.FireCounter -= _iceOnFireLoseDuration;
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    PlayerManager.Instance.FreezeCounter += _perfectIceFreezeDuration;
+                    PlayerManager.Instance.FireCounter -= _iceOnFireLoseDuration;
+                    break;
+                case ObjetMaterialType.Metal:
+                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+                    {
+                        PlayerManager.Instance.ParalyzeCounter = _metalParalyzeDuration;
+                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                    }
                     break;
                 case ObjetMaterialType.Electricity:
-                    RuntimeManager.PlayOneShot(paralyzeSound);
-                    PlayerManager.Instance.ParalyzeCounter += 1;
+                    PlayerManager.Instance.ParalyzeCounter += _electricityParalyzeDuration;
                     break;
             }
         }
@@ -502,55 +496,49 @@ public class CombatSystem : MonoBehaviour
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
-                    RuntimeManager.PlayOneShot(fireSound);
-                    if (currentEnemy.WetCounter == 0)
+                    if (Enemy.WetCounter == 0)
                     {
-                        currentEnemy.FireCounter = _initialFireDuration;
-                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
-                        if (currentEnemy.FreezeCounter > 0)
-                            currentEnemy.FreezeCounter -= 1;
-                            ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                        //currentEnemy.FireCounter = _initialFireDuration;
+                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                        //if (currentEnemy.FreezeCounter > 0)
+                        //    currentEnemy.FreezeCounter -= 1;
+                        //    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
 
-
+                        Enemy.FireCounter += Enemy.FireCounter > 0 ? _subsequentFireDuration : _initialFireDuration;
+                        if (Enemy.FreezeCounter > 0)
+                            Enemy.FreezeCounter -= _fireOnIceLoseDuration;
                     }
                     break;
-                case ObjetMaterialType.Ice:
-                    RuntimeManager.PlayOneShot(iceSound);
-                    //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                    currentEnemy.FreezeCounter += 1;
-                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                case ObjetMaterialType.Wood:
+                    if (Enemy.FireCounter > 0)
+                        Enemy.FireCounter += _woodOnFireAddDuration;
+                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.Water:
-                    if (currentEnemy.WetCounter == 0)
-                    {
-                        currentEnemy.WetCounter = _initialWetDuration; // Applique l'effet de mouille
-                    }
-                    else if (currentEnemy.WetCounter > 0)
-                        currentEnemy.WetCounter += 1; // Applique l'effet de mouille +1 round..
+                    Enemy.WetCounter += Enemy.WetCounter > 0 ? _subsequentWetDuration : _initialWetDuration;
+                    Enemy.FireCounter = 0;
+                    break;
+                case ObjetMaterialType.Ice:
+                    Enemy.FreezeCounter += _freezeDuration;
+                    Enemy.FireCounter -= _iceOnFireLoseDuration;
+                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    Enemy.FreezeCounter += _perfectIceFreezeDuration;
+                    Enemy.FireCounter -= _iceOnFireLoseDuration;
+                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.Metal:
                     if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
                     {
-                        RuntimeManager.PlayOneShot(paralyzeSound);
-                        currentEnemy.ParalyzeCounter = _metalParalyzeDuration; // Applique l'effet de paralysie
-                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                        Enemy.ParalyzeCounter = _metalParalyzeDuration;
                         WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     }
                     break;
-                case ObjetMaterialType.Wood:
-                    if (currentEnemy.FireCounter > 0)
-                        currentEnemy.FireCounter += _woodAddFireDuration; // Prolonge l'effet de brulure
-                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
-                    break;
-                case ObjetMaterialType.PerfectIce:
-                    RuntimeManager.PlayOneShot(iceSound);
-                    currentEnemy.FreezeCounter += 2;
-                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
-                    break;
                 case ObjetMaterialType.Electricity:
-                    RuntimeManager.PlayOneShot(paralyzeSound);
-                    currentEnemy.ParalyzeCounter += 1;
-                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                    Enemy.ParalyzeCounter += _electricityParalyzeDuration;
+                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
             }
         }
@@ -561,7 +549,7 @@ public class CombatSystem : MonoBehaviour
     {
         if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Rain)
         {
-            currentEnemy.WetCounter = _initialWetDuration;
+            Enemy.WetCounter = _initialWetDuration;
             PlayerManager.Instance.WetCounter = _initialWetDuration;
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Snow)
