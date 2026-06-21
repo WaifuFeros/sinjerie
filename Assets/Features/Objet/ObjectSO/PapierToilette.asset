@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 1fbc2a9e2711a99448877fe823139125, type: 3}
   objetName: Papier toilette
-  objetDescription: "Ne fais rien de sp\xE9cial"
+  objetDescription: combustible qui peut alimenter le feu
   objetMaterialType: 0
   objetWeight: 1
   objectType: 0

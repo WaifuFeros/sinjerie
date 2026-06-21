@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 0}
   objetName: Poche de froid
-  objetDescription: pratique pour les traumatismes
+  objetDescription: "permet de se soigner mais extremement froid... \xE7a pourrait
+    vous geler"
   objetMaterialType: 4
   objetWeight: 2
   objectType: 0

@@ -191,4 +191,13 @@ public class UIManager : MonoBehaviour
             combatStatusText.text = message;
         }
     }
+
+    public void QuitToMenu()
+    {
+        TransitionManager.Instance.TransitionWithAction(() =>
+        {
+            SceneLoadManager.Instance.LoadSceneAsActive("HomeMenu");
+        });
+    }
+
 }

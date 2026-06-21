@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 0}
   objetName: Ramen
-  objetDescription: "un d\xE9licieux ramen plein d'\xE9nergie"
+  objetDescription: Le meilleurs plat du monde pour se soigner
   objetMaterialType: 0
   objetWeight: 3
   objectType: 0

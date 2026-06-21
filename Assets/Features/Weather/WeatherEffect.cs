@@ -1,14 +1,11 @@
 using System;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeatherEffect : MonoBehaviour
 {
     public static WeatherEffect Instance { get; private set; }
 
-    [SerializeField] private Enemy enemy;
-
+    [SerializeField] public Enemy enemy; 
 
     private void Awake()
     {
@@ -16,106 +13,170 @@ public class WeatherEffect : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
+    private void RefreshItemReactions()
+    {
+        if (enemy == null)
+            return;
+
+        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+    }
+
     public void OnFire(bool isPlayer)
     {
-        if (!isPlayer && enemy.FireCounter > 0)
+        if (isPlayer)
         {
-           enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-           enemy.FireCounter--;
-            if (enemy.FireCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+            if (PlayerManager.Instance.FireCounter > 0)
+            {
+                PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+                PlayerManager.Instance.FireCounter--;
+
+                if (PlayerManager.Instance.FireCounter == 0)
+                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+            }
         }
-        else if (PlayerManager.Instance.FireCounter > 0)
+        else
         {
-           PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-           PlayerManager.Instance.FireCounter--;
-            if (PlayerManager.Instance.FireCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+            if (enemy.FireCounter > 0)
+            {
+                enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+                enemy.FireCounter--;
+
+                if (enemy.FireCounter == 0)
+                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+            }
         }
+
+        PlayerManager.Instance.UpdateAfflictionIcons();
+        enemy.UpdateAfflictionIcons();
         CombatSystem.Instance.CheckCombatEnd();
-       
+
+        //RefreshItemReactions(); 
     }
 
     public bool OnFreeze(bool isPlayer)
     {
-        if (!isPlayer && enemy.FreezeCounter > 0)
+        bool result = false;
+
+        if (isPlayer)
         {
-            enemy.WetCounter = 0;
-            if (enemy.FreezeCounter >= 3)
+            if (PlayerManager.Instance.FreezeCounter > 0)
             {
-                enemy.FreezeCounter = 0;
-                return true; //ennemi gele
+                PlayerManager.Instance.WetCounter = 0;
+
+                if (PlayerManager.Instance.FreezeCounter >= 3)
+                {
+                    PlayerManager.Instance.FreezeCounter = 0;
+                    PlayerManager.Instance.UpdateAfflictionIcons();
+                    result = true; 
+                }
             }
         }
-        else if (PlayerManager.Instance.FreezeCounter > 0)
+        else
         {
-            PlayerManager.Instance.WetCounter = 0;
-            if (PlayerManager.Instance.FreezeCounter >= 3)
+            if (enemy.FreezeCounter > 0)
             {
-                PlayerManager.Instance.FreezeCounter = 0;
-                return true; //player gele
+                enemy.WetCounter = 0;
+
+                if (enemy.FreezeCounter >= 3)
+                {
+                    enemy.FreezeCounter = 0;
+                    enemy.UpdateAfflictionIcons();
+                    result = true; 
+                }
             }
         }
-        return false;
+
+        PlayerManager.Instance.UpdateAfflictionIcons();
+        enemy.UpdateAfflictionIcons();
+
+        //RefreshItemReactions();
+
+        return result;
     }
-    //a tester :)
-    public void isSnowing() 
+
+    public void isSnowing()
     {
         PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina - 2;
         PlayerManager.Instance.OnStaminaUpdateEvent?.Invoke();
+
         enemy.currentStaminaMax = enemy.EnemyStats.MaxStamina - 2;
+
+        //RefreshItemReactions();
     }
 
     public void OnWet(bool isPlayer)
     {
-        if (!isPlayer && enemy.WetCounter > 0)
+        if (isPlayer)
         {
-            enemy.FireCounter = 0;
-            enemy.WetCounter -= 1;
-            if (enemy.WetCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
-        }
-        else if (PlayerManager.Instance.WetCounter > 0)
-        {
-            PlayerManager.Instance.FireCounter = 0;
-            PlayerManager.Instance.WetCounter -= 1;
-            if (PlayerManager.Instance.WetCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
-        }
-    }
+            if (PlayerManager.Instance.WetCounter > 0)
+            {
+                PlayerManager.Instance.FireCounter = 0;
+                PlayerManager.Instance.WetCounter--;
 
+                if (PlayerManager.Instance.WetCounter == 0)
+                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+            }
+        }
+        else
+        {
+            if (enemy.WetCounter > 0)
+            {
+                enemy.FireCounter = 0;
+                enemy.WetCounter--;
+
+                if (enemy.WetCounter == 0)
+                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+            }
+        }
+
+        PlayerManager.Instance.UpdateAfflictionIcons();
+        enemy.UpdateAfflictionIcons();
+
+    }
 
     public bool OnParalyze(bool isPlayer)
     {
         int paralyze = UnityEngine.Random.Range(0, 100);
-        if (!isPlayer && enemy.ParalyzeCounter > 0 )
+        bool result = false;
+
+        if (isPlayer)
         {
-            if (paralyze <= 25)
+            if (PlayerManager.Instance.ParalyzeCounter > 0)
             {
-                return true; //ennemi paralyse, il saute son tour
+                PlayerManager.Instance.ParalyzeCounter--;
+                PlayerManager.Instance.UpdateAfflictionIcons();
+
+                if (paralyze <= 25)
+                    result = true; 
             }
-            enemy.ParalyzeCounter--;
         }
-        else if (PlayerManager.Instance.ParalyzeCounter > 0)
+        else
         {
-            if (paralyze <= 25)
+            if (enemy.ParalyzeCounter > 0)
             {
-                return true; //player paralyse, il saute son tour
+                enemy.ParalyzeCounter--;
+                enemy.UpdateAfflictionIcons();
+
+                if (paralyze <= 25)
+                    result = true; 
             }
-            PlayerManager.Instance.ParalyzeCounter--;
         }
-        return false;
+
+        //RefreshItemReactions();
+
+        return result;
     }
 
-    public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
+    public void Thunder(bool isPlayer, bool isThunder, int damageThunder)
     {
-        if (isThunder && !isPlayer)
-        {
-            enemy.TakeDamage(damageThunder);
-        }
-        else if (isThunder && isPlayer)
-        {
+        if (!isThunder)
+            return;
+
+        if (isPlayer)
             PlayerManager.Instance.TakeDamage(damageThunder);
-        }
+        else
+            enemy.TakeDamage(damageThunder);
+
+        //RefreshItemReactions();
     }
 }

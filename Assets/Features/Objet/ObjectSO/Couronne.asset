@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 1bade73470a866e44b3fdba9b114ef23, type: 3}
   objetName: Couronne
-  objetDescription: 'Couronne en or '
+  objetDescription: "Couronne en or qui peut conduire l'electricit\xE9"
   objetMaterialType: 1
   objetWeight: 3
   objectType: 1

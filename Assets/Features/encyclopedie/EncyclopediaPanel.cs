@@ -29,7 +29,7 @@ public class EncyclopediaPanel : MonoBehaviour
         {
             Debug.Log("Encyclopedia populate complete");
             // Tri par rareté (Common → Legendary)
-            var sortedList = new List<ObjetSO>(ItemManager.Instance.ItemsData)
+            var sortedList = new List<ObjetSO>(ItemManager.Instance.ItemsDatabase)
                 .OrderBy(o => o.Rarity)
                 .ToList();
 

@@ -26,21 +26,13 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     [SerializeField] private Animator smokeAnimator;
     [SerializeField] private float delayBeforeChange = 0.021f;
 
-    [Header("Asset")]
-    [SerializeField] private Sprite _communSprite;
-    [SerializeField] private Sprite _uncommonSprite;
-    [SerializeField] private Sprite _rareSprite;
-    [SerializeField] private Sprite _epicSprite;
-    [SerializeField] private Sprite _lengendarySprite;
-    [SerializeField] private Sprite _healSprite;
-    [SerializeField] private Sprite _atkSprite;
-
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
     private Coroutine longPressCoroutine;
     private Coroutine updateCoroutine;
     private bool isDragging;
+    private ItemWiggleDOTween wiggle;
 
     private Color _weightTextBaseColor;
 
@@ -57,6 +49,8 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         _weightTextBaseColor = weightText.color;
         PlayerManager.Instance.OnStaminaUpdateEvent += UpdateWeightVisual;
+        //wiggle = gameObject.AddComponent<ItemWiggleDOTween>();
+        //wiggle.enabled = true;
     }
 
     private void UpdateWeightVisual()
@@ -91,33 +85,10 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         itemIcon.sprite = itemData.objetSprite;
         descriptionText.text = itemData.objetDescription;
-        switch (itemData.Rarity)
-        {
-            case ObjetRarity.Common:
-                itemBackground.sprite = _communSprite;
-                break;
-            case ObjetRarity.Uncommon:
-                itemBackground.sprite = _uncommonSprite;
-                break;
-            case ObjetRarity.Rare:
-                itemBackground.sprite = _rareSprite;
-                break;
-            case ObjetRarity.Epic:
-                itemBackground.sprite = _epicSprite;
-                break;
-            case ObjetRarity.Legendary:
-                itemBackground.sprite = _lengendarySprite;
-                break;
-        }
+        itemBackground.sprite = ItemManager.Instance.GetRaritySprite(itemData.Rarity);
 
-        effectImage.gameObject.SetActive(true);
-
-        if (itemData.objectType == ObjetEffectType.Heal)
-            effectImage.sprite = _healSprite;
-        else if (itemData.objectType == ObjetEffectType.Attack)
-            effectImage.sprite = _atkSprite;
-        else if (itemData.objectType == ObjetEffectType.Special)
-            effectImage.gameObject.SetActive(false);
+        effectImage.gameObject.SetActive(ItemManager.Instance.GetObjetTypeSprite(itemData.objectType, out Sprite result));
+        effectImage.sprite = result;
 
         effectText.text = itemData.objectEffect.ToString();
         weightText.text = itemData.objetWeight.ToString();
@@ -182,4 +153,5 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         if (itemData != null) Destroy(itemData);
     }
+
 }

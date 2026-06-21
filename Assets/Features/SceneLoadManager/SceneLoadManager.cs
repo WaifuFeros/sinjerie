@@ -9,6 +9,7 @@ public class SceneLoadManager : MonoBehaviour
 
     public string ActiveSceneName { get; private set; }
     public string CurrentLoadingSceneName { get; private set; }
+    public bool SceneLoadingLocked { get; private set; }
 
     public static bool IsManagerSceneLoaded { get; private set; }
 
@@ -28,8 +29,12 @@ public class SceneLoadManager : MonoBehaviour
 
     public void LoadSceneAsActive(string sceneName)
     {
+        if (SceneLoadingLocked)
+            return;
+
         SceneManager.sceneLoaded += OnGameSceneLoaded;
         CurrentLoadingSceneName = sceneName;
+        SceneLoadingLocked = true;
         SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
     }
 
@@ -42,6 +47,7 @@ public class SceneLoadManager : MonoBehaviour
             SceneManager.UnloadSceneAsync(ActiveSceneName);
             ActiveSceneName = CurrentLoadingSceneName;
             CurrentLoadingSceneName = null;
+            SceneLoadingLocked = false;
         }
     }
 }

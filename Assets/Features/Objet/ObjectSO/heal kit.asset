@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: a2b9aa90e3ec36749afd7cac31507120, type: 3}
   objetName: Heal Kit
-  objetDescription: Can heal !
+  objetDescription: un kit de soin
   objetMaterialType: 0
   objetWeight: 3
   objectType: 0
