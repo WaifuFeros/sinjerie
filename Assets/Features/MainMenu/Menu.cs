@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using FMODUnity;
 
 
 public class Menu : MonoBehaviour
 {
+    [SerializeField] private EventReference clickSound;
     [SerializeField] private  GameObject _EncyclopediaPanel;
     [SerializeField] private  GameObject _ParametresPanel;
     [SerializeField] private Button _ParametresButton;

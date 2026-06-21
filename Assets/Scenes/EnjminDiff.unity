@@ -2783,6 +2783,7 @@ GameObject:
   - component: {fileID: 886044152}
   - component: {fileID: 886044151}
   - component: {fileID: 886044150}
+  - component: {fileID: 886044154}
   m_Layer: 5
   m_Name: SkipTurnButton
   m_TagString: Untagged
@@ -2891,6 +2892,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -515}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &886044154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886044149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1cf36b7d89be8479d3891423639442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound:
+    Guid:
+      Data1: -530144235
+      Data2: 1173144793
+      Data3: 776551597
+      Data4: 272658488
+    Path: event:/Button
 --- !u!1 &888724472
 GameObject:
   m_ObjectHideFlags: 0
