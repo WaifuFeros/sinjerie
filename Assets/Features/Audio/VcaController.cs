@@ -25,4 +25,16 @@ public class VcaController : MonoBehaviour
     {
         vca.setVolume(volume);
     }
+    private float originalVolume = 1f;
+
+    public void LowerMusicVolume(float multiplier = 0.3f)
+    {
+        vca.getVolume(out originalVolume);
+        vca.setVolume(originalVolume * multiplier);
+    }
+
+    public void RestoreMusicVolume()
+    {
+        vca.setVolume(originalVolume);
+    }
 }

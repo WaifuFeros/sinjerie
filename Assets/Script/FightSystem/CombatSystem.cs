@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,15 @@ public class CombatSystem : MonoBehaviour
     public static CombatSystem Instance { get; private set; }
 
     public bool isPlayerTurn { get; set; } = true;
+
+    [Header("Audio")]
+    [SerializeField] private EventReference hitSound;
+    [SerializeField] private EventReference healSound;
+    [SerializeField] private EventReference fireSound;
+    [SerializeField] private EventReference iceSound;
+    [SerializeField] private EventReference paralyzeSound;
+    [SerializeField] private EventReference victorySound;
+    [SerializeField] private EventReference defeatSound;
 
     [Header("Combat Settings")]
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
@@ -148,6 +158,7 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive)
             return;
+        RuntimeManager.PlayOneShot(hitSound);
         PlayerManager.Instance.TakeDamage(attack.objectEffect);
         CheckItemEffect(attack, true);
         CheckCombatEnd();
@@ -156,6 +167,7 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive)
             return;
+        RuntimeManager.PlayOneShot(healSound);
         PlayerManager.Instance.Heal(healItem.objectEffect);
         CheckItemEffect(healItem, true);
         CheckCombatEnd();
@@ -165,6 +177,7 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive || currentEnemy == null)
             return;
+        RuntimeManager.PlayOneShot(hitSound);
         currentEnemy.TakeDamage(attack.objectEffect);
         CheckItemEffect(attack, false);
         CheckCombatEnd();
@@ -173,6 +186,7 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive || currentEnemy == null)
             return;
+        RuntimeManager.PlayOneShot(healSound);
         currentEnemy.Heal(healItem.objectEffect);
         CheckItemEffect(healItem, false);
         CheckCombatEnd();
@@ -396,11 +410,13 @@ public class CombatSystem : MonoBehaviour
         if (victory)
         {
             Debug.Log("Victoire au combat!");
+            RuntimeManager.PlayOneShot(victorySound);
             onVictoryCallback?.Invoke();
         }
         else
         {
             Debug.Log("Défaite au combat!");
+            RuntimeManager.PlayOneShot(defeatSound);
             onDefeatCallback?.Invoke();
         }
         yield break;
@@ -435,6 +451,7 @@ public class CombatSystem : MonoBehaviour
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
+                    RuntimeManager.PlayOneShot(fireSound);
                     // Applique l'effet de brulure
                     if (PlayerManager.Instance.WetCounter == 0)
                     {
@@ -453,16 +470,19 @@ public class CombatSystem : MonoBehaviour
                     PlayerManager.Instance.FireCounter--;
                     break;
                 case ObjetMaterialType.Ice:
+                    RuntimeManager.PlayOneShot(iceSound);
                     PlayerManager.Instance.FreezeCounter += _freezeDuration;
                     PlayerManager.Instance.FireCounter -= 1;
                     break;
                 case ObjetMaterialType.PerfectIce:
+                    RuntimeManager.PlayOneShot(iceSound);
                     PlayerManager.Instance.FreezeCounter += _perfectIceFreezeDuration;
                     PlayerManager.Instance.FireCounter -= 1;
                     break;
                 case ObjetMaterialType.Metal:
                     if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
                     {
+                        RuntimeManager.PlayOneShot(paralyzeSound);
                         PlayerManager.Instance.ParalyzeCounter = _metalParalyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
                         WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
                     }
@@ -472,6 +492,7 @@ public class CombatSystem : MonoBehaviour
                         PlayerManager.Instance.FireCounter += _woodAddFireDuration; // Prolonge l'effet de brulure
                     break;
                 case ObjetMaterialType.Electricity:
+                    RuntimeManager.PlayOneShot(paralyzeSound);
                     PlayerManager.Instance.ParalyzeCounter += 1;
                     break;
             }
@@ -481,6 +502,7 @@ public class CombatSystem : MonoBehaviour
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
+                    RuntimeManager.PlayOneShot(fireSound);
                     if (currentEnemy.WetCounter == 0)
                     {
                         currentEnemy.FireCounter = _initialFireDuration;
@@ -493,6 +515,7 @@ public class CombatSystem : MonoBehaviour
                     }
                     break;
                 case ObjetMaterialType.Ice:
+                    RuntimeManager.PlayOneShot(iceSound);
                     //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
                     currentEnemy.FreezeCounter += 1;
                     ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
@@ -508,6 +531,7 @@ public class CombatSystem : MonoBehaviour
                 case ObjetMaterialType.Metal:
                     if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
                     {
+                        RuntimeManager.PlayOneShot(paralyzeSound);
                         currentEnemy.ParalyzeCounter = _metalParalyzeDuration; // Applique l'effet de paralysie
                         ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                         WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
@@ -519,10 +543,12 @@ public class CombatSystem : MonoBehaviour
                         ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.PerfectIce:
+                    RuntimeManager.PlayOneShot(iceSound);
                     currentEnemy.FreezeCounter += 2;
                     ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.Electricity:
+                    RuntimeManager.PlayOneShot(paralyzeSound);
                     currentEnemy.ParalyzeCounter += 1;
                     ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
