@@ -36,8 +36,6 @@ public class WeatherManager : MonoBehaviour
     void Start()
     {
         LoadTimeStamp();
-        //Debug.Log("Start() appelé : lancement de la coroutine GetWeather");
-        //StartCoroutine(GetWeather());
     }
 
     public void UpdateWeather(Action onLoadComplete)
@@ -77,13 +75,11 @@ public class WeatherManager : MonoBehaviour
 
         Debug.Log("Requête météo réussie, récupération des données...");
         WeatherData data = JsonUtility.FromJson<WeatherData>(request.downloadHandler.text);
-        temperature = data.main.temp; //save temperature for use in weather effect
-        //effetMeteorologique = data.weather[0].main; //save weather effect for use in weather effect system
+        temperature = data.main.temp;
         effetMeteorologique = convertWeatherStateToGameWeather(data.weather[0].main);
 
-        DisplayDebug(data.name, data.main.temp, data.weather[0].main);
-        ItemManager.Instance.UpdateAllReactions(effetMeteorologique); // to move
-        //coordText.text = $"{gpsManager.latitude:F4}, {gpsManager.longitude:F4}";
+        DisplayDebug(data.name, temperature, effetMeteorologique.ToString());
+        ItemManager.Instance.UpdateAllReactions(effetMeteorologique);
 
         SaveTimeStamp();
         onLoadComplete?.Invoke();
@@ -171,6 +167,7 @@ public class WeatherManager : MonoBehaviour
             _lastSaveTime = DateTime.Parse(save.dateTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
             temperature = save.temperature;
             effetMeteorologique = save.weatherType;
+            DisplayDebug("no city", temperature, effetMeteorologique.ToString());
         }
         else
         {
