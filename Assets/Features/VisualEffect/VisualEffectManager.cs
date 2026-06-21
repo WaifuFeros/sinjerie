@@ -66,7 +66,6 @@ public class VisualEffectManager : MonoBehaviour
         if (_visualEffectDictionary.TryGetValue((targetGO, particleType), out VisualEffect effect))
         {
             effect.SetActive(false);
-            Debug.Log("Removed effect", effect);
         }
     }
 

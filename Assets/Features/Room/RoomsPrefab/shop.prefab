@@ -1840,17 +1840,12 @@ MonoBehaviour:
   item: {fileID: 5836722240855104291}
   itemIcon: {fileID: 166325981707429985}
   itemBackground: {fileID: 6237316565035452102}
-  effectImage: {fileID: 4427112459905856473}
+  effectImage: {fileID: 70905761060679978}
   effectText: {fileID: 152319276742218442}
   weightText: {fileID: 48766440881278121}
   priceText: {fileID: 6464549548700044660}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &5121089389815686585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4108,20 +4103,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4132c4748f89944867ea5a175a157a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 2342869165994985403}
   itemIcon: {fileID: 8960316019003429180}
   itemBackground: {fileID: 4476995822863339741}
-  effectImage: {fileID: 5669345000386866980}
+  effectImage: {fileID: 2794358595312501569}
   effectText: {fileID: 746879110837516877}
   weightText: {fileID: 5166546789555317380}
   priceText: {fileID: 4323768736495979406}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &1201592914040412062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4292,17 +4282,12 @@ MonoBehaviour:
   item: {fileID: 7625990175218825380}
   itemIcon: {fileID: 6253551623296308718}
   itemBackground: {fileID: 8149672012163423848}
-  effectImage: {fileID: 5393293250213945893}
+  effectImage: {fileID: 6495856993983199743}
   effectText: {fileID: 3753285263560637515}
   weightText: {fileID: 3689473476536920876}
   priceText: {fileID: 7657991083336158298}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &2222704965149724138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4607,17 +4592,12 @@ MonoBehaviour:
   item: {fileID: 1903891017896945607}
   itemIcon: {fileID: 6589196095730719021}
   itemBackground: {fileID: 8663685587169377309}
-  effectImage: {fileID: 8827148425764014754}
+  effectImage: {fileID: 1590196664077375387}
   effectText: {fileID: 6762828813757757915}
   weightText: {fileID: 3469855529342632607}
   priceText: {fileID: 7804964624283171662}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &8684916230575160978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4842,20 +4822,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4132c4748f89944867ea5a175a157a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 2574010833840568155}
   itemIcon: {fileID: 6108118658644044886}
   itemBackground: {fileID: 8243253362533170269}
-  effectImage: {fileID: 7816210497734921409}
+  effectImage: {fileID: 5447242108823797750}
   effectText: {fileID: 4142567898050501383}
   weightText: {fileID: 2760207372043285917}
   priceText: {fileID: 8357412796335406457}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &6566486344528981238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5314,17 +5289,12 @@ MonoBehaviour:
   item: {fileID: 0}
   itemIcon: {fileID: 541188482355916894}
   itemBackground: {fileID: 6672453948506653850}
-  effectImage: {fileID: 8596398271581047445}
+  effectImage: {fileID: 5536742670065133993}
   effectText: {fileID: 883850509193460329}
   weightText: {fileID: 5420277932552939066}
   priceText: {fileID: 2529761786275276684}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &4622922353160457951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5840,20 +5810,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4132c4748f89944867ea5a175a157a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 2922464392548562982}
   itemIcon: {fileID: 1783275218254141804}
   itemBackground: {fileID: 498808811546312635}
-  effectImage: {fileID: 3280246413818545534}
+  effectImage: {fileID: 6122237824322304461}
   effectText: {fileID: 1420743839186932561}
   weightText: {fileID: 4962438131641788206}
   priceText: {fileID: 8979137768773152630}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &5978461072369656087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7302,20 +7267,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4132c4748f89944867ea5a175a157a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 3959459693163191825}
   itemIcon: {fileID: 2142406848352752287}
   itemBackground: {fileID: 8526497318049434097}
-  effectImage: {fileID: 514624610422341587}
+  effectImage: {fileID: 8051690151063975601}
   effectText: {fileID: 1614440782836712880}
   weightText: {fileID: 5763685093590375534}
   priceText: {fileID: 8279579351262551089}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &8435958741781132891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7562,20 +7522,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4132c4748f89944867ea5a175a157a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 4149766442033489490}
   itemIcon: {fileID: 1500483144407436153}
   itemBackground: {fileID: 4457870522019660327}
-  effectImage: {fileID: 5822763677799013009}
+  effectImage: {fileID: 2973626854489486008}
   effectText: {fileID: 4855168857894678029}
   weightText: {fileID: 218142844030760048}
   priceText: {fileID: 2505590495332403064}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &4147850282674560496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8182,17 +8137,12 @@ MonoBehaviour:
   item: {fileID: 5847729414388508631}
   itemIcon: {fileID: 5511792661160808585}
   itemBackground: {fileID: 7744240793911631373}
-  effectImage: {fileID: 7784228819245125569}
+  effectImage: {fileID: 5287605439367670279}
   effectText: {fileID: 1447004064807449095}
   weightText: {fileID: 6834363346657925778}
   priceText: {fileID: 4064423231926265081}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &5745630493490924067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11099,17 +11049,12 @@ MonoBehaviour:
   item: {fileID: 6512384333799988230}
   itemIcon: {fileID: 7811170715821216464}
   itemBackground: {fileID: 6323144743958964479}
-  effectImage: {fileID: 3804358987915646598}
+  effectImage: {fileID: 1548867287528368137}
   effectText: {fileID: 357733331860627988}
   weightText: {fileID: 2880248501565559599}
   priceText: {fileID: 4689930422838267267}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &2245253481955173562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11281,20 +11226,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4132c4748f89944867ea5a175a157a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 6342962385937580054}
   itemIcon: {fileID: 6347134544511171059}
   itemBackground: {fileID: 7331018784852184332}
-  effectImage: {fileID: 6931829147308975376}
+  effectImage: {fileID: 7744490562383514016}
   effectText: {fileID: 7047538799288734107}
   weightText: {fileID: 6848535034056564823}
   priceText: {fileID: 8077801593713268406}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &5106595042003906116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11812,17 +11752,12 @@ MonoBehaviour:
   item: {fileID: 793074819867194214}
   itemIcon: {fileID: 480431119822057308}
   itemBackground: {fileID: 4629423397646499395}
-  effectImage: {fileID: 4208430098758072431}
+  effectImage: {fileID: 620168174473102560}
   effectText: {fileID: 8455057066359371152}
   weightText: {fileID: 8675590906950096641}
   priceText: {fileID: 5588868064197304853}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &2647452612984945983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12537,17 +12472,12 @@ MonoBehaviour:
   item: {fileID: 8229760607035708266}
   itemIcon: {fileID: 3340649830422485213}
   itemBackground: {fileID: 1575225635655649748}
-  effectImage: {fileID: 3934861878892684230}
+  effectImage: {fileID: 1736108560863865536}
   effectText: {fileID: 4858420542918404485}
   weightText: {fileID: 8349044454224243984}
   priceText: {fileID: 2124078989368086175}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &1684399413583437487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12794,20 +12724,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4132c4748f89944867ea5a175a157a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 6894149614966377867}
   itemIcon: {fileID: 2454244122946783974}
   itemBackground: {fileID: 7687665017778891264}
-  effectImage: {fileID: 6955924706164495982}
+  effectImage: {fileID: 8106697453362342143}
   effectText: {fileID: 6695962547911972691}
   weightText: {fileID: 6153606397530814739}
   priceText: {fileID: 850023016393434432}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &415919827640459835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13491,20 +13416,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4132c4748f89944867ea5a175a157a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 7150630258849714078}
   itemIcon: {fileID: 7638630210331822602}
   itemBackground: {fileID: 7551763230491472000}
-  effectImage: {fileID: 7204311462323177450}
+  effectImage: {fileID: 139715370998336666}
   effectText: {fileID: 8850193169007600973}
   weightText: {fileID: 9152467025803338456}
   priceText: {fileID: 3153834815936978736}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  _communSprite: {fileID: 21300000, guid: d8805fa50b203cf47b3337c274eff92a, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  _rareSprite: {fileID: 21300000, guid: e30caabac731ccd49b64a2a6147b19b4, type: 3}
-  _epicSprite: {fileID: 21300000, guid: f7b73c4883c019e4eae01314c9c01968, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 835bf25e43111c7408ded5f12b8b8ea5, type: 3}
 --- !u!114 &8955736416785550450
 MonoBehaviour:
   m_ObjectHideFlags: 0

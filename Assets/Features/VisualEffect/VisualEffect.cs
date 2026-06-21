@@ -26,7 +26,6 @@ public class VisualEffect : MonoBehaviour
 
     public virtual void TriggerBurst()
     {
-        Debug.Log("Trigger Burst", this);
         onTriggerBurst?.Invoke();
     }
 }
