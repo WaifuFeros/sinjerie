@@ -67,6 +67,7 @@ public class WeatherManager : MonoBehaviour
         cityText.text = data.name;
         tempText.text = $"{data.main.temp:F1} °C";
         descText.text = data.weather[0].main;
+        ItemManager.Instance.UpdateAllReactions(effetMeteorologique);
         //coordText.text = $"{gpsManager.latitude:F4}, {gpsManager.longitude:F4}";
     }
 

@@ -32,6 +32,7 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     private Coroutine longPressCoroutine;
     private Coroutine updateCoroutine;
     private bool isDragging;
+    private ItemWiggleDOTween wiggle;
 
     private Color _weightTextBaseColor;
 
@@ -48,6 +49,8 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         _weightTextBaseColor = weightText.color;
         PlayerManager.Instance.OnStaminaUpdateEvent += UpdateWeightVisual;
+        //wiggle = gameObject.AddComponent<ItemWiggleDOTween>();
+        //wiggle.enabled = true;
     }
 
     private void UpdateWeightVisual()
@@ -150,4 +153,5 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         if (itemData != null) Destroy(itemData);
     }
+
 }

@@ -5,13 +5,20 @@ public class WeatherEffect : MonoBehaviour
 {
     public static WeatherEffect Instance { get; private set; }
 
-    [SerializeField] private Enemy enemy;
-
+    [SerializeField] public Enemy enemy; 
 
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
+    }
+
+    private void RefreshItemReactions()
+    {
+        if (enemy == null)
+            return;
+
+        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
     }
 
     public void OnFire(bool isPlayer)
@@ -20,8 +27,9 @@ public class WeatherEffect : MonoBehaviour
         {
             if (PlayerManager.Instance.FireCounter > 0)
             {
-               PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-               PlayerManager.Instance.FireCounter--;
+                PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+                PlayerManager.Instance.FireCounter--;
+
                 if (PlayerManager.Instance.FireCounter == 0)
                     VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
             }
@@ -30,30 +38,36 @@ public class WeatherEffect : MonoBehaviour
         {
             if (enemy.FireCounter > 0)
             {
-               enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-               enemy.FireCounter--;
+                enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+                enemy.FireCounter--;
+
                 if (enemy.FireCounter == 0)
                     VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
             }
         }
-        
+
         PlayerManager.Instance.UpdateAfflictionIcons();
         enemy.UpdateAfflictionIcons();
         CombatSystem.Instance.CheckCombatEnd();
+
+        //RefreshItemReactions(); 
     }
 
     public bool OnFreeze(bool isPlayer)
     {
+        bool result = false;
+
         if (isPlayer)
         {
             if (PlayerManager.Instance.FreezeCounter > 0)
             {
                 PlayerManager.Instance.WetCounter = 0;
+
                 if (PlayerManager.Instance.FreezeCounter >= 3)
                 {
                     PlayerManager.Instance.FreezeCounter = 0;
                     PlayerManager.Instance.UpdateAfflictionIcons();
-                    return true; //player gele
+                    result = true; 
                 }
             }
         }
@@ -62,25 +76,32 @@ public class WeatherEffect : MonoBehaviour
             if (enemy.FreezeCounter > 0)
             {
                 enemy.WetCounter = 0;
+
                 if (enemy.FreezeCounter >= 3)
                 {
                     enemy.FreezeCounter = 0;
                     enemy.UpdateAfflictionIcons();
-                    return true; //ennemi gele
+                    result = true; 
                 }
             }
         }
 
         PlayerManager.Instance.UpdateAfflictionIcons();
         enemy.UpdateAfflictionIcons();
-        return false;
+
+        //RefreshItemReactions();
+
+        return result;
     }
-    //a tester :)
-    public void isSnowing() 
+
+    public void isSnowing()
     {
         PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina - 2;
         PlayerManager.Instance.OnStaminaUpdateEvent?.Invoke();
+
         enemy.currentStaminaMax = enemy.EnemyStats.MaxStamina - 2;
+
+        //RefreshItemReactions();
     }
 
     public void OnWet(bool isPlayer)
@@ -90,7 +111,8 @@ public class WeatherEffect : MonoBehaviour
             if (PlayerManager.Instance.WetCounter > 0)
             {
                 PlayerManager.Instance.FireCounter = 0;
-                PlayerManager.Instance.WetCounter -= 1;
+                PlayerManager.Instance.WetCounter--;
+
                 if (PlayerManager.Instance.WetCounter == 0)
                     VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
             }
@@ -100,7 +122,8 @@ public class WeatherEffect : MonoBehaviour
             if (enemy.WetCounter > 0)
             {
                 enemy.FireCounter = 0;
-                enemy.WetCounter -= 1;
+                enemy.WetCounter--;
+
                 if (enemy.WetCounter == 0)
                     VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
             }
@@ -108,22 +131,23 @@ public class WeatherEffect : MonoBehaviour
 
         PlayerManager.Instance.UpdateAfflictionIcons();
         enemy.UpdateAfflictionIcons();
-    }
 
+    }
 
     public bool OnParalyze(bool isPlayer)
     {
         int paralyze = UnityEngine.Random.Range(0, 100);
+        bool result = false;
+
         if (isPlayer)
         {
             if (PlayerManager.Instance.ParalyzeCounter > 0)
             {
                 PlayerManager.Instance.ParalyzeCounter--;
                 PlayerManager.Instance.UpdateAfflictionIcons();
+
                 if (paralyze <= 25)
-                {
-                    return true; //player paralyse, il saute son tour
-                }
+                    result = true; 
             }
         }
         else
@@ -132,17 +156,18 @@ public class WeatherEffect : MonoBehaviour
             {
                 enemy.ParalyzeCounter--;
                 enemy.UpdateAfflictionIcons();
+
                 if (paralyze <= 25)
-                {
-                    return true; //ennemi paralyse, il saute son tour
-                }
+                    result = true; 
             }
         }
-        
-        return false;
+
+        //RefreshItemReactions();
+
+        return result;
     }
 
-    public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
+    public void Thunder(bool isPlayer, bool isThunder, int damageThunder)
     {
         if (!isThunder)
             return;
@@ -151,5 +176,7 @@ public class WeatherEffect : MonoBehaviour
             PlayerManager.Instance.TakeDamage(damageThunder);
         else
             enemy.TakeDamage(damageThunder);
+
+        //RefreshItemReactions();
     }
 }

@@ -814,6 +814,7 @@ GameObject:
   - component: {fileID: 4045041718213290110}
   - component: {fileID: 95422923443289690}
   - component: {fileID: 8057034763559363972}
+  - component: {fileID: 3567540623687512713}
   m_Layer: 5
   m_Name: icon
   m_TagString: Untagged
@@ -878,6 +879,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3567540623687512713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7465461060997720557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5321efef4ab9ddf4ab59eaa57e0595c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsWiggling: 0
 --- !u!1 &8316754013918109564
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,13 +970,6 @@ MonoBehaviour:
   invalidWeightImagesColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   smokeAnimator: {fileID: 6366638186658251795}
   delayBeforeChange: 0.021
-  _communSprite: {fileID: 21300000, guid: 67d7f697860ed294297b8e570df3d5b3, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: 7d5dbc6b1081cd4498d44626fcbb84a4, type: 3}
-  _rareSprite: {fileID: 21300000, guid: addce85b734dfb14688ef1fb2fd38bbe, type: 3}
-  _epicSprite: {fileID: 21300000, guid: 5684c6d12fc6ea740ae540028981fdfe, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 62a6d2dd612f75048b65e76e21494fcd, type: 3}
-  _healSprite: {fileID: 21300000, guid: 69416dd45b48d8b4593c9d5c17312c41, type: 3}
-  _atkSprite: {fileID: 21300000, guid: bde18a5e5ed228f46a792611f4eafe1e, type: 3}
 --- !u!114 &-1921863523013163353
 MonoBehaviour:
   m_ObjectHideFlags: 0

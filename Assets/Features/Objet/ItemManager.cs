@@ -212,4 +212,80 @@ public class ItemManager : MonoBehaviour
         Initializing,
         Initialized
     }
+    private bool ShouldItemReactToEnemy(ObjetMaterialType itemType, ObjetMaterialType enemyType)
+    {
+        switch (enemyType)
+        {
+            case ObjetMaterialType.Fire:
+                return itemType == ObjetMaterialType.Fire ||
+                       itemType == ObjetMaterialType.Wood;
+
+            case ObjetMaterialType.Ice:
+                return itemType == ObjetMaterialType.Ice ||
+                       itemType == ObjetMaterialType.PerfectIce;
+
+            case ObjetMaterialType.Electricity:
+                return itemType == ObjetMaterialType.Metal;
+
+            default:
+                return false;
+        }
+    }
+
+    private bool ShouldItemReactToWeather(ObjetMaterialType itemType, GameWeatherType weather)
+    {
+        switch (weather)
+        {
+            case GameWeatherType.Thunderstorm:
+                return itemType == ObjetMaterialType.Metal;
+
+            case GameWeatherType.Snow:
+                return itemType == ObjetMaterialType.Ice ||
+                       itemType == ObjetMaterialType.PerfectIce;
+
+            case GameWeatherType.ClearSky:
+            default:
+                return false;
+        }
+    }
+
+    private ObjetMaterialType GetEnemyElementType()
+    {
+        var enemy = WeatherEffect.Instance.enemy;
+
+        if (enemy == null)
+            return ObjetMaterialType.None;
+
+        if (enemy.FireCounter > 0)
+            return ObjetMaterialType.Fire;
+
+        if (enemy.FreezeCounter > 0)
+            return ObjetMaterialType.Ice;
+
+        if (enemy.ParalyzeCounter > 0)
+            return ObjetMaterialType.Electricity;
+
+        if (enemy.WetCounter > 0)
+            return ObjetMaterialType.Water;
+
+        return ObjetMaterialType.None;
+    }
+
+
+
+    public void UpdateAllReactions(GameWeatherType weather)
+    {
+        ObjetMaterialType enemyType = GetEnemyElementType();
+
+        foreach (var item in activeItems)
+        {
+            var wiggle = item.GetComponentInChildren<ItemWiggleDOTween>();
+            if (wiggle == null) continue;
+
+            bool weatherReact = ShouldItemReactToWeather(item.itemData.objetMaterialType, weather);
+            bool enemyReact = ShouldItemReactToEnemy(item.itemData.objetMaterialType, enemyType);
+
+            wiggle.SetWiggle(weatherReact || enemyReact);
+        }
+    }
 }
