@@ -65,12 +65,10 @@ public class ItemManager : MonoBehaviour
 
     public void WaitForItemDatabaseInitialization(Action onLoadCompleted)
     {
-        Debug.Log(_databaseState);
         switch (_databaseState)
         {
             default:
             case ItemDataBaseInizializationState.NotInizialized:
-                Debug.Log("Do Initialize");
                 Initialize(onLoadCompleted);
                 break;
             case ItemDataBaseInizializationState.Initializing:

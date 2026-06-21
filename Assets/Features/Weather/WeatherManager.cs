@@ -106,8 +106,6 @@ public class WeatherManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"{stateString} => {weatherType.ToString()}");
-
         return weatherType;
     }
 
@@ -162,7 +160,6 @@ public class WeatherManager : MonoBehaviour
     {
         _lastSaveTime = DateTime.UtcNow;
         string json = JsonUtility.ToJson(new WeatherSaveTimeStampFormat(_lastSaveTime, temperature, effetMeteorologique));
-        Debug.Log($"[Debug] {_lastSaveTime.ToString()} | {temperature} | {effetMeteorologique}");
         PlayerPrefs.SetString(TIME_STAMP_SAVE_KEY, JsonUtility.ToJson(new WeatherSaveTimeStampFormat(_lastSaveTime, temperature, effetMeteorologique)));
         PlayerPrefs.Save();
     }
@@ -175,11 +172,9 @@ public class WeatherManager : MonoBehaviour
             _lastSaveTime = DateTime.Parse(save.dateTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
             temperature = save.temperature;
             effetMeteorologique = save.weatherType;
-            Debug.Log($"[Debug] {_lastSaveTime.ToString()} | {temperature} | {effetMeteorologique}");
         }
         else
         {
-            Debug.Log("[Debug] Did not find playerprefs");
             UpdateWeather(null);
         }
     }
