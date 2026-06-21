@@ -22,13 +22,15 @@ public class CombatSystem : MonoBehaviour
     [Header(" Effect Settings")]
     [SerializeField] private int _initialFireDuration;
     [SerializeField] private int _subsequentFireDuration;
-    [SerializeField] private int _woodAddFireDuration;
+    [SerializeField] private int _woodOnFireAddDuration;
+    [SerializeField] private int _iceOnFireLoseDuration;
     [Space]
     [SerializeField] private int _initialWetDuration;
     [SerializeField] private int _subsequentWetDuration;
     [Space]
     [SerializeField] private int _freezeDuration;
     [SerializeField] private int _perfectIceFreezeDuration;
+    [SerializeField] private int _fireOnIceLoseDuration;
     public int freezeProcThreshold;
     [Space]
     [SerializeField] private int _metalParalyzeDuration;
@@ -435,44 +437,38 @@ public class CombatSystem : MonoBehaviour
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
-                    // Applique l'effet de brulure
                     if (PlayerManager.Instance.WetCounter == 0)
                     {
-                        PlayerManager.Instance.FireCounter += _initialFireDuration;
+                        PlayerManager.Instance.FireCounter += PlayerManager.Instance.FireCounter > 0 ? _subsequentFireDuration : _initialFireDuration;
                         if (PlayerManager.Instance.FreezeCounter > 0)
-                            PlayerManager.Instance.FreezeCounter -= 1;
-                    }
-                    break;
-                case ObjetMaterialType.Water:
-                    if (PlayerManager.Instance.WetCounter == 0) 
-                    { 
-                        PlayerManager.Instance.WetCounter = _initialWetDuration; // Applique l'effet de mouille
-                    }
-                    else if (PlayerManager.Instance.WetCounter > 0)
-                        PlayerManager.Instance.WetCounter += _subsequentWetDuration; // Applique l'effet de mouille +1 round..
-                    PlayerManager.Instance.FireCounter--;
-                    break;
-                case ObjetMaterialType.Ice:
-                    PlayerManager.Instance.FreezeCounter += _freezeDuration;
-                    PlayerManager.Instance.FireCounter -= 1;
-                    break;
-                case ObjetMaterialType.PerfectIce:
-                    PlayerManager.Instance.FreezeCounter += _perfectIceFreezeDuration;
-                    PlayerManager.Instance.FireCounter -= 1;
-                    break;
-                case ObjetMaterialType.Metal:
-                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
-                    {
-                        PlayerManager.Instance.ParalyzeCounter = _metalParalyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
-                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                            PlayerManager.Instance.FreezeCounter -= _fireOnIceLoseDuration;
                     }
                     break;
                 case ObjetMaterialType.Wood:
                     if (PlayerManager.Instance.FireCounter > 0)
-                        PlayerManager.Instance.FireCounter += _woodAddFireDuration; // Prolonge l'effet de brulure
+                        PlayerManager.Instance.FireCounter += _woodOnFireAddDuration;
+                    break;
+                case ObjetMaterialType.Water:
+                    PlayerManager.Instance.WetCounter += PlayerManager.Instance.WetCounter > 0 ? _subsequentWetDuration : _initialWetDuration;
+                    PlayerManager.Instance.FireCounter = 0;
+                    break;
+                case ObjetMaterialType.Ice:
+                    PlayerManager.Instance.FreezeCounter += _freezeDuration;
+                    PlayerManager.Instance.FireCounter -= _iceOnFireLoseDuration;
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    PlayerManager.Instance.FreezeCounter += _perfectIceFreezeDuration;
+                    PlayerManager.Instance.FireCounter -= _iceOnFireLoseDuration;
+                    break;
+                case ObjetMaterialType.Metal:
+                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+                    {
+                        PlayerManager.Instance.ParalyzeCounter = _metalParalyzeDuration;
+                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                    }
                     break;
                 case ObjetMaterialType.Electricity:
-                    PlayerManager.Instance.ParalyzeCounter += 1;
+                    PlayerManager.Instance.ParalyzeCounter += _electricityParalyzeDuration;
                     break;
             }
         }
@@ -483,48 +479,47 @@ public class CombatSystem : MonoBehaviour
                 case ObjetMaterialType.Fire:
                     if (currentEnemy.WetCounter == 0)
                     {
-                        currentEnemy.FireCounter = _initialFireDuration;
-                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                        //currentEnemy.FireCounter = _initialFireDuration;
+                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                        //if (currentEnemy.FreezeCounter > 0)
+                        //    currentEnemy.FreezeCounter -= 1;
+                        //    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+
+                        currentEnemy.FireCounter += currentEnemy.FireCounter > 0 ? _subsequentFireDuration : _initialFireDuration;
                         if (currentEnemy.FreezeCounter > 0)
-                            currentEnemy.FreezeCounter -= 1;
-                            ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
-
-
-                    }
-                    break;
-                case ObjetMaterialType.Ice:
-                    //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                    currentEnemy.FreezeCounter += 1;
-                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
-                    break;
-                case ObjetMaterialType.Water:
-                    if (currentEnemy.WetCounter == 0)
-                    {
-                        currentEnemy.WetCounter = _initialWetDuration; // Applique l'effet de mouille
-                    }
-                    else if (currentEnemy.WetCounter > 0)
-                        currentEnemy.WetCounter += 1; // Applique l'effet de mouille +1 round..
-                    break;
-                case ObjetMaterialType.Metal:
-                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
-                    {
-                        currentEnemy.ParalyzeCounter = _metalParalyzeDuration; // Applique l'effet de paralysie
-                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
-                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                            currentEnemy.FreezeCounter -= _fireOnIceLoseDuration;
                     }
                     break;
                 case ObjetMaterialType.Wood:
                     if (currentEnemy.FireCounter > 0)
-                        currentEnemy.FireCounter += _woodAddFireDuration; // Prolonge l'effet de brulure
-                        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                        currentEnemy.FireCounter += _woodOnFireAddDuration;
+                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                    break;
+                case ObjetMaterialType.Water:
+                    currentEnemy.WetCounter += currentEnemy.WetCounter > 0 ? _subsequentWetDuration : _initialWetDuration;
+                    currentEnemy.FireCounter = 0;
+                    break;
+                case ObjetMaterialType.Ice:
+                    currentEnemy.FreezeCounter += _freezeDuration;
+                    currentEnemy.FireCounter -= _iceOnFireLoseDuration;
+                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.PerfectIce:
-                    currentEnemy.FreezeCounter += 2;
-                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                    currentEnemy.FreezeCounter += _perfectIceFreezeDuration;
+                    currentEnemy.FireCounter -= _iceOnFireLoseDuration;
+                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                    break;
+                case ObjetMaterialType.Metal:
+                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+                    {
+                        currentEnemy.ParalyzeCounter = _metalParalyzeDuration;
+                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                    }
                     break;
                 case ObjetMaterialType.Electricity:
-                    currentEnemy.ParalyzeCounter += 1;
-                    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+                    currentEnemy.ParalyzeCounter += _electricityParalyzeDuration;
+                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
             }
         }

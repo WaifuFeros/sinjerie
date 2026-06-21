@@ -14,6 +14,11 @@ public class WeatherEffect : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
+    private void Start()
+    {
+        enemy.OnAfflictionUpdateEvent += RefreshItemReactions;
+    }
+
     private void RefreshItemReactions()
     {
         if (enemy == null)
@@ -28,7 +33,7 @@ public class WeatherEffect : MonoBehaviour
         {
             if (PlayerManager.Instance.FireCounter > 0)
             {
-                PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+                PlayerManager.Instance.TakeDamage(FireDamage());
                 PlayerManager.Instance.FireCounter--;
                 VisualEffectManager.Instance.TriggerBurst(PlayerManager.Instance.playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
 
@@ -39,9 +44,9 @@ public class WeatherEffect : MonoBehaviour
         {
             if (enemy.FireCounter > 0)
             {
-                enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-                VisualEffectManager.Instance.TriggerBurst(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+                enemy.TakeDamage(FireDamage());
                 enemy.FireCounter--;
+                VisualEffectManager.Instance.TriggerBurst(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
 
                 yield return new WaitForSeconds(1);
             }
@@ -54,38 +59,26 @@ public class WeatherEffect : MonoBehaviour
 
     public bool OnFreeze(bool isPlayer)
     {
-        bool result = false;
-
         if (isPlayer)
         {
             if (PlayerManager.Instance.FreezeCounter > 0)
             {
-                PlayerManager.Instance.WetCounter = 0;
-
                 if (PlayerManager.Instance.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
-                {
-                    //PlayerManager.Instance.FreezeCounter = 0;
-                    result = true; 
-                }
+                    return true;
             }
         }
         else
         {
             if (enemy.FreezeCounter > 0)
             {
-                enemy.WetCounter = 0;
-
                 if (enemy.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
-                {
-                    //enemy.FreezeCounter = 0;
-                    result = true; 
-                }
+                    return true; 
             }
         }
 
         //RefreshItemReactions();
 
-        return result;
+        return false;
     }
 
     public void isSnowing()
@@ -176,5 +169,10 @@ public class WeatherEffect : MonoBehaviour
             enemy.TakeDamage(damageThunder);
 
         //RefreshItemReactions();
+    }
+
+    public int FireDamage()
+    {
+        return Convert.ToInt32(WeatherManager.Instance.temperature / 7);
     }
 }
