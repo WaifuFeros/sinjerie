@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class WeatherEffect : MonoBehaviour
@@ -21,17 +22,19 @@ public class WeatherEffect : MonoBehaviour
         ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
     }
 
-    public void OnFire(bool isPlayer)
+    public IEnumerator OnFire(bool isPlayer)
     {
         if (isPlayer)
         {
             if (PlayerManager.Instance.FireCounter > 0)
             {
                 PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+                VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance._playerhead, VisualEffectManager.ParticleEffectType.Fire);PlayerManager.Instance.FireCounter--;
                 PlayerManager.Instance.FireCounter--;
-
                 if (PlayerManager.Instance.FireCounter == 0)
-                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead, VisualEffectManager.ParticleEffectType.Fire);
+
+                yield return new WaitForSeconds(1);
             }
         }
         else
@@ -39,10 +42,12 @@ public class WeatherEffect : MonoBehaviour
             if (enemy.FireCounter > 0)
             {
                 enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
+                VisualEffectManager.Instance.TriggerBurst(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Fire);
                 enemy.FireCounter--;
-
                 if (enemy.FireCounter == 0)
-                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+
+                yield return new WaitForSeconds(1);
             }
         }
 
@@ -114,7 +119,7 @@ public class WeatherEffect : MonoBehaviour
                 PlayerManager.Instance.WetCounter--;
 
                 if (PlayerManager.Instance.WetCounter == 0)
-                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead, VisualEffectManager.ParticleEffectType.Water);
             }
         }
         else
@@ -125,7 +130,7 @@ public class WeatherEffect : MonoBehaviour
                 enemy.WetCounter--;
 
                 if (enemy.WetCounter == 0)
-                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Water);
             }
         }
 
@@ -167,7 +172,21 @@ public class WeatherEffect : MonoBehaviour
         return result;
     }
 
-    public void Thunder(bool isPlayer, bool isThunder, int damageThunder)
+    public IEnumerator PlayParalyzeAnimation()
+    {
+        VisualEffectManager.Instance.TriggerBurst(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    public IEnumerator PlayFrozenAnimation()
+    {
+        VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
     {
         if (!isThunder)
             return;
