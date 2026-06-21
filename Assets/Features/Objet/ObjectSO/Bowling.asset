@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
-  m_Name: PierrePhilosophale
+  m_Name: Bowling
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
-  objetName: Pierre Philosophale
-  objetDescription: on raconte que cette pierre redonne la vie
+  objetSprite: {fileID: 21300000, guid: 38cf4f76146ee9440b1b7ce94236a8ef, type: 3}
+  objetName: Boule de bowling
+  objetDescription: Une grosse boule
   objetMaterialType: 0
-  objetWeight: 10
-  objectType: 0
-  objectEffect: 20
+  objetWeight: 3
+  objectType: 1
+  objectEffect: 6
   specialAction: {fileID: 0}
-  Rarity: 4
+  Rarity: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: Adrenaline
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 21300000, guid: ce4f11e37f991fa438edb4fdd864962c, type: 3}
-  objetName: "Piqure d'adr\xE9naline"
+  objetSprite: {fileID: 21300000, guid: 020a0fb41a1b42940a9f30d072358969, type: 3}
+  objetName: "Seringue d'adr\xE9naline"
   objetDescription: Remet la stamina au max
   objetMaterialType: 0
   objetWeight: 2

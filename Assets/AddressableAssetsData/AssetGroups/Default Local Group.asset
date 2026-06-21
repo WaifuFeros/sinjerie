@@ -269,12 +269,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fd6c4bfad975f9b4182ecf282e60b927
-    m_Address: Assets/Features/Objet/ObjectSO/PierrePhilosophale.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Items
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d52e8d16913abce409ac2715eb41a8ee, type: 2}
   m_SchemaSet:

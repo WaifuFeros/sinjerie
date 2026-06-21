@@ -17,7 +17,7 @@ MonoBehaviour:
   objetDescription: Glace Vanille, elle peut geler le cerveau de l'adversaire
   objetMaterialType: 4
   objetWeight: 1
-  objectType: 1
+  objectType: 0
   objectEffect: 1
   specialAction: {fileID: 0}
   Rarity: 1
