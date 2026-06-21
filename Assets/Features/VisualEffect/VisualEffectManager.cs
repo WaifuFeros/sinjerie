@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VisualEffectManager : MonoBehaviour
 {
@@ -24,8 +25,6 @@ public class VisualEffectManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject _uiRootContainer;
-    [SerializeField] private GameObject _enemyIcon;
-
 
     [Header("Prefab")]
     [SerializeField] private ParticleEffectPair[] _particles;
@@ -121,8 +120,8 @@ public class VisualEffectManager : MonoBehaviour
     }
     public void EnemyTakeDamage()
     {
-        Transform iconTransform = _enemyIcon.transform;
-        UnityEngine.UI.Image iconImage = _enemyIcon.GetComponent<UnityEngine.UI.Image>();
+        Image iconImage = CombatSystem.Instance.currentEnemy.enemyHead;
+        Transform iconTransform = iconImage.transform;
         iconTransform.DOKill(true);
         if (iconImage != null) iconImage.DOKill(true);
         float duration = 0.3f;
@@ -140,8 +139,8 @@ public class VisualEffectManager : MonoBehaviour
 
     public void EnemyHeal()
     {
-        Transform iconTransform = _enemyIcon.transform;
-        UnityEngine.UI.Image iconImage = _enemyIcon.GetComponent<UnityEngine.UI.Image>();
+        Image iconImage = CombatSystem.Instance.currentEnemy.enemyHead;
+        Transform iconTransform = iconImage.transform;
         iconTransform.DOKill(true);
         if (iconImage != null) iconImage.DOKill(true);
         float duration = 0.5f;

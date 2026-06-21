@@ -1,5 +1,7 @@
 using System;
+using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -31,20 +33,65 @@ public class PlayerManager : MonoBehaviour
 
     public Action OnStaminaUpdateEvent;
     public Action OnGoldUpdateEvent;
+    public Action OnAfflictionUpdateEvent;
  
     [Header("Player Stats")]
     [SerializeField] public PlayerStatsData stats;
 
     [Header("UI")]
-    [SerializeField] private UnityEngine.UI.Slider healthBar;
+    [SerializeField] private Slider healthBar;
     [SerializeField] private StaminaUIManager staminaUI;
     [SerializeField] private AfflictionEffect afflictionEffect;
+    [SerializeField] public Image playerHead;
 
-    [Header("WeatherEffect")]
-    [SerializeField,HideInInspector] public int FireCounter = 0;
-    [SerializeField,HideInInspector] public int FreezeCounter = 0;
-    [SerializeField,HideInInspector] public int WetCounter = 0;
-    [SerializeField,HideInInspector] public int ParalyzeCounter = 0;
+    #region Counter logic variables
+
+    public int FireCounter
+    {
+        get => _fireCounter;
+        set
+        {
+            _fireCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int WetCounter
+    {
+        get => _wetCounter;
+        set
+        {
+            _wetCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int ParalyzeCounter
+    {
+        get => _paralyzeCounter;
+        set
+        {
+            _paralyzeCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int FreezeCounter
+    {
+        get => _freezeCounter;
+        set
+        {
+            _freezeCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+
+    public bool IsFrozen => FreezeCounter >= CombatSystem.Instance.freezeProcThreshold;
+
+    private int _fireCounter;
+    private int _freezeCounter;
+    private int _wetCounter;
+    private int _paralyzeCounter;
+    private bool _afflictionUpdated;
+
+    #endregion
 
     private void Awake()
     {
@@ -61,12 +108,24 @@ public class PlayerManager : MonoBehaviour
         staminaUI.SetupStamina(stats.maxStamina);
         staminaUI.UpdateDisplay(stats.currentStamina);
 
+        OnAfflictionUpdateEvent += UpdateAfflictionIcons;
         UpdateAfflictionIcons();
+    }
+
+    private void LateUpdate()
+    {
+        if (_afflictionUpdated)
+        {
+            OnAfflictionUpdateEvent?.Invoke();
+            _afflictionUpdated = false;
+        }
     }
 
     private void OnDestroy()
     {
         OnStaminaUpdateEvent = null;
+        OnGoldUpdateEvent = null;
+        OnAfflictionUpdateEvent = null;
     }
 
     /// <summary>
@@ -189,5 +248,25 @@ public class PlayerManager : MonoBehaviour
     public void UpdateAfflictionIcons()
     {
         afflictionEffect.UpdateVisuals(FireCounter, WetCounter, ParalyzeCounter, FreezeCounter);
+
+        if (FireCounter > 0)
+            VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+        else
+            VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+
+        if (WetCounter > 0)
+            VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Water);
+        else
+            VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Water);
+
+        if (ParalyzeCounter > 0)
+            VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+        else
+            VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+
+        if (IsFrozen)
+            VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        else
+            VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
     }
 }

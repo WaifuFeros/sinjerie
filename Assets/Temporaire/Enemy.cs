@@ -1,22 +1,82 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public Action OnAfflictionUpdateEvent;
+
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
-    [SerializeField] public UnityEngine.UI.Image EnemyImage;
+    [SerializeField] public UnityEngine.UI.Image enemyHead;
     [SerializeField] private AfflictionEffect afflictionEffect;
 
-    [Header("WeatherEffect")]
-    [SerializeField] public int FireCounter = 0;
-    [SerializeField] public int FreezeCounter = 0;
-    [SerializeField] public int WetCounter = 0;
-    [SerializeField] public int ParalyzeCounter = 0;
+    #region Counter logic variables
+
+    public int FireCounter
+    {
+        get => _fireCounter;
+        set
+        {
+            _fireCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int WetCounter
+    {
+        get => _wetCounter;
+        set
+        {
+            _wetCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int ParalyzeCounter
+    {
+        get => _paralyzeCounter;
+        set
+        {
+            _paralyzeCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int FreezeCounter
+    {
+        get => _freezeCounter;
+        set
+        {
+            _freezeCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+
+    public bool IsFrozen => FreezeCounter >= CombatSystem.Instance.freezeProcThreshold;
+
+    private int _fireCounter;
+    private int _freezeCounter;
+    private int _wetCounter;
+    private int _paralyzeCounter;
+    private bool _afflictionUpdated;
+
+    #endregion
 
     public EnemySO EnemyStats;
 
     public int currentHealth;
     public int currentStaminaMax;
+
+    private void Awake()
+    {
+        OnAfflictionUpdateEvent += UpdateAfflictionIcons;
+    }
+
+    private void LateUpdate()
+    {
+        if (_afflictionUpdated)
+        {
+            OnAfflictionUpdateEvent?.Invoke();
+            _afflictionUpdated = false;
+        }
+    }
 
     public void Initialize(EnemySO stats)
     {
@@ -26,11 +86,9 @@ public class Enemy : MonoBehaviour
         ParalyzeCounter = 0;
         EnemyStats = stats;
         currentHealth = EnemyStats.MaxHealth;
-        EnemyImage.sprite = EnemyStats.Sprite;
+        enemyHead.sprite = EnemyStats.Sprite;
         currentStaminaMax = EnemyStats.MaxStamina;
-        VisualEffectManager.Instance.RemoveAllEffects(EnemyImage.gameObject);
         UpdateHealthBar();
-        UpdateAfflictionIcons();
     }
 
     public void TakeDamage(int damage)
@@ -69,5 +127,25 @@ public class Enemy : MonoBehaviour
     public void UpdateAfflictionIcons()
     {
         afflictionEffect.UpdateVisuals(FireCounter, WetCounter, ParalyzeCounter, FreezeCounter);
+
+        if (FireCounter > 0)
+            VisualEffectManager.Instance.AddEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+        else
+            VisualEffectManager.Instance.RemoveEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+
+        if (WetCounter > 0)
+            VisualEffectManager.Instance.AddEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Water);
+        else
+            VisualEffectManager.Instance.RemoveEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Water);
+
+        if (ParalyzeCounter > 0)
+            VisualEffectManager.Instance.AddEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+        else
+            VisualEffectManager.Instance.RemoveEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+
+        if (IsFrozen)
+            VisualEffectManager.Instance.AddEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        else
+            VisualEffectManager.Instance.RemoveEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
     }
 }

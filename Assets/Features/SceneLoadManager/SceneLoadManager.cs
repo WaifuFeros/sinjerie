@@ -20,7 +20,6 @@ public class SceneLoadManager : MonoBehaviour
             Instance = this;
             IsManagerSceneLoaded = true;
             ActiveSceneName = SceneManager.GetActiveScene().name;
-            DontDestroyOnLoad(gameObject);
             return;
         }
 

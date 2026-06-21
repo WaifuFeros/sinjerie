@@ -6,7 +6,7 @@ public class WeatherEffect : MonoBehaviour
 {
     public static WeatherEffect Instance { get; private set; }
 
-    [SerializeField] public Enemy enemy; 
+    [SerializeField] public Enemy enemy;
 
     private void Awake()
     {
@@ -29,10 +29,8 @@ public class WeatherEffect : MonoBehaviour
             if (PlayerManager.Instance.FireCounter > 0)
             {
                 PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-                VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance._playerhead, VisualEffectManager.ParticleEffectType.Fire);PlayerManager.Instance.FireCounter--;
                 PlayerManager.Instance.FireCounter--;
-                if (PlayerManager.Instance.FireCounter == 0)
-                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead, VisualEffectManager.ParticleEffectType.Fire);
+                VisualEffectManager.Instance.TriggerBurst(PlayerManager.Instance.playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
 
                 yield return new WaitForSeconds(1);
             }
@@ -42,17 +40,13 @@ public class WeatherEffect : MonoBehaviour
             if (enemy.FireCounter > 0)
             {
                 enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-                VisualEffectManager.Instance.TriggerBurst(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+                VisualEffectManager.Instance.TriggerBurst(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
                 enemy.FireCounter--;
-                if (enemy.FireCounter == 0)
-                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Fire);
 
                 yield return new WaitForSeconds(1);
             }
         }
 
-        PlayerManager.Instance.UpdateAfflictionIcons();
-        enemy.UpdateAfflictionIcons();
         CombatSystem.Instance.CheckCombatEnd();
 
         //RefreshItemReactions(); 
@@ -68,10 +62,9 @@ public class WeatherEffect : MonoBehaviour
             {
                 PlayerManager.Instance.WetCounter = 0;
 
-                if (PlayerManager.Instance.FreezeCounter >= 3)
+                if (PlayerManager.Instance.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
                 {
-                    PlayerManager.Instance.FreezeCounter = 0;
-                    PlayerManager.Instance.UpdateAfflictionIcons();
+                    //PlayerManager.Instance.FreezeCounter = 0;
                     result = true; 
                 }
             }
@@ -82,17 +75,13 @@ public class WeatherEffect : MonoBehaviour
             {
                 enemy.WetCounter = 0;
 
-                if (enemy.FreezeCounter >= 3)
+                if (enemy.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
                 {
-                    enemy.FreezeCounter = 0;
-                    enemy.UpdateAfflictionIcons();
+                    //enemy.FreezeCounter = 0;
                     result = true; 
                 }
             }
         }
-
-        PlayerManager.Instance.UpdateAfflictionIcons();
-        enemy.UpdateAfflictionIcons();
 
         //RefreshItemReactions();
 
@@ -117,9 +106,6 @@ public class WeatherEffect : MonoBehaviour
             {
                 PlayerManager.Instance.FireCounter = 0;
                 PlayerManager.Instance.WetCounter--;
-
-                if (PlayerManager.Instance.WetCounter == 0)
-                    VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead, VisualEffectManager.ParticleEffectType.Water);
             }
         }
         else
@@ -128,15 +114,8 @@ public class WeatherEffect : MonoBehaviour
             {
                 enemy.FireCounter = 0;
                 enemy.WetCounter--;
-
-                if (enemy.WetCounter == 0)
-                    VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Water);
             }
         }
-
-        PlayerManager.Instance.UpdateAfflictionIcons();
-        enemy.UpdateAfflictionIcons();
-
     }
 
     public bool OnParalyze(bool isPlayer)
@@ -149,7 +128,6 @@ public class WeatherEffect : MonoBehaviour
             if (PlayerManager.Instance.ParalyzeCounter > 0)
             {
                 PlayerManager.Instance.ParalyzeCounter--;
-                PlayerManager.Instance.UpdateAfflictionIcons();
 
                 if (paralyze <= 25)
                     result = true; 
@@ -160,7 +138,6 @@ public class WeatherEffect : MonoBehaviour
             if (enemy.ParalyzeCounter > 0)
             {
                 enemy.ParalyzeCounter--;
-                enemy.UpdateAfflictionIcons();
 
                 if (paralyze <= 25)
                     result = true; 
@@ -174,16 +151,18 @@ public class WeatherEffect : MonoBehaviour
 
     public IEnumerator PlayParalyzeAnimation()
     {
-        VisualEffectManager.Instance.TriggerBurst(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+        VisualEffectManager.Instance.TriggerBurst(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
 
         yield return new WaitForSeconds(1f);
     }
 
     public IEnumerator PlayFrozenAnimation()
     {
-        VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        VisualEffectManager.Instance.TriggerBurst(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
 
         yield return new WaitForSeconds(1f);
+
+        VisualEffectManager.Instance.RemoveEffect(enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
     }
 
     public void Thunder(bool isPlayer,bool isThunder, int damageThunder)

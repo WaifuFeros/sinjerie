@@ -46,21 +46,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAttackDelay: 1
   skipTurnButton: {fileID: 0}
-  _fireDuration: 1
-  _paralyzeDuration: 4
-  _wetDuration: 4
-  _addFireDuration: 4
+  _initialFireDuration: 3
+  _subsequentFireDuration: 1
+  _woodAddFireDuration: 3
+  _initialWetDuration: 3
+  _subsequentWetDuration: 1
+  _freezeDuration: 1
+  _perfectIceFreezeDuration: 2
+  freezeProcThreshold: 3
+  _metalParalyzeDuration: 4
+  _electricityParalyzeDuration: 1
   _damageThunder: 5
   _canvasParent: {fileID: 0}
   _itemAnimPrefab: {fileID: 1330769031389707562, guid: 7d2ef08ee1909e644a9a125609496501,
     type: 3}
-  _enemyTransform: {fileID: 0}
-  _playerTransform: {fileID: 0}
   _animationDuration: 0.8
   _highlightSkipButtonSize: 1.2
   _highlightSkipButtonTime: 0.5
-  _playerhead: {fileID: 0}
-  _ennemyhead: {fileID: 0}
   dataStorage: {fileID: 0}
   currentEnemy: {fileID: 0}
   isPlayerTurn: 1
