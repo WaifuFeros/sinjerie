@@ -16,6 +16,7 @@ public class AfflictionEffect : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _paralizeCountText;
 
     [SerializeField] private Image _freezeImage;
+    [SerializeField] private Image _freezeFillImage;
     [SerializeField] private TextMeshProUGUI _freezeCountText;
 
     public void UpdateVisuals(int fireCounter, int wetCounter, int paralizeCounter, int freezeCounter)
@@ -30,6 +31,7 @@ public class AfflictionEffect : MonoBehaviour
         _paralizeCountText.text = paralizeCounter.ToString();
 
         _freezeImage.gameObject.SetActive(freezeCounter > 0);
+        _freezeFillImage.fillAmount = Mathf.Clamp01((float)freezeCounter / CombatSystem.Instance.freezeProcThreshold);
         _freezeCountText.text = freezeCounter.ToString();
     }
 }
