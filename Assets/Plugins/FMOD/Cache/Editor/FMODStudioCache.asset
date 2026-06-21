@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: FMOD Sinjerie/sinjerie/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639175843143116667
+  lastModified: 639176071006801457
   FileSizes:
   - Name: Desktop
     Value: 3337120
@@ -233,7 +233,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 6718513324839054380}
   cacheVersion: 131860
-  cacheTime: 639175843143116667
+  cacheTime: 639176071006801457
   SerializableEventsDict:
   - key: event:/SwitchWeather
     index: 0
@@ -384,7 +384,7 @@ MonoBehaviour:
   Path: FMOD Sinjerie/sinjerie/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639175843143116667
+  lastModified: 639176071006801457
   FileSizes:
   - Name: Desktop
     Value: 900
