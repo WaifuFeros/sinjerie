@@ -16,8 +16,8 @@ MonoBehaviour:
   objetName: Taze
   objetDescription: "Un boitier venant d'un autre temps qui produit de l'electricit\xE9"
   objetMaterialType: 6
-  objetWeight: 4
+  objetWeight: 2
   objectType: 1
-  objectEffect: 6
+  objectEffect: 3
   specialAction: {fileID: 0}
   Rarity: 3
