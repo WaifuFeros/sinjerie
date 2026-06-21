@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: f49e052c32e6c3042985ca4c2c65f193, type: 3}
   objetName: Heal Potion
-  objetDescription: It heals a little
-  objetMaterialType: 5
+  objetDescription: potion de soin
+  objetMaterialType: 0
   objetWeight: 2
   objectType: 0
   objectEffect: 3

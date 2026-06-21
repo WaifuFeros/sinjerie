@@ -1916,6 +1916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugPanel: {fileID: 5457931809899974184}
   weatherDropdown: {fileID: 1053036998488012431}
+  temperatureInputField: {fileID: 5609686929039016236}
 --- !u!1 &5431675999457496159
 GameObject:
   m_ObjectHideFlags: 0

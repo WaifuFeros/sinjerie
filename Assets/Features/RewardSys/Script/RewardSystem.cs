@@ -69,25 +69,27 @@ public class RewardSystem : MonoBehaviour
 
     public void ValidateChoice()
     {
-        Panel.gameObject.SetActive(false);
-        // Donne les items
-        for (int i = 0; i < ItemRewards.Count; i++)
-        {
-            var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
-            deckList.Add(ItemRewards[i]);
-            PlayerManager.Instance.stats.Deck = deckList.ToArray();
-        }
-        // Donne les gold
-        PlayerManager.Instance.AddGold(EnemySO.GoldReward);
+        TransitionManager.Instance.TransitionWithAction(() => {
+            Panel.gameObject.SetActive(false);
+            // Donne les items
+            for (int i = 0; i < ItemRewards.Count; i++)
+            {
+                var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
+                deckList.Add(ItemRewards[i]);
+                PlayerManager.Instance.stats.Deck = deckList.ToArray();
+            }
+            // Donne les gold
+            PlayerManager.Instance.AddGold(EnemySO.GoldReward);
 
-        // Réinitialise le système de récompense pour la prochaine fois
-        for (int i = 0; i < ToggleAssignations.Count; i++)
-        {
-            Destroy(ToggleAssignations[i].gameObject);
-        }
-        ItemRewards.Clear();
-        ToggleAssignations.Clear();
-        GameLoopManager.Instance.ExitRoom();
+            // Réinitialise le système de récompense pour la prochaine fois
+            for (int i = 0; i < ToggleAssignations.Count; i++)
+            {
+                Destroy(ToggleAssignations[i].gameObject);
+            }
+            ItemRewards.Clear();
+            ToggleAssignations.Clear();
+            GameLoopManager.Instance.ExitRoom();
+        });
     }
     
 

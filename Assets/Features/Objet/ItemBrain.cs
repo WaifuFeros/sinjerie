@@ -15,22 +15,16 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     [SerializeField] private Image itemBackground;
     [SerializeField] private GameObject descritptionPanel;
     [SerializeField] private TextMeshProUGUI descriptionText;
-    [SerializeField] private GameObject effectImage;
+    [SerializeField, Min(0)] private float descriptionPressTime;
+    [SerializeField] private Image effectImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
+    [SerializeField] private Color invalidWeightTextColor = Color.red;
+    [SerializeField] private Color invalidWeightImagesColor = new Color(0.3f, 0.3f, 0.3f, 1f);
 
     [Header("Smoke Effect")]
     [SerializeField] private Animator smokeAnimator;
     [SerializeField] private float delayBeforeChange = 0.021f;
-
-    [Header("Asset")]
-    [SerializeField] private Sprite _communSprite;
-    [SerializeField] private Sprite _uncommonSprite;
-    [SerializeField] private Sprite _rareSprite;
-    [SerializeField] private Sprite _epicSprite;
-    [SerializeField] private Sprite _lengendarySprite;
-    [SerializeField] private Sprite _healSprite;
-    [SerializeField] private Sprite _atkSprite;
 
     private RectTransform rectTransform;
     private Canvas canvas;
@@ -38,6 +32,9 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     private Coroutine longPressCoroutine;
     private Coroutine updateCoroutine;
     private bool isDragging;
+    private ItemWiggleDOTween wiggle;
+
+    private Color _weightTextBaseColor;
 
     void Start()
     {
@@ -49,6 +46,18 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
         descritptionPanel.SetActive(false);
+
+        _weightTextBaseColor = weightText.color;
+        PlayerManager.Instance.OnStaminaUpdateEvent += UpdateWeightVisual;
+        //wiggle = gameObject.AddComponent<ItemWiggleDOTween>();
+        //wiggle.enabled = true;
+    }
+
+    private void UpdateWeightVisual()
+    {
+        weightText.color = PlayerManager.Instance.stats.currentStamina >= itemData.objetWeight ? _weightTextBaseColor : invalidWeightTextColor;
+        itemIcon.color = PlayerManager.Instance.stats.currentStamina >= itemData.objetWeight ? Color.white : invalidWeightImagesColor;
+        itemBackground.color = PlayerManager.Instance.stats.currentStamina >= itemData.objetWeight ? Color.white : invalidWeightImagesColor;
     }
 
     public void TriggerVisualUpdate()
@@ -76,36 +85,15 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
         itemIcon.sprite = itemData.objetSprite;
         descriptionText.text = itemData.objetDescription;
-        switch (itemData.Rarity)
-        {
-            case ObjetRarity.Common:
-                itemBackground.sprite = _communSprite;
-                break;
-            case ObjetRarity.Uncommon:
-                itemBackground.sprite = _uncommonSprite;
-                break;
-            case ObjetRarity.Rare:
-                itemBackground.sprite = _rareSprite;
-                break;
-            case ObjetRarity.Epic:
-                itemBackground.sprite = _epicSprite;
-                break;
-            case ObjetRarity.Legendary:
-                itemBackground.sprite = _lengendarySprite;
-                break;
-        }
+        itemBackground.sprite = ItemManager.Instance.GetRaritySprite(itemData.Rarity);
 
-        effectImage.SetActive(true);
-        
-        if (itemData.objectType == ObjetEffectType.Heal)
-            effectImage.GetComponent<Image>().sprite = _healSprite;
-        else if (itemData.objectType == ObjetEffectType.Attack)
-            effectImage.GetComponent<Image>().sprite = _atkSprite;
-        else if (itemData.objectType == ObjetEffectType.Special)
-            effectImage.SetActive(false);
+        effectImage.gameObject.SetActive(ItemManager.Instance.GetObjetTypeSprite(itemData.objectType, out Sprite result));
+        effectImage.sprite = result;
 
         effectText.text = itemData.objectEffect.ToString();
         weightText.text = itemData.objetWeight.ToString();
+
+        UpdateWeightVisual();
     }
 
     public void InitItem(ObjetSO data)
@@ -120,27 +108,31 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        StaminaUIManager.Instance.DisplayStaminaPreview(PlayerManager.Instance.stats.currentStamina, itemData.objetWeight);
         longPressCoroutine = StartCoroutine(WaitAndShowDescription());
     }
     public void OnPointerUp(PointerEventData eventData)
     {
+        StaminaUIManager.Instance.HideStaminaPreview();
         StopLongPress();
     }
     private IEnumerator WaitAndShowDescription()
     {
-        yield return new WaitForSeconds(1.5f);
-        if (!isDragging) descritptionPanel.SetActive(true);
+        yield return new WaitForSeconds(descriptionPressTime);
+        //if (!isDragging) descritptionPanel.SetActive(true);
+        DescriptionManager.Instance.DisplayDescription(itemData);
     }
     private void StopLongPress()
     {
         if (longPressCoroutine != null) StopCoroutine(longPressCoroutine);
-        descritptionPanel.SetActive(false);
+        //descritptionPanel.SetActive(false);
     }
 
     public override void BeginDrag(Vector3 mousePosition)
     {
         isDragging = true;
         base.BeginDrag(mousePosition);
+        StopLongPress();
     }
 
     public override void EndDrag()
@@ -157,6 +149,9 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         if (ItemManager.Instance != null)
             ItemManager.Instance.activeItems.Remove(this);
 
+        PlayerManager.Instance.OnStaminaUpdateEvent -= UpdateWeightVisual;
+
         if (itemData != null) Destroy(itemData);
     }
+
 }

@@ -1,4 +1,8 @@
+using System;
+using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class PlayerStatsData
@@ -27,18 +31,67 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
+    public Action OnStaminaUpdateEvent;
+    public Action OnGoldUpdateEvent;
+    public Action OnAfflictionUpdateEvent;
+ 
     [Header("Player Stats")]
     [SerializeField] public PlayerStatsData stats;
 
     [Header("UI")]
-    [SerializeField] private UnityEngine.UI.Slider healthBar;
+    [SerializeField] private Slider healthBar;
     [SerializeField] private StaminaUIManager staminaUI;
+    [SerializeField] private AfflictionEffect afflictionEffect;
+    [SerializeField] public Image playerHead;
 
-    [Header("WeatherEffect")]
-    [SerializeField,HideInInspector] public int FireCounter = 0;
-    [SerializeField,HideInInspector] public int FreezeCounter = 0;
-    [SerializeField,HideInInspector] public int WetCounter = 0;
-    [SerializeField,HideInInspector] public int ParalyzeCounter = 0;
+    #region Counter logic variables
+
+    public int FireCounter
+    {
+        get => _fireCounter;
+        set
+        {
+            _fireCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int WetCounter
+    {
+        get => _wetCounter;
+        set
+        {
+            _wetCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int ParalyzeCounter
+    {
+        get => _paralyzeCounter;
+        set
+        {
+            _paralyzeCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+    public int FreezeCounter
+    {
+        get => _freezeCounter;
+        set
+        {
+            _freezeCounter = Mathf.Max(0, value);
+            _afflictionUpdated = true;
+        }
+    }
+
+    public bool IsFrozen => FreezeCounter >= CombatSystem.Instance.freezeProcThreshold;
+
+    private int _fireCounter;
+    private int _freezeCounter;
+    private int _wetCounter;
+    private int _paralyzeCounter;
+    private bool _afflictionUpdated;
+
+    #endregion
 
     private void Awake()
     {
@@ -54,10 +107,26 @@ public class PlayerManager : MonoBehaviour
         UpdateHealthBar();
         staminaUI.SetupStamina(stats.maxStamina);
         staminaUI.UpdateDisplay(stats.currentStamina);
+
+        OnAfflictionUpdateEvent += UpdateAfflictionIcons;
+        UpdateAfflictionIcons();
     }
 
+    private void LateUpdate()
+    {
+        if (_afflictionUpdated)
+        {
+            OnAfflictionUpdateEvent?.Invoke();
+            _afflictionUpdated = false;
+        }
+    }
 
-
+    private void OnDestroy()
+    {
+        OnStaminaUpdateEvent = null;
+        OnGoldUpdateEvent = null;
+        OnAfflictionUpdateEvent = null;
+    }
 
     /// <summary>
     /// Le joueur prend des degats
@@ -118,7 +187,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Met a jour la barre de vie dans l'UI
     /// </summary>
-    private void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         if (healthBar != null)
         {
@@ -134,27 +203,32 @@ public class PlayerManager : MonoBehaviour
         {
             stats.currentStamina -= nb;
             staminaUI.UpdateDisplay(stats.currentStamina);
+            OnStaminaUpdateEvent?.Invoke();
             return true;
         }
         return false;
     }
     // Remet la stamina a son maximum
-    public void refillStamina()
+    public void refillStamina(int staminaPenaly = 0)
     {
-        stats.currentStamina = Mathf.Min(stats.currentStamina + stats.staminaRegenPerTurn, stats.maxStamina);
+        int staminaToRegen = Mathf.Max(stats.staminaRegenPerTurn - staminaPenaly, 0);
+        stats.currentStamina = Mathf.Min(stats.currentStamina + staminaToRegen, stats.maxStamina);
         staminaUI.UpdateDisplay(stats.currentStamina);
+        OnStaminaUpdateEvent?.Invoke();
     }
 
     public void AddGold(int amount)
     {
         stats.gold += amount;
-        UIManager.Instance.UpdateGoldUI(stats.gold);
+        OnGoldUpdateEvent?.Invoke();
+        //UIManager.Instance.UpdateGoldUI(stats.gold);
         // + une anim de gain de piece
     }
     public void removeGold(int amount)
     {
         stats.gold -= amount;
-        UIManager.Instance.UpdateGoldUI(stats.gold);
+        OnGoldUpdateEvent?.Invoke();
+        //UIManager.Instance.UpdateGoldUI(stats.gold);
         // + une anim de perte de piece
     }
 
@@ -169,5 +243,30 @@ public class PlayerManager : MonoBehaviour
     public PlayerStatsData GetStats()
     {
         return stats;
+    }
+
+    public void UpdateAfflictionIcons()
+    {
+        afflictionEffect.UpdateVisuals(FireCounter, WetCounter, ParalyzeCounter, FreezeCounter);
+
+        if (FireCounter > 0)
+            VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+        else
+            VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+
+        if (WetCounter > 0)
+            VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Water);
+        else
+            VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Water);
+
+        if (ParalyzeCounter > 0)
+            VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+        else
+            VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+
+        if (IsFrozen)
+            VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        else
+            VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
     }
 }

@@ -6,12 +6,12 @@ using System.IO;
 public class SaveScript : MonoBehaviour
 {
     public PlayerPerf _playerPerf;
-    public Encyclopedia _encyclopedia;
+    public EncyclopediaPanel _encyclopedia;
 
     private void Start()
     {
          _playerPerf = new PlayerPerf();
-        _encyclopedia = new Encyclopedia();
+        _encyclopedia = new EncyclopediaPanel();
     }
     public void SaveInfo()
     {

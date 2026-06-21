@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 public enum ObjetMaterialType
 {
+    None,
     Metal,
     Wood,
     Fire,
     Ice,
+    PerfectIce,
+    Electricity,
     Water,
-    Nothing
 }
 public enum ObjetEffectType
 {

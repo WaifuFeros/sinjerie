@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 091ed4e23cd509645b59a769b5e5d219, type: 3}
+  m_Name: Berserker
+  m_EditorClassIdentifier: 
+  Sprite: {fileID: 21300000, guid: 1f054c1739dc1bb4c85c716c8f8a2ce8, type: 3}
+  Name: Berserker
+  Description: C'est un singe
+  MaxHealth: 12
+  MaxStamina: 8
+  Items:
+  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
+  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
+  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+  - {fileID: 11400000, guid: 1b7063bdc0a5f46408c7c115062d0f60, type: 2}
+  - {fileID: 11400000, guid: 1922c64f124679c4eb1fd30d69eb759f, type: 2}
+  - {fileID: 11400000, guid: 1922c64f124679c4eb1fd30d69eb759f, type: 2}
+  - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+  behavior: {fileID: 11400000, guid: 7cb011597c9f9e3499d7f8cdaf320fad, type: 2}
+  GoldReward: 10
+  IsBoss: 0
+  IsActive: 1
