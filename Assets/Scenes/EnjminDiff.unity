@@ -7697,6 +7697,11 @@ PrefabInstance:
       propertyPath: roomContainer
       value: 
       objectReference: {fileID: 398857956}
+    - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _roomsLoop.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8645190218317517349, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: m_LocalPosition.x

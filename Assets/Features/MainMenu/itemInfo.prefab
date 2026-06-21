@@ -581,6 +581,7 @@ GameObject:
   - component: {fileID: 4887853503184978234}
   - component: {fileID: 1180166681716107607}
   - component: {fileID: -6519884659312511468}
+  - component: {fileID: 7307757157433962295}
   m_Layer: 5
   m_Name: itemInfo
   m_TagString: Untagged
@@ -637,3 +638,16 @@ MonoBehaviour:
   effectImage: {fileID: 8229670100182393962}
   effectText: {fileID: 3134645131967731897}
   weightText: {fileID: 589202801167609858}
+--- !u!114 &7307757157433962295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316754013918109564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3852a64a3b02243b3bbfe927d1cc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  descriptionPressTime: 0.5

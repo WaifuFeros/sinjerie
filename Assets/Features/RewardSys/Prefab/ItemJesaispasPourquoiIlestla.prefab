@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9039717934299548874}
   - component: {fileID: 7776034505762933177}
   - component: {fileID: 4747932098277095653}
+  - component: {fileID: -1164798843232412242}
   m_Layer: 5
   m_Name: ItemJesaispasPourquoiIlestla
   m_TagString: Untagged
@@ -111,13 +112,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 0}
   IsSelected: 0
-  _communSprite: {fileID: 21300000, guid: 67d7f697860ed294297b8e570df3d5b3, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: 7d5dbc6b1081cd4498d44626fcbb84a4, type: 3}
-  _rareSprite: {fileID: 21300000, guid: addce85b734dfb14688ef1fb2fd38bbe, type: 3}
-  _epicSprite: {fileID: 21300000, guid: 5684c6d12fc6ea740ae540028981fdfe, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 62a6d2dd612f75048b65e76e21494fcd, type: 3}
-  _healSprite: {fileID: 21300000, guid: 69416dd45b48d8b4593c9d5c17312c41, type: 3}
-  _atkSprite: {fileID: 21300000, guid: bde18a5e5ed228f46a792611f4eafe1e, type: 3}
   _itemHide: {fileID: 21300000, guid: 507486c1818e6814ab3fa641fc79efd7, type: 3}
   itemIcon: {fileID: 2571635614689729761}
   itemBackground: {fileID: 575909164266554638}
@@ -126,6 +120,19 @@ MonoBehaviour:
   effectText: {fileID: 7049701911995506328}
   weightText: {fileID: 3509560572353063890}
   descriptionPressTime: 0.25
+--- !u!114 &-1164798843232412242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173677916944649377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3852a64a3b02243b3bbfe927d1cc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  descriptionPressTime: 0.5
 --- !u!1 &3938687245045438864
 GameObject:
   m_ObjectHideFlags: 0

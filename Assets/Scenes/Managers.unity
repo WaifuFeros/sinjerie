@@ -419,6 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aea6187d175c5a40a69ba1fac5e53de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <DescriptionPressTime>k__BackingField: 0.5
   _descriptionWindow: {fileID: 1389613965}
 --- !u!4 &592228429
 Transform:

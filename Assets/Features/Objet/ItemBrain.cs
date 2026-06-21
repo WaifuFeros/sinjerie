@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
-using Unity.VisualScripting;
 
-public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPointerUpHandler
+public class ItemBrain : GameDraggableObjectController, IItemObject
 {
+    public ObjetSO ItemData => itemData;
+
     [Header("Data")]
     [SerializeField] public ObjetSO itemData;
 
@@ -15,12 +15,12 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     [SerializeField] private Image itemBackground;
     [SerializeField] private GameObject descritptionPanel;
     [SerializeField] private TextMeshProUGUI descriptionText;
-    [SerializeField, Min(0)] private float descriptionPressTime;
     [SerializeField] private Image effectImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
     [SerializeField] private Color invalidWeightTextColor = Color.red;
     [SerializeField] private Color invalidWeightImagesColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+    [SerializeField] private ItemDescription description;
 
     [Header("Smoke Effect")]
     [SerializeField] private Animator smokeAnimator;
@@ -29,7 +29,6 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
-    private Coroutine longPressCoroutine;
     private Coroutine updateCoroutine;
     private bool isDragging;
     private ItemWiggleDOTween wiggle;
@@ -105,34 +104,11 @@ public class ItemBrain : GameDraggableObjectController, IPointerDownHandler, IPo
         TriggerVisualUpdate();
     }
 
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        StaminaUIManager.Instance.DisplayStaminaPreview(PlayerManager.Instance.stats.currentStamina, itemData.objetWeight);
-        longPressCoroutine = StartCoroutine(WaitAndShowDescription());
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        StaminaUIManager.Instance.HideStaminaPreview();
-        StopLongPress();
-    }
-    private IEnumerator WaitAndShowDescription()
-    {
-        yield return new WaitForSeconds(descriptionPressTime);
-        //if (!isDragging) descritptionPanel.SetActive(true);
-        DescriptionManager.Instance.DisplayDescription(itemData);
-    }
-    private void StopLongPress()
-    {
-        if (longPressCoroutine != null) StopCoroutine(longPressCoroutine);
-        //descritptionPanel.SetActive(false);
-    }
-
     public override void BeginDrag(Vector3 mousePosition)
     {
         isDragging = true;
         base.BeginDrag(mousePosition);
-        StopLongPress();
+        description.StopLongPress();
     }
 
     public override void EndDrag()

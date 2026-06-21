@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ItemBrainOnlyInfo : MonoBehaviour
+public class ItemBrainOnlyInfo : MonoBehaviour, IItemObject
 {
+    public ObjetSO ItemData => itemData;
+
     [Header("Data")]
     [SerializeField] public ObjetSO itemData;
 

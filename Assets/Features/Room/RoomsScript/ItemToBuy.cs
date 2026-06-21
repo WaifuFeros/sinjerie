@@ -4,13 +4,16 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 
-public class ItemToBuy : MonoBehaviour
+public class ItemToBuy : MonoBehaviour, IItemObject
 {
+    public ObjetSO ItemData => itemToBuySO;
+
     private int price;
     private ObjetSO itemToBuySO;
 
     [Header("UI")]
     [SerializeField] private GameObject item;
+    [SerializeField] private Button button;
     [SerializeField] private Image itemIcon;
     [SerializeField] private Image itemBackground;
     [SerializeField] private Image effectImage;
@@ -91,6 +94,7 @@ public class ItemToBuy : MonoBehaviour
             // Affichage
             GetComponent<Button>().interactable = false;
             item.SetActive(false);
+            button.interactable = false;
         }
     }
 

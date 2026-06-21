@@ -7,8 +7,10 @@ using DG.Tweening;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+public class ToggleAssignation : MonoBehaviour, IItemObject, IPointerEnterHandler, IPointerExitHandler
 {
+    public ObjetSO ItemData => Item;
+
     public ObjetSO Item;
     public bool IsSelected;
 
@@ -22,9 +24,7 @@ public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerE
     [SerializeField] private Image weightImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
-    [SerializeField, Min(0)] private float descriptionPressTime;
 
-    private Coroutine longPressCoroutine;
     public void Initialized(ObjetSO itemsInToggle, RewardSystem rewardSystem)
     {
         Item = itemsInToggle;
@@ -94,24 +94,5 @@ public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerE
     {
         if (IsSelected) return;
         transform.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutQuad);
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        longPressCoroutine = StartCoroutine(WaitAndShowDescription());
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        StopLongPress();
-    }
-
-    private IEnumerator WaitAndShowDescription()
-    {
-        yield return new WaitForSeconds(descriptionPressTime);
-        DescriptionManager.Instance.DisplayDescription(Item);
-    }
-    private void StopLongPress()
-    {
-        if (longPressCoroutine != null) StopCoroutine(longPressCoroutine);
     }
 }
