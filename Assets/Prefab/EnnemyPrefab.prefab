@@ -44,10 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4eba3c4910414a81c33b675e61ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats:
-    maxHealth: 100
-    currentHealth: 0
-    attackDamage: 10
-    defense: 5
-    speed: 50
+  iceSound:
+    Guid:
+      Data1: -708588515
+      Data2: 1325351671
+      Data3: -185272656
+      Data4: 555128329
+    Path: event:/Freeze
   healthBar: {fileID: 0}
+  enemyHead: {fileID: 0}
+  afflictionEffect: {fileID: 0}
+  EnemyStats: {fileID: 0}
+  currentHealth: 0
+  currentStaminaMax: 0

@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 539438579533318230}
   - component: {fileID: 6434979541649002828}
   - component: {fileID: 4892339323020515940}
+  - component: {fileID: 2848681832729512375}
   m_Layer: 0
   m_Name: ExitRoomButton
   m_TagString: Untagged
@@ -280,3 +281,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81fcf1009f28468419bfdeb38aa255c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameplayMusicVCA: {fileID: 2848681832729512375}
+--- !u!114 &2848681832729512375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560766395626895032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2f783fda8f89144b73f2c921f31d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VcaName: Gameplay

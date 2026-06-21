@@ -1,9 +1,11 @@
+using FMODUnity;
 using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     public Action OnAfflictionUpdateEvent;
+    [SerializeField] private EventReference iceSound;
 
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
@@ -144,7 +146,10 @@ public class Enemy : MonoBehaviour
             VisualEffectManager.Instance.RemoveEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
 
         if (IsFrozen)
+        {
+            RuntimeManager.PlayOneShot(iceSound);
             VisualEffectManager.Instance.AddEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        }
         else
             VisualEffectManager.Instance.RemoveEffect(enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
     }

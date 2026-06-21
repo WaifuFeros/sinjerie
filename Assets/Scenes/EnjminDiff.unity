@@ -2733,6 +2733,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4eba3c4910414a81c33b675e61ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iceSound:
+    Guid:
+      Data1: -708588515
+      Data2: 1325351671
+      Data3: -185272656
+      Data4: 555128329
+    Path: event:/Freeze
   healthBar: {fileID: 2030078171}
   enemyHead: {fileID: 2134683397}
   afflictionEffect: {fileID: 1952586286}
@@ -7561,6 +7568,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1579070845386890660, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: gameplayMusicVCA
+      value: 
+      objectReference: {fileID: 1749451220213605312}
     - target: {fileID: 3809902733895903087, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: m_Name
@@ -7618,9 +7630,34 @@ PrefabInstance:
       objectReference: {fileID: 2058587214}
     - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
+      propertyPath: iceSound.Path
+      value: event:/Freeze
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
       propertyPath: afflictionEffect
       value: 
       objectReference: {fileID: 555871824}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Guid.Data1
+      value: -708588515
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Guid.Data2
+      value: 1325351671
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Guid.Data3
+      value: -185272656
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Guid.Data4
+      value: 555128329
+      objectReference: {fileID: 0}
     - target: {fileID: 6778061878213955686, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: stats.Deck.Array.size
@@ -7707,6 +7744,11 @@ PrefabInstance:
       propertyPath: _ButtonValidate
       value: 
       objectReference: {fileID: 2124370894}
+    - target: {fileID: 7305757815109641315, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: gameplayMusicVCA
+      value: 
+      objectReference: {fileID: 1749451220213605312}
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: enemy
@@ -7717,6 +7759,11 @@ PrefabInstance:
       propertyPath: roomContainer
       value: 
       objectReference: {fileID: 398857956}
+    - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: gameplayMusicVCA
+      value: 
+      objectReference: {fileID: 1749451220213605312}
     - target: {fileID: 8645190218317517349, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7766,6 +7813,81 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Path
+      value: event:/Freeze
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: fireSound.Path
+      value: event:/Burn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: paralyzeSound.Path
+      value: event:/Paralyze
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Guid.Data1
+      value: -708588515
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Guid.Data2
+      value: 1325351671
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Guid.Data3
+      value: -185272656
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: iceSound.Guid.Data4
+      value: 555128329
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: fireSound.Guid.Data1
+      value: -1036567083
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: fireSound.Guid.Data2
+      value: 1172207858
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: fireSound.Guid.Data3
+      value: -1854519167
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: fireSound.Guid.Data4
+      value: -368997885
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: paralyzeSound.Guid.Data1
+      value: -1399272686
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: paralyzeSound.Guid.Data2
+      value: 1340559983
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: paralyzeSound.Guid.Data3
+      value: -741512773
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: paralyzeSound.Guid.Data4
+      value: 1502787199
       objectReference: {fileID: 0}
     - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
@@ -7828,6 +7950,11 @@ PrefabInstance:
       propertyPath: defeatSound.Path
       value: event:/Lose
       objectReference: {fileID: 0}
+    - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: gameplayMusicVCA
+      value: 
+      objectReference: {fileID: 1749451220213605312}
     - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: victorySound.Path
@@ -7928,6 +8055,11 @@ PrefabInstance:
       propertyPath: playerHealSound.Path
       value: event:/Heal
       objectReference: {fileID: 0}
+    - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: <Enemy>k__BackingField
+      value: 
+      objectReference: {fileID: 851288018}
     - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: defeatSound.Guid.Data1

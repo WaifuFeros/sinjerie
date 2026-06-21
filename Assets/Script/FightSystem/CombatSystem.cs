@@ -17,11 +17,9 @@ public class CombatSystem : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private EventReference hitSound;
     [SerializeField] private EventReference healSound;
-    [SerializeField] private EventReference fireSound;
-    [SerializeField] private EventReference iceSound;
-    [SerializeField] private EventReference paralyzeSound;
     [SerializeField] private EventReference victorySound;
     [SerializeField] private EventReference defeatSound;
+    [SerializeField] private VcaController gameplayMusicVCA;
 
     [Header("Combat Settings")]
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
@@ -413,12 +411,14 @@ public class CombatSystem : MonoBehaviour
         if (victory)
         {
             Debug.Log("Victoire au combat!");
+            gameplayMusicVCA.FadeLowerMusicVolume(2f, 0.2f);
             RuntimeManager.PlayOneShot(victorySound);
             onVictoryCallback?.Invoke();
         }
         else
         {
             Debug.Log("Défaite au combat!");
+            gameplayMusicVCA.FadeLowerMusicVolume(2f, 0f);
             RuntimeManager.PlayOneShot(defeatSound);
             onDefeatCallback?.Invoke();
         }
@@ -454,7 +454,6 @@ public class CombatSystem : MonoBehaviour
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
-                    RuntimeManager.PlayOneShot(fireSound);
                     // Applique l'effet de brulure
                     if (PlayerManager.Instance.WetCounter == 0)
                     {

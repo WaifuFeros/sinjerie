@@ -1,9 +1,13 @@
+using FMODUnity;
 using System;
 using System.Collections;
 using UnityEngine;
 
 public class WeatherEffect : MonoBehaviour
 {
+    [SerializeField] private EventReference fireSound;
+    [SerializeField] private EventReference paralyzeSound;
+
     public static WeatherEffect Instance { get; private set; }
 
     private void Awake()
@@ -142,6 +146,7 @@ public class WeatherEffect : MonoBehaviour
 
     public IEnumerator PlayParalyzeAnimation()
     {
+        RuntimeManager.PlayOneShot(paralyzeSound);
         VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
 
         yield return new WaitForSeconds(1f);
@@ -171,6 +176,7 @@ public class WeatherEffect : MonoBehaviour
 
     public int FireDamage()
     {
+        RuntimeManager.PlayOneShot(fireSound);
         return Convert.ToInt32(WeatherManager.Instance.temperature / 7);
     }
 }
