@@ -4688,6 +4688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1287202596}
   audioSource: {fileID: 1287202595}
+  closeButton: {fileID: 978050498}
   ads:
   - {fileID: 32900000, guid: 54897b309e265804cb9305e0d31b6cf0, type: 3}
   - {fileID: 32900000, guid: 673f637f247e43d468e922752152616e, type: 3}
