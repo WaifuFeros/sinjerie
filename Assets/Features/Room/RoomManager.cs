@@ -9,6 +9,8 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance { get; private set; }
 
+    [SerializeField] private VcaController gameplayMusicVCA;
+
     [Header("Room Settings")]
     [SerializeField] private Transform roomContainer;
     [SerializeField] private GameObject roomShop; // La salle de shop
@@ -69,11 +71,13 @@ public class RoomManager : MonoBehaviour
             case RoomType.Shop:
                 currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);
                 currentRoom.transform.SetParent(roomContainer, false);
+                gameplayMusicVCA.FadeLowerMusicVolume(2f, 0.2f);
                 return roomType;
             case RoomType.Special:
                 GameObject roomToSpawn = roomPrefabs[UnityEngine.Random.Range(0, roomPrefabs.Length)];
                 currentRoom = Instantiate(roomToSpawn, roomContainer.position, roomContainer.rotation);
                 currentRoom.transform.SetParent(roomContainer, false);
+                gameplayMusicVCA.FadeLowerMusicVolume(2f, 0.2f);
                 return roomType;
         }
     }

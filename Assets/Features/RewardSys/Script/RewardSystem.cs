@@ -13,6 +13,9 @@ public class RewardSystem : MonoBehaviour
 {
     public static RewardSystem Instance { get; private set; }
 
+    [SerializeField]
+    private VcaController gameplayMusicVCA;
+
     [Header("Reward Settings")]
 
     public int NumberOfToggle;
@@ -89,6 +92,7 @@ public class RewardSystem : MonoBehaviour
             ItemRewards.Clear();
             ToggleAssignations.Clear();
             GameLoopManager.Instance.ExitRoom();
+            gameplayMusicVCA.FadeRestoreMusicVolume(2f);
         });
     }
     

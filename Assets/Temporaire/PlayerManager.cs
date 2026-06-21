@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Net.NetworkInformation;
 using UnityEngine;
@@ -7,6 +8,7 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class PlayerStatsData
 {
+
     [Header("Base Stats")]
     public int maxHealth = 100;
     public int currentHealth;
@@ -30,6 +32,7 @@ public class PlayerStatsData
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
+    [SerializeField] private EventReference iceSound;
 
     public Action OnStaminaUpdateEvent;
     public Action OnGoldUpdateEvent;
@@ -265,7 +268,11 @@ public class PlayerManager : MonoBehaviour
             VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
 
         if (IsFrozen)
+        {
+            RuntimeManager.PlayOneShot(iceSound);
             VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        }
+
         else
             VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
     }
