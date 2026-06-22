@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 2e6be7af97a738b499669625f6b8f062
   m_SerializeEntries:
+  - m_GUID: 049c09ec7a3be3842a763fef76710a52
+    m_Address: Assets/Features/Objet/ObjectSO/planete.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 110d5ff5eeb09134b9016dbfc23ffef3
     m_Address: Assets/Features/Objet/ObjectSO/stick.asset
     m_ReadOnly: 0
@@ -191,17 +197,17 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd32cc19014849e47a97fbbab56c91ef
+    m_Address: Assets/Features/Objet/ObjectSO/Bowling.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: be4185223eb37b64eb58a9cd3b9c46e5
     m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 4.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Enemy
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c1782ff0266c66a47acc4902c675932a
-    m_Address: Assets/Features/Objet/ObjectSO/Congelateur.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Items
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c55c76fd672ea174fb12f0e62044694d
     m_Address: Assets/Features/Objet/ObjectSO/sword.asset

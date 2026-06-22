@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
-  m_Name: TastyCrousty
+  m_Name: Canette
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 0}
-  objetName: TastyCrousty
-  objetDescription: "un plat m\xE9diocre... Il vous redonnera tout de m\xEAme de
-    la vie"
-  objetMaterialType: 0
+  objetSprite: {fileID: 21300000, guid: a9eeec72f91533746921bcbd13926732, type: 3}
+  objetName: Canette
+  objetDescription: 
+  objetMaterialType: 1
   objetWeight: 2
   objectType: 0
   objectEffect: 2
