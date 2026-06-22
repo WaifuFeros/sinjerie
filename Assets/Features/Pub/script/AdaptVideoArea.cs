@@ -29,4 +29,20 @@ public class AdaptVideoArea : MonoBehaviour
             videoArea.sizeDelta = new Vector2(width, height);
         }
     }
+
+    public void RevertDeath()
+    {
+        for (int i = 0; i <= 3; i++)
+        {
+            ItemManager.Instance.SpawnRandomItem();
+        }
+        PlayerManager.Instance.Heal(PlayerManager.Instance.stats.maxHealth);
+        CombatSystem.Instance.isPlayerTurn = true;
+        CombatSystem.Instance.combatActive = true;
+        CombatSystem.Instance.isDefeat = false;
+        CombatSystem.Instance.isPlayed = false;
+        CombatSystem.Instance.SetupSkipTurnButtonInteractable(true);
+    }
+
 }
+
