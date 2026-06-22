@@ -962,7 +962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &414656391
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4728,9 +4728,7 @@ MonoBehaviour:
   audioSource: {fileID: 1287202595}
   closeButton: {fileID: 978050498}
   ads:
-  - {fileID: 32900000, guid: 54897b309e265804cb9305e0d31b6cf0, type: 3}
-  - {fileID: 32900000, guid: 673f637f247e43d468e922752152616e, type: 3}
-  - {fileID: 32900000, guid: b4c8c44dce01fec4880812529949c91b, type: 3}
+  - {fileID: 32900000, guid: 375864c89af794d4a9d62058e20f4450, type: 3}
 --- !u!114 &1623062359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7767,7 +7765,7 @@ PrefabInstance:
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: _roomsLoop.Array.data[0]
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8645190218317517349, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
