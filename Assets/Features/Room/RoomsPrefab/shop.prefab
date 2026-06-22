@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2423172468006368042}
   - component: {fileID: 1987881381831337313}
   - component: {fileID: 295156678127249189}
+  - component: {fileID: 1018468976771779021}
   m_Layer: 0
   m_Name: owl
   m_TagString: Untagged
@@ -35,9 +36,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -287, y: 287}
+  m_AnchoredPosition: {x: -287, y: 57}
   m_SizeDelta: {x: 500, y: 460}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &2423172468006368042
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -119,7 +120,34 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1987881381831337313}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1018468976771779021}
+        m_TargetAssemblyTypeName: OwlPress, Assembly-CSharp
+        m_MethodName: OnOwlClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1018468976771779021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27961836327550852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9218b7a70fe54f84e9372ed96720612c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressedSprite: {fileID: 21300000, guid: 45ed601d4696c2a47b6a57bccc49281f, type: 3}
+  duration: 0.1
+  pressedScale: {x: 0.85, y: 0.85, z: 1}
 --- !u!1 &561400270389937346
 GameObject:
   m_ObjectHideFlags: 0
