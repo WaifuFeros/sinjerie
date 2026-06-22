@@ -8,7 +8,9 @@ public class ExitSpecialRoom : MonoBehaviour
 
     public void ExitRoom()
     {
-        GameLoopManager.Instance.ExitRoom();
+        TransitionManager.Instance.TransitionWithAction(() => {
+            GameLoopManager.Instance.ExitRoom();
+        });
         gameplayMusicVCA.FadeRestoreMusicVolume(2f);
     }
 }
