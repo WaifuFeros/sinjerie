@@ -7765,7 +7765,7 @@ PrefabInstance:
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: _roomsLoop.Array.data[0]
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
