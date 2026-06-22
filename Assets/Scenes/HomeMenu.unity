@@ -2469,13 +2469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 285272aa45e2fa44990636fe2f6089f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionText: {fileID: 1723309006}
-  latitude: 0
-  longitude: 0
-  gpsReady: 0
   simulateInEditor: 1
   editorLatitude: 45.6484
   editorLongitude: 0.1562
+  positionText: {fileID: 1723309006}
 --- !u!4 &523285005
 Transform:
   m_ObjectHideFlags: 0
@@ -6183,12 +6180,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gpsManager: {fileID: 523285004}
+  weatherUpdateInterval: 0
+  conversionData: []
   cityText: {fileID: 390305673}
   tempText: {fileID: 1344507030}
   descText: {fileID: 822953862}
-  temperature: 0
-  effetMeteorologique: 0
-  conversionData: []
   apiKey: cab53e4ddd7d114609d442afdc97e4af
 --- !u!4 &1464999609
 Transform:
@@ -7538,7 +7534,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8fbb5bc09020301498a68be003b015be, type: 2}
   - {fileID: 11400000, guid: 1edf5721c8246ce43a92225c7e11c24d, type: 2}
   - {fileID: 11400000, guid: 38f01eb820be83e4ab06d34af066c5d6, type: 2}
-  - {fileID: 11400000, guid: 059f07d0df7053841b9c14ccfa906d3f, type: 2}
   characterPrefab: {fileID: 3162358337384565786, guid: 47c10ee26da9716489c2321007d372fd,
     type: 3}
   itemPrefab: {fileID: 8316754013918109564, guid: 500b8996ea2c44c46816f550536e2ca0,
