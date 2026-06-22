@@ -58,7 +58,9 @@ public class CombatSystem : MonoBehaviour
     [field: SerializeField] public Enemy Enemy { get; private set; }
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
-    private bool combatActive = false;
+    public bool combatActive = false;
+    public bool isPlayed = false;
+    public bool isDefeat;
 
     private RectTransform _skipButtonRectTransform;
 
@@ -269,7 +271,7 @@ public class CombatSystem : MonoBehaviour
     /// <summary>
     /// Vérifie si le bouton de passage de tour doit être interactif
     /// </summary>
-    private void SetupSkipTurnButtonInteractable(bool interactable)
+    public void SetupSkipTurnButtonInteractable(bool interactable)
     {
         if (skipTurnButton != null)
         {
@@ -282,10 +284,16 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     public void CheckCombatEnd()
     {
+        if (isDefeat)
+            return;
+
         if (Enemy != null && Enemy.IsDead())
             StartCoroutine(EndCombat(true));
         else if (PlayerManager.Instance.IsDead())
+        {
+            print("############# tu es mort");
             StartCoroutine(EndCombat(false));
+        }
     }
 
     /// <summary>
@@ -396,6 +404,7 @@ public class CombatSystem : MonoBehaviour
 
     private IEnumerator EndCombat(bool victory)
     {
+        Debug.Log("End Combat");
         PlayerManager.Instance.FireCounter = 0;
         PlayerManager.Instance.FreezeCounter = 0;
         PlayerManager.Instance.WetCounter = 0;
@@ -408,19 +417,22 @@ public class CombatSystem : MonoBehaviour
 
         // Vérifier si l'ennemi est mort
 
-        if (victory)
+        if (victory && !isPlayed)
         {
             Debug.Log("Victoire au combat!");
             gameplayMusicVCA.FadeLowerMusicVolume(2f, 0.2f);
             RuntimeManager.PlayOneShot(victorySound);
             onVictoryCallback?.Invoke();
+            //isPlayed = true;
         }
-        else
+        else if (!isPlayed)
         {
+            isDefeat = true;
             Debug.Log("Défaite au combat!");
             gameplayMusicVCA.FadeLowerMusicVolume(2f, 0f);
             RuntimeManager.PlayOneShot(defeatSound);
             onDefeatCallback?.Invoke();
+            isPlayed = true;
         }
         yield break;
     }

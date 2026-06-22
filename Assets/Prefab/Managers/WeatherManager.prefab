@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gpsManager: {fileID: 9050300822296738809}
-  weatherUpdateInterval: 90
+  weatherUpdateInterval: 10
   conversionData:
   - weatherMain: Clear
     asType: 0
