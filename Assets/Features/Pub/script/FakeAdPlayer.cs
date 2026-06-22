@@ -84,7 +84,7 @@ public class FakeAdPlayer : MonoBehaviour
 
     private void OnVideoFinished(VideoPlayer vp)
     {
-        Debug.Log("🎬 Pub terminée !");
+        Debug.Log("Pub terminée !");
 
         if (closeButton != null)
             closeButton.SetActive(true);  
