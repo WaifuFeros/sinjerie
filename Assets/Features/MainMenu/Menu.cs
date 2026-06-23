@@ -39,6 +39,15 @@ public class Menu : MonoBehaviour
         });
     }
 
+    public void StartTutorialGame()
+    {
+        TutorialManager.Instance.IsTutorial = true;
+        TransitionManager.Instance.TransitionWithAction(() => {
+            SceneLoadManager.Instance.LoadSceneAsActive(_gameSceneName);
+
+        });
+    }
+
     //private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     //{
     //    if (scene.name == _gameSceneName)

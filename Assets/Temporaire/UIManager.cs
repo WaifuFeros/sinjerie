@@ -24,6 +24,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] 
     private GameObject defeatPanel;
 
+    [SerializeField]
+    private GameObject tutorialVictoryPanel;
+
     [Header("Banana Reward")]
     [SerializeField] GameObject bananaPanel;
     [SerializeField] GameObject bananaBackground;
@@ -163,6 +166,10 @@ public class UIManager : MonoBehaviour
             ShowRewardPanel();
         });
 
+    }
+    public void ShowTutorialVictoryPanel()
+    {
+        tutorialVictoryPanel.SetActive(true);
     }
     private void HideAllPanels()
     {

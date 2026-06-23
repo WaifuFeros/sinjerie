@@ -11,6 +11,8 @@ public class WeatherManager : MonoBehaviour
     public GameWeatherType effetMeteorologique { get; private set; }
     public bool LockWeather { get; set; } = false;
 
+    public Action OnWeatherChangedEvent;
+
     [SerializeField] private GPSManager gpsManager;
     [SerializeField, Min(0)] private float weatherUpdateInterval;
 
