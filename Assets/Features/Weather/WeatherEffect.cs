@@ -177,6 +177,10 @@ public class WeatherEffect : MonoBehaviour
         else
             CombatSystem.Instance.Enemy.TakeDamage(damageThunder);
 
+        if(isPlayer)
+            VisualEffectManager.Instance.TriggerBurst(PlayerManager.Instance.playerHead.gameObject, VisualEffectManager.ParticleEffectType.Thunder);
+        else
+            VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Thunder);
         //RefreshItemReactions();
     }
 
