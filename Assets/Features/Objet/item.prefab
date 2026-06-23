@@ -970,6 +970,7 @@ MonoBehaviour:
   invalidWeightTextColor: {r: 1, g: 0, b: 0, a: 1}
   invalidWeightImagesColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   description: {fileID: 9001939699521270500}
+  wiggle: {fileID: 3567540623687512713}
   smokeAnimator: {fileID: 6366638186658251795}
   delayBeforeChange: 0.021
 --- !u!114 &-1921863523013163353

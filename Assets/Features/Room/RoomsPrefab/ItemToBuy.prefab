@@ -988,6 +988,20 @@ MonoBehaviour:
   priceText: {fileID: 6390836354501582911}
   _notEnoughMoneyTextColor: {r: 1, g: 0, b: 0, a: 1}
   _notEnoughMoneyImageColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  coinSound:
+    Guid:
+      Data1: -1202830046
+      Data2: 1120676103
+      Data3: -2073045609
+      Data4: -1967111669
+    Path: event:/Coins
+  wrongSound:
+    Guid:
+      Data1: -828374209
+      Data2: 1135599686
+      Data3: -1764511605
+      Data4: 1036524725
+    Path: event:/Wrong
 --- !u!114 &7959152670572075213
 MonoBehaviour:
   m_ObjectHideFlags: 0
