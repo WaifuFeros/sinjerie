@@ -9,8 +9,6 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance { get; private set; }
 
-    [SerializeField] private VcaController gameplayMusicVCA;
-
     [Header("Room Settings")]
     [SerializeField] private Transform roomContainer;
     [SerializeField] private GameObject roomShop; // La salle de shop
@@ -65,12 +63,12 @@ public class RoomManager : MonoBehaviour
             case RoomType.Enemy:
                 SpawnEnemy(false);
                 Debug.Log("enemy restore music!");
-                gameplayMusicVCA.FadeRestoreMusicVolume(2f);
+                VcaController.Instance.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Boss:
                 SpawnEnemy(false);
                 Debug.Log("boss restore music!");
-                gameplayMusicVCA.FadeRestoreMusicVolume(2f);
+                VcaController.Instance.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Shop:
                 currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);

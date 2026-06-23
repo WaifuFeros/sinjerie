@@ -1,86 +1,132 @@
-using System; // <-- AJOUT pour l'Action
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 
 public class VcaController : MonoBehaviour
 {
-    // ---> AJOUT : L'événement global que l'AudioSource va écouter
+    public static VcaController Instance { get; private set; }
     public static event Action<string, float> OnVcaVolumeChanged;
 
-    private FMOD.Studio.VCA vca;
-    public string VcaName;
+    // Listes pour retenir le volume d'origine de chaque VCA lors d'un Fade
+    private Dictionary<string, float> originalVolumes = new Dictionary<string, float>();
+    private Dictionary<string, bool> isLoweredFlags = new Dictionary<string, bool>();
 
-    private Slider slider;
-    private float originalVolume = 1f;
-    private bool isLowered = false;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Permet de garder le son actif entre les scènes
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        vca = FMODUnity.RuntimeManager.GetVCA("vca:/" + VcaName);
-        slider = GetComponent<Slider>();
-
-        // On récupère le volume sauvegardé, ou le volume FMOD actuel par défaut
-        float savedVolume = PlayerPrefs.GetFloat("VCA_" + VcaName, 1f);
-        vca.getVolume(out float fmodVolume);
-
-        float finalVolume = PlayerPrefs.HasKey("VCA_" + VcaName) ? savedVolume : fmodVolume;
-
-        // Appliquer le volume initial
-        SetVolume(finalVolume);
-
-        if (slider != null)
-        {
-            slider.SetValueWithoutNotify(finalVolume);
-        }
+        // Au démarrage du jeu, on force FMOD à appliquer les volumes sauvegardés
+        // pour éviter que le son soit à 100% tant qu'on n'a pas ouvert le menu des options.
+        InitializeVcaOnLaunch("Master");
+        InitializeVcaOnLaunch("Music");
+        // InitializeVcaOnLaunch("SFX"); // Décommente cette ligne si tu as un VCA pour les bruitages
     }
 
-    // ---> NOUVELLE MÉTHODE INTERNE : Centralise l'application du son et avertit Unity
-    private void ApplyVolumeInternal(float volume, bool saveToPrefs)
+    private void InitializeVcaOnLaunch(string vcaName)
     {
+        // On récupère la sauvegarde (1 par défaut si elle n'existe pas)
+        float savedVolume = PlayerPrefs.GetFloat("VCA_" + vcaName, 1f);
+
+        // On l'applique directement dans FMOD
+        var vcaInstance = FMODUnity.RuntimeManager.GetVCA("vca:/" + vcaName);
+        vcaInstance.setVolume(savedVolume);
+
+        Debug.Log($"[AudioLaunch] Initialisation automatique de {vcaName} au volume : {savedVolume}");
+    }
+
+    /// <summary>
+    /// Permet à un slider de récupérer le volume initial (sauvegardé ou FMOD) au démarrage
+    /// </summary>
+    public float GetSavedVolume(string vcaName)
+    {
+        if (PlayerPrefs.HasKey("VCA_" + vcaName))
+        {
+            return PlayerPrefs.GetFloat("VCA_" + vcaName);
+        }
+
+        var vca = FMODUnity.RuntimeManager.GetVCA("vca:/" + vcaName);
+        vca.getVolume(out float fmodVolume);
+        return fmodVolume;
+    }
+
+    /// <summary>
+    /// Modifie le volume d'un VCA spécifique par son nom
+    /// </summary>
+    public void SetVolume(string vcaName, float volume)
+    {
+        bool isLowered = isLoweredFlags.ContainsKey(vcaName) && isLoweredFlags[vcaName];
+        if (!isLowered) originalVolumes[vcaName] = volume;
+
+        ApplyVolumeInternal(vcaName, volume, true);
+    }
+
+    private void ApplyVolumeInternal(string vcaName, float volume, bool saveToPrefs)
+    {
+        var vca = FMODUnity.RuntimeManager.GetVCA("vca:/" + vcaName);
         vca.setVolume(volume);
 
+        bool isLowered = isLoweredFlags.ContainsKey(vcaName) && isLoweredFlags[vcaName];
         if (saveToPrefs && !isLowered)
         {
-            PlayerPrefs.SetFloat("VCA_" + VcaName, volume);
-            PlayerPrefs.Save(); // <--- AJOUTE CETTE LIGNE : Force la sauvegarde immédiate
+            PlayerPrefs.SetFloat("VCA_" + vcaName, volume);
+            PlayerPrefs.Save();
         }
 
-        OnVcaVolumeChanged?.Invoke(VcaName, volume);
+        OnVcaVolumeChanged?.Invoke(vcaName, volume);
     }
 
-    public void SetVolume(float volume)
-    {
-        if (!isLowered) originalVolume = volume;
-        ApplyVolumeInternal(volume, true);
-    }
-
+    // Le combat system appelle directement cette fonction globale (par défaut sur "Music")
     public void FadeLowerMusicVolume(float duration = 1.5f, float multiplier = 0.3f)
     {
+        string vcaName = "Music";
+        var vca = FMODUnity.RuntimeManager.GetVCA("vca:/" + vcaName);
         vca.getVolume(out float currentVolume);
 
-        if (!isLowered)
+        if (!isLoweredFlags.ContainsKey(vcaName) || !isLoweredFlags[vcaName])
         {
-            originalVolume = currentVolume;
-            isLowered = true;
+            originalVolumes[vcaName] = currentVolume;
+            isLoweredFlags[vcaName] = true;
         }
 
-        float targetVolume = originalVolume * multiplier;
+        float targetVolume = originalVolumes[vcaName] * multiplier;
 
-        // Modifié pour passer par notre méthode interne (permet le fade de l'AudioSource Unity !)
-        DOTween.To(() => currentVolume, x => ApplyVolumeInternal(x, false), targetVolume, duration)
+        DOTween.To(() => currentVolume, x => ApplyVolumeInternal(vcaName, x, false), targetVolume, duration)
             .SetEase(Ease.InOutSine);
     }
 
     public void FadeRestoreMusicVolume(float duration = 1.5f)
     {
+        string vcaName = "Music";
+        var vca = FMODUnity.RuntimeManager.GetVCA("vca:/" + vcaName);
         vca.getVolume(out float currentVolume);
 
-        DOTween.To(() => currentVolume, x => ApplyVolumeInternal(x, false), originalVolume, duration)
+        float targetVolume = originalVolumes.ContainsKey(vcaName) ? originalVolumes[vcaName] : 1f;
+
+        DOTween.To(() => currentVolume, x => ApplyVolumeInternal(vcaName, x, false), targetVolume, duration)
             .SetEase(Ease.InOutSine)
-            .OnComplete(() => isLowered = false);
-        Debug.Log($"RESTORING");
+            .OnComplete(() => isLoweredFlags[vcaName] = false);
+    }
+
+    /// <summary>
+    /// Récupère le volume PHYSIQUE actuel du VCA directement depuis FMOD
+    /// </summary>
+    public float GetCurrentVolume(string vcaName)
+    {
+        var vcaInstance = FMODUnity.RuntimeManager.GetVCA("vca:/" + vcaName);
+        vcaInstance.getVolume(out float currentVolume);
+        return currentVolume;
     }
 }

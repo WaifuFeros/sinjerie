@@ -19,7 +19,7 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private EventReference healSound;
     [SerializeField] private EventReference victorySound;
     [SerializeField] private EventReference defeatSound;
-    [SerializeField] private VcaController gameplayMusicVCA;
+    //[SerializeField] private VcaController gameplayMusicVCA;
 
     [Header("Combat Settings")]
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
@@ -428,7 +428,7 @@ public class CombatSystem : MonoBehaviour
         if (victory && !isPlayed)
         {
             Debug.Log("Victoire au combat!");
-            gameplayMusicVCA.FadeLowerMusicVolume(2f, 0.2f);
+            VcaController.Instance.FadeLowerMusicVolume(2f, 0.2f);
             RuntimeManager.PlayOneShot(victorySound);
             onVictoryCallback?.Invoke();
             //isPlayed = true;
@@ -437,7 +437,7 @@ public class CombatSystem : MonoBehaviour
         {
             isDefeat = true;
             Debug.Log("Défaite au combat!");
-            gameplayMusicVCA.FadeLowerMusicVolume(2f, 0f);
+            VcaController.Instance.FadeLowerMusicVolume(2f, 0f);
             RuntimeManager.PlayOneShot(defeatSound);
             onDefeatCallback?.Invoke();
             isPlayed = true;

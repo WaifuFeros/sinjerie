@@ -540,7 +540,6 @@ GameObject:
   - component: {fileID: 154187827}
   - component: {fileID: 154187828}
   - component: {fileID: 154187829}
-  - component: {fileID: 154187830}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -730,20 +729,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emitter: {fileID: 154187827}
-  gameplayMusicVCA: {fileID: 154187830}
---- !u!114 &154187830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154187822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e2f783fda8f89144b73f2c921f31d64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VcaName: Gameplay
 --- !u!1 &213580304
 GameObject:
   m_ObjectHideFlags: 0
@@ -7285,7 +7270,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
-      objectReference: {fileID: 154187830}
+      objectReference: {fileID: 0}
     - target: {fileID: 8788013228209724801, guid: 75ffe5844579644429223506324ceae8,
         type: 3}
       propertyPath: m_Pivot.x
@@ -7403,7 +7388,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameplayMusicVCA
       value: 
-      objectReference: {fileID: 1749451220213605312}
+      objectReference: {fileID: 0}
     - target: {fileID: 3809902733895903087, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: m_Name
@@ -7595,7 +7580,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameplayMusicVCA
       value: 
-      objectReference: {fileID: 1749451220213605312}
+      objectReference: {fileID: 0}
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: enemy
@@ -7610,7 +7595,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameplayMusicVCA
       value: 
-      objectReference: {fileID: 1749451220213605312}
+      objectReference: {fileID: 0}
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: roomPrefabs.Array.size
@@ -7818,7 +7803,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameplayMusicVCA
       value: 
-      objectReference: {fileID: 1749451220213605312}
+      objectReference: {fileID: 0}
     - target: {fileID: 9164934883704013513, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: victorySound.Path
@@ -8027,31 +8012,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1743014803838526496, guid: 183536fe8d7d932499ff79916d0f4944,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1749451220213605312}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 183536fe8d7d932499ff79916d0f4944, type: 3}
---- !u!1 &1749451220213605311 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1743014803838526496, guid: 183536fe8d7d932499ff79916d0f4944,
-    type: 3}
-  m_PrefabInstance: {fileID: 1749451220213605310}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1749451220213605312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749451220213605311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e2f783fda8f89144b73f2c921f31d64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VcaName: Gameplay
 --- !u!1001 &5506881843433862474
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1596,7 +1596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e2f783fda8f89144b73f2c921f31d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VcaName: Menu
 --- !u!1 &358238350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3870,19 +3869,7 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 892304930}
-        m_TargetAssemblyTypeName: VcaController, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &892304930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3892,7 +3879,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 892304927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e2f783fda8f89144b73f2c921f31d64, type: 3}
+  m_Script: {fileID: 11500000, guid: f54e6243030f0ac43aaf4f52c04f13cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   VcaName: SFX
@@ -6884,7 +6871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1654821657}
   - component: {fileID: 1654821658}
-  - component: {fileID: 1654821659}
+  - component: {fileID: 1654821660}
   m_Layer: 5
   m_Name: MasterVolumeSlider
   m_TagString: Untagged
@@ -6965,20 +6952,8 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1654821659}
-        m_TargetAssemblyTypeName: VcaController, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1654821659
+      m_Calls: []
+--- !u!114 &1654821660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6987,7 +6962,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1654821656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e2f783fda8f89144b73f2c921f31d64, type: 3}
+  m_Script: {fileID: 11500000, guid: f54e6243030f0ac43aaf4f52c04f13cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   VcaName: Master
@@ -8237,19 +8212,7 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1990635686}
-        m_TargetAssemblyTypeName: VcaController, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1990635686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8259,7 +8222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1990635683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e2f783fda8f89144b73f2c921f31d64, type: 3}
+  m_Script: {fileID: 11500000, guid: f54e6243030f0ac43aaf4f52c04f13cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   VcaName: Music
