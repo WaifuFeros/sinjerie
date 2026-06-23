@@ -2095,6 +2095,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f05411c9b2c57b459cd4d8c8920cb49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossSound:
+    Guid:
+      Data1: -2019533892
+      Data2: 1320159763
+      Data3: 902037426
+      Data4: 1792159832
+    Path: event:/Boss
+  victorySound:
+    Guid:
+      Data1: 17575083
+      Data2: 1143888556
+      Data3: 1444321409
+      Data4: -987494605
+    Path: event:/Victory
+  bananaSound:
+    Guid:
+      Data1: 1197807706
+      Data2: 1155274501
+      Data3: -902451800
+      Data4: 208563686
+    Path: event:/Banana
   roomPanel: {fileID: 518467310}
   combatPanel: {fileID: 1607031817}
   rewardPanel: {fileID: 949505829}
@@ -8339,6 +8360,11 @@ PrefabInstance:
         type: 3}
       propertyPath: roomPrefabs.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _roomsLoop.Array.data[0]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}

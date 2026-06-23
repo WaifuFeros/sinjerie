@@ -418,7 +418,10 @@ public class CombatSystem : MonoBehaviour
         {
             Debug.Log("Victoire au combat!");
             VcaController.Instance.FadeLowerMusicVolume(2f, 0.2f);
-            RuntimeManager.PlayOneShot(victorySound);
+            if (Enemy != null && !Enemy.EnemyStats.IsBoss)
+            {
+                RuntimeManager.PlayOneShot(victorySound);
+            }
             onVictoryCallback?.Invoke();
             //isPlayed = true;
         }

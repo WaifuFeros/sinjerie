@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{4aa9178f-ee66-48bc-8304-6d3a33fdd404}">
+		<property name="assetPath">
+			<value>Banana.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.80979591836734699</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ef9333a7-41e2-4b50-930a-f3810dc1d60c}</destination>
+		</relationship>
+	</object>
+</objects>

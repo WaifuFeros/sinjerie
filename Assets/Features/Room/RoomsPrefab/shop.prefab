@@ -1946,7 +1946,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExitRoomButton
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2848681832729512375, guid: 757889da734cf98419485a553d54e33b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
