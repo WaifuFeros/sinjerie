@@ -73,9 +73,12 @@ public class UIManager : MonoBehaviour
 
     public void ShowDefeatPanel()
     {
-        HideAllPanels();
-        if (defeatPanel != null)
-            defeatPanel.SetActive(true);
+        TransitionManager.Instance.TransitionWithAction(() =>
+        {
+            HideAllPanels();
+            if (defeatPanel != null)
+                defeatPanel.SetActive(true);
+        });
     }
 
     public void ShowRewardPanel()
