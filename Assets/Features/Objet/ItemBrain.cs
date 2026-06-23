@@ -21,26 +21,20 @@ public class ItemBrain : GameDraggableObjectController, IItemObject
     [SerializeField] private Color invalidWeightTextColor = Color.red;
     [SerializeField] private Color invalidWeightImagesColor = new Color(0.3f, 0.3f, 0.3f, 1f);
     [SerializeField] private ItemDescription description;
+    [SerializeField] public ItemWiggleDOTween wiggle;
 
     [Header("Smoke Effect")]
     [SerializeField] private Animator smokeAnimator;
     [SerializeField] private float delayBeforeChange = 0.021f;
 
-    private RectTransform rectTransform;
-    private Canvas canvas;
     private CanvasGroup canvasGroup;
     private Coroutine updateCoroutine;
-    private bool isDragging;
-    private ItemWiggleDOTween wiggle;
 
     private Color _weightTextBaseColor;
 
     void Start()
     {
         name = $"Item: {itemData.objetName}";
-        isDragging = false;
-        rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
 
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
@@ -48,8 +42,6 @@ public class ItemBrain : GameDraggableObjectController, IItemObject
 
         _weightTextBaseColor = weightText.color;
         PlayerManager.Instance.OnStaminaUpdateEvent += UpdateWeightVisual;
-        //wiggle = gameObject.AddComponent<ItemWiggleDOTween>();
-        //wiggle.enabled = true;
     }
 
     private void UpdateWeightVisual()
@@ -106,14 +98,12 @@ public class ItemBrain : GameDraggableObjectController, IItemObject
 
     public override void BeginDrag(Vector3 mousePosition)
     {
-        isDragging = true;
         base.BeginDrag(mousePosition);
         description.StopLongPress();
     }
 
     public override void EndDrag()
     {
-        isDragging = false;
         base.EndDrag();
     }
 
