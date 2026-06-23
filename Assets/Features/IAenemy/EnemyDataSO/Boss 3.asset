@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boss 3
   m_EditorClassIdentifier: 
   Sprite: {fileID: 21300000, guid: 221a69d837e0e57498199db4187055e0, type: 3}
-  Name: Beber
+  Name: Boss 3
   Description: C'est un singe
   MaxHealth: 10
   MaxStamina: 6
@@ -28,3 +28,4 @@ MonoBehaviour:
   behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
   GoldReward: 10
   IsBoss: 1
+  IsActive: 0

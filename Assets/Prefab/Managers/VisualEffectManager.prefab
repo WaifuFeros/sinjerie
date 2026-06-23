@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiRootContainer: {fileID: 0}
-  _enemyIcon: {fileID: 0}
   _particles:
   - type: 0
     prefab: {fileID: 6072495273595165902, guid: a53caa5882fbf0b488a26251c179bc6a,
@@ -58,4 +57,10 @@ MonoBehaviour:
       type: 3}
   - type: 3
     prefab: {fileID: 6072495273595165902, guid: d42c6c57f7475d949a0bd314ee537646,
+      type: 3}
+  - type: 4
+    prefab: {fileID: 6072495273595165902, guid: eea0a16e6365bd6409ac1f2d33d1f994,
+      type: 3}
+  - type: 5
+    prefab: {fileID: 6072495273595165902, guid: ee8031bb6046d51499aa8cb5fe292d68,
       type: 3}
