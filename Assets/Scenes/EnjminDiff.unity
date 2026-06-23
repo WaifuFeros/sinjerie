@@ -1596,7 +1596,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -93.97}
-  m_SizeDelta: {x: 1000, y: 700}
+  m_SizeDelta: {x: 1100, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &525124176
 MonoBehaviour:
@@ -2846,6 +2846,7 @@ GameObject:
   - component: {fileID: 886044151}
   - component: {fileID: 886044150}
   - component: {fileID: 886044154}
+  - component: {fileID: 886044155}
   m_Layer: 5
   m_Name: SkipTurnButton
   m_TagString: Untagged
@@ -2872,7 +2873,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2973,6 +2974,18 @@ MonoBehaviour:
       Data3: 776551597
       Data4: 272658488
     Path: event:/Button
+--- !u!114 &886044155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886044149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9665c6388530a954087868af79c53004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &888724472
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,17 +6365,17 @@ PrefabInstance:
     - target: {fileID: 5442558841728310566, guid: a005f31f6cc01454485b5fe80bd0df1a,
         type: 3}
       propertyPath: m_Spacing.x
-      value: 24
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 5442558841728310566, guid: a005f31f6cc01454485b5fe80bd0df1a,
         type: 3}
       propertyPath: m_Spacing.y
-      value: 24
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 5442558841728310566, guid: a005f31f6cc01454485b5fe80bd0df1a,
         type: 3}
       propertyPath: m_Padding.m_Top
-      value: 55
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5442558841728310566, guid: a005f31f6cc01454485b5fe80bd0df1a,
         type: 3}
@@ -6377,7 +6390,7 @@ PrefabInstance:
     - target: {fileID: 5442558841728310566, guid: a005f31f6cc01454485b5fe80bd0df1a,
         type: 3}
       propertyPath: m_Padding.m_Bottom
-      value: 55
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5474953244947356551, guid: a005f31f6cc01454485b5fe80bd0df1a,
         type: 3}
@@ -6912,7 +6925,7 @@ PrefabInstance:
     - target: {fileID: 9149620734452161619, guid: a005f31f6cc01454485b5fe80bd0df1a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 144
+      value: 147
       objectReference: {fileID: 0}
     - target: {fileID: 9149620734452161619, guid: a005f31f6cc01454485b5fe80bd0df1a,
         type: 3}
