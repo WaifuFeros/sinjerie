@@ -1,5 +1,7 @@
 using FMODUnity;
 using System;
+using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,6 +11,7 @@ public class Enemy : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Slider healthBar;
+    [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] public UnityEngine.UI.Image enemyHead;
     [SerializeField] private AfflictionEffect afflictionEffect;
 
@@ -118,6 +121,7 @@ public class Enemy : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.value = (float)currentHealth / EnemyStats.MaxHealth;
+            healthText.text = currentHealth.ToString();
         }
     }
 

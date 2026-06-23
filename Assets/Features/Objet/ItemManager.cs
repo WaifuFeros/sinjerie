@@ -292,13 +292,10 @@ public class ItemManager : MonoBehaviour
 
         foreach (var item in activeItems)
         {
-            var wiggle = item.GetComponentInChildren<ItemWiggleDOTween>();
-            if (wiggle == null) continue;
-
             bool weatherReact = ShouldItemReactToWeather(item.itemData.objetMaterialType, weather);
             bool enemyReact = ShouldItemReactToEnemy(item.itemData.objetMaterialType, enemyType);
 
-            wiggle.SetWiggle(weatherReact || enemyReact);
+            item.wiggle.SetWiggle(weatherReact || enemyReact);
         }
     }
 
