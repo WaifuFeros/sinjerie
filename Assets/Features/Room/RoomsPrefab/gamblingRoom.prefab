@@ -1112,6 +1112,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5276367499281678399}
+    - targetCorrespondingSourceObject: {fileID: 1560766395626895032, guid: 757889da734cf98419485a553d54e33b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4437515077198139723}
   m_SourcePrefab: {fileID: 100100000, guid: 757889da734cf98419485a553d54e33b, type: 3}
 --- !u!1 &138418236993692415 stripped
 GameObject:
@@ -1139,6 +1143,25 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &4437515077198139723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138418236993692415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1cf36b7d89be8479d3891423639442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound:
+    Guid:
+      Data1: -530144235
+      Data2: 1173144793
+      Data3: 776551597
+      Data4: 272658488
+    Path: event:/Button
 --- !u!224 &503647523451043479 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1350629785395079888, guid: 757889da734cf98419485a553d54e33b,
