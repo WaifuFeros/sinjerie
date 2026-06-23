@@ -27,7 +27,9 @@ public class CombatSystem : MonoBehaviour
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
-    [Header(" Effect Settings")]
+    #region Effect Settings
+
+    [Header("Effect Settings")]
     [SerializeField] private int _initialFireDuration;
     [SerializeField] private int _subsequentFireDuration;
     [SerializeField] private int _woodOnFireAddDuration;
@@ -44,6 +46,8 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private int _metalParalyzeDuration;
     [SerializeField] private int _electricityParalyzeDuration;
     [SerializeField] private int _damageThunder;
+
+    #endregion
 
     [Header("Animation References")]
     [SerializeField] private Transform _canvasParent;
@@ -362,6 +366,9 @@ public class CombatSystem : MonoBehaviour
             Debug.Log("Le joueur est paralysé et ne peut pas attaquer ce tour !");
             StartCoroutine(EnemyAttackSequence()); // Lancer le tour de l'ennemi
         }
+
+        if (TutorialManager.Instance.IsTutorial && PlayerManager.Instance.HasTakenDamage)
+            TutorialPanelsManager.Instance.DisplayPanel(TutorialStep.ThrowOnPlayer);
     }
 
     private IEnumerator AnimateItemThrow(ObjetSO item)
@@ -578,7 +585,12 @@ public class CombatSystem : MonoBehaviour
         }
 
         if (lowestStaminaConsuption > PlayerManager.Instance.stats.currentStamina)
+        {
             HighlightSkipTurnButton();
+
+            if (TutorialManager.Instance.IsTutorial)
+                TutorialPanelsManager.Instance.DisplayPanel(TutorialStep.SkipTurn);
+        }
         else
             StopHighlightSkipTurnButton();
     }

@@ -34,6 +34,8 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
     [SerializeField] private EventReference iceSound;
 
+    public bool HasTakenDamage { get; private set; }
+
     public Action OnStaminaUpdateEvent;
     public Action OnGoldUpdateEvent;
     public Action OnAfflictionUpdateEvent;
@@ -139,6 +141,8 @@ public class PlayerManager : MonoBehaviour
         VisualEffectManager.Instance.ShakeUI(0.3f, 20f, 15);
         stats.currentHealth -= damage;
         UpdateHealthBar();
+
+        HasTakenDamage = true;
     }
 
     /// <summary>

@@ -1,46 +1,66 @@
+using System; // <-- AJOUT pour l'Action
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening; // <-- Ne pas oublier l'import de DOTween
+using DG.Tweening;
 
 public class VcaController : MonoBehaviour
 {
+    // ---> AJOUT : L'événement global que l'AudioSource va écouter
+    public static event Action<string, float> OnVcaVolumeChanged;
+
     private FMOD.Studio.VCA vca;
     public string VcaName;
 
     private Slider slider;
     private float originalVolume = 1f;
-    private bool isLowered = false; // Sécurité pour ne pas perdre le vrai volume de base
+    private bool isLowered = false;
 
     void Start()
     {
         vca = FMODUnity.RuntimeManager.GetVCA("vca:/" + VcaName);
         slider = GetComponent<Slider>();
 
-        vca.getVolume(out float volume);
+        // On récupère le volume sauvegardé, ou le volume FMOD actuel par défaut
+        float savedVolume = PlayerPrefs.GetFloat("VCA_" + VcaName, 1f);
+        vca.getVolume(out float fmodVolume);
+
+        float finalVolume = PlayerPrefs.HasKey("VCA_" + VcaName) ? savedVolume : fmodVolume;
+
+        // Appliquer le volume initial
+        SetVolume(finalVolume);
 
         if (slider != null)
         {
-            slider.SetValueWithoutNotify(volume);
+            slider.SetValueWithoutNotify(finalVolume);
         }
+    }
+
+    // ---> NOUVELLE MÉTHODE INTERNE : Centralise l'application du son et avertit Unity
+    private void ApplyVolumeInternal(float volume, bool saveToPrefs)
+    {
+        vca.setVolume(volume);
+
+        if (saveToPrefs && !isLowered)
+        {
+            PlayerPrefs.SetFloat("VCA_" + VcaName, volume);
+            PlayerPrefs.Save(); // <--- AJOUTE CETTE LIGNE : Force la sauvegarde immédiate
+        }
+
+        OnVcaVolumeChanged?.Invoke(VcaName, volume);
     }
 
     public void SetVolume(float volume)
     {
-        vca.setVolume(volume);
-        // Si la musique n'est pas atténuée, on met à jour le volume de référence
         if (!isLowered) originalVolume = volume;
+        ApplyVolumeInternal(volume, true);
     }
 
-    /// <summary>
-    /// Atténue progressivement le volume du VCA.
-    /// </summary>
     public void FadeLowerMusicVolume(float duration = 1.5f, float multiplier = 0.3f)
     {
         vca.getVolume(out float currentVolume);
 
-        // On sauvegarde le volume seulement la première fois qu'on le baisse
         if (!isLowered)
         {
             originalVolume = currentVolume;
@@ -49,20 +69,17 @@ public class VcaController : MonoBehaviour
 
         float targetVolume = originalVolume * multiplier;
 
-        // Transition fluide du volume actuel vers le volume cible
-        DOTween.To(() => currentVolume, x => vca.setVolume(x), targetVolume, duration)
+        // Modifié pour passer par notre méthode interne (permet le fade de l'AudioSource Unity !)
+        DOTween.To(() => currentVolume, x => ApplyVolumeInternal(x, false), targetVolume, duration)
             .SetEase(Ease.InOutSine);
     }
 
-    /// <summary>
-    /// Restaure progressivement le volume original du VCA.
-    /// </summary>
     public void FadeRestoreMusicVolume(float duration = 1.5f)
     {
         vca.getVolume(out float currentVolume);
 
-        DOTween.To(() => currentVolume, x => vca.setVolume(x), originalVolume, duration)
+        DOTween.To(() => currentVolume, x => ApplyVolumeInternal(x, false), originalVolume, duration)
             .SetEase(Ease.InOutSine)
-            .OnComplete(() => isLowered = false); // Réinitialise l'état à la fin du fade
+            .OnComplete(() => isLowered = false);
     }
 }

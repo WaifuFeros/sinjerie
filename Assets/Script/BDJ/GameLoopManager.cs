@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,6 +62,9 @@ public class GameLoopManager : MonoBehaviour
     {
         currentRoomNumber = 0;
 
+        if (TutorialManager.Instance.IsTutorial)
+            TutorialPanelsManager.Instance.DisplayPanel(TutorialStep.ThrowOnEnemy);
+
         // Initialiser tout les Manager
         RoomManager.Instance.Initialize(() =>
         {
@@ -120,13 +124,18 @@ public class GameLoopManager : MonoBehaviour
     {
         Debug.Log("Réussite - Combat gagné!");
 
-        if (CombatSystem.Instance.Enemy.EnemyStats.IsBoss)
-            UIManager.Instance.ShowBananaRewardPanel();
+        if (!TutorialManager.Instance.IsTutorial)
+        {
+            if (CombatSystem.Instance.Enemy.EnemyStats.IsBoss)
+                UIManager.Instance.ShowBananaRewardPanel();
+            else
+                UIManager.Instance.ShowRewardPanel();
+        }
         else
-            UIManager.Instance.ShowRewardPanel();
-        
-
-        
+        {
+            TutorialManager.Instance.IsTutorial = false;
+            UIManager.Instance.ShowTutorialVictoryPanel();
+        }
     }
 
     /// <summary>
