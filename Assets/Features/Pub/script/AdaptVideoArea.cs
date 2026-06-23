@@ -36,7 +36,7 @@ public class AdaptVideoArea : MonoBehaviour
         {
             ItemManager.Instance.SpawnRandomItem();
         }
-        PlayerManager.Instance.Heal(PlayerManager.Instance.stats.maxHealth);
+        PlayerManager.Instance.stats.currentHealth = PlayerManager.Instance.stats.maxHealth;
         CombatSystem.Instance.isPlayerTurn = true;
         CombatSystem.Instance.combatActive = true;
         CombatSystem.Instance.isDefeat = false;

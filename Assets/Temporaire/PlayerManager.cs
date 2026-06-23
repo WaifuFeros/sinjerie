@@ -140,6 +140,8 @@ public class PlayerManager : MonoBehaviour
     {
         VisualEffectManager.Instance.ShakeUI(0.3f, 20f, 15);
         stats.currentHealth -= damage;
+        if(stats.currentHealth < 0)
+            stats.currentHealth = 0;
         UpdateHealthBar();
 
         HasTakenDamage = true;
