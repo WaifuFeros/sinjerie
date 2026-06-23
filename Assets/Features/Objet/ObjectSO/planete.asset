@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 16ae8f2ebf15dfe45b30267e38f3fa2b, type: 3}
   objetName: "Plan\xE8te"
-  objetDescription: "Une gigantesque plan\xE8te"
+  objetDescription: "Une crazy plan\xE8te"
   objetMaterialType: 3
   objetWeight: 8
   objectType: 1
