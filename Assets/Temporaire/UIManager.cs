@@ -16,9 +16,6 @@ public class UIManager : MonoBehaviour
     private GameObject combatPanel;
 
     [SerializeField] 
-    private GameObject victoryPanel;
-
-    [SerializeField] 
     private GameObject rewardPanel;
 
     [SerializeField] 
@@ -31,6 +28,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject bananaPanel;
     [SerializeField] GameObject bananaBackground;
     [SerializeField] GameObject banana;
+
+    [Header("Banana Reward")]
+    [SerializeField] private GameObject bossFightMessagePanel;
+    [SerializeField] private GameObject bossFightMessage;
 
     [Header("Combat UI")]
     [SerializeField] 
@@ -68,13 +69,6 @@ public class UIManager : MonoBehaviour
         {
             combatStatusText.text = "Touchez un bouton pour attaquer!";
         }
-    }
-
-    public void ShowVictoryPanel()
-    {
-        HideAllPanels();
-        if (victoryPanel != null)
-            victoryPanel.SetActive(true);
     }
 
     public void ShowDefeatPanel()
@@ -167,6 +161,24 @@ public class UIManager : MonoBehaviour
         });
 
     }
+    public void ShowBossMessagePanel()
+    {
+        Vector3 localPos = bossFightMessage.transform.localPosition;
+        bossFightMessage.transform.localPosition = new Vector3(-1500, localPos.y, localPos.z);
+
+        bossFightMessagePanel.SetActive(true);
+
+        Sequence bossMessageSequence = DOTween.Sequence();
+        bossMessageSequence.Kill();
+
+        bossMessageSequence = DOTween.Sequence();
+        bossMessageSequence
+            .AppendInterval(0.5f)
+            .Append(bossFightMessage.transform.DOLocalMoveX(0, 0.4f).SetEase(Ease.OutQuad))
+            .AppendInterval(1f)
+            .Append(bossFightMessage.transform.DOLocalMoveX(1500, 0.4f).SetEase(Ease.InQuad))
+            .OnComplete(() => bossFightMessagePanel.SetActive(false));
+    }
     public void ShowTutorialVictoryPanel()
     {
         tutorialVictoryPanel.SetActive(true);
@@ -175,7 +187,6 @@ public class UIManager : MonoBehaviour
     {
         if (roomPanel != null) roomPanel.SetActive(false);
         if (combatPanel != null) combatPanel.SetActive(false);
-        if (victoryPanel != null) victoryPanel.SetActive(false);
         if (defeatPanel != null) defeatPanel.SetActive(false);
         if (rewardPanel != null) rewardPanel.SetActive(false);
     }
