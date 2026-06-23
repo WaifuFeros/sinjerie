@@ -92,7 +92,6 @@ public class RewardSystem : MonoBehaviour
             ItemRewards.Clear();
             ToggleAssignations.Clear();
             GameLoopManager.Instance.ExitRoom();
-            gameplayMusicVCA.FadeRestoreMusicVolume(2f);
         });
     }
     

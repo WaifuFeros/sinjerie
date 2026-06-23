@@ -64,20 +64,22 @@ public class RoomManager : MonoBehaviour
             case RoomType.None:
             case RoomType.Enemy:
                 SpawnEnemy(false);
+                Debug.Log("enemy restore music!");
+                gameplayMusicVCA.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Boss:
                 SpawnEnemy(false);
+                Debug.Log("boss restore music!");
+                gameplayMusicVCA.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Shop:
                 currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);
                 currentRoom.transform.SetParent(roomContainer, false);
-                gameplayMusicVCA.FadeLowerMusicVolume(2f, 0.2f);
                 return roomType;
             case RoomType.Special:
                 GameObject roomToSpawn = roomPrefabs[UnityEngine.Random.Range(0, roomPrefabs.Length)];
                 currentRoom = Instantiate(roomToSpawn, roomContainer.position, roomContainer.rotation);
                 currentRoom.transform.SetParent(roomContainer, false);
-                gameplayMusicVCA.FadeLowerMusicVolume(2f, 0.2f);
                 return roomType;
         }
     }

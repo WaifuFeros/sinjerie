@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static WeatherManager;
 
 public class ItemManager : MonoBehaviour
 {
@@ -31,7 +33,6 @@ public class ItemManager : MonoBehaviour
     private ItemDataBaseInizializationState _databaseState = ItemDataBaseInizializationState.NotInizialized;
 
     private Action _onLoadItemsCompleteEvent;
-
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -41,6 +42,7 @@ public class ItemManager : MonoBehaviour
     private void Start()
     {
         Initialize(null);
+
     }
 
     public void Initialize(Action onLoadCompleted)
@@ -297,6 +299,20 @@ public class ItemManager : MonoBehaviour
             bool enemyReact = ShouldItemReactToEnemy(item.itemData.objetMaterialType, enemyType);
 
             wiggle.SetWiggle(weatherReact || enemyReact);
+        }
+    }
+
+    public void setActiveMetal()
+    {
+        foreach (var item in activeItems)
+        {
+            var _metalObject = item.GetComponent<ParticleMetalObject>();
+            print(_metalObject);
+            if (_metalObject == null) continue;
+            else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm && item.itemData.objetMaterialType == ObjetMaterialType.Metal)
+            {
+                _metalObject.enabled = true;
+            }
         }
     }
 }

@@ -157,6 +157,7 @@ public class CombatSystem : MonoBehaviour
             deckList.RemoveAt(randomIndex);
             PlayerManager.Instance.stats.Deck = deckList.ToArray();
             ItemManager.Instance.SpawnItem(obj);
+            ItemManager.Instance.setActiveMetal();
         }
     }
 

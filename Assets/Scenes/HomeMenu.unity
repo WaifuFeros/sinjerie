@@ -1565,6 +1565,7 @@ GameObject:
   - component: {fileID: 356959390}
   - component: {fileID: 356959393}
   - component: {fileID: 356959394}
+  - component: {fileID: 356959395}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -1587,10 +1588,10 @@ RectTransform:
   - {fileID: 839577020}
   m_Father: {fileID: 718835626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -535}
-  m_SizeDelta: {x: 276.09, y: 104.9}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -465}
+  m_SizeDelta: {x: 276.09, y: 104.899994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356959390
 MonoBehaviour:
@@ -1717,6 +1718,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9665c6388530a954087868af79c53004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &356959395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356959388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2f783fda8f89144b73f2c921f31d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VcaName: Menu
 --- !u!1 &358238350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,7 +1805,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 162, y: 125}
+  m_AnchoredPosition: {x: 162, y: 80}
   m_SizeDelta: {x: 270, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &373351256
@@ -4900,6 +4914,7 @@ GameObject:
   - component: {fileID: 982641078}
   - component: {fileID: 982641076}
   - component: {fileID: 982641080}
+  - component: {fileID: 982641081}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -5031,6 +5046,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
+--- !u!114 &982641081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982641075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 367036893
+      Data2: 1332342721
+      Data3: -1485295437
+      Data4: -1245652166
+    Path: event:/Menu
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1019567566
 GameObject:
   m_ObjectHideFlags: 0
@@ -5575,7 +5621,7 @@ GameObject:
   - component: {fileID: 1172129031}
   - component: {fileID: 1172129030}
   m_Layer: 5
-  m_Name: Start (1)
+  m_Name: Tuto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5596,9 +5642,9 @@ RectTransform:
   - {fileID: 977468560}
   m_Father: {fileID: 718835626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375.9, y: -535}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -587}
   m_SizeDelta: {x: 276.09, y: 104.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1172129030
@@ -7870,7 +7916,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -162, y: 125}
+  m_AnchoredPosition: {x: -162, y: 80}
   m_SizeDelta: {x: 270, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1922787600

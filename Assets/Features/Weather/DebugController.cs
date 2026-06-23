@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class DebugController : MonoBehaviour
+ public class DebugController : MonoBehaviour
 {
     public GameObject debugPanel;
     public TMP_Dropdown weatherDropdown;
