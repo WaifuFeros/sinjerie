@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FreezeParticle : MonoBehaviour
+public class ThunderParticle : MonoBehaviour
 {
     [SerializeField] private RectTransform _rectTransform;
     [SerializeField] private CanvasGroup _canvasGroup;
@@ -23,34 +23,9 @@ public class FreezeParticle : MonoBehaviour
         DOTween.Kill(_rectTransform);
     }
 
-    public void Display()
-    {
-        DOTween.Kill(_rectTransform);
-
-        var seq = DOTween.Sequence();
-
-        seq.SetTarget(_rectTransform);
-        seq.Append(_canvasGroup.DOFade(1, _fadeDuration));
-        seq.Join(_rectTransform.DOScale(1, _fadeDuration));
-
-        seq.Play();
-    }
-
-    public void Hide()
-    {
-        DOTween.Kill(_rectTransform);
-
-        var seq = DOTween.Sequence();
-
-        seq.SetTarget(_rectTransform);
-        seq.Append(_canvasGroup.DOFade(0, _fadeDuration));
-        seq.Join(_rectTransform.DOScale(_startingScale, _fadeDuration));
-
-        seq.Play();
-    }
-
     public void Shake()
     {
+
         _rectTransform.DOShakeAnchorPos(_shakeDuration, Vector2.right * _shakeStrenght).OnKill(() =>
         {
             _rectTransform.anchoredPosition = Vector2.zero;

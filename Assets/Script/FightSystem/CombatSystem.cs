@@ -118,6 +118,9 @@ public class CombatSystem : MonoBehaviour
         combatActive = true;
         isPlayerTurn = true;
 
+        if (Enemy.EnemyStats.IsBoss)
+            UIManager.Instance.ShowBossMessagePanel();
+
         // Mettre la stamina au max
         PlayerManager.Instance.refillStamina();
 
