@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
+using FMODUnity;
 
 public class ItemToBuy : MonoBehaviour, IItemObject
 {
@@ -22,6 +23,10 @@ public class ItemToBuy : MonoBehaviour, IItemObject
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private Color _notEnoughMoneyTextColor = Color.red;
     [SerializeField] private Color _notEnoughMoneyImageColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+
+    [Header("Audio")]
+    [SerializeField] private EventReference coinSound;
+    [SerializeField] private EventReference wrongSound;
 
     private Color _priceTextBaseColor;
 
@@ -87,6 +92,7 @@ public class ItemToBuy : MonoBehaviour, IItemObject
         {
             // Ajoute l'item au deck du joueur et retire l'or
             PlayerManager.Instance.removeGold(price);
+            RuntimeManager.PlayOneShot("coinSound");
             var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
             deckList.Add(itemToBuySO);
             PlayerManager.Instance.stats.Deck = deckList.ToArray();
@@ -95,6 +101,10 @@ public class ItemToBuy : MonoBehaviour, IItemObject
             GetComponent<Button>().interactable = false;
             item.SetActive(false);
             button.interactable = false;
+        }
+        else
+        {
+            RuntimeManager.PlayOneShot("wrongSound");
         }
     }
 

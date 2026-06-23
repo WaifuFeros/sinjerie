@@ -13,9 +13,6 @@ public class RewardSystem : MonoBehaviour
 {
     public static RewardSystem Instance { get; private set; }
 
-    [SerializeField]
-    private VcaController gameplayMusicVCA;
-
     [Header("Reward Settings")]
 
     public int NumberOfToggle;

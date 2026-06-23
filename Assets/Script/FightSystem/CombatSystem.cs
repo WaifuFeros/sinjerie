@@ -19,7 +19,6 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] private EventReference healSound;
     [SerializeField] private EventReference victorySound;
     [SerializeField] private EventReference defeatSound;
-    //[SerializeField] private VcaController gameplayMusicVCA;
 
     [Header("Combat Settings")]
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
@@ -427,8 +426,8 @@ public class CombatSystem : MonoBehaviour
         {
             isDefeat = true;
             Debug.Log("Défaite au combat!");
-            VcaController.Instance.FadeLowerMusicVolume(2f, 0f);
             RuntimeManager.PlayOneShot(defeatSound);
+            VcaController.Instance.FadeLowerMusicVolume(2f, 0f);
             onDefeatCallback?.Invoke();
             isPlayed = true;
         }
