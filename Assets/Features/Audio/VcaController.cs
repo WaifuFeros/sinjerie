@@ -81,5 +81,6 @@ public class VcaController : MonoBehaviour
         DOTween.To(() => currentVolume, x => ApplyVolumeInternal(x, false), originalVolume, duration)
             .SetEase(Ease.InOutSine)
             .OnComplete(() => isLowered = false);
+        Debug.Log($"RESTORING");
     }
 }
