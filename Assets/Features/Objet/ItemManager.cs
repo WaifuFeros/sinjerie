@@ -108,6 +108,7 @@ public class ItemManager : MonoBehaviour
 
         var slot = InventoryManager.Instance.GetEmptySlot();
         slot.SetItem(newItemBrain);
+        setActiveMetal();
     }
 
     // Recup des items de l'inventaire
