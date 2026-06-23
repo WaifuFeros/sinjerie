@@ -1,8 +1,5 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,15 +15,6 @@ public class DescriptionWindow : MonoBehaviour
     [SerializeField] private Image _effectImage;
     [SerializeField] private TextMeshProUGUI _effectText;
     [SerializeField] private TextMeshProUGUI _weightText;
-
-    [Header("Asset")]
-    [SerializeField] private Sprite _communSprite;
-    [SerializeField] private Sprite _uncommonSprite;
-    [SerializeField] private Sprite _rareSprite;
-    [SerializeField] private Sprite _epicSprite;
-    [SerializeField] private Sprite _lengendarySprite;
-    [SerializeField] private Sprite _healSprite;
-    [SerializeField] private Sprite _atkSprite;
 
     [Header("Animation")]
     [SerializeField] private float _hiddenScale;
@@ -60,33 +48,10 @@ public class DescriptionWindow : MonoBehaviour
             _materialTypeText.gameObject.SetActive(false);
         }
 
-        switch (item.Rarity)
-        {
-            case ObjetRarity.Common:
-                _rarityBorder.sprite = _communSprite;
-                break;
-            case ObjetRarity.Uncommon:
-                _rarityBorder.sprite = _uncommonSprite;
-                break;
-            case ObjetRarity.Rare:
-                _rarityBorder.sprite = _rareSprite;
-                break;
-            case ObjetRarity.Epic:
-                _rarityBorder.sprite = _epicSprite;
-                break;
-            case ObjetRarity.Legendary:
-                _rarityBorder.sprite = _lengendarySprite;
-                break;
-        }
+        _rarityBorder.sprite = ItemManager.Instance.GetRaritySprite(item.Rarity);
 
-        _effectImage.gameObject.SetActive(true);
-
-        if (item.objectType == ObjetEffectType.Heal)
-            _effectImage.sprite = _healSprite;
-        else if (item.objectType == ObjetEffectType.Attack)
-            _effectImage.sprite = _atkSprite;
-        else if (item.objectType == ObjetEffectType.Special)
-            _effectImage.gameObject.SetActive(false);
+        _effectImage.gameObject.SetActive(ItemManager.Instance.GetObjetTypeSprite(item.objectType, out Sprite result));
+        _effectImage.sprite = result;
 
         _effectText.text = item.objectEffect.ToString();
         _weightText.text = item.objetWeight.ToString();

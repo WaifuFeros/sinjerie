@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: Rikiki
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 21300000, guid: d990c5243f5aab44390a630b10fd1074, type: 3}
+  objetSprite: {fileID: 21300000, guid: 2d49ae37056977f4688cfd0b83177d8c, type: 3}
   objetName: Baguette Rikiki
-  objetDescription: Set the weight of all the items to 1.
+  objetDescription: "Passe le poids de tous les objets \xE0 1."
   objetMaterialType: 0
   objetWeight: 4
   objectType: 2

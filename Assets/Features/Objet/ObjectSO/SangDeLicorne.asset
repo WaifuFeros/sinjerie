@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 19cc72642e7f5b1429fd341184cf5b9e, type: 3}
   objetName: Sang de licorne
-  objetDescription: on raconte qu'il peut rallonger la vie
+  objetDescription: "Le sang de licorne a des propri\xE9t\xE9s magique qui vous soignera
+    une grande quantit\xE9 de vie."
   objetMaterialType: 0
   objetWeight: 4
   objectType: 0

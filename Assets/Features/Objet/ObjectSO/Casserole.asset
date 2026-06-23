@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: b0c3de36ee1effe4884c3519d1874514, type: 3}
   objetName: Casserole
-  objetDescription: "une Casserole en acier renforc\xE9"
+  objetDescription: "une Casserole qui peut conduire l'\xE9lectricit\xE9.\n\n\nOn
+    raconte que lors des orages, lancer cet item  sur votre ennemis fait tomber la
+    foudre sur lui."
   objetMaterialType: 1
   objetWeight: 3
   objectType: 1

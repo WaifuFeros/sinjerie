@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: sword
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 795afcee7f34f504ca52493a9e9589f0, type: 3}
-  objetName: Sword
-  objetDescription: A simple sword
+  objetName: "\xE9p\xE9e"
+  objetDescription: "une \xE9p\xE9e, parfait pour taillader vos ennemis.\n\n\nOn
+    raconte que lors des orages, lancer cet item  sur votre ennemis fait tomber la
+    foudre sur lui."
   objetMaterialType: 1
   objetWeight: 3
   objectType: 1

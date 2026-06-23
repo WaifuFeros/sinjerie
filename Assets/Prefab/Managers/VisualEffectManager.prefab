@@ -45,7 +45,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiRootContainer: {fileID: 0}
-  _fireParticlePrefab: {fileID: 6072495273595165902, guid: a53caa5882fbf0b488a26251c179bc6a,
-    type: 3}
-  _waterParticlePrefab: {fileID: 6072495273595165902, guid: 9ddb1b7c339e60c4a80c893ec67743b9,
-    type: 3}
+  _particles:
+  - type: 0
+    prefab: {fileID: 6072495273595165902, guid: a53caa5882fbf0b488a26251c179bc6a,
+      type: 3}
+  - type: 1
+    prefab: {fileID: 6072495273595165902, guid: 9ddb1b7c339e60c4a80c893ec67743b9,
+      type: 3}
+  - type: 2
+    prefab: {fileID: 6072495273595165902, guid: acccb9d24ae89a1479df1924cad59230,
+      type: 3}
+  - type: 3
+    prefab: {fileID: 6072495273595165902, guid: d42c6c57f7475d949a0bd314ee537646,
+      type: 3}
+  - type: 4
+    prefab: {fileID: 6072495273595165902, guid: eea0a16e6365bd6409ac1f2d33d1f994,
+      type: 3}
+  - type: 5
+    prefab: {fileID: 6072495273595165902, guid: ee8031bb6046d51499aa8cb5fe292d68,
+      type: 3}

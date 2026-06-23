@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 78a39c4388a90da41acae810b87c875d, type: 3}
   objetName: Bandage
-  objetDescription: un simple bandage
+  objetDescription: un simple bandage qui peut vous soigner.
   objetMaterialType: 2
   objetWeight: 2
   objectType: 0

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public enum GameState
 public class GameLoopManager : MonoBehaviour
 {
     public static GameLoopManager Instance { get; private set; }
+
+    [SerializeField] private VcaController gameplayMusicVCA;
 
     [Header("Room Settings")]
     [SerializeField] private int currentRoomNumber = 0;
@@ -45,7 +48,11 @@ public class GameLoopManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        SceneManager.LoadScene(_gameSceneName);
+        TransitionManager.Instance.TransitionWithAction(() =>
+        {
+            gameplayMusicVCA.FadeRestoreMusicVolume(2f);
+            SceneLoadManager.Instance.LoadSceneAsActive(_gameSceneName);
+        });
     }
 
     /// <summary>
@@ -54,6 +61,9 @@ public class GameLoopManager : MonoBehaviour
     public void StartGame()
     {
         currentRoomNumber = 0;
+
+        if (TutorialManager.Instance.IsTutorial)
+            TutorialPanelsManager.Instance.DisplayPanel(TutorialStep.ThrowOnEnemy);
 
         // Initialiser tout les Manager
         RoomManager.Instance.Initialize(() =>
@@ -64,7 +74,7 @@ public class GameLoopManager : MonoBehaviour
                 {
                     RewardSystem.Instance.Initialize(() =>
                     {                         // Tout est prêt, passer à la première salle
-                        StartCoroutine(TransitionToNewRoom());
+                        TransitionToNewRoom(true);
                     });
 
                 });
@@ -77,30 +87,32 @@ public class GameLoopManager : MonoBehaviour
     /// <summary>
     /// Étape 2: Nouvelle salle
     /// </summary>
-    private IEnumerator TransitionToNewRoom()
+    private void TransitionToNewRoom(bool addDelayToItemSpawn = false)
     {
         currentRoomNumber++;
 
-        // Générer une nouvelle salle (0 = normal, 1 = spécial)
-        RoomType roomType = RoomManager.Instance.GenerateNewRoom(currentRoomNumber);
-        
-        if (roomType == RoomType.Enemy || roomType == RoomType.Boss)
+        WeatherManager.Instance.UpdateWeather(() =>
         {
-            // Mettre à jour l'UI
-            UIManager.Instance.UpdateRoomCounter(currentRoomNumber);
-            UIManager.Instance.ShowRoomUI();
-            // Passer au combat
-            StartCombat();
-        }
-        yield return null;
+            // Générer une nouvelle salle (0 = normal, 1 = spécial)
+            RoomType roomType = RoomManager.Instance.GenerateNewRoom(currentRoomNumber);
+
+            if (roomType == RoomType.Enemy || roomType == RoomType.Boss)
+            {
+                // Mettre à jour l'UI
+                UIManager.Instance.UpdateRoomCounter(currentRoomNumber);
+                UIManager.Instance.ShowRoomUI();
+                // Passer au combat
+                StartCombat(addDelayToItemSpawn);
+            }
+        });
     }
 
     /// <summary>
     /// Étape 3: Ennemi - Démarrage du combat
     /// </summary>
-    public void StartCombat()
+    public void StartCombat(bool addDelayToItemSpawn = false)
     {
-        CombatSystem.Instance.StartCombat(OnCombatVictory, OnCombatDefeat);
+        CombatSystem.Instance.StartCombat(OnCombatVictory, OnCombatDefeat, addDelayToItemSpawn);
         UIManager.Instance.ShowCombatUI();
 
     }
@@ -112,13 +124,18 @@ public class GameLoopManager : MonoBehaviour
     {
         Debug.Log("Réussite - Combat gagné!");
 
-        if (CombatSystem.Instance.currentEnemy.EnemyStats.IsBoss)
-            UIManager.Instance.ShowBananaRewardPanel();
+        if (!TutorialManager.Instance.IsTutorial)
+        {
+            if (CombatSystem.Instance.Enemy.EnemyStats.IsBoss)
+                UIManager.Instance.ShowBananaRewardPanel();
+            else
+                UIManager.Instance.ShowRewardPanel();
+        }
         else
-            UIManager.Instance.ShowRewardPanel();
-        
-
-        
+        {
+            TutorialManager.Instance.IsTutorial = false;
+            UIManager.Instance.ShowTutorialVictoryPanel();
+        }
     }
 
     /// <summary>
@@ -136,7 +153,7 @@ public class GameLoopManager : MonoBehaviour
     /// </summary>
     public void ExitRoom()
     {
-        StartCoroutine(TransitionToNewRoom());
+        TransitionToNewRoom();
     }
 
     public int GetCurrentRoomNumber()

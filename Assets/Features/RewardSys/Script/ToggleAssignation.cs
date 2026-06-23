@@ -7,63 +7,34 @@ using DG.Tweening;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
+public class ToggleAssignation : MonoBehaviour, IItemObject, IPointerEnterHandler, IPointerExitHandler
 {
+    public ObjetSO ItemData => Item;
+
     public ObjetSO Item;
     public bool IsSelected;
 
     [Header("Asset")]
-    [SerializeField] private Sprite _communSprite;
-    [SerializeField] private Sprite _uncommonSprite;
-    [SerializeField] private Sprite _rareSprite;
-    [SerializeField] private Sprite _epicSprite;
-    [SerializeField] private Sprite _lengendarySprite;
-    [SerializeField] private Sprite _healSprite;
-    [SerializeField] private Sprite _atkSprite;
     [SerializeField] private Sprite _itemHide;
 
     [Header("UI")]
     [SerializeField] private Image itemIcon;
     [SerializeField] private Image itemBackground;
-    [SerializeField] private GameObject effectImage;
-    [SerializeField] private GameObject weightImage;
+    [SerializeField] private Image effectImage;
+    [SerializeField] private Image weightImage;
     [SerializeField] private TextMeshProUGUI effectText;
     [SerializeField] private TextMeshProUGUI weightText;
 
-    private RewardSystem RewardSystem;
     public void Initialized(ObjetSO itemsInToggle, RewardSystem rewardSystem)
     {
         Item = itemsInToggle;
-        RewardSystem = rewardSystem;
 
         // Ajoute les visuels
         if (WeatherManager.Instance.effetMeteorologique != GameWeatherType.Mist) {
             itemIcon.sprite = Item.objetSprite;
-            switch (Item.Rarity)
-            {
-                case ObjetRarity.Common:
-                    itemBackground.sprite = _communSprite;
-                    break;
-                case ObjetRarity.Uncommon:
-                    itemBackground.sprite = _uncommonSprite;
-                    break;
-                case ObjetRarity.Rare:
-                    itemBackground.sprite = _rareSprite;
-                    break;
-                case ObjetRarity.Epic:
-                    itemBackground.sprite = _epicSprite;
-                    break;
-                case ObjetRarity.Legendary:
-                    itemBackground.sprite = _lengendarySprite;
-                    break;
-            }
-            effectImage.SetActive(true);
-            if (Item.objectType == ObjetEffectType.Heal)
-                effectImage.GetComponent<Image>().sprite = _healSprite;
-            else if (Item.objectType == ObjetEffectType.Attack)
-                effectImage.GetComponent<Image>().sprite = _atkSprite;
-            else if (Item.objectType == ObjetEffectType.Special)
-                effectImage.SetActive(false);
+            itemBackground.sprite = ItemManager.Instance.GetRaritySprite(Item.Rarity);
+            effectImage.gameObject.SetActive(ItemManager.Instance.GetObjetTypeSprite(Item.objectType, out Sprite result));
+            effectImage.sprite = result;
 
             effectText.text = Item.objectEffect.ToString();
             weightText.text = Item.objetWeight.ToString();
@@ -72,8 +43,8 @@ public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerE
         {
             // Affiche une icone de brouillard
             itemIcon.gameObject.SetActive(false);
-            effectImage.SetActive(false);
-            weightImage.SetActive(false);
+            effectImage.gameObject.SetActive(false);
+            weightImage.gameObject.SetActive(false);
 
             itemBackground.sprite = _itemHide;
         }
@@ -82,13 +53,13 @@ public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerE
     public void PressToggle()
     {
         int count = 0;
-        foreach (var toggleAssignation in RewardSystem.ToggleAssignations)
+        foreach (var toggleAssignation in RewardSystem.Instance.ToggleAssignations)
         {
             if (toggleAssignation.IsSelected)
                 count++;
         }
 
-        bool hasEnoughSelected = count >= RewardSystem.NumberOfRewardToChoose;
+        bool hasEnoughSelected = count >= RewardSystem.Instance.NumberOfRewardToChoose;
 
         // Annule les anim en cours
         transform.DOKill();
@@ -98,13 +69,13 @@ public class ToggleAssignation : MonoBehaviour , IPointerEnterHandler, IPointerE
         if (!IsSelected && !hasEnoughSelected)
         {
             transform.DOScale(Vector3.one * 1.4f, 0.2f).SetEase(Ease.OutBack);
-            RewardSystem.ItemRewards.Add(Item);
+            RewardSystem.Instance.ItemRewards.Add(Item);
             IsSelected = true;
         }
         else if (IsSelected)
         {
             transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
-            RewardSystem.ItemRewards.Remove(Item);
+            RewardSystem.Instance.ItemRewards.Remove(Item);
             IsSelected = false;
         }
         else

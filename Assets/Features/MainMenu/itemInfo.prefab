@@ -581,6 +581,7 @@ GameObject:
   - component: {fileID: 4887853503184978234}
   - component: {fileID: 1180166681716107607}
   - component: {fileID: -6519884659312511468}
+  - component: {fileID: 7307757157433962295}
   m_Layer: 5
   m_Name: itemInfo
   m_TagString: Untagged
@@ -634,13 +635,19 @@ MonoBehaviour:
   itemData: {fileID: 0}
   itemIcon: {fileID: 8057034763559363972}
   itemBackground: {fileID: 6214382334856560422}
-  effectImage: {fileID: 606718359362830057}
+  effectImage: {fileID: 8229670100182393962}
   effectText: {fileID: 3134645131967731897}
   weightText: {fileID: 589202801167609858}
-  _communSprite: {fileID: 21300000, guid: 67d7f697860ed294297b8e570df3d5b3, type: 3}
-  _uncommonSprite: {fileID: 21300000, guid: 7d5dbc6b1081cd4498d44626fcbb84a4, type: 3}
-  _rareSprite: {fileID: 21300000, guid: addce85b734dfb14688ef1fb2fd38bbe, type: 3}
-  _epicSprite: {fileID: 21300000, guid: 5684c6d12fc6ea740ae540028981fdfe, type: 3}
-  _lengendarySprite: {fileID: 21300000, guid: 62a6d2dd612f75048b65e76e21494fcd, type: 3}
-  _healSprite: {fileID: 21300000, guid: 69416dd45b48d8b4593c9d5c17312c41, type: 3}
-  _atkSprite: {fileID: 21300000, guid: bde18a5e5ed228f46a792611f4eafe1e, type: 3}
+--- !u!114 &7307757157433962295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316754013918109564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3852a64a3b02243b3bbfe927d1cc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  descriptionPressTime: 0.5

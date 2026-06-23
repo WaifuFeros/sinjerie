@@ -4,13 +4,16 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class DebugController : MonoBehaviour
+ public class DebugController : MonoBehaviour
 {
     public GameObject debugPanel;
     public TMP_Dropdown weatherDropdown;
     public TMP_InputField temperatureInputField;
 
+    public TMP_Dropdown enemyDropdown;
+
     private List<GameWeatherType> weatherList;
+    private List<EnemySO> enemyList;
 
     private void Start()
     {
@@ -21,6 +24,9 @@ public class DebugController : MonoBehaviour
     {
         InitWeatherDropdown();
         InitTemperature();
+
+        InitEnemyDropdown();
+
         debugPanel.SetActive(true);
     }
 
@@ -46,7 +52,7 @@ public class DebugController : MonoBehaviour
     public void SetWeather(int index)
     {
         WeatherManager.Instance.SetWeatherByType(weatherList[index]);
-        CombatSystem.Instance.MeteoCheck(true);
+        CombatSystem.Instance?.MeteoCheck(true);
     }
 
     public void SetWeatherLock(bool value)
@@ -59,6 +65,26 @@ public class DebugController : MonoBehaviour
         if (float.TryParse(tempAsText, out float temp))
         {
             WeatherManager.Instance.SetTemperature(temp);
+        }
+    }
+
+    public void InitEnemyDropdown()
+    {
+        enemyList = RoomManager.Instance.GetEnemyList();
+
+        enemyDropdown.ClearOptions();
+        enemyDropdown.AddOptions(enemyList.Select(x => x.Name).ToList());
+
+        enemyDropdown.SetValueWithoutNotify(enemyList.IndexOf(CombatSystem.Instance.Enemy.EnemyStats));
+    }
+
+    public void SetEnemy()
+    {
+        EnemySO enemy = enemyList[enemyDropdown.value];
+
+        if (enemy != null)
+        {
+            RoomManager.Instance.SetEnemy(enemy);
         }
     }
 }

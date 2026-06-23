@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,14 @@ public class CombatSystem : MonoBehaviour
 {
     public static CombatSystem Instance { get; private set; }
 
+    public bool isPlayerTurn { get; set; } = true;
+
+    [Header("Audio")]
+    [SerializeField] private EventReference hitSound;
+    [SerializeField] private EventReference healSound;
+    [SerializeField] private EventReference victorySound;
+    [SerializeField] private EventReference defeatSound;
+    //[SerializeField] private VcaController gameplayMusicVCA;
 
     [Header("Combat Settings")]
     [SerializeField] private float enemyAttackDelay = 2f; // Délai avant que l'ennemi attaque
@@ -18,36 +27,44 @@ public class CombatSystem : MonoBehaviour
     [Header("Skip Turn Button")]
     [SerializeField] private UnityEngine.UI.Button skipTurnButton; // Bouton pour passer le tour
 
-    [Header(" Effect Settings")]
-    [SerializeField] private int _fireDuration;
-    //[SerializeField] private int _freezeDuration;
-    [SerializeField] private int _paralyzeDuration;
-    [SerializeField] private int _wetDuration;
-    [SerializeField] private int _addFireDuration;
+    #region Effect Settings
+
+    [Header("Effect Settings")]
+    [SerializeField] private int _initialFireDuration;
+    [SerializeField] private int _subsequentFireDuration;
+    [SerializeField] private int _woodOnFireAddDuration;
+    [SerializeField] private int _iceOnFireLoseDuration;
+    [Space]
+    [SerializeField] private int _initialWetDuration;
+    [SerializeField] private int _subsequentWetDuration;
+    [Space]
+    [SerializeField] private int _freezeDuration;
+    [SerializeField] private int _perfectIceFreezeDuration;
+    [SerializeField] private int _fireOnIceLoseDuration;
+    public int freezeProcThreshold;
+    [Space]
+    [SerializeField] private int _metalParalyzeDuration;
+    [SerializeField] private int _electricityParalyzeDuration;
     [SerializeField] private int _damageThunder;
+
+    #endregion
 
     [Header("Animation References")]
     [SerializeField] private Transform _canvasParent;
     [SerializeField] private GameObject _itemAnimPrefab;
-    [SerializeField] private Transform _enemyTransform;
-    [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _animationDuration = 0.8f;
     [SerializeField] private float _highlightSkipButtonSize = 1.2f;
     [SerializeField] private float _highlightSkipButtonTime = 0.2f;
 
-
-    [Header("UI")]
-    [SerializeField] public GameObject _playerhead;
-    [SerializeField] private GameObject _ennemyhead;
-
     [Header("Data Storage")]
     [SerializeField] private SelectedCharacterData dataStorage;
 
-    public Enemy currentEnemy;
+    [field: SerializeField] public Enemy Enemy { get; private set; }
     private System.Action onVictoryCallback;
     private System.Action onDefeatCallback;
-    private bool combatActive = false;
-    public bool isPlayerTurn = true;
+    public bool combatActive = false;
+    public bool isPlayed = false;
+    public bool isDefeat;
 
     private RectTransform _skipButtonRectTransform;
 
@@ -62,6 +79,7 @@ public class CombatSystem : MonoBehaviour
     private void Start()
     {
         PlayerManager.Instance.OnStaminaUpdateEvent += CheckItemsAvailable;
+        PlayerManager.Instance.OnAfflictionUpdateEvent += CheckPlayerFreeze;
     }
 
     private void OnDestroy()
@@ -77,12 +95,11 @@ public class CombatSystem : MonoBehaviour
         if (dataStorage.selectedCharacter != null)
         {
             PlayerManager.Instance.stats.Deck = dataStorage.selectedCharacter.startDeck;
-            print("hey");
-            _playerhead.GetComponent<UnityEngine.UI.Image>().sprite = dataStorage.selectedCharacter.characterSprite;
+            PlayerManager.Instance.playerHead.sprite = dataStorage.selectedCharacter.characterSprite;
         }
         onLoadCompleted?.Invoke();
     }
-
+    
     ///<summary>
     ///Configure le bouton de passage de tour
     ///</summary>
@@ -98,7 +115,7 @@ public class CombatSystem : MonoBehaviour
     /// <summary>
     /// Démarre un combat
     /// </summary>
-    public void StartCombat(System.Action onVictory, System.Action onDefeat)
+    public void StartCombat(System.Action onVictory, System.Action onDefeat, bool addDelayToItemSpawn = false)
     {
         onVictoryCallback = onVictory;
         onDefeatCallback = onDefeat;
@@ -108,19 +125,19 @@ public class CombatSystem : MonoBehaviour
         // Mettre la stamina au max
         PlayerManager.Instance.refillStamina();
 
-        // Récupérer l'ennemi actuel
-        if (RoomManager.Instance != null)
-        {
-            GameObject enemyObj = RoomManager.Instance.GetEnemy();
-            if (enemyObj != null)
-            {
-                currentEnemy = enemyObj.GetComponent<Enemy>();
-            }
-        }
-
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille au debut du combat
 
         // Ajout item dans l'inventaire du joueur
+        StartCoroutine(AddItemsToPlayerInventory(addDelayToItemSpawn ? 0.25f : 0));
+
+        SetupSkipTurnButtonInteractable(true);
+
+    }
+
+    private IEnumerator AddItemsToPlayerInventory(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
         for (int i = 0; i < PlayerManager.Instance.stats.nbStartItem; i++)
         {
             if (PlayerManager.Instance.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
@@ -131,16 +148,15 @@ public class CombatSystem : MonoBehaviour
             deckList.RemoveAt(randomIndex);
             PlayerManager.Instance.stats.Deck = deckList.ToArray();
             ItemManager.Instance.SpawnItem(obj);
+            ItemManager.Instance.setActiveMetal();
         }
-
-        SetupSkipTurnButtonInteractable(true);
-
     }
 
     public void AttackPlayer(ObjetSO attack)
     {
         if (!combatActive)
             return;
+        RuntimeManager.PlayOneShot(hitSound);
         PlayerManager.Instance.TakeDamage(attack.objectEffect);
         CheckItemEffect(attack, true);
         CheckCombatEnd();
@@ -149,6 +165,7 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive)
             return;
+        RuntimeManager.PlayOneShot(healSound);
         PlayerManager.Instance.Heal(healItem.objectEffect);
         CheckItemEffect(healItem, true);
         CheckCombatEnd();
@@ -156,17 +173,20 @@ public class CombatSystem : MonoBehaviour
 
     public void AttackEnemy(ObjetSO attack)
     {
-        if (!combatActive || currentEnemy == null)
+        if (!combatActive || Enemy == null)
             return;
-        currentEnemy.TakeDamage(attack.objectEffect);
+        RuntimeManager.PlayOneShot(hitSound);
+        Enemy.TakeDamage(attack.objectEffect);
         CheckItemEffect(attack, false);
         CheckCombatEnd();
     }
     public void HealEnemy(ObjetSO healItem)
     {
-        if (!combatActive || currentEnemy == null)
+        if (!combatActive || Enemy == null)
             return;
-        currentEnemy.Heal(healItem.objectEffect);
+
+        RuntimeManager.PlayOneShot(healSound);
+        Enemy.Heal(healItem.objectEffect);
         CheckItemEffect(healItem, false);
         CheckCombatEnd();
     }
@@ -179,38 +199,54 @@ public class CombatSystem : MonoBehaviour
     {
         StopHighlightSkipTurnButton();
 
-        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour du joueur
-        WeatherEffect.Instance.OnFire(false);
-        WeatherEffect.Instance.OnWet(false);
-        if (!combatActive || !isPlayerTurn)
-        {
-            return;
-        }
-        isPlayerTurn = false;
+        StartCoroutine(EndPlayerTurnSequence());
+    }
+
+    private IEnumerator EndPlayerTurnSequence()
+    {
         SetupSkipTurnButtonInteractable(false);
+        isPlayerTurn = false;
+
+        WeatherEffect.Instance.OnWet(false);
+        MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour du joueur
+        yield return WeatherEffect.Instance.OnFire(false);
+
+        if (!combatActive)
+            yield break;
+
         PlayerManager.Instance.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
-        // l'ennemis attack
-        if(WeatherEffect.Instance.OnParalyze(false))
+
+        bool enemyCanPlay = true;
+        if (WeatherEffect.Instance.OnParalyze(false))
         {
-            Debug.Log("aaaaaaaaaaaL'ennemi est paralysé et ne peut pas attaquer ce tour !");
-            isPlayerTurn = true;
-            SetupSkipTurnButtonInteractable(true);
-            return;
-        }
-        else if (WeatherEffect.Instance.OnFreeze(false))
-        {
+            enemyCanPlay = false;
             Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            yield return WeatherEffect.Instance.PlayParalyzeAnimation(false);
+        }
+        
+        if (WeatherEffect.Instance.CheckFreeze(false))
+        {
+            enemyCanPlay = false;
+            Debug.Log("L'ennemi est gelé et ne peut pas attaquer ce tour !");
+            yield return WeatherEffect.Instance.PlayFrozenAnimation(false);
+            Enemy.FreezeCounter = 0;
+        }
+
+        if (enemyCanPlay)
+        {
+            yield return EnemyAttackSequence();
+        }
+        else
+        {
             isPlayerTurn = true;
             SetupSkipTurnButtonInteractable(true);
-            return;
         }
-        StartCoroutine(EnemyAttackSequence());
     }
 
     /// <summary>
     /// Vérifie si le bouton de passage de tour doit être interactif
     /// </summary>
-    private void SetupSkipTurnButtonInteractable(bool interactable)
+    public void SetupSkipTurnButtonInteractable(bool interactable)
     {
         if (skipTurnButton != null)
         {
@@ -223,10 +259,16 @@ public class CombatSystem : MonoBehaviour
     /// </summary>
     public void CheckCombatEnd()
     {
-        if (currentEnemy != null && currentEnemy.IsDead())
+        if (isDefeat)
+            return;
+
+        if (Enemy != null && Enemy.IsDead())
             StartCoroutine(EndCombat(true));
         else if (PlayerManager.Instance.IsDead())
+        {
+            print("############# tu es mort");
             StartCoroutine(EndCombat(false));
+        }
     }
 
     /// <summary>
@@ -237,13 +279,13 @@ public class CombatSystem : MonoBehaviour
     {
         if (!combatActive) yield break;
 
-        ObjetSO[] chosenItems = currentEnemy.EnemyStats.behavior.ChooseItem(
-            currentEnemy.EnemyStats.Items,
-            currentEnemy.EnemyStats.MaxHealth,
-            currentEnemy.currentHealth,
-            currentEnemy.currentStaminaMax
+        ObjetSO[] chosenItems = Enemy.EnemyStats.behavior.ChooseItem(
+            Enemy.EnemyStats.Items,
+            Enemy.EnemyStats.MaxHealth,
+            Enemy.currentHealth,
+            Enemy.currentStaminaMax
         );
-        currentEnemy.currentStaminaMax = currentEnemy.EnemyStats.MaxStamina; // Reset stamina max pour l'effet snow
+        Enemy.currentStaminaMax = Enemy.EnemyStats.MaxStamina; // Reset stamina max pour l'effet snow
         foreach (ObjetSO item in chosenItems)
         {
             // Animation
@@ -255,12 +297,21 @@ public class CombatSystem : MonoBehaviour
                 HealEnemy(item);
 
             yield return new WaitForSeconds(0.4f); // Petit délai entre les attaques
+
+            if (Enemy.IsFrozen)
+            {
+                StartCoroutine(FreezeEnemyDuringHisTurn());
+                yield break;
+            }
+
+            // Si le joueur est mort, arrête de le fracasser
+            if (combatActive == false)
+                yield break;
         }
 
-        CheckCombatEnd();
-        WeatherEffect.Instance.OnFire(true);
         WeatherEffect.Instance.OnWet(true);
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour de l'ennemi
+        yield return WeatherEffect.Instance.OnFire(true);
 
         // pioche des items aléatoires à la fin du tour
         for (int i = 0; i < PlayerManager.Instance.stats.nbItemPerTurn; i++)
@@ -279,34 +330,49 @@ public class CombatSystem : MonoBehaviour
             ItemManager.Instance.SpawnItem(obj);
         }
 
-        if (!WeatherEffect.Instance.OnParalyze(true))
+        bool playerCanPlay = true;
+        if (WeatherEffect.Instance.OnParalyze(true))
         {
-            isPlayerTurn = true;
+            Debug.Log("Le joueur est paralysé et ne peut pas attaquer ce tour !");
+            playerCanPlay = false;
+            yield return WeatherEffect.Instance.PlayParalyzeAnimation(true);
             SetupSkipTurnButtonInteractable(true);
         }
-        else if (!WeatherEffect.Instance.OnFreeze(true))
+        if (WeatherEffect.Instance.CheckFreeze(true))
         {
-            isPlayerTurn = true;
-            SetupSkipTurnButtonInteractable(true);
+            Debug.Log("Le joueur est gelé et ne peut pas attaquer ce tour !");
+            playerCanPlay = false;
+            yield return WeatherEffect.Instance.PlayFrozenAnimation(true);
+            ItemManager.Instance.SetAllItemsActive(true);
+            PlayerManager.Instance.FreezeCounter = 0;
+        }
+
+        if (playerCanPlay == false)
+        {
+            StartCoroutine(EnemyAttackSequence());
         }
         else
         {
-            Debug.Log("Le joueur est paralysé et ne peut pas attaquer ce tour !");
-            StartCoroutine(EnemyAttackSequence()); // Lancer le tour de l'ennemi
+            SetupSkipTurnButtonInteractable(true);
+            isPlayerTurn = true;
         }
+
+        if (TutorialManager.Instance.IsTutorial && PlayerManager.Instance.HasTakenDamage)
+            TutorialPanelsManager.Instance.DisplayPanel(TutorialStep.ThrowOnPlayer);
     }
+
     private IEnumerator AnimateItemThrow(ObjetSO item)
     {
         GameObject projectile = Instantiate(_itemAnimPrefab, _canvasParent);
-        projectile.transform.position = _enemyTransform.position;
+        projectile.transform.position = Enemy.enemyHead.transform.position;
         projectile.GetComponent<UnityEngine.UI.Image>().sprite = item.objetSprite;
 
-        Vector3 startPos = _enemyTransform.position;
+        Vector3 startPos = Enemy.enemyHead.transform.position;
         Sequence throwSequence = DOTween.Sequence();
 
         if (item.objectType == ObjetEffectType.Heal)
         {
-            Vector3 endPos = _enemyTransform.position;
+            Vector3 endPos = Enemy.enemyHead.transform.position;
             Vector3 midPoint = startPos + new Vector3(0, 350f, 0); // Petit décalage X pour la courbe
             Vector3[] path = new Vector3[] { startPos, midPoint, endPos };
 
@@ -317,7 +383,7 @@ public class CombatSystem : MonoBehaviour
         }
         else
         {
-            Vector3 endPos = _playerTransform.position;
+            Vector3 endPos = PlayerManager.Instance.playerHead.transform.position;
             Vector3 midPoint = (startPos + endPos) / 2 + new Vector3(0, 300f, 0);
             Vector3[] path = new Vector3[] { startPos, midPoint, endPos };
 
@@ -333,8 +399,10 @@ public class CombatSystem : MonoBehaviour
         yield return throwSequence.WaitForCompletion();
         Destroy(projectile);
     }
+
     private IEnumerator EndCombat(bool victory)
     {
+        Debug.Log("End Combat");
         PlayerManager.Instance.FireCounter = 0;
         PlayerManager.Instance.FreezeCounter = 0;
         PlayerManager.Instance.WetCounter = 0;
@@ -347,15 +415,22 @@ public class CombatSystem : MonoBehaviour
 
         // Vérifier si l'ennemi est mort
 
-        if (victory)
+        if (victory && !isPlayed)
         {
             Debug.Log("Victoire au combat!");
+            VcaController.Instance.FadeLowerMusicVolume(2f, 0.2f);
+            RuntimeManager.PlayOneShot(victorySound);
             onVictoryCallback?.Invoke();
+            //isPlayed = true;
         }
-        else
+        else if (!isPlayed)
         {
+            isDefeat = true;
             Debug.Log("Défaite au combat!");
+            VcaController.Instance.FadeLowerMusicVolume(2f, 0f);
+            RuntimeManager.PlayOneShot(defeatSound);
             onDefeatCallback?.Invoke();
+            isPlayed = true;
         }
         yield break;
     }
@@ -382,52 +457,46 @@ public class CombatSystem : MonoBehaviour
         return combatActive;
     }
 
-    public Enemy GetCurrentEnemy()
-    {
-        return currentEnemy;
-    }
-
-
     private void CheckItemEffect(ObjetSO objet, bool isPlayer)
     {
         if (isPlayer)
         {
             switch (objet.objetMaterialType)
             {
-                //a reprendre la logique du feu car impression que prog deguelasse (il est 5h zebi j'ai plus de cerveau) mais normalement c'est fonctionnelle mais immonde
                 case ObjetMaterialType.Fire:
                     // Applique l'effet de brulure
                     if (PlayerManager.Instance.WetCounter == 0)
                     {
-                        PlayerManager.Instance.FireCounter += _fireDuration;
-                        VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Fire);
+                        PlayerManager.Instance.FireCounter += PlayerManager.Instance.FireCounter > 0 ? _subsequentFireDuration : _initialFireDuration;
                         if (PlayerManager.Instance.FreezeCounter > 0)
-                            PlayerManager.Instance.FreezeCounter -= 1;
+                            PlayerManager.Instance.FreezeCounter -= _fireOnIceLoseDuration;
                     }
-                    break;
-                case ObjetMaterialType.Ice:
-                    //PlayerManager.Instance.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                    PlayerManager.Instance.FreezeCounter += 1;
-                    break;
-                case ObjetMaterialType.Water:
-                    VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Water);
-                    if (PlayerManager.Instance.WetCounter == 0) 
-                    { 
-                        PlayerManager.Instance.WetCounter = _wetDuration; // Applique l'effet de mouille
-                    }
-                    else if (PlayerManager.Instance.WetCounter > 0)
-                        PlayerManager.Instance.WetCounter += 1; // Applique l'effet de mouille +1 round..
-                    break;
-                case ObjetMaterialType.Metal:
-                    PlayerManager.Instance.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie pareil si pb compteur regarder le fix du feu.
-                    WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
                     break;
                 case ObjetMaterialType.Wood:
                     if (PlayerManager.Instance.FireCounter > 0)
-                        PlayerManager.Instance.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
+                        PlayerManager.Instance.FireCounter += _woodOnFireAddDuration;
+                    break;
+                case ObjetMaterialType.Water:
+                    PlayerManager.Instance.WetCounter += PlayerManager.Instance.WetCounter > 0 ? _subsequentWetDuration : _initialWetDuration;
+                    PlayerManager.Instance.FireCounter = 0;
+                    break;
+                case ObjetMaterialType.Ice:
+                    PlayerManager.Instance.FreezeCounter += _freezeDuration;
+                    PlayerManager.Instance.FireCounter -= _iceOnFireLoseDuration;
                     break;
                 case ObjetMaterialType.PerfectIce:
-                    PlayerManager.Instance.FreezeCounter += 2; // Applique l'effet de gel infini tant que pas soigné par un item ou autre
+                    PlayerManager.Instance.FreezeCounter += _perfectIceFreezeDuration;
+                    PlayerManager.Instance.FireCounter -= _iceOnFireLoseDuration;
+                    break;
+                case ObjetMaterialType.Metal:
+                    if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+                    {
+                        PlayerManager.Instance.ParalyzeCounter = _metalParalyzeDuration;
+                        WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
+                    }
+                    break;
+                case ObjetMaterialType.Electricity:
+                    PlayerManager.Instance.ParalyzeCounter += _electricityParalyzeDuration;
                     break;
             }
         }
@@ -436,43 +505,39 @@ public class CombatSystem : MonoBehaviour
             switch (objet.objetMaterialType)
             {
                 case ObjetMaterialType.Fire:
-                    if (currentEnemy.WetCounter == 0)
+                    if (Enemy.WetCounter == 0)
                     {
-                        currentEnemy.FireCounter = _fireDuration;
-                        VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Fire);
-                        if (currentEnemy.FreezeCounter > 0)
-                            currentEnemy.FreezeCounter -= 1;
+
+                        Enemy.FireCounter += Enemy.FireCounter > 0 ? _subsequentFireDuration : _initialFireDuration;
+                        if (Enemy.FreezeCounter > 0)
+                            Enemy.FreezeCounter -= _fireOnIceLoseDuration;
                     }
                     break;
-                case ObjetMaterialType.Ice:
-                    //currentEnemy.FreezeCounter = _freezeDuration; // Applique l'effet de gel
-                    currentEnemy.FreezeCounter += 1;
+                case ObjetMaterialType.Wood:
+                    if (Enemy.FireCounter > 0)
+                        Enemy.FireCounter += _woodOnFireAddDuration;
                     break;
                 case ObjetMaterialType.Water:
-                    VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
-                    if (currentEnemy.WetCounter == 0)
-                    {
-                        currentEnemy.WetCounter = _wetDuration; // Applique l'effet de mouille
-                    }
-                    else if (PlayerManager.Instance.WetCounter > 0)
-                        PlayerManager.Instance.WetCounter += 1; // Applique l'effet de mouille +1 round..
+                    Enemy.WetCounter += Enemy.WetCounter > 0 ? _subsequentWetDuration : _initialWetDuration;
+                    Enemy.FireCounter = 0;
+                    break;
+                case ObjetMaterialType.Ice:
+                    Enemy.FreezeCounter += _freezeDuration;
+                    Enemy.FireCounter -= _iceOnFireLoseDuration;
+                    break;
+                case ObjetMaterialType.PerfectIce:
+                    Enemy.FreezeCounter += _perfectIceFreezeDuration;
+                    Enemy.FireCounter -= _iceOnFireLoseDuration;
                     break;
                 case ObjetMaterialType.Metal:
                     if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
                     {
-                        currentEnemy.ParalyzeCounter = _paralyzeDuration; // Applique l'effet de paralysie
+                        Enemy.ParalyzeCounter = _metalParalyzeDuration;
                         WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
                     }
                     break;
-                case ObjetMaterialType.Wood:
-                    if (currentEnemy.FireCounter > 0)
-                        currentEnemy.FireCounter += _addFireDuration; // Prolonge l'effet de brulure
-                    break;
-                case ObjetMaterialType.PerfectIce:
-                    currentEnemy.FreezeCounter += 2; 
-                    break;
                 case ObjetMaterialType.Electricity:
-                    currentEnemy.ParalyzeCounter += 1;
+                    Enemy.ParalyzeCounter += _electricityParalyzeDuration;
                     break;
             }
         }
@@ -483,11 +548,8 @@ public class CombatSystem : MonoBehaviour
     {
         if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Rain)
         {
-            currentEnemy.WetCounter = _wetDuration;
-            PlayerManager.Instance.WetCounter = _wetDuration;
-            VisualEffectManager.Instance.AddEffect(_playerhead, ParticleEffectType.Water);
-            VisualEffectManager.Instance.AddEffect(_ennemyhead, ParticleEffectType.Water);
-
+            Enemy.WetCounter = Mathf.Max(_initialWetDuration, Enemy.WetCounter);
+            PlayerManager.Instance.WetCounter = Mathf.Max(_initialWetDuration, PlayerManager.Instance.WetCounter);
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Snow)
         {
@@ -513,8 +575,40 @@ public class CombatSystem : MonoBehaviour
         }
 
         if (lowestStaminaConsuption > PlayerManager.Instance.stats.currentStamina)
+        {
             HighlightSkipTurnButton();
+
+            if (TutorialManager.Instance.IsTutorial)
+                TutorialPanelsManager.Instance.DisplayPanel(TutorialStep.SkipTurn);
+        }
         else
             StopHighlightSkipTurnButton();
+    }
+
+    private void CheckPlayerFreeze()
+    {
+        if (isPlayerTurn && PlayerManager.Instance.IsFrozen)
+        {
+            StartCoroutine(SkipPlayerTurn());
+        }
+    }
+
+    private IEnumerator SkipPlayerTurn()
+    {
+        ItemManager.Instance.SetAllItemsActive(false);
+
+        VisualEffectManager.Instance.AddEffect(InventoryManager.Instance.itemsParent.gameObject, VisualEffectManager.ParticleEffectType.FreezeInventory);
+
+        yield return new WaitForSeconds(1);
+
+        HighlightSkipTurnButton();
+    }
+
+    private IEnumerator FreezeEnemyDuringHisTurn()
+    {
+        yield return new WaitForSeconds(1);
+
+        isPlayerTurn = true;
+        SetupSkipTurnButtonInteractable(true);
     }
 }

@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: piece
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 21300000, guid: 5c76b3d09a2051541a5612c1531116dd, type: 3}
-  objetName: Torch
-  objetDescription: A simple torch. It can set the opponet on fire
+  objetSprite: {fileID: 21300000, guid: d04f44030894ff9419ca005e7b292b75, type: 3}
+  objetName: Pile ou face
+  objetDescription: "Pile ou face ? \n\nPile vous prenez des d\xE9gats.\n\nFace l'ennemis
+    vous met des d\xE9gats"
   objetMaterialType: 0
   objetWeight: 2
   objectType: 2
-  objectEffect: 4
+  objectEffect: 10
   specialAction: {fileID: 11400000, guid: 44d02634f5550684582bad11d2255e87, type: 2}
   Rarity: 2

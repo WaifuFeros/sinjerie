@@ -24,6 +24,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] 
     private GameObject defeatPanel;
 
+    [SerializeField]
+    private GameObject tutorialVictoryPanel;
+
     [Header("Banana Reward")]
     [SerializeField] GameObject bananaPanel;
     [SerializeField] GameObject bananaBackground;
@@ -164,6 +167,10 @@ public class UIManager : MonoBehaviour
         });
 
     }
+    public void ShowTutorialVictoryPanel()
+    {
+        tutorialVictoryPanel.SetActive(true);
+    }
     private void HideAllPanels()
     {
         if (roomPanel != null) roomPanel.SetActive(false);
@@ -191,4 +198,13 @@ public class UIManager : MonoBehaviour
             combatStatusText.text = message;
         }
     }
+
+    public void QuitToMenu()
+    {
+        TransitionManager.Instance.TransitionWithAction(() =>
+        {
+            SceneLoadManager.Instance.LoadSceneAsActive("HomeMenu");
+        });
+    }
+
 }

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
   m_Name: helium
   m_EditorClassIdentifier: 
-  objetSprite: {fileID: 21300000, guid: 223437f1115e861418a243df48ffcbd3, type: 3}
-  objetName: "Ballon d'h\xE9lium"
-  objetDescription: "Met le poid des objet qui p\xE8se 1 \xE0 0"
+  objetSprite: {fileID: 21300000, guid: 5715d1915f408c24fb09a13cd7d43af0, type: 3}
+  objetName: Ballon gonflable
+  objetDescription: "Change le poids des objets qui p\xE8sent 1, et les met \xE0
+    0."
   objetMaterialType: 0
   objetWeight: 2
   objectType: 2

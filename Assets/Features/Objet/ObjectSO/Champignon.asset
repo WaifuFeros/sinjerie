@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce45927a8941aa4a933f8e9e5caed1d, type: 3}
+  m_Name: Champignon
+  m_EditorClassIdentifier: 
+  objetSprite: {fileID: 21300000, guid: 8f56d62956ae5e34ca08bfb2f9e4f29f, type: 3}
+  objetName: Champignon
+  objetDescription: Champignon cultiver par Gaia, elle y a mis tellement d'amour
+    qu'il rallonge votre vie.
+  objetMaterialType: 0
+  objetWeight: 3
+  objectType: 2
+  objectEffect: 0
+  specialAction: {fileID: 11400000, guid: 16444da66c12b3a439ca0775c3b05a04, type: 2}
+  Rarity: 3

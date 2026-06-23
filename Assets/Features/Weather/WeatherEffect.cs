@@ -1,14 +1,14 @@
+using FMODUnity;
 using System;
-using Unity.Mathematics;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class WeatherEffect : MonoBehaviour
 {
+    [SerializeField] private EventReference fireSound;
+    [SerializeField] private EventReference paralyzeSound;
+
     public static WeatherEffect Instance { get; private set; }
-
-    [SerializeField] private Enemy enemy;
-
 
     private void Awake()
     {
@@ -16,106 +16,173 @@ public class WeatherEffect : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
-    public void OnFire(bool isPlayer)
+    private void Start()
     {
-        if (!isPlayer && enemy.FireCounter > 0)
-        {
-           enemy.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-           enemy.FireCounter--;
-            if (enemy.FireCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
-        }
-        else if (PlayerManager.Instance.FireCounter > 0)
-        {
-           PlayerManager.Instance.TakeDamage(Convert.ToInt32(WeatherManager.Instance.temperature / 7));
-           PlayerManager.Instance.FireCounter--;
-            if (PlayerManager.Instance.FireCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
-        }
-        CombatSystem.Instance.CheckCombatEnd();
-       
+        CombatSystem.Instance.Enemy.OnAfflictionUpdateEvent += RefreshItemReactions;
     }
 
-    public bool OnFreeze(bool isPlayer)
+    private void RefreshItemReactions()
     {
-        if (!isPlayer && enemy.FreezeCounter > 0)
+        if (CombatSystem.Instance.Enemy == null)
+            return;
+
+        ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
+    }
+
+    public IEnumerator OnFire(bool isPlayer)
+    {
+        if (isPlayer)
         {
-            enemy.WetCounter = 0;
-            if (enemy.FreezeCounter >= 3)
+            if (PlayerManager.Instance.FireCounter > 0)
             {
-                enemy.FreezeCounter = 0;
-                return true; //ennemi gele
+                PlayerManager.Instance.TakeDamage(ComputeFireDamage());
+                PlayerManager.Instance.FireCounter--;
+                VisualEffectManager.Instance.TriggerBurst(PlayerManager.Instance.playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+
+                yield return new WaitForSeconds(1);
             }
         }
-        else if (PlayerManager.Instance.FreezeCounter > 0)
+        else
         {
-            PlayerManager.Instance.WetCounter = 0;
-            if (PlayerManager.Instance.FreezeCounter >= 3)
+            if (CombatSystem.Instance.Enemy.FireCounter > 0)
             {
-                PlayerManager.Instance.FreezeCounter = 0;
-                return true; //player gele
+                CombatSystem.Instance.Enemy.TakeDamage(ComputeFireDamage());
+                CombatSystem.Instance.Enemy.FireCounter--;
+                VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
+
+                yield return new WaitForSeconds(1);
             }
         }
+
+        CombatSystem.Instance.CheckCombatEnd();
+
+        //RefreshItemReactions(); 
+    }
+
+    public bool CheckFreeze(bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            if (PlayerManager.Instance.FreezeCounter > 0)
+            {
+                if (PlayerManager.Instance.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
+                    return true;
+            }
+        }
+        else
+        {
+            if (CombatSystem.Instance.Enemy.FreezeCounter > 0)
+            {
+                if (CombatSystem.Instance.Enemy.FreezeCounter >= CombatSystem.Instance.freezeProcThreshold)
+                    return true; 
+            }
+        }
+
+        //RefreshItemReactions();
+
         return false;
     }
-    //a tester :)
-    public void isSnowing() 
+
+    public void isSnowing()
     {
         PlayerManager.Instance.stats.currentStamina = PlayerManager.Instance.stats.maxStamina - 2;
         PlayerManager.Instance.OnStaminaUpdateEvent?.Invoke();
-        enemy.currentStaminaMax = enemy.EnemyStats.MaxStamina - 2;
+
+        CombatSystem.Instance.Enemy.currentStaminaMax = CombatSystem.Instance.Enemy.EnemyStats.MaxStamina - 2;
+
+        //RefreshItemReactions();
     }
 
     public void OnWet(bool isPlayer)
     {
-        if (!isPlayer && enemy.WetCounter > 0)
+        if (isPlayer)
         {
-            enemy.FireCounter = 0;
-            enemy.WetCounter -= 1;
-            if (enemy.WetCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(enemy.EnemyImage.gameObject);
+            if (PlayerManager.Instance.WetCounter > 0)
+            {
+                PlayerManager.Instance.FireCounter = 0;
+                PlayerManager.Instance.WetCounter--;
+            }
         }
-        else if (PlayerManager.Instance.WetCounter > 0)
+        else
         {
-            PlayerManager.Instance.FireCounter = 0;
-            PlayerManager.Instance.WetCounter -= 1;
-            if (PlayerManager.Instance.WetCounter == 0)
-                VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance._playerhead);
+            if (CombatSystem.Instance.Enemy.WetCounter > 0)
+            {
+                CombatSystem.Instance.Enemy.FireCounter = 0;
+                CombatSystem.Instance.Enemy.WetCounter--;
+            }
         }
     }
-
 
     public bool OnParalyze(bool isPlayer)
     {
         int paralyze = UnityEngine.Random.Range(0, 100);
-        if (!isPlayer && enemy.ParalyzeCounter > 0 )
+        bool result = false;
+
+        if (isPlayer)
         {
-            if (paralyze <= 25)
+            if (PlayerManager.Instance.ParalyzeCounter > 0)
             {
-                return true; //ennemi paralyse, il saute son tour
+                PlayerManager.Instance.ParalyzeCounter--;
+
+                if (paralyze <= 25)
+                    result = true; 
             }
-            enemy.ParalyzeCounter--;
         }
-        else if (PlayerManager.Instance.ParalyzeCounter > 0)
+        else
         {
-            if (paralyze <= 25)
+            if (CombatSystem.Instance.Enemy.ParalyzeCounter > 0)
             {
-                return true; //player paralyse, il saute son tour
+                CombatSystem.Instance.Enemy.ParalyzeCounter--;
+
+                if (paralyze <= 25)
+                    result = true; 
             }
-            PlayerManager.Instance.ParalyzeCounter--;
         }
-        return false;
+
+        return result;
+    }
+
+    public IEnumerator PlayParalyzeAnimation(bool isPlayer)
+    {
+        GameObject target = isPlayer ? PlayerManager.Instance.playerHead.gameObject : CombatSystem.Instance.Enemy.enemyHead.gameObject;
+
+        RuntimeManager.PlayOneShot(paralyzeSound);
+        VisualEffectManager.Instance.TriggerBurst(target, VisualEffectManager.ParticleEffectType.Paralyze);
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    public IEnumerator PlayFrozenAnimation(bool isPlayer)
+    {
+        GameObject target = isPlayer ? PlayerManager.Instance.playerHead.gameObject : CombatSystem.Instance.Enemy.enemyHead.gameObject;
+
+        VisualEffectManager.Instance.TriggerBurst(target, VisualEffectManager.ParticleEffectType.Freeze);
+
+        yield return new WaitForSeconds(1f);
+
+        VisualEffectManager.Instance.RemoveEffect(target, VisualEffectManager.ParticleEffectType.Freeze);
+        if (isPlayer)
+            VisualEffectManager.Instance.RemoveEffect(InventoryManager.Instance.itemsParent.gameObject, VisualEffectManager.ParticleEffectType.FreezeInventory);
+
+        yield return new WaitForSeconds(1f);
     }
 
     public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
     {
-        if (isThunder && !isPlayer)
-        {
-            enemy.TakeDamage(damageThunder);
-        }
-        else if (isThunder && isPlayer)
-        {
+        if (!isThunder)
+            return;
+
+        if (isPlayer)
             PlayerManager.Instance.TakeDamage(damageThunder);
-        }
+        else
+            CombatSystem.Instance.Enemy.TakeDamage(damageThunder);
+
+        //RefreshItemReactions();
+    }
+
+    private int ComputeFireDamage()
+    {
+        RuntimeManager.PlayOneShot(fireSound);
+        return Convert.ToInt32(WeatherManager.Instance.temperature / 7);
     }
 }

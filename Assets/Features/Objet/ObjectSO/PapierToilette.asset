@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 1fbc2a9e2711a99448877fe823139125, type: 3}
   objetName: Papier toilette
-  objetDescription: "Ne fais rien de sp\xE9cial"
-  objetMaterialType: 0
+  objetDescription: "Objet rare durant le confinement, \nqui ici permet d'alimenter
+    l'\xE9tat de br\xFBlure."
+  objetMaterialType: 2
   objetWeight: 1
   objectType: 0
   objectEffect: 0

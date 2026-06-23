@@ -29,7 +29,7 @@ public class EncyclopediaPanel : MonoBehaviour
         {
             Debug.Log("Encyclopedia populate complete");
             // Tri par rareté (Common → Legendary)
-            var sortedList = new List<ObjetSO>(ItemManager.Instance.ItemsData)
+            var sortedList = new List<ObjetSO>(ItemManager.Instance.ItemsDatabase)
                 .OrderBy(o => o.Rarity)
                 .ToList();
 
@@ -39,8 +39,10 @@ public class EncyclopediaPanel : MonoBehaviour
             {
                 Debug.Log("Spawn item Encyclopedia");
                 var entryObj = Instantiate(entryPrefab, contentParent);
-                var entry = entryObj.GetComponent<ObjetEntry>();
-                entry.Setup(obj, this);
+                var entry = entryObj.GetComponent<ItemBrainOnlyInfo>();
+                entry.itemData = obj;
+                entry.ApplyVisuals();
+                entryObj.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             }
         });
     }

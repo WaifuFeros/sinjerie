@@ -16,13 +16,12 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField] private RoomType[] _roomsLoop;
 
-    [Header("Enemy Spawn")]
-    [SerializeField] private GameObject enemy;
-
     private GameObject currentRoom;
     private List<EnemySO> availableEnemyData = new List<EnemySO>();
     private List<EnemySO> availableBossData = new List<EnemySO>();
     private RewardSystem rewardSystem;
+
+    private List<EnemySO> allEnemies = new List<EnemySO>();
 
     private void Awake()
     {
@@ -39,6 +38,7 @@ public class RoomManager : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
+                allEnemies.AddRange(handle.Result);
                 availableEnemyData.AddRange(handle.Result.Where(x => x.IsActive && !x.IsBoss));
                 availableBossData.AddRange(handle.Result.Where(x => x.IsActive && x.IsBoss));
                 onLoadCompleted?.Invoke();
@@ -58,7 +58,6 @@ public class RoomManager : MonoBehaviour
         int roomNumberMod = (roomNumber - 1) % _roomsLoop.Length;
 
         RoomType roomType = _roomsLoop[roomNumberMod];
-        Debug.Log($"{roomNumber} | {roomNumberMod} | {roomType}");
 
         switch (roomType)
         {
@@ -66,42 +65,45 @@ public class RoomManager : MonoBehaviour
             case RoomType.None:
             case RoomType.Enemy:
                 SpawnEnemy(false);
+                Debug.Log("enemy restore music!");
+                VcaController.Instance.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Boss:
                 SpawnEnemy(false);
+                Debug.Log("boss restore music!");
+                VcaController.Instance.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Shop:
                 currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);
-                currentRoom.transform.SetParent(roomContainer);
+                currentRoom.transform.SetParent(roomContainer, false);
                 return roomType;
             case RoomType.Special:
                 GameObject roomToSpawn = roomPrefabs[UnityEngine.Random.Range(0, roomPrefabs.Length)];
                 currentRoom = Instantiate(roomToSpawn, roomContainer.position, roomContainer.rotation);
-                currentRoom.transform.SetParent(roomContainer);
+                currentRoom.transform.SetParent(roomContainer, false);
                 return roomType;
         }
     }
 
     private void SpawnEnemy(bool isBoss)
     {
-        if (enemy != null)
-        {
-            // Configurer l'ennemi selon le numéro de salle (difficulté progressive)
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            int randomIndex = UnityEngine.Random.Range(0, availableEnemyData.Count);
-            EnemySO randomData = availableEnemyData[randomIndex];
-            enemyScript.Initialize(randomData);
-            rewardSystem.EnemySO = randomData;
-        }
-
+        // Configurer l'ennemi selon le numéro de salle (difficulté progressive)
+        int randomIndex = UnityEngine.Random.Range(0, availableEnemyData.Count);
+        EnemySO randomData = availableEnemyData[randomIndex];
+        CombatSystem.Instance.Enemy.Initialize(randomData);
+        rewardSystem.EnemySO = randomData;
     }
 
-    public GameObject GetEnemy()
+    public void SetEnemy(EnemySO enemy)
     {
-        return enemy;
+        CombatSystem.Instance.Enemy.Initialize(enemy);
     }
 
-
+    public List<EnemySO> GetEnemyList()
+    {
+        var list = new List<EnemySO>(allEnemies);
+        return list;
+    }
 }
 
 public enum RoomType

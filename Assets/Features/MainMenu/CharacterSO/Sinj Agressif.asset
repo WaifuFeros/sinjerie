@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f5e24c9612ad84180440ba0cf3b8f4, type: 3}
+  m_Name: Sinj Agressif
+  m_EditorClassIdentifier: 
+  characterSprite: {fileID: 21300000, guid: c51863c04551898419a2528324982dfc, type: 3}
+  characterName: Sinj Agressif
+  characterDescription: Agressif
+  price: 0
+  startDeck:
+  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
+  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
+  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+  - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+  - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+  - {fileID: 11400000, guid: 1922c64f124679c4eb1fd30d69eb759f, type: 2}
+  - {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5, type: 2}
+  - {fileID: 11400000, guid: e9cf4aed8ac5b9e4f81c40a95634f792, type: 2}
+  - {fileID: 11400000, guid: 600e3565089aec84fbb7d71cc73719ec, type: 2}

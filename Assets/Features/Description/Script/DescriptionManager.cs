@@ -9,6 +9,7 @@ public class DescriptionManager : MonoBehaviour
     public static DescriptionManager Instance { get; private set; }
 
     [SerializeField] private DescriptionWindow _descriptionWindow;
+    [field: SerializeField, Min(0)] public float DescriptionPressTime { get; private set; }
 
     private void Awake()
     {

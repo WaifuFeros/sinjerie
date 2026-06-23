@@ -25,6 +25,7 @@ public class PlayerMoney : MonoBehaviour
 
     private void UpdateGoldText()
     {
-        _text.text = PlayerManager.Instance.stats.gold.ToString();
+        if (PlayerManager.Instance != null)
+            _text.text = PlayerManager.Instance.stats.gold.ToString();
     }
 }
