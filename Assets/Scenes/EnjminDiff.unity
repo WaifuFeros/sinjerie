@@ -1324,18 +1324,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 414656390}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -8540,6 +8528,22 @@ PrefabInstance:
       propertyPath: _uiRootContainer
       value: 
       objectReference: {fileID: 1178827169}
+    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _particles.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _particles.Array.data[6].type
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _particles.Array.data[6].prefab
+      value: 
+      objectReference: {fileID: 6072495273595165902, guid: 358a16e2aa485c84f8bc890584a6caea,
+        type: 3}
     - target: {fileID: 6099543184983951143, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: cityText

@@ -15,7 +15,8 @@ public class VisualEffectManager : MonoBehaviour
         Paralyze,
         Freeze,
         Electric,
-        FreezeInventory
+        FreezeInventory,
+        Thunder
     }
 
     [System.Serializable]
