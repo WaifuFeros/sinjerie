@@ -18,8 +18,6 @@ public class GameLoopManager : MonoBehaviour
 {
     public static GameLoopManager Instance { get; private set; }
 
-    [SerializeField] private VcaController gameplayMusicVCA;
-
     [Header("Room Settings")]
     [SerializeField] private int currentRoomNumber = 0;
 
@@ -50,7 +48,7 @@ public class GameLoopManager : MonoBehaviour
     {
         TransitionManager.Instance.TransitionWithAction(() =>
         {
-            gameplayMusicVCA.FadeRestoreMusicVolume(2f);
+            VcaController.Instance.FadeRestoreMusicVolume(2f);
             SceneLoadManager.Instance.LoadSceneAsActive(_gameSceneName);
         });
     }
