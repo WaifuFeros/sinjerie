@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: stick
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 4ed25c5a10c0b16458fb8cd6f4651050, type: 3}
-  objetName: Stick
-  objetDescription: un simple baton en bois... Parfait pour alimenter un feu
+  objetName: Baton en bois
+  objetDescription: un simple baton en bois... Parfait pour alimenter un feu.
   objetMaterialType: 2
   objetWeight: 1
   objectType: 1

@@ -21,6 +21,8 @@ public class RoomManager : MonoBehaviour
     private List<EnemySO> availableBossData = new List<EnemySO>();
     private RewardSystem rewardSystem;
 
+    private List<EnemySO> allEnemies = new List<EnemySO>();
+
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -36,6 +38,7 @@ public class RoomManager : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
+                allEnemies.AddRange(handle.Result);
                 availableEnemyData.AddRange(handle.Result.Where(x => x.IsActive && !x.IsBoss));
                 availableBossData.AddRange(handle.Result.Where(x => x.IsActive && x.IsBoss));
                 onLoadCompleted?.Invoke();
@@ -94,6 +97,17 @@ public class RoomManager : MonoBehaviour
         EnemySO randomData = listEnemy[randomIndex];
         CombatSystem.Instance.Enemy.Initialize(randomData);
         rewardSystem.EnemySO = randomData;
+    }
+
+    public void SetEnemy(EnemySO enemy)
+    {
+        CombatSystem.Instance.Enemy.Initialize(enemy);
+    }
+
+    public List<EnemySO> GetEnemyList()
+    {
+        var list = new List<EnemySO>(allEnemies);
+        return list;
     }
 }
 

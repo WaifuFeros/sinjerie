@@ -33,7 +33,7 @@ public class ObjetSO : ScriptableObject
 {
     public Sprite objetSprite;
     public string objetName;
-    public string objetDescription;
+    [TextArea] public string objetDescription;
     public ObjetMaterialType objetMaterialType;
     public int objetWeight;
     public ObjetEffectType objectType;

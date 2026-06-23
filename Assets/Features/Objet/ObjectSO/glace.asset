@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: ac095f27f3519d942b0037a30b85041b, type: 3}
   objetName: Glace
-  objetDescription: Glace Vanille, elle peut geler le cerveau de l'adversaire
+  objetDescription: "Glace Vanille, En offrir \xE0 votre adversaire pourrait bien
+    le geler."
   objetMaterialType: 4
   objetWeight: 1
   objectType: 0

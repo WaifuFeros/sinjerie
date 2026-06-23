@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 16ae8f2ebf15dfe45b30267e38f3fa2b, type: 3}
   objetName: "Plan\xE8te"
-  objetDescription: "Une crazy plan\xE8te"
+  objetDescription: Lancez une "Crazy planet" qui tuera jusqu'au plus coriace de
+    vos ennemis d'un seul coup.
   objetMaterialType: 3
   objetWeight: 7
   objectType: 1
-  objectEffect: 25
+  objectEffect: 50
   specialAction: {fileID: 0}
   Rarity: 4

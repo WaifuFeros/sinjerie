@@ -14,7 +14,8 @@ public class VisualEffectManager : MonoBehaviour
         Water,
         Paralyze,
         Freeze,
-        Electric
+        Electric,
+        FreezeInventory
     }
 
     [System.Serializable]
@@ -54,7 +55,7 @@ public class VisualEffectManager : MonoBehaviour
             if (effect != null)
             {
                 _visualEffectDictionary.Add((targetGO, particleType), effect);
-                effect.SetActive(true);
+                effect?.SetActive(true);
             }
         }
     }
@@ -66,7 +67,7 @@ public class VisualEffectManager : MonoBehaviour
 
         if (_visualEffectDictionary.TryGetValue((targetGO, particleType), out VisualEffect effect))
         {
-            effect.SetActive(false);
+            effect?.SetActive(false);
         }
     }
 
@@ -78,7 +79,7 @@ public class VisualEffectManager : MonoBehaviour
         foreach (var item in _visualEffectDictionary)
         {
             if (item.Key.gameObject == targetGO)
-                item.Value.SetActive(false);
+                item.Value?.SetActive(false);
         }
     }
 
@@ -89,7 +90,7 @@ public class VisualEffectManager : MonoBehaviour
 
         if (_visualEffectDictionary.TryGetValue((targetGO, type), out VisualEffect effect))
         {
-            effect.TriggerBurst();
+            effect?.TriggerBurst();
         }
         else
         {
@@ -97,7 +98,7 @@ public class VisualEffectManager : MonoBehaviour
             if (newEffect != null)
             {
                 _visualEffectDictionary.Add((targetGO, type), newEffect);
-                newEffect.TriggerBurst();
+                newEffect?.TriggerBurst();
             }
         }
     }

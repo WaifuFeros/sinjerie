@@ -35,7 +35,7 @@ public class WeatherEffect : MonoBehaviour
         {
             if (PlayerManager.Instance.FireCounter > 0)
             {
-                PlayerManager.Instance.TakeDamage(FireDamage());
+                PlayerManager.Instance.TakeDamage(ComputeFireDamage());
                 PlayerManager.Instance.FireCounter--;
                 VisualEffectManager.Instance.TriggerBurst(PlayerManager.Instance.playerHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
 
@@ -46,7 +46,7 @@ public class WeatherEffect : MonoBehaviour
         {
             if (CombatSystem.Instance.Enemy.FireCounter > 0)
             {
-                CombatSystem.Instance.Enemy.TakeDamage(FireDamage());
+                CombatSystem.Instance.Enemy.TakeDamage(ComputeFireDamage());
                 CombatSystem.Instance.Enemy.FireCounter--;
                 VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Fire);
 
@@ -59,7 +59,7 @@ public class WeatherEffect : MonoBehaviour
         //RefreshItemReactions(); 
     }
 
-    public bool OnFreeze(bool isPlayer)
+    public bool CheckFreeze(bool isPlayer)
     {
         if (isPlayer)
         {
@@ -139,26 +139,32 @@ public class WeatherEffect : MonoBehaviour
             }
         }
 
-        //RefreshItemReactions();
-
         return result;
     }
 
-    public IEnumerator PlayParalyzeAnimation()
+    public IEnumerator PlayParalyzeAnimation(bool isPlayer)
     {
+        GameObject target = isPlayer ? PlayerManager.Instance.playerHead.gameObject : CombatSystem.Instance.Enemy.enemyHead.gameObject;
+
         RuntimeManager.PlayOneShot(paralyzeSound);
-        VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Paralyze);
+        VisualEffectManager.Instance.TriggerBurst(target, VisualEffectManager.ParticleEffectType.Paralyze);
 
         yield return new WaitForSeconds(1f);
     }
 
-    public IEnumerator PlayFrozenAnimation()
+    public IEnumerator PlayFrozenAnimation(bool isPlayer)
     {
-        VisualEffectManager.Instance.TriggerBurst(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        GameObject target = isPlayer ? PlayerManager.Instance.playerHead.gameObject : CombatSystem.Instance.Enemy.enemyHead.gameObject;
+
+        VisualEffectManager.Instance.TriggerBurst(target, VisualEffectManager.ParticleEffectType.Freeze);
 
         yield return new WaitForSeconds(1f);
 
-        VisualEffectManager.Instance.RemoveEffect(CombatSystem.Instance.Enemy.enemyHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+        VisualEffectManager.Instance.RemoveEffect(target, VisualEffectManager.ParticleEffectType.Freeze);
+        if (isPlayer)
+            VisualEffectManager.Instance.RemoveEffect(InventoryManager.Instance.itemsParent.gameObject, VisualEffectManager.ParticleEffectType.FreezeInventory);
+
+        yield return new WaitForSeconds(1f);
     }
 
     public void Thunder(bool isPlayer,bool isThunder, int damageThunder)
@@ -174,7 +180,7 @@ public class WeatherEffect : MonoBehaviour
         //RefreshItemReactions();
     }
 
-    public int FireDamage()
+    private int ComputeFireDamage()
     {
         RuntimeManager.PlayOneShot(fireSound);
         return Convert.ToInt32(WeatherManager.Instance.temperature / 7);
