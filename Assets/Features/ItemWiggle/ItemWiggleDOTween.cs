@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 public class ItemWiggleDOTween : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class ItemWiggleDOTween : MonoBehaviour
 
     private RectTransform rect;
     private Tween wiggleTween;
+
 
     void Awake()
     {
