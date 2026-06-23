@@ -50,8 +50,8 @@ public class GameLoopManager : MonoBehaviour
     {
         TransitionManager.Instance.TransitionWithAction(() =>
         {
-            SceneLoadManager.Instance.LoadSceneAsActive(_gameSceneName);
             gameplayMusicVCA.FadeRestoreMusicVolume(2f);
+            SceneLoadManager.Instance.LoadSceneAsActive(_gameSceneName);
         });
     }
 
