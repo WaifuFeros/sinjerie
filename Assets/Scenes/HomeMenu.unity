@@ -2469,13 +2469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 285272aa45e2fa44990636fe2f6089f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionText: {fileID: 1723309006}
-  latitude: 0
-  longitude: 0
-  gpsReady: 0
   simulateInEditor: 1
   editorLatitude: 45.6484
   editorLongitude: 0.1562
+  positionText: {fileID: 1723309006}
 --- !u!4 &523285005
 Transform:
   m_ObjectHideFlags: 0
@@ -6183,12 +6180,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gpsManager: {fileID: 523285004}
+  weatherUpdateInterval: 0
+  conversionData: []
   cityText: {fileID: 390305673}
   tempText: {fileID: 1344507030}
   descText: {fileID: 822953862}
-  temperature: 0
-  effetMeteorologique: 0
-  conversionData: []
   apiKey: cab53e4ddd7d114609d442afdc97e4af
 --- !u!4 &1464999609
 Transform:
