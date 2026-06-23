@@ -69,7 +69,7 @@ public class RoomManager : MonoBehaviour
                 VcaController.Instance.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Boss:
-                SpawnEnemy(false);
+                SpawnEnemy(true);
                 Debug.Log("boss restore music!");
                 VcaController.Instance.FadeRestoreMusicVolume(2f);
                 return roomType;
@@ -87,9 +87,14 @@ public class RoomManager : MonoBehaviour
 
     private void SpawnEnemy(bool isBoss)
     {
-        // Configurer l'ennemi selon le numéro de salle (difficulté progressive)
-        int randomIndex = UnityEngine.Random.Range(0, availableEnemyData.Count);
-        EnemySO randomData = availableEnemyData[randomIndex];
+        List<EnemySO> listEnemy = new List<EnemySO>();
+        if (isBoss)
+            listEnemy = availableBossData;
+        else
+            listEnemy = availableEnemyData;
+
+        int randomIndex = UnityEngine.Random.Range(0, listEnemy.Count);
+        EnemySO randomData = listEnemy[randomIndex];
         CombatSystem.Instance.Enemy.Initialize(randomData);
         rewardSystem.EnemySO = randomData;
     }
