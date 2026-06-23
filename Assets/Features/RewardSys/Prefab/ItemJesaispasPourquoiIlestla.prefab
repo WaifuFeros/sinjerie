@@ -112,6 +112,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 0}
   IsSelected: 0
+  wrongSound:
+    Guid:
+      Data1: -828374209
+      Data2: 1135599686
+      Data3: -1764511605
+      Data4: 1036524725
+    Path: event:/Wrong
+  clickSound:
+    Guid:
+      Data1: -530144235
+      Data2: 1173144793
+      Data3: 776551597
+      Data4: 272658488
+    Path: event:/Button
   _itemHide: {fileID: 21300000, guid: 507486c1818e6814ab3fa641fc79efd7, type: 3}
   itemIcon: {fileID: 2571635614689729761}
   itemBackground: {fileID: 575909164266554638}
@@ -119,7 +133,6 @@ MonoBehaviour:
   weightImage: {fileID: 348970786062545476}
   effectText: {fileID: 7049701911995506328}
   weightText: {fileID: 3509560572353063890}
-  descriptionPressTime: 0.25
 --- !u!114 &-1164798843232412242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c3852a64a3b02243b3bbfe927d1cc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  descriptionPressTime: 0.5
 --- !u!1 &3938687245045438864
 GameObject:
   m_ObjectHideFlags: 0

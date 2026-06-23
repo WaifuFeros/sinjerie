@@ -691,8 +691,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1112866683248465365}
-        m_TargetAssemblyTypeName: OwlPress, Assembly-CSharp
-        m_MethodName: OnOwlClicked
+        m_TargetAssemblyTypeName: AnimalPress, Assembly-CSharp
+        m_MethodName: OnAnimalClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -714,9 +714,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9218b7a70fe54f84e9372ed96720612c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animalType: 1
   pressedSprite: {fileID: 21300000, guid: 9a507cac0d71c4746996f3bd906707b9, type: 3}
   duration: 0.1
   pressedScale: {x: 0.85, y: 0.85, z: 1}
+  owlSound:
+    Guid:
+      Data1: 255747912
+      Data2: 1226459606
+      Data3: 1619192972
+      Data4: -130864593
+    Path: event:/Owl
+  frogSound:
+    Guid:
+      Data1: -1513308246
+      Data2: 1103402078
+      Data3: -1795438451
+      Data4: -879017698
+    Path: event:/Frog
 --- !u!1 &8213737330798213323
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +888,34 @@ MonoBehaviour:
   rotationDuration: 2
   rotationAngleMin: -360
   rotationAngleMax: -720
+  wheelSound:
+    Guid:
+      Data1: 188094747
+      Data2: 1206882469
+      Data3: -1413709170
+      Data4: -2036748989
+    Path: event:/Wheel
+  healSound:
+    Guid:
+      Data1: -1198465966
+      Data2: 1287344645
+      Data3: -52302700
+      Data4: 1092038431
+    Path: event:/Heal
+  coinSound:
+    Guid:
+      Data1: -1202830046
+      Data2: 1120676103
+      Data3: -2073045609
+      Data4: -1967111669
+    Path: event:/Coins
+  wrongSound:
+    Guid:
+      Data1: -828374209
+      Data2: 1135599686
+      Data3: -1764511605
+      Data4: 1036524725
+    Path: event:/Wrong
 --- !u!1 &8476826726768660601
 GameObject:
   m_ObjectHideFlags: 0
