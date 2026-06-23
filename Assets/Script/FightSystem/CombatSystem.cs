@@ -240,36 +240,44 @@ public class CombatSystem : MonoBehaviour
 
     private IEnumerator EndPlayerTurnSequence()
     {
+        SetupSkipTurnButtonInteractable(false);
+        isPlayerTurn = false;
+
+        WeatherEffect.Instance.OnWet(false);
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour du joueur
         yield return WeatherEffect.Instance.OnFire(false);
-        WeatherEffect.Instance.OnWet(false);
-        if (!combatActive || !isPlayerTurn)
-        {
+
+        if (!combatActive /*|| !isPlayerTurn*/)
             yield break;
-        }
-        isPlayerTurn = false;
-        SetupSkipTurnButtonInteractable(false);
+
         PlayerManager.Instance.refillStamina(); // Restaure la stamina du joueur à chaque tour passé
         // l'ennemis attack
+
+        bool enemyCanPlay = true;
         if (WeatherEffect.Instance.OnParalyze(false))
         {
-            Debug.Log("aaaaaaaaaaaL'ennemi est paralysé et ne peut pas attaquer ce tour !");
+            enemyCanPlay = false;
+            Debug.Log("L'ennemi est paralysé et ne peut pas attaquer ce tour !");
             yield return WeatherEffect.Instance.PlayParalyzeAnimation();
-            isPlayerTurn = true;
-            SetupSkipTurnButtonInteractable(true);
-            yield break;
         }
-        else if (WeatherEffect.Instance.OnFreeze(false))
+        
+        if (WeatherEffect.Instance.CheckFreeze(false))
         {
+            enemyCanPlay = false;
             Debug.Log("L'ennemi est gelé et ne peut pas attaquer ce tour !");
             yield return WeatherEffect.Instance.PlayFrozenAnimation();
-            isPlayerTurn = true;
-            SetupSkipTurnButtonInteractable(true);
             Enemy.FreezeCounter = 0;
-            yield break;
         }
 
-        yield return EnemyAttackSequence();
+        if (enemyCanPlay)
+        {
+            yield return EnemyAttackSequence();
+        }
+        else
+        {
+            isPlayerTurn = true;
+            SetupSkipTurnButtonInteractable(true);
+        }
     }
 
     /// <summary>
@@ -326,12 +334,16 @@ public class CombatSystem : MonoBehaviour
                 HealEnemy(item);
 
             yield return new WaitForSeconds(0.4f); // Petit délai entre les attaques
+
+            if (combatActive == false)
+                yield break;
         }
 
         CheckCombatEnd();
-        yield return WeatherEffect.Instance.OnFire(true);
+
         WeatherEffect.Instance.OnWet(true);
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour de l'ennemi
+        yield return WeatherEffect.Instance.OnFire(true);
 
         // pioche des items aléatoires à la fin du tour
         for (int i = 0; i < PlayerManager.Instance.stats.nbItemPerTurn; i++)
@@ -350,20 +362,29 @@ public class CombatSystem : MonoBehaviour
             ItemManager.Instance.SpawnItem(obj);
         }
 
-        if (!WeatherEffect.Instance.OnParalyze(true))
+        bool playerCanPlay = true;
+        if (WeatherEffect.Instance.OnParalyze(true))
         {
-            isPlayerTurn = true;
+            playerCanPlay = false;
+            yield return WeatherEffect.Instance.PlayParalyzeAnimation();
             SetupSkipTurnButtonInteractable(true);
         }
-        else if (!WeatherEffect.Instance.OnFreeze(true))
+        if (!WeatherEffect.Instance.CheckFreeze(true))
         {
-            isPlayerTurn = true;
-            SetupSkipTurnButtonInteractable(true);
+            playerCanPlay = false;
+            yield return WeatherEffect.Instance.PlayFrozenAnimation();
+            PlayerManager.Instance.FreezeCounter = 0;
+        }
+
+        if (playerCanPlay == false)
+        {
+            Debug.Log("Le joueur est paralysé et ne peut pas attaquer ce tour !");
+            StartCoroutine(EnemyAttackSequence());
         }
         else
         {
-            Debug.Log("Le joueur est paralysé et ne peut pas attaquer ce tour !");
-            StartCoroutine(EnemyAttackSequence()); // Lancer le tour de l'ennemi
+            SetupSkipTurnButtonInteractable(true);
+            isPlayerTurn = true;
         }
 
         if (TutorialManager.Instance.IsTutorial && PlayerManager.Instance.HasTakenDamage)
@@ -557,8 +578,8 @@ public class CombatSystem : MonoBehaviour
     {
         if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Rain)
         {
-            Enemy.WetCounter = _initialWetDuration;
-            PlayerManager.Instance.WetCounter = _initialWetDuration;
+            Enemy.WetCounter = Mathf.Max(_initialWetDuration, Enemy.WetCounter);
+            PlayerManager.Instance.WetCounter = Mathf.Max(_initialWetDuration, PlayerManager.Instance.WetCounter);
         }
         else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Snow)
         {

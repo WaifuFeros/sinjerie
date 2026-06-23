@@ -59,7 +59,7 @@ public class WeatherEffect : MonoBehaviour
         //RefreshItemReactions(); 
     }
 
-    public bool OnFreeze(bool isPlayer)
+    public bool CheckFreeze(bool isPlayer)
     {
         if (isPlayer)
         {
