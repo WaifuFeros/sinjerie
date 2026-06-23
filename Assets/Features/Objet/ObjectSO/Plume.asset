@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 4e1591440895f7e438da730009d75693, type: 3}
   objetName: Plume
-  objetDescription: "Met le poid de 3 objets al\xE9atoire \xE0 0"
+  objetDescription: "Met 3 objets \xE0 0 de poids."
   objetMaterialType: 0
   objetWeight: 3
   objectType: 2

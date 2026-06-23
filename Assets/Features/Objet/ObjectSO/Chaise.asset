@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 0c0585bbb6aa1fc4cbca354bc7138a5e, type: 3}
   objetName: Chaise
-  objetDescription: "Chaise ayant appartenu \xE0 dieux"
+  objetDescription: "Chaise sur laquelle dieu c'est assis le 7\xE8me jours."
   objetMaterialType: 2
-  objetWeight: 3
+  objetWeight: 6
   objectType: 1
-  objectEffect: 7
+  objectEffect: 13
   specialAction: {fileID: 0}
   Rarity: 4

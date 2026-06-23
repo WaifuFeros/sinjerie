@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 16cca0b2e9236c94682329dd347b1511, type: 3}
   objetName: Ramen
-  objetDescription: Le meilleurs plat du monde pour se soigner
+  objetDescription: Le meilleurs plat du monde pour se soigner.
   objetMaterialType: 0
   objetWeight: 3
   objectType: 0

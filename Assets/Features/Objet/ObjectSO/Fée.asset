@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 58192ffdf8235b844b2a6a32feabe934, type: 3}
   objetName: "F\xE9e"
-  objetDescription: "On raconte que manger une f\xE9e soigne les maladies"
+  objetDescription: "On raconte que manger une f\xE9e soigne les maladies."
   objetMaterialType: 0
   objetWeight: 5
   objectType: 0

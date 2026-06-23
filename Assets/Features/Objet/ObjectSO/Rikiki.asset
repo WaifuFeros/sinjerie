@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 2d49ae37056977f4688cfd0b83177d8c, type: 3}
   objetName: Baguette Rikiki
-  objetDescription: "Passe le poids de tous les items \xE0 1."
+  objetDescription: "Passe le poids de tous les objets \xE0 1."
   objetMaterialType: 0
   objetWeight: 4
   objectType: 2

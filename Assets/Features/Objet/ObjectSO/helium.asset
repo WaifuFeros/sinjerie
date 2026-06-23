@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 5715d1915f408c24fb09a13cd7d43af0, type: 3}
   objetName: Ballon gonflable
-  objetDescription: "Met le poid des objet qui p\xE8se 1 \xE0 0"
+  objetDescription: "Change le poids des objets qui p\xE8sent 1, et les met \xE0
+    0."
   objetMaterialType: 0
   objetWeight: 2
   objectType: 2
