@@ -309,13 +309,9 @@ public class ItemManager : MonoBehaviour
             var _metalObject = item.GetComponent<ParticleMetalObject>();
             print(_metalObject);
             if (_metalObject == null) continue;
-            else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
+            else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm && item.itemData.objetMaterialType == ObjetMaterialType.Metal)
             {
                 _metalObject.enabled = true;
-            }
-            else
-            {
-                _metalObject.enabled = false;
             }
         }
     }
