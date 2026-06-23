@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: a91354869664636469ef50ff4b0a614e, type: 3}
   objetName: Pomme
-  objetDescription: Une simple Pomme, elle vous redonnera un peu de vie
+  objetDescription: Une simple Pomme, elle vous redonnera un peu de vie.
   objetMaterialType: 0
   objetWeight: 1
   objectType: 0

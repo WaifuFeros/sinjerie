@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: a9eeec72f91533746921bcbd13926732, type: 3}
   objetName: Canette
-  objetDescription: 
+  objetDescription: 'vielle canette de pespi.
+
+
+    On raconte que lors des orages,
+    lancer cet objet sur votre ennemis fait s''abattre la foudre.'
   objetMaterialType: 1
   objetWeight: 2
   objectType: 0

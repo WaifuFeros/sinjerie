@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetSprite: {fileID: 21300000, guid: 8f56d62956ae5e34ca08bfb2f9e4f29f, type: 3}
   objetName: Champignon
-  objetDescription: Augmente la vie max
+  objetDescription: Champignon cultiver par Gaia, elle y a mis tellement d'amour
+    qu'il rallonge votre vie.
   objetMaterialType: 0
   objetWeight: 3
   objectType: 2
