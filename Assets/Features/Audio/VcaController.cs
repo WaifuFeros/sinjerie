@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening; // <-- Ne pas oublier l'import de DOTween
+using DG.Tweening;
+using UnityEngine.Rendering; // <-- Ne pas oublier l'import de DOTween
 
 public class VcaController : MonoBehaviour
 {
     private FMOD.Studio.VCA vca;
     public string VcaName;
+    [SerializeField] AudioSource audioSource; // Référence à l'AudioSource pour le volume de base
 
     private Slider slider;
     private float originalVolume = 1f;
@@ -31,6 +33,11 @@ public class VcaController : MonoBehaviour
         vca.setVolume(volume);
         // Si la musique n'est pas atténuée, on met à jour le volume de référence
         if (!isLowered) originalVolume = volume;
+    }
+
+    public void setPubVolume()
+    {
+        audioSource.volume = slider.value;
     }
 
     /// <summary>
