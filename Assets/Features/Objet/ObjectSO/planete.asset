@@ -16,7 +16,7 @@ MonoBehaviour:
   objetName: "Plan\xE8te"
   objetDescription: "Une crazy plan\xE8te"
   objetMaterialType: 3
-  objetWeight: 8
+  objetWeight: 7
   objectType: 1
   objectEffect: 25
   specialAction: {fileID: 0}
