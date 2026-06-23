@@ -46,7 +46,7 @@ public class DebugController : MonoBehaviour
     public void SetWeather(int index)
     {
         WeatherManager.Instance.SetWeatherByType(weatherList[index]);
-        CombatSystem.Instance.MeteoCheck(true);
+        CombatSystem.Instance?.MeteoCheck(true);
     }
 
     public void SetWeatherLock(bool value)

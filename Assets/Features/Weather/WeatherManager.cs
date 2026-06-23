@@ -43,12 +43,20 @@ public class WeatherManager : MonoBehaviour
     public void UpdateWeather(Action onLoadComplete)
     {
         if (LockWeather)
+        {
+            DisplayDebug("Debug", temperature, effetMeteorologique.ToString());
+            OnWeatherChangedEvent?.Invoke();
+            onLoadComplete?.Invoke();
             return;
+        }
 
         if (DateTime.UtcNow > _lastSaveTime.AddSeconds(weatherUpdateInterval))
             StartCoroutine(GetWeatherRequest(onLoadComplete));
         else
+        {
+            OnWeatherChangedEvent?.Invoke();
             onLoadComplete?.Invoke();
+        }
     }
 
     private IEnumerator GetWeatherRequest(Action onLoadComplete)
@@ -81,6 +89,7 @@ public class WeatherManager : MonoBehaviour
         effetMeteorologique = convertWeatherStateToGameWeather(data.weather[0].main);
 
         DisplayDebug(data.name, temperature, effetMeteorologique.ToString());
+        OnWeatherChangedEvent?.Invoke();
         ItemManager.Instance.UpdateAllReactions(effetMeteorologique);
 
         SaveTimeStamp();
