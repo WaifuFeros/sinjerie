@@ -89,6 +89,7 @@ public class WeatherManager : MonoBehaviour
         effetMeteorologique = convertWeatherStateToGameWeather(data.weather[0].main);
 
         DisplayDebug(data.name, temperature, effetMeteorologique.ToString());
+        OnWeatherChangedEvent?.Invoke();
         ItemManager.Instance.UpdateAllReactions(effetMeteorologique);
 
         SaveTimeStamp();
