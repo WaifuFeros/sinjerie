@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{f7d4c8e8-71f8-4c33-94b9-8b160609ba1e}">
+		<property name="assetPath">
+			<value>Chest.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.38400000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ef9333a7-41e2-4b50-930a-f3810dc1d60c}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -304,7 +304,6 @@ public class ItemManager : MonoBehaviour
         foreach (var item in activeItems)
         {
             var _metalObject = item.GetComponent<ParticleMetalObject>();
-            print(_metalObject);
             if (_metalObject == null) continue;
             else if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm && item.itemData.objetMaterialType == ObjetMaterialType.Metal)
             {

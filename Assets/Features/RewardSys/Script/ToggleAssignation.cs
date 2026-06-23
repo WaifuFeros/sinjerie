@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 using TMPro;
+using FMODUnity;
 
 public class ToggleAssignation : MonoBehaviour, IItemObject, IPointerEnterHandler, IPointerExitHandler
 {
@@ -13,6 +14,10 @@ public class ToggleAssignation : MonoBehaviour, IItemObject, IPointerEnterHandle
 
     public ObjetSO Item;
     public bool IsSelected;
+
+    [Header("Audio")]
+    [SerializeField] private EventReference wrongSound;
+    [SerializeField] private EventReference clickSound;
 
     [Header("Asset")]
     [SerializeField] private Sprite _itemHide;
@@ -71,16 +76,19 @@ public class ToggleAssignation : MonoBehaviour, IItemObject, IPointerEnterHandle
             transform.DOScale(Vector3.one * 1.4f, 0.2f).SetEase(Ease.OutBack);
             RewardSystem.Instance.ItemRewards.Add(Item);
             IsSelected = true;
+            RuntimeManager.PlayOneShot(clickSound);
         }
         else if (IsSelected)
         {
             transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
             RewardSystem.Instance.ItemRewards.Remove(Item);
             IsSelected = false;
+            RuntimeManager.PlayOneShot(clickSound);
         }
         else
         {
             transform.DOPunchRotation(new Vector3(0, 0, 15f), 0.3f, 13, 1);
+            RuntimeManager.PlayOneShot(wrongSound);
         }
     }
     public void OnPointerEnter(PointerEventData eventData)

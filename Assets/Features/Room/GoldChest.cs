@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using FMODUnity;
 
 public class GoldChest : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class GoldChest : MonoBehaviour
     [SerializeField] private float clickScaleMultiplier = 1.3f;
     [SerializeField] private float clickDuration = 0.2f;
 
+    [Header("Audio")]
+    [SerializeField] private EventReference chestSound;
+
     void Start()
     {
         transform.DOLocalMoveY(transform.localPosition.y + bounceStrength, bounceDuration)
@@ -22,6 +26,7 @@ public class GoldChest : MonoBehaviour
 
     public void OnChestClicked()
     {
+        RuntimeManager.PlayOneShot(chestSound);
         PlayerManager.Instance.AddGold(goldGiven);
         transform.DOKill();
         transform.DOScale(transform.localScale * clickScaleMultiplier, clickDuration / 2)

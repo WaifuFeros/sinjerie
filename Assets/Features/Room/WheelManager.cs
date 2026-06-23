@@ -1,7 +1,8 @@
+using DG.Tweening;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 using UnityEngine.UI;
 
 public class WheelManager : MonoBehaviour
@@ -22,6 +23,12 @@ public class WheelManager : MonoBehaviour
     [SerializeField] private float rotationDuration = 2f;
     [SerializeField] private float rotationAngleMin = -360f;
     [SerializeField] private float rotationAngleMax = -720;
+
+    [Header("Audio")]
+    [SerializeField] private EventReference wheelSound;
+    [SerializeField] private EventReference healSound;
+    [SerializeField] private EventReference coinSound;
+    [SerializeField] private EventReference wrongSound;
 
     private Button wheelButton;
     private Vector3 wheelgenInitialPosition;
@@ -46,10 +53,12 @@ public class WheelManager : MonoBehaviour
             wheelButton.interactable = false;
             TriggerBackWheelRotation(wheelback);
             TriggerFrontClickAnimation(wheelgen);
+            RuntimeManager.PlayOneShot(wheelSound);
         }
         else
         {
             TriggerNotEnoughGoldAnimation(wheelgen);
+            RuntimeManager.PlayOneShot(wrongSound);
         }
     }
 
@@ -112,10 +121,12 @@ public class WheelManager : MonoBehaviour
         if (currentAngle >= 335f || currentAngle <= 25f)
         {
             PlayerManager.Instance.Heal(10);
+            RuntimeManager.PlayOneShot(healSound);
         }
         else if (currentAngle >= 151f && currentAngle <= 205f)
         {
             PlayerManager.Instance.AddGold(20);
+            RuntimeManager.PlayOneShot(coinSound);
         }
     }
 }

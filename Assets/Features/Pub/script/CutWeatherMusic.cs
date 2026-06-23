@@ -24,11 +24,6 @@ public class CutWeatherMusic : MonoBehaviour
 
     public void OnResumeMusicButtonClicked()
     {
-        //gameplayMusicVCA.FadeRestoreMusicVolume(2f);
-        //gameplayMusicVCA.
-        //Debug.Log( gameplayMusicVCA);
-        ////emitter.EventInstance.setVolume(1f);
-        
-        //Debug.Log(" Musique FMOD réactivée !");
+        VcaController.Instance.FadeRestoreMusicVolume(1f);
     }
 }
