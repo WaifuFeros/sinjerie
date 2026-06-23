@@ -132,6 +132,7 @@ public class WeatherManager : MonoBehaviour
             {
                 effetMeteorologique = item.asType;
                 descText.text = effetMeteorologique.ToString();
+                OnWeatherChangedEvent?.Invoke();
                 return;
             }
         }
