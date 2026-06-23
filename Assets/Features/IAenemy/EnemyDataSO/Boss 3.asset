@@ -15,7 +15,7 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 221a69d837e0e57498199db4187055e0, type: 3}
   Name: Beber
   Description: C'est un singe
-  MaxHealth: 10
+  MaxHealth: 30
   MaxStamina: 6
   Items:
   - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
@@ -28,3 +28,4 @@ MonoBehaviour:
   behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
   GoldReward: 10
   IsBoss: 1
+  IsActive: 1
