@@ -13,7 +13,8 @@ public class VisualEffectManager : MonoBehaviour
         Fire,
         Water,
         Paralyze,
-        Freeze
+        Freeze,
+        Electric
     }
 
     [System.Serializable]

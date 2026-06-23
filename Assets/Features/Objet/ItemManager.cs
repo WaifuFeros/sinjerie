@@ -125,6 +125,19 @@ public class ItemManager : MonoBehaviour
         }
         return result;
     }
+
+    public List<ItemBrain> GetItemsOfMaterial(ObjetMaterialType type)
+    {
+        List<ItemBrain> result = new List<ItemBrain>();
+        foreach (ItemBrain item in activeItems)
+        {
+            if (item.itemData.objetMaterialType == type)
+            {
+                result.Add(item);
+            }
+        }
+        return result;
+    }
     public List<ItemBrain> GetRandomItems(int nb)
     {
         List<ItemBrain> result = new List<ItemBrain>();

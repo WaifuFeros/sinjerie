@@ -516,11 +516,6 @@ public class CombatSystem : MonoBehaviour
                 case ObjetMaterialType.Fire:
                     if (Enemy.WetCounter == 0)
                     {
-                        //currentEnemy.FireCounter = _initialFireDuration;
-                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
-                        //if (currentEnemy.FreezeCounter > 0)
-                        //    currentEnemy.FreezeCounter -= 1;
-                        //    ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
 
                         Enemy.FireCounter += Enemy.FireCounter > 0 ? _subsequentFireDuration : _initialFireDuration;
                         if (Enemy.FreezeCounter > 0)
@@ -530,7 +525,6 @@ public class CombatSystem : MonoBehaviour
                 case ObjetMaterialType.Wood:
                     if (Enemy.FireCounter > 0)
                         Enemy.FireCounter += _woodOnFireAddDuration;
-                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.Water:
                     Enemy.WetCounter += Enemy.WetCounter > 0 ? _subsequentWetDuration : _initialWetDuration;
@@ -539,24 +533,20 @@ public class CombatSystem : MonoBehaviour
                 case ObjetMaterialType.Ice:
                     Enemy.FreezeCounter += _freezeDuration;
                     Enemy.FireCounter -= _iceOnFireLoseDuration;
-                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.PerfectIce:
                     Enemy.FreezeCounter += _perfectIceFreezeDuration;
                     Enemy.FireCounter -= _iceOnFireLoseDuration;
-                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
                 case ObjetMaterialType.Metal:
                     if (WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm)
                     {
                         Enemy.ParalyzeCounter = _metalParalyzeDuration;
                         WeatherEffect.Instance.Thunder(isPlayer, WeatherManager.Instance.effetMeteorologique == GameWeatherType.Thunderstorm, _damageThunder);
-                        //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     }
                     break;
                 case ObjetMaterialType.Electricity:
                     Enemy.ParalyzeCounter += _electricityParalyzeDuration;
-                    //ItemManager.Instance.UpdateAllReactions(WeatherManager.Instance.effetMeteorologique);
                     break;
             }
         }
