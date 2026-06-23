@@ -15,17 +15,22 @@ public class UnityVideoLink : MonoBehaviour
     void Awake()
     {
         _videoPlayer = GetComponent<VideoPlayer>();
-
-        // ---> AJOUT : On écoute le moment où la vidéo est enfin chargée et prête
         _videoPlayer.prepareCompleted += OnVideoPrepared;
     }
 
     void Start()
     {
-        _currentMasterVolume = PlayerPrefs.GetFloat("VCA_Master", 1f);
-        _currentCategoryVolume = PlayerPrefs.GetFloat("VCA_" + targetVcaName, 1f);
-
-        // On n'appelle plus UpdateFinalVolume ici car la vidéo n'est pas encore prête
+        // CORRECTION : On demande le volume RÉEL actuel à FMOD via le Singleton
+        if (VcaController.Instance != null)
+        {
+            _currentMasterVolume = VcaController.Instance.GetCurrentVolume("Master");
+            _currentCategoryVolume = VcaController.Instance.GetCurrentVolume(targetVcaName);
+        }
+        else // Sécurité au cas où le VcaController n'est pas encore là
+        {
+            _currentMasterVolume = PlayerPrefs.GetFloat("VCA_Master", 1f);
+            _currentCategoryVolume = PlayerPrefs.GetFloat("VCA_" + targetVcaName, 1f);
+        }
     }
 
     void OnEnable()
@@ -39,10 +44,8 @@ public class UnityVideoLink : MonoBehaviour
         _videoPlayer.prepareCompleted -= OnVideoPrepared;
     }
 
-    // ---> NOUVELLE FONCTION : Appelée automatiquement par Unity dès que la vidéo est prête
     private void OnVideoPrepared(VideoPlayer source)
     {
-        Debug.Log("[VideoLink] La vidéo est prête ! Application du volume initial.");
         UpdateFinalVolume();
     }
 
@@ -71,15 +74,9 @@ public class UnityVideoLink : MonoBehaviour
     {
         float finalVolume = _currentMasterVolume * _currentCategoryVolume;
 
-        // On vérifie si la vidéo est prête ET possède des pistes audio
         if (_videoPlayer.isPrepared && _videoPlayer.controlledAudioTrackCount > 0)
         {
             _videoPlayer.SetDirectAudioVolume(0, finalVolume);
-            Debug.Log($"[VideoLink] Volume appliqué avec succès sur la vidéo : {finalVolume}");
-        }
-        else
-        {
-            Debug.LogWarning("[VideoLink] Impossible d'appliquer le volume : la vidéo n'est pas prête ou n'a pas de piste audio détectée.");
         }
     }
 }

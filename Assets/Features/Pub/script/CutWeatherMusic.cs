@@ -5,7 +5,6 @@ using DG.Tweening;
 public class CutWeatherMusic : MonoBehaviour
 {
     [SerializeField] private StudioEventEmitter emitter;
-    [SerializeField] private VcaController gameplayMusicVCA;
 
 
     // Appelé par ton bouton

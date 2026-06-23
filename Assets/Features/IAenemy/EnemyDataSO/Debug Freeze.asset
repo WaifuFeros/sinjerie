@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 091ed4e23cd509645b59a769b5e5d219, type: 3}
+  m_Name: Debug Freeze
+  m_EditorClassIdentifier: 
+  Sprite: {fileID: 0}
+  Name: Debug Freeze
+  Description: C'est un singe
+  MaxHealth: 15
+  MaxStamina: 6
+  Items:
+  - {fileID: 11400000, guid: 1b7063bdc0a5f46408c7c115062d0f60, type: 2}
+  - {fileID: 11400000, guid: 1b7063bdc0a5f46408c7c115062d0f60, type: 2}
+  - {fileID: 11400000, guid: 1b7063bdc0a5f46408c7c115062d0f60, type: 2}
+  - {fileID: 11400000, guid: 1b7063bdc0a5f46408c7c115062d0f60, type: 2}
+  - {fileID: 11400000, guid: 1b7063bdc0a5f46408c7c115062d0f60, type: 2}
+  - {fileID: 11400000, guid: 1b7063bdc0a5f46408c7c115062d0f60, type: 2}
+  behavior: {fileID: 11400000, guid: 2b56d2b257826ca49a3b04e08a7a098c, type: 2}
+  GoldReward: 10
+  IsBoss: 0
+  IsActive: 0

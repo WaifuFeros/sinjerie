@@ -278,8 +278,10 @@ public class PlayerManager : MonoBehaviour
             RuntimeManager.PlayOneShot(iceSound);
             VisualEffectManager.Instance.AddEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
         }
-
         else
+        {
             VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
+            VisualEffectManager.Instance.RemoveEffect(InventoryManager.Instance.itemsParent.gameObject, VisualEffectManager.ParticleEffectType.FreezeInventory);
+        }
     }
 }

@@ -315,4 +315,12 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
+
+    public void SetAllItemsActive(bool isActive)
+    {
+        foreach (var item in activeItems)
+        {
+            item.SetIsInteractable(isActive);
+        }
+    }
 }

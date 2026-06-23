@@ -10,7 +10,10 @@ using UnityEngine;
     public TMP_Dropdown weatherDropdown;
     public TMP_InputField temperatureInputField;
 
+    public TMP_Dropdown enemyDropdown;
+
     private List<GameWeatherType> weatherList;
+    private List<EnemySO> enemyList;
 
     private void Start()
     {
@@ -21,6 +24,9 @@ using UnityEngine;
     {
         InitWeatherDropdown();
         InitTemperature();
+
+        InitEnemyDropdown();
+
         debugPanel.SetActive(true);
     }
 
@@ -59,6 +65,26 @@ using UnityEngine;
         if (float.TryParse(tempAsText, out float temp))
         {
             WeatherManager.Instance.SetTemperature(temp);
+        }
+    }
+
+    public void InitEnemyDropdown()
+    {
+        enemyList = RoomManager.Instance.GetEnemyList();
+
+        enemyDropdown.ClearOptions();
+        enemyDropdown.AddOptions(enemyList.Select(x => x.Name).ToList());
+
+        enemyDropdown.SetValueWithoutNotify(enemyList.IndexOf(CombatSystem.Instance.Enemy.EnemyStats));
+    }
+
+    public void SetEnemy()
+    {
+        EnemySO enemy = enemyList[enemyDropdown.value];
+
+        if (enemy != null)
+        {
+            RoomManager.Instance.SetEnemy(enemy);
         }
     }
 }

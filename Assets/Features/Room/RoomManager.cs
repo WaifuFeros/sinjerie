@@ -9,8 +9,6 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance { get; private set; }
 
-    [SerializeField] private VcaController gameplayMusicVCA;
-
     [Header("Room Settings")]
     [SerializeField] private Transform roomContainer;
     [SerializeField] private GameObject roomShop; // La salle de shop
@@ -22,6 +20,8 @@ public class RoomManager : MonoBehaviour
     private List<EnemySO> availableEnemyData = new List<EnemySO>();
     private List<EnemySO> availableBossData = new List<EnemySO>();
     private RewardSystem rewardSystem;
+
+    private List<EnemySO> allEnemies = new List<EnemySO>();
 
     private void Awake()
     {
@@ -38,6 +38,7 @@ public class RoomManager : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
+                allEnemies.AddRange(handle.Result);
                 availableEnemyData.AddRange(handle.Result.Where(x => x.IsActive && !x.IsBoss));
                 availableBossData.AddRange(handle.Result.Where(x => x.IsActive && x.IsBoss));
                 onLoadCompleted?.Invoke();
@@ -65,12 +66,12 @@ public class RoomManager : MonoBehaviour
             case RoomType.Enemy:
                 SpawnEnemy(false);
                 Debug.Log("enemy restore music!");
-                gameplayMusicVCA.FadeRestoreMusicVolume(2f);
+                VcaController.Instance.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Boss:
                 SpawnEnemy(false);
                 Debug.Log("boss restore music!");
-                gameplayMusicVCA.FadeRestoreMusicVolume(2f);
+                VcaController.Instance.FadeRestoreMusicVolume(2f);
                 return roomType;
             case RoomType.Shop:
                 currentRoom = Instantiate(roomShop, roomContainer.position, roomContainer.rotation);
@@ -91,6 +92,17 @@ public class RoomManager : MonoBehaviour
         EnemySO randomData = availableEnemyData[randomIndex];
         CombatSystem.Instance.Enemy.Initialize(randomData);
         rewardSystem.EnemySO = randomData;
+    }
+
+    public void SetEnemy(EnemySO enemy)
+    {
+        CombatSystem.Instance.Enemy.Initialize(enemy);
+    }
+
+    public List<EnemySO> GetEnemyList()
+    {
+        var list = new List<EnemySO>(allEnemies);
+        return list;
     }
 }
 
