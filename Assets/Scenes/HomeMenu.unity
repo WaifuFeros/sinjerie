@@ -5389,7 +5389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentParent: {fileID: 1091458871}
-  entryPrefab: {fileID: 1964708398829810119, guid: 1b55c9cea604f064fbccfb50bf79a829,
+  entryPrefab: {fileID: 8316754013918109564, guid: 500b8996ea2c44c46816f550536e2ca0,
     type: 3}
   detailIcon: {fileID: 1214954176}
   detailName: {fileID: 258598688}
