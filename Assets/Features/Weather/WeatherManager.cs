@@ -43,7 +43,11 @@ public class WeatherManager : MonoBehaviour
     public void UpdateWeather(Action onLoadComplete)
     {
         if (LockWeather)
+        {
+            DisplayDebug("Debug", temperature, effetMeteorologique.ToString());
+            onLoadComplete?.Invoke();
             return;
+        }
 
         if (DateTime.UtcNow > _lastSaveTime.AddSeconds(weatherUpdateInterval))
             StartCoroutine(GetWeatherRequest(onLoadComplete));
