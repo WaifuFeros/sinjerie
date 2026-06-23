@@ -37,7 +37,9 @@ public class VcaController : MonoBehaviour
 
     public void setPubVolume()
     {
+        Debug.Log("setPubVolume called with slider value: " + slider.value);
         audioSource.volume = slider.value;
+        Debug.Log(audioSource.volume);
     }
 
     /// <summary>
