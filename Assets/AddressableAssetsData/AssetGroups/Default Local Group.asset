@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1deabff527bdb224db4174c5742da019
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/Debug Freeze.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1fb73396d959f564f8377bbdef3fae3e
     m_Address: "Assets/Features/Objet/ObjectSO/F\xE9e.asset"
     m_ReadOnly: 0
@@ -253,6 +259,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e46112519e8ef434e8e692a1e6f5acde
     m_Address: Assets/Features/IAenemy/EnemyDataSO/beber 3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5c28dfffd4ac204e9ea76280c70bb9c
+    m_Address: Assets/Features/IAenemy/EnemyDataSO/Tutorial Enemy.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Enemy

@@ -7505,22 +7505,6 @@ PrefabInstance:
       propertyPath: _uiRootContainer
       value: 
       objectReference: {fileID: 1178827169}
-    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
-        type: 3}
-      propertyPath: _particles.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
-        type: 3}
-      propertyPath: _particles.Array.data[4].type
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
-        type: 3}
-      propertyPath: _particles.Array.data[4].prefab
-      value: 
-      objectReference: {fileID: 6072495273595165902, guid: eea0a16e6365bd6409ac1f2d33d1f994,
-        type: 3}
     - target: {fileID: 6099543184983951143, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: cityText
