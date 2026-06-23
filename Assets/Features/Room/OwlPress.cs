@@ -12,7 +12,6 @@ public class OwlPress : MonoBehaviour
 
     private Sprite originalSprite;
     private Vector3 originalScale;
-    private bool isAnimating = false;
     private Image targetImage;
 
     void Start()
@@ -24,8 +23,6 @@ public class OwlPress : MonoBehaviour
 
     public void OnOwlClicked()
     {
-        isAnimating = true;
-
         targetImage.sprite = pressedSprite;
         targetImage.transform.DOScale(pressedScale, duration)
             .SetEase(Ease.OutQuad)
@@ -36,7 +33,6 @@ public class OwlPress : MonoBehaviour
                     .OnComplete(() =>
                     {
                         targetImage.sprite = originalSprite;
-                        isAnimating = false;
                     });
             });
     }
