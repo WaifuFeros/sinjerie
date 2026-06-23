@@ -150,6 +150,13 @@ MonoBehaviour:
   bounceStrength: 20
   clickScaleMultiplier: 1.3
   clickDuration: 0.2
+  chestSound:
+    Guid:
+      Data1: 336262161
+      Data2: 1201293359
+      Data3: 1193171621
+      Data4: -562584242
+    Path: event:/Chest
 --- !u!1 &7833640586931172554
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +365,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1560766395626895032, guid: 757889da734cf98419485a553d54e33b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7441858178400548692}
   m_SourcePrefab: {fileID: 100100000, guid: 757889da734cf98419485a553d54e33b, type: 3}
 --- !u!224 &8230653569873886134 stripped
 RectTransform:
@@ -366,3 +377,28 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6955600107784573286}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8444167621319731166 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1560766395626895032, guid: 757889da734cf98419485a553d54e33b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6955600107784573286}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7441858178400548692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8444167621319731166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1cf36b7d89be8479d3891423639442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound:
+    Guid:
+      Data1: -530144235
+      Data2: 1173144793
+      Data3: 776551597
+      Data4: 272658488
+    Path: event:/Button

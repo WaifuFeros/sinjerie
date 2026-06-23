@@ -58,14 +58,16 @@ public class AnimalPress : MonoBehaviour
 
     private void PlayAnimalSound()
     {
+        Debug.Log($"Playing sound for {animalType}");
         switch (animalType)
         {
             case AnimalType.Owl:
-                RuntimeManager.PlayOneShot("owlSound");
+                Debug.Log("Playing owl sound");
+                RuntimeManager.PlayOneShot(owlSound);
                 break;
 
             case AnimalType.Frog:
-                RuntimeManager.PlayOneShot("frogSound");
+                RuntimeManager.PlayOneShot(frogSound);
                 break;
         }
     }

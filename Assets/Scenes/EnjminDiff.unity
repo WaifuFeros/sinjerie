@@ -7418,6 +7418,7 @@ GameObject:
   - component: {fileID: 2124370897}
   - component: {fileID: 2124370896}
   - component: {fileID: 2124370900}
+  - component: {fileID: 2124370901}
   m_Layer: 5
   m_Name: ValidateButton
   m_TagString: Untagged
@@ -7571,6 +7572,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9665c6388530a954087868af79c53004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2124370901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124370894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1cf36b7d89be8479d3891423639442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound:
+    Guid:
+      Data1: -530144235
+      Data2: 1173144793
+      Data3: 776551597
+      Data4: 272658488
+    Path: event:/Button
 --- !u!1 &2134683395
 GameObject:
   m_ObjectHideFlags: 0
@@ -7661,6 +7681,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070745997775039934, guid: 75ffe5844579644429223506324ceae8,
         type: 3}
+      propertyPath: ads.Array.data[0]
+      value: 
+      objectReference: {fileID: 32900000, guid: 54897b309e265804cb9305e0d31b6cf0,
+        type: 3}
+    - target: {fileID: 2070745997775039934, guid: 75ffe5844579644429223506324ceae8,
+        type: 3}
       propertyPath: ads.Array.data[1]
       value: 
       objectReference: {fileID: 32900000, guid: b4c8c44dce01fec4880812529949c91b,
@@ -7669,19 +7695,19 @@ PrefabInstance:
         type: 3}
       propertyPath: ads.Array.data[2]
       value: 
-      objectReference: {fileID: 32900000, guid: 54897b309e265804cb9305e0d31b6cf0,
+      objectReference: {fileID: 32900000, guid: 8824fea1d8ea2b243b88b0ce1a24edd7,
         type: 3}
     - target: {fileID: 2070745997775039934, guid: 75ffe5844579644429223506324ceae8,
         type: 3}
       propertyPath: ads.Array.data[3]
       value: 
-      objectReference: {fileID: 32900000, guid: 1b1d8a53ca5b06141bc2eb53185447ab,
+      objectReference: {fileID: 32900000, guid: 375864c89af794d4a9d62058e20f4450,
         type: 3}
     - target: {fileID: 2070745997775039934, guid: 75ffe5844579644429223506324ceae8,
         type: 3}
       propertyPath: ads.Array.data[4]
       value: 
-      objectReference: {fileID: 32900000, guid: 8824fea1d8ea2b243b88b0ce1a24edd7,
+      objectReference: {fileID: 32900000, guid: 1b1d8a53ca5b06141bc2eb53185447ab,
         type: 3}
     - target: {fileID: 2070745997775039934, guid: 75ffe5844579644429223506324ceae8,
         type: 3}
@@ -7851,6 +7877,11 @@ PrefabInstance:
         type: 3}
       propertyPath: gameplayMusicVCA
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3556014707139600293, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3809902733895903087, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
@@ -8052,6 +8083,16 @@ PrefabInstance:
         type: 3}
       propertyPath: roomPrefabs.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _roomsLoop.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _roomsLoop.Array.data[2]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}

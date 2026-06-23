@@ -92,7 +92,7 @@ public class ItemToBuy : MonoBehaviour, IItemObject
         {
             // Ajoute l'item au deck du joueur et retire l'or
             PlayerManager.Instance.removeGold(price);
-            RuntimeManager.PlayOneShot("coinSound");
+            RuntimeManager.PlayOneShot(coinSound);
             var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
             deckList.Add(itemToBuySO);
             PlayerManager.Instance.stats.Deck = deckList.ToArray();
@@ -104,7 +104,7 @@ public class ItemToBuy : MonoBehaviour, IItemObject
         }
         else
         {
-            RuntimeManager.PlayOneShot("wrongSound");
+            RuntimeManager.PlayOneShot(wrongSound);
         }
     }
 

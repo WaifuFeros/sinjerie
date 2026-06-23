@@ -143,7 +143,7 @@ MonoBehaviour:
   Path: FMOD Sinjerie/sinjerie/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639178467022421523
+  lastModified: 639178544992119909
   FileSizes:
   - Name: Desktop
     Value: 5909152
@@ -238,10 +238,10 @@ MonoBehaviour:
   Path: FMOD Sinjerie/sinjerie/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639178467022484528
+  lastModified: 639178544993931641
   FileSizes:
   - Name: Desktop
-    Value: 321088
+    Value: 463520
   Exists: 1
 --- !u!114 &-4377131145803142247
 MonoBehaviour:
@@ -402,6 +402,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-2193397944948052385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Chest
+  m_EditorClassIdentifier: 
+  Path: event:/Chest
+  Guid:
+    Data1: 336262161
+    Data2: 1201293359
+    Data3: 1193171621
+    Data4: -562584242
+  Banks:
+  - {fileID: -5524142413255593592}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 950
 --- !u!114 &-1957847575461213247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,13 +507,17 @@ MonoBehaviour:
   - {fileID: 2306763441036463524}
   - {fileID: 9065597475463251747}
   - {fileID: -8224325366768252250}
+  - {fileID: 8237155434223098900}
+  - {fileID: 7271839229158428502}
+  - {fileID: 5312153097377329487}
+  - {fileID: -2193397944948052385}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6383436366205636484}
   StringsBanks:
   - {fileID: 1869455483835721863}
   cacheVersion: 131860
-  cacheTime: 639178467022484528
+  cacheTime: 639178544993931641
   SerializableEventsDict:
   - key: event:/Lose
     index: 0
@@ -514,6 +545,14 @@ MonoBehaviour:
     index: 11
   - key: event:/Burn
     index: 12
+  - key: event:/Wheel
+    index: 13
+  - key: event:/Wrong
+    index: 14
+  - key: event:/Frog
+    index: 15
+  - key: event:/Chest
+    index: 16
 --- !u!114 &538298894671981198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,10 +666,10 @@ MonoBehaviour:
   Path: FMOD Sinjerie/sinjerie/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639178467022441657
+  lastModified: 639178544992139878
   FileSizes:
   - Name: Desktop
-    Value: 1702
+    Value: 1876
   Exists: 1
 --- !u!114 &2306763441036463524
 MonoBehaviour:
@@ -797,6 +836,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 84705
+--- !u!114 &5312153097377329487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Frog
+  m_EditorClassIdentifier: 
+  Path: event:/Frog
+  Guid:
+    Data1: -1513308246
+    Data2: 1103402078
+    Data3: -1795438451
+    Data4: -879017698
+  Banks:
+  - {fileID: -5524142413255593592}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 500
 --- !u!114 &5413059559698132629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -928,6 +994,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3500
+--- !u!114 &7271839229158428502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Wrong
+  m_EditorClassIdentifier: 
+  Path: event:/Wrong
+  Guid:
+    Data1: -828374209
+    Data2: 1135599686
+    Data3: -1764511605
+    Data4: 1036524725
+  Banks:
+  - {fileID: -5524142413255593592}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 400
 --- !u!114 &7309520441942255897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -982,6 +1075,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 997
+--- !u!114 &8237155434223098900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Wheel
+  m_EditorClassIdentifier: 
+  Path: event:/Wheel
+  Guid:
+    Data1: 188094747
+    Data2: 1206882469
+    Data3: -1413709170
+    Data4: -2036748989
+  Banks:
+  - {fileID: -5524142413255593592}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2050
 --- !u!114 &8353669713499654787
 MonoBehaviour:
   m_ObjectHideFlags: 0
