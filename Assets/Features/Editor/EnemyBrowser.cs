@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class EnemyBrowser : GenericScriptableObjectBrowser<EnemySO>
@@ -16,6 +17,16 @@ public class EnemyBrowser : GenericScriptableObjectBrowser<EnemySO>
 
     protected override IComparable GetGroupKey(EnemySO item)
     {
-        return item.IsBoss;
+        if (item.name.ToLower().Contains("debug"))
+        {
+            return "3.Debug";
+        }
+        else
+        {
+            if (item.IsBoss)
+                return "2.Boss";
+            else
+                return "1.Ennemis";
+        }
     }
 }
