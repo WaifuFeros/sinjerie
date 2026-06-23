@@ -1,6 +1,7 @@
 using FMODUnity;
 using System;
 using System.Net.NetworkInformation;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -45,6 +46,7 @@ public class PlayerManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private Slider healthBar;
+    [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private StaminaUIManager staminaUI;
     [SerializeField] private AfflictionEffect afflictionEffect;
     [SerializeField] public Image playerHead;
@@ -199,6 +201,7 @@ public class PlayerManager : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.value = (float)stats.currentHealth / stats.maxHealth;
+            healthText.text = stats.currentHealth.ToString();
         }
     }
 
