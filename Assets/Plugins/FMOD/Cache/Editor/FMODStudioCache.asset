@@ -143,7 +143,7 @@ MonoBehaviour:
   Path: FMOD Sinjerie/sinjerie/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639178467022421523
+  lastModified: 639178416940249952
   FileSizes:
   - Name: Desktop
     Value: 5909152
@@ -238,7 +238,7 @@ MonoBehaviour:
   Path: FMOD Sinjerie/sinjerie/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639178467022484528
+  lastModified: 639178416940259952
   FileSizes:
   - Name: Desktop
     Value: 321088
@@ -486,7 +486,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 1869455483835721863}
   cacheVersion: 131860
-  cacheTime: 639178467022484528
+  cacheTime: 639178416940259952
   SerializableEventsDict:
   - key: event:/Lose
     index: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
   Path: FMOD Sinjerie/sinjerie/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639178467022441657
+  lastModified: 639178416940259952
   FileSizes:
   - Name: Desktop
     Value: 1702
