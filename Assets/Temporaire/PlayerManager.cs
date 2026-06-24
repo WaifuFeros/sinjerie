@@ -110,7 +110,7 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         stats.maxHealth = stats.baseMaxHealth + MetaProgressionManager.Instance.GetValueByType(StatUpgradeType.Health);
-        stats.maxHealth = stats.baseMaxStamina + MetaProgressionManager.Instance.GetValueByType(StatUpgradeType.Stamina);
+        stats.maxStamina = stats.baseMaxStamina + MetaProgressionManager.Instance.GetValueByType(StatUpgradeType.Stamina);
 
         stats.currentHealth = stats.maxHealth;
         stats.currentStamina = stats.maxStamina;
