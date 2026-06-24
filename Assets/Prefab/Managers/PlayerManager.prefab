@@ -97,10 +97,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd143ccc4f0537a4eb60df812c0e8426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iceSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   stats:
-    maxHealth: 20
+    baseMaxHealth: 35
+    maxHealth: 35
     currentHealth: 0
-    maxStamina: 7
+    baseMaxStamina: 7
+    maxStamina: 12
     staminaRegenPerTurn: 7
     currentStamina: 0
     nbStartItem: 22
@@ -129,8 +138,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 7c5b7f7ac7bd9ee4a978efddb7b8839b, type: 2}
     - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
   healthBar: {fileID: 0}
+  healthText: {fileID: 0}
   staminaUI: {fileID: 0}
-  FireCounter: 0
-  FreezeCounter: 0
-  WetCounter: 0
-  ParalyzeCounter: 0
+  afflictionEffect: {fileID: 0}
+  playerHead: {fileID: 0}
