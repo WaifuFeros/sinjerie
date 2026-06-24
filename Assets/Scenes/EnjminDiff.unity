@@ -1220,6 +1220,7 @@ GameObject:
   - component: {fileID: 510525703}
   - component: {fileID: 510525702}
   - component: {fileID: 510525701}
+  - component: {fileID: 510525704}
   m_Layer: 5
   m_Name: LeftGame
   m_TagString: Untagged
@@ -1341,6 +1342,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510525699}
   m_CullTransparentMesh: 1
+--- !u!114 &510525704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510525699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1cf36b7d89be8479d3891423639442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound:
+    Guid:
+      Data1: -530144235
+      Data2: 1173144793
+      Data3: 776551597
+      Data4: 272658488
+    Path: event:/Button
 --- !u!1 &514022460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2075,6 +2095,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f05411c9b2c57b459cd4d8c8920cb49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossSound:
+    Guid:
+      Data1: -2019533892
+      Data2: 1320159763
+      Data3: 902037426
+      Data4: 1792159832
+    Path: event:/Boss
+  victorySound:
+    Guid:
+      Data1: 17575083
+      Data2: 1143888556
+      Data3: 1444321409
+      Data4: -987494605
+    Path: event:/Victory
+  bananaSound:
+    Guid:
+      Data1: 1197807706
+      Data2: 1155274501
+      Data3: -902451800
+      Data4: 208563686
+    Path: event:/Banana
   roomPanel: {fileID: 518467310}
   combatPanel: {fileID: 1607031817}
   rewardPanel: {fileID: 949505829}
@@ -2604,6 +2645,7 @@ GameObject:
   - component: {fileID: 886044150}
   - component: {fileID: 886044154}
   - component: {fileID: 886044155}
+  - component: {fileID: 886044156}
   m_Layer: 5
   m_Name: SkipTurnButton
   m_TagString: Untagged
@@ -2743,6 +2785,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9665c6388530a954087868af79c53004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &886044156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886044149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1cf36b7d89be8479d3891423639442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound:
+    Guid:
+      Data1: -530144235
+      Data2: 1173144793
+      Data3: 776551597
+      Data4: 272658488
+    Path: event:/Button
 --- !u!1 &888724472
 GameObject:
   m_ObjectHideFlags: 0
@@ -8414,6 +8475,11 @@ PrefabInstance:
         type: 3}
       propertyPath: roomPrefabs.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _roomsLoop.Array.data[0]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7760783066260945297, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
