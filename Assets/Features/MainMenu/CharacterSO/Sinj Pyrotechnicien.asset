@@ -17,21 +17,23 @@ MonoBehaviour:
   characterDescription: Du feu
   price: 0
   startDeck:
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
-  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
-  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
-  - {fileID: 11400000, guid: 868b49fe578a609459929659800dea7b, type: 2}
-  - {fileID: 11400000, guid: 868b49fe578a609459929659800dea7b, type: 2}
   - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}
-  - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}
-  - {fileID: 11400000, guid: c718e095ff2be1f42866a38b5eb4f8f7, type: 2}
-  - {fileID: 11400000, guid: c718e095ff2be1f42866a38b5eb4f8f7, type: 2}
+  - {fileID: 11400000, guid: cda912efc7296234e85547b44aaecc63, type: 2}
+  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+  - {fileID: 11400000, guid: 868b49fe578a609459929659800dea7b, type: 2}
+  - {fileID: 11400000, guid: d1930c27e415e0748890c48d70c85eff, type: 2}
+  - {fileID: 11400000, guid: 7cebe4567aa1fd84f919e8ef108da7e3, type: 2}
+  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+  - {fileID: 11400000, guid: 2189040e6dd943a48af681ed39a0dd1a, type: 2}
+  - {fileID: 11400000, guid: 600e3565089aec84fbb7d71cc73719ec, type: 2}
   - {fileID: 11400000, guid: c718e095ff2be1f42866a38b5eb4f8f7, type: 2}
   - {fileID: 11400000, guid: 7c5b7f7ac7bd9ee4a978efddb7b8839b, type: 2}
-  - {fileID: 11400000, guid: 7c5b7f7ac7bd9ee4a978efddb7b8839b, type: 2}
-  - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}
-  - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}
+  - {fileID: 11400000, guid: 3de7df18b0736e64db5af12212917e58, type: 2}
+  - {fileID: 11400000, guid: 868b49fe578a609459929659800dea7b, type: 2}
+  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+  - {fileID: 11400000, guid: 339490779a92aa048bf26dc55d8771a5, type: 2}
+  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
   - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}
   - {fileID: 11400000, guid: 857e1776262ed8a46b7a77aa772f78eb, type: 2}

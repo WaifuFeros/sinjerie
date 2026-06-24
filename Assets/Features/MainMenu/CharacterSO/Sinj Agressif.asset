@@ -18,11 +18,20 @@ MonoBehaviour:
   price: 0
   startDeck:
   - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
-  - {fileID: 11400000, guid: 8853d16ccc8f687489ce34377a2b5a37, type: 2}
+  - {fileID: 11400000, guid: 1922c64f124679c4eb1fd30d69eb759f, type: 2}
   - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
   - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
   - {fileID: 11400000, guid: 1922c64f124679c4eb1fd30d69eb759f, type: 2}
   - {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5, type: 2}
   - {fileID: 11400000, guid: e9cf4aed8ac5b9e4f81c40a95634f792, type: 2}
-  - {fileID: 11400000, guid: 600e3565089aec84fbb7d71cc73719ec, type: 2}
+  - {fileID: 11400000, guid: bd32cc19014849e47a97fbbab56c91ef, type: 2}
   - {fileID: 11400000, guid: e29c8c03bea93df4cb07e3e536afb15b, type: 2}
+  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
+  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
+  - {fileID: 11400000, guid: e39ac38057e9cc144ae1b469c8daf3fa, type: 2}
+  - {fileID: 11400000, guid: e39ac38057e9cc144ae1b469c8daf3fa, type: 2}
+  - {fileID: 11400000, guid: 5020cfe67d6343b40baf1c3249feb520, type: 2}
+  - {fileID: 11400000, guid: 868b49fe578a609459929659800dea7b, type: 2}
+  - {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5, type: 2}
+  - {fileID: 11400000, guid: bd32cc19014849e47a97fbbab56c91ef, type: 2}
+  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
