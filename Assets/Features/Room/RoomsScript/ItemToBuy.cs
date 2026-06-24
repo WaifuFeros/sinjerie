@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 using FMODUnity;
+using DG.Tweening;
 
 public class ItemToBuy : MonoBehaviour, IItemObject
 {
@@ -29,9 +30,10 @@ public class ItemToBuy : MonoBehaviour, IItemObject
     [SerializeField] private EventReference wrongSound;
 
     private Color _priceTextBaseColor;
-
+    private Vector3 itemInitialLocalPosition;
     void Start()
     {
+        itemInitialLocalPosition = item.transform.localPosition;
         _priceTextBaseColor = priceText.color;
 
         // Choisi la rareté et le prix et applique l'affichage de la rareté
@@ -85,26 +87,38 @@ public class ItemToBuy : MonoBehaviour, IItemObject
     {
         PlayerManager.Instance.OnGoldUpdateEvent -= UpdatePriceColor;
     }
+    
+
+
 
     public void BuyItem()
     {
         if (PlayerManager.Instance.stats.gold >= price)
         {
-            // Ajoute l'item au deck du joueur et retire l'or
             PlayerManager.Instance.removeGold(price);
             RuntimeManager.PlayOneShot(coinSound);
             var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
             deckList.Add(itemToBuySO);
             PlayerManager.Instance.stats.Deck = deckList.ToArray();
-
-            // Affichage
             GetComponent<Button>().interactable = false;
-            item.SetActive(false);
             button.interactable = false;
+
+            item.transform.DOScale(1.1f, 0.1f).OnComplete(() =>
+            {
+                item.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
+                {
+                    item.SetActive(false);
+                });
+            });
         }
         else
         {
             RuntimeManager.PlayOneShot(wrongSound);
+            item.transform.DOKill();
+
+            item.transform.localPosition = itemInitialLocalPosition;
+            item.transform.localScale = Vector3.one;
+            item.transform.DOShakePosition(0.4f, Vector3.right * 15f, 10, 90, false, true);
         }
     }
 

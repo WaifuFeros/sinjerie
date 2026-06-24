@@ -2,11 +2,16 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using FMODUnity;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    [Header("Audio")]
+    [SerializeField] private EventReference bossSound;
+    [SerializeField] private EventReference victorySound;
+    [SerializeField] private EventReference bananaSound;
 
     [Header("Panels")]
     [SerializeField] 
@@ -29,7 +34,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject bananaBackground;
     [SerializeField] GameObject banana;
 
-    [Header("Banana Reward")]
+    [Header("Boss Panel")]
     [SerializeField] private GameObject bossFightMessagePanel;
     [SerializeField] private GameObject bossFightMessage;
 
@@ -97,6 +102,7 @@ public class UIManager : MonoBehaviour
     public void ShowBananaRewardPanel()
     {
         bananaPanel.SetActive(true);
+        RuntimeManager.PlayOneShot(victorySound);
         Button bgButton = bananaBackground.GetComponent<Button>();
         bgButton.interactable = true;
         Image panelImage = bananaPanel.GetComponent<Image>();
@@ -141,6 +147,7 @@ public class UIManager : MonoBehaviour
     public void OnBananaBackgroundClicked()
     {
         Image panelImage = bananaPanel.GetComponent<Image>();
+        RuntimeManager.PlayOneShot(bananaSound);
 
         bananaBackground.transform.DOKill();
         banana.transform.DOKill();
@@ -171,6 +178,7 @@ public class UIManager : MonoBehaviour
         bossFightMessage.transform.localPosition = new Vector3(-1500, localPos.y, localPos.z);
 
         bossFightMessagePanel.SetActive(true);
+        RuntimeManager.PlayOneShot(bossSound);
 
         Sequence bossMessageSequence = DOTween.Sequence();
         bossMessageSequence.Kill();
