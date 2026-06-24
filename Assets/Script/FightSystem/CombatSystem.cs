@@ -121,6 +121,10 @@ public class CombatSystem : MonoBehaviour
         if (Enemy.EnemyStats.IsBoss)
             UIManager.Instance.ShowBossMessagePanel();
 
+        //uunlock freeze item
+        ItemManager.Instance.SetAllItemsActive(true);
+
+
         // Mettre la stamina au max
         PlayerManager.Instance.refillStamina();
 
