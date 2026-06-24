@@ -294,6 +294,7 @@ public class PlayerManager : MonoBehaviour
         {
             VisualEffectManager.Instance.RemoveEffect(playerHead.gameObject, VisualEffectManager.ParticleEffectType.Freeze);
             VisualEffectManager.Instance.RemoveEffect(InventoryManager.Instance.itemsParent.gameObject, VisualEffectManager.ParticleEffectType.FreezeInventory);
+            ItemManager.Instance.SetAllItemsActive(true);
         }
     }
 }
