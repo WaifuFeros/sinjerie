@@ -220,6 +220,11 @@ public class PlayerManager : MonoBehaviour
         }
         return false;
     }
+
+    public bool checkStamina(int nb)
+    {
+        return stats.currentStamina - nb >= 0;
+    }
     // Remet la stamina a son maximum
     public void refillStamina(int staminaPenaly = 0)
     {

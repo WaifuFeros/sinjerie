@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{e0a46de3-bd82-477d-801c-96a97f9d69d6}">
+		<property name="assetPath">
+			<value>Boss.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.750204081632653</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ef9333a7-41e2-4b50-930a-f3810dc1d60c}</destination>
+		</relationship>
+	</object>
+</objects>

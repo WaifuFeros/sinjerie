@@ -7,6 +7,7 @@ public class WeatherEffect : MonoBehaviour
 {
     [SerializeField] private EventReference fireSound;
     [SerializeField] private EventReference paralyzeSound;
+    [SerializeField] private EventReference thunderSound;
 
     public static WeatherEffect Instance { get; private set; }
 
@@ -171,6 +172,8 @@ public class WeatherEffect : MonoBehaviour
     {
         if (!isThunder)
             return;
+
+        RuntimeManager.PlayOneShot(thunderSound);
 
         if (isPlayer)
             PlayerManager.Instance.TakeDamage(damageThunder);
