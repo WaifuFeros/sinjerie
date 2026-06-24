@@ -8565,6 +8565,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
+      propertyPath: thunderSound.Path
+      value: event:/Lightning
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
       propertyPath: paralyzeSound.Path
       value: event:/Paralyze
       objectReference: {fileID: 0}
@@ -8607,6 +8612,26 @@ PrefabInstance:
         type: 3}
       propertyPath: fireSound.Guid.Data4
       value: -368997885
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: thunderSound.Guid.Data1
+      value: 1820964681
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: thunderSound.Guid.Data2
+      value: 1224165083
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: thunderSound.Guid.Data3
+      value: 1203818170
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: thunderSound.Guid.Data4
+      value: -478188312
       objectReference: {fileID: 0}
     - target: {fileID: 8931502081743569818, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
