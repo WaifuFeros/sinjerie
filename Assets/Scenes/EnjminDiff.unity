@@ -8289,7 +8289,7 @@ PrefabInstance:
     - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
       propertyPath: _particles.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
@@ -8298,9 +8298,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
+      propertyPath: _particles.Array.data[7].type
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
       propertyPath: _particles.Array.data[6].prefab
       value: 
       objectReference: {fileID: 6072495273595165902, guid: 358a16e2aa485c84f8bc890584a6caea,
+        type: 3}
+    - target: {fileID: 5599329987871969448, guid: 183536fe8d7d932499ff79916d0f4944,
+        type: 3}
+      propertyPath: _particles.Array.data[7].prefab
+      value: 
+      objectReference: {fileID: 6072495273595165902, guid: cb347e3a97166d549b32fa92356c7dfa,
         type: 3}
     - target: {fileID: 6099543184983951143, guid: 183536fe8d7d932499ff79916d0f4944,
         type: 3}
