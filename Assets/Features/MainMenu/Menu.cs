@@ -26,8 +26,9 @@ public class Menu : MonoBehaviour
 
     private void Awake()
     {
-        if (!string.IsNullOrWhiteSpace(managersScene) && SceneLoadManager.IsManagerSceneLoaded == false)
+        if (SceneManager.GetSceneByName(managersScene).IsValid() == false)
             SceneManager.LoadScene(managersScene, LoadSceneMode.Additive);
+        //if (!string.IsNullOrWhiteSpace(managersScene) && SceneLoadManager.IsManagerSceneLoaded == false)
 
         if (_saveScript != null)
         {

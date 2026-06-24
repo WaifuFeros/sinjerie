@@ -93,6 +93,12 @@ public class ItemBrain : GameDraggableObjectController, IItemObject
         if (itemData != null) Destroy(itemData);
 
         itemData = Instantiate(data);
+
+        if (itemData.objectType == ObjetEffectType.Attack)
+            itemData.objectEffect += MetaProgressionManager.Instance.GetValueByType(StatUpgradeType.Damage);
+        else if (itemData.objectType == ObjetEffectType.Heal)
+            itemData.objectEffect += MetaProgressionManager.Instance.GetValueByType(StatUpgradeType.Heal);
+
         TriggerVisualUpdate();
     }
 
