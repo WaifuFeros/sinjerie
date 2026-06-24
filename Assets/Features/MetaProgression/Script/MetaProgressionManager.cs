@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MetaProgressionManager : MonoBehaviour
@@ -72,7 +73,8 @@ public class MetaProgressionManager : MonoBehaviour
 
         if (upgradeData != null)
         {
-            return Mathf.RoundToInt(upgradeData.GetValue(upgradeLevel));
+            int value = Mathf.RoundToInt(upgradeData.GetValue(upgradeLevel));
+            return value;
         }
 
         return 0;
@@ -80,17 +82,13 @@ public class MetaProgressionManager : MonoBehaviour
 
     public void Upgrade(StatUpgradeType type)
     {
-        Debug.Log("try update");
         var upgradeData = GetUpgradeData(type);
 
         if (upgradeData != null)
         {
-            Debug.Log("upgrade found");
-            Debug.Log(_currentUpgradesDictionary[type]);
             int upgradeLevel = _currentUpgradesDictionary[type];
             upgradeLevel++;
             _currentUpgradesDictionary[type] = Mathf.Clamp(upgradeLevel, 0, upgradeData.maxUpdateCount);
-            Debug.Log(_currentUpgradesDictionary[type]);
 
             CurrentBananaCount -= upgradeData.upgradeCost;
         }
@@ -102,12 +100,9 @@ public class MetaProgressionManager : MonoBehaviour
 
         if (upgradeData != null)
         {
-            Debug.Log("upgrade found");
-            Debug.Log(_currentUpgradesDictionary[type]);
             int upgradeLevel = _currentUpgradesDictionary[type];
             upgradeLevel--;
             _currentUpgradesDictionary[type] = Mathf.Clamp(upgradeLevel, 0, upgradeData.maxUpdateCount);
-            Debug.Log(_currentUpgradesDictionary[type]);
 
             CurrentBananaCount += upgradeData.upgradeCost;
         }
@@ -139,6 +134,21 @@ public class MetaProgressionManager : MonoBehaviour
     {
         return CurrentBananaCount >= count;
     }
+
+    public StatUpgradeSave[] GetStatUpgradeSave()
+    {
+        return _currentUpgradesDictionary.Select(x => new StatUpgradeSave() { type = x.Key, upgradeLevel = x.Value }).ToArray();
+    }
+
+    public void LoadUpgradeLevels(StatUpgradeSave[] upgrades)
+    {
+        _currentUpgradesDictionary = upgrades.ToDictionary(x => x.type, x => x.upgradeLevel);
+    }
+
+    public void SetTotalBanana(int count)
+    {
+        TotalBananaCount = count;
+    }
 }
 
 public enum StatUpgradeType
@@ -161,7 +171,7 @@ public class StatUpgradeData
 
     public float GetValue(int upgradeLevel)
     {
-        return upgradeValue * maxUpdateCount;
+        return upgradeValue * upgradeLevel;
     }
 }
 
