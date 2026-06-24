@@ -5085,6 +5085,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  AllowSpecial: 0
 --- !u!114 &1854486088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7601,6 +7602,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  AllowSpecial: 1
 --- !u!114 &2058587214
 MonoBehaviour:
   m_ObjectHideFlags: 0
