@@ -23,6 +23,7 @@ public class WeatherManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tempText;
     [SerializeField] private TextMeshProUGUI descText;
     [SerializeField] private float defaultTemperature = 20f;
+    [SerializeField] private GameWeatherType defaultMeteo = GameWeatherType.ClearSky;
 
     [SerializeField, ReadOnlyField] private string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
 
@@ -83,7 +84,7 @@ public class WeatherManager : MonoBehaviour
             Debug.LogError(request.error);
 
             temperature = defaultTemperature;
-            effetMeteorologique = GameWeatherType.ClearSky;
+            effetMeteorologique = defaultMeteo;
             DisplayDebug("No city", temperature, effetMeteorologique.ToString());
 
         }
