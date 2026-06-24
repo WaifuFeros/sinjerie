@@ -4,12 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.ParticleSystem;
 
 public class WheelManager : MonoBehaviour
 {
     [Header("GameObjects à animer")]
     [SerializeField] private GameObject wheelback;
     [SerializeField] private GameObject wheelgen;
+    [SerializeField] private GameObject particule;
 
     [Header("Idle")]
     [SerializeField] private float idleScaleY = 1.1f;
@@ -125,6 +127,7 @@ public class WheelManager : MonoBehaviour
         }
         else if (currentAngle >= 151f && currentAngle <= 205f)
         {
+            VisualEffectManager.Instance.TriggerBurst(particule, VisualEffectManager.ParticleEffectType.Gold);
             PlayerManager.Instance.AddGold(20);
             RuntimeManager.PlayOneShot(coinSound);
         }
