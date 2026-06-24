@@ -19,6 +19,11 @@ public class Menu : MonoBehaviour
     [SelectScene]
     public string managersScene;
 
+    private void Start()
+    {
+        TutorialManager.Instance.IsTutorial = false;
+    }
+
     private void Awake()
     {
         if (!string.IsNullOrWhiteSpace(managersScene) && SceneLoadManager.IsManagerSceneLoaded == false)
