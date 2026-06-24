@@ -934,6 +934,26 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2572963166041897695, guid: cf63f08ad137de943a63f9875eda375c,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572963166041897695, guid: cf63f08ad137de943a63f9875eda375c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572963166041897695, guid: cf63f08ad137de943a63f9875eda375c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572963166041897695, guid: cf63f08ad137de943a63f9875eda375c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3608328539424925314, guid: cf63f08ad137de943a63f9875eda375c,
         type: 3}
       propertyPath: m_fontAsset
