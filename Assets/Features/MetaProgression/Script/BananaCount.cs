@@ -10,6 +10,7 @@ public class BananaCount : MonoBehaviour
 
     private void Start()
     {
+        UpdateBananaCount();
         MetaProgressionManager.Instance.OnBananaCountUpdated += UpdateBananaCount;
     }
 
