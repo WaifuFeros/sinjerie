@@ -22,6 +22,7 @@ public class WeatherManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cityText;
     [SerializeField] private TextMeshProUGUI tempText;
     [SerializeField] private TextMeshProUGUI descText;
+    [SerializeField] private float defaultTemperature = 20f;
 
     [SerializeField, ReadOnlyField] private string apiKey = "cab53e4ddd7d114609d442afdc97e4af";
 
@@ -80,15 +81,23 @@ public class WeatherManager : MonoBehaviour
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError(request.error);
-            yield break;
+
+            temperature = defaultTemperature;
+            effetMeteorologique = GameWeatherType.ClearSky;
+            DisplayDebug("No city", temperature, effetMeteorologique.ToString());
+
+        }
+        else
+        {
+            WeatherData data = JsonUtility.FromJson<WeatherData>(request.downloadHandler.text);
+            temperature = data.main.temp;
+            effetMeteorologique = convertWeatherStateToGameWeather(data.weather[0].main);
+            DisplayDebug(data.name, temperature, effetMeteorologique.ToString());
         }
 
         Debug.Log("Requête météo réussie, récupération des données...");
-        WeatherData data = JsonUtility.FromJson<WeatherData>(request.downloadHandler.text);
-        temperature = data.main.temp;
-        effetMeteorologique = convertWeatherStateToGameWeather(data.weather[0].main);
+        
 
-        DisplayDebug(data.name, temperature, effetMeteorologique.ToString());
         OnWeatherChangedEvent?.Invoke();
         ItemManager.Instance.UpdateAllReactions(effetMeteorologique);
 
