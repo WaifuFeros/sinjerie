@@ -19,22 +19,22 @@ public class Menu : MonoBehaviour
     [SelectScene]
     public string managersScene;
 
-    private void Start()
-    {
-        TutorialManager.Instance.IsTutorial = false;
-    }
-
     private void Awake()
     {
         if (SceneManager.GetSceneByName(managersScene).IsValid() == false)
             SceneManager.LoadScene(managersScene, LoadSceneMode.Additive);
         //if (!string.IsNullOrWhiteSpace(managersScene) && SceneLoadManager.IsManagerSceneLoaded == false)
+    }
 
-        if (_saveScript != null)
+    private void Start()
+    {
+        TutorialManager.Instance.IsTutorial = false;
+        if (_saveScript != null && SaveScript.HasLoadedSave == false)
         {
             _saveScript.LoadInfo();
         }
     }
+
     public void StartGame()
     {
         TransitionManager.Instance.TransitionWithAction(() => {

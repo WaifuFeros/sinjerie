@@ -34,6 +34,7 @@ public class MetaProgressionUpgradeButton : MonoBehaviour
 
         _downgradeButton.interactable = currentUpgradeLevel > 0;
         _upgradeButton.interactable = MetaProgressionManager.Instance.HasEnoughBanana(upgradeData.upgradeCost) && currentUpgradeLevel < upgradeData.maxUpdateCount;
+        _upgradeLevelText.text = MetaProgressionManager.Instance.GetUpgradeLevel(_upgradeType).ToString();
     }
 
     public void Upgrade()
