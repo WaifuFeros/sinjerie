@@ -1,6 +1,5 @@
 using FMODUnity;
 using System;
-using System.Net.NetworkInformation;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +10,10 @@ public class PlayerStatsData
 {
 
     [Header("Base Stats")]
+    public int baseMaxHealth = 20;
     public int maxHealth = 100;
     public int currentHealth;
+    public int baseMaxStamina = 4;
     public int maxStamina = 5;
     public int staminaRegenPerTurn = 2;
     public int currentStamina;
@@ -108,6 +109,9 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+        stats.maxHealth = stats.baseMaxHealth + MetaProgressionManager.Instance.GetValueByType(StatUpgradeType.Health);
+        stats.maxHealth = stats.baseMaxStamina + MetaProgressionManager.Instance.GetValueByType(StatUpgradeType.Stamina);
+
         stats.currentHealth = stats.maxHealth;
         stats.currentStamina = stats.maxStamina;
 
@@ -231,7 +235,7 @@ public class PlayerManager : MonoBehaviour
 
     public void AddGold(int amount)
     {
-        stats.gold += amount;
+        stats.gold += Mathf.RoundToInt(amount * (1f + MetaProgressionManager.Instance.GetValueByTypeAsFloat(StatUpgradeType.GoldIncrease)));
         OnGoldUpdateEvent?.Invoke();
         //UIManager.Instance.UpdateGoldUI(stats.gold);
         // + une anim de gain de piece

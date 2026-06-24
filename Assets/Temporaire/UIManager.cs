@@ -163,6 +163,7 @@ public class UIManager : MonoBehaviour
             ShowRewardPanel();
         });
 
+        MetaProgressionManager.Instance.AddBananaToTotal(1);
     }
     public void ShowBossMessagePanel()
     {

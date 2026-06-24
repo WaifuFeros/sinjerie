@@ -17,7 +17,9 @@ public class RewardSystem : MonoBehaviour
 
     public int NumberOfToggle;
 
-    public int NumberOfRewardToChoose;
+    public int BaseNumberOfRewardToChoose = 1;
+
+    public int NumberOfRewardToChoose { get; private set; }
 
     [Header("References")]
 
@@ -46,6 +48,8 @@ public class RewardSystem : MonoBehaviour
     }
     public void Initialize(Action onLoadCompleted)
     {
+        NumberOfRewardToChoose = BaseNumberOfRewardToChoose + MetaProgressionManager.Instance.GetValueByType(StatUpgradeType.RewardCount);
+
         onLoadCompleted?.Invoke();
     }
 
