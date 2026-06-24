@@ -47,6 +47,7 @@ public class ThunderParticle : MonoBehaviour
         {
             _rectTransform.anchoredPosition = Vector2.zero;
         });
+        Thunder();
     }
 
     public void Thunder()
