@@ -15,16 +15,16 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 2a1dcb0c2bd10b741a040a2eacbe744d, type: 3}
   Name: Tank
   Description: C'est un singe
-  MaxHealth: 25
+  MaxHealth: 20
   MaxStamina: 4
   Items:
   - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
-  - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
+  - {fileID: 11400000, guid: bd32cc19014849e47a97fbbab56c91ef, type: 2}
+  - {fileID: 11400000, guid: a0cbff3bb2e03ec4995742c67bcd28de, type: 2}
+  - {fileID: 11400000, guid: cda912efc7296234e85547b44aaecc63, type: 2}
   - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+  - {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5, type: 2}
+  - {fileID: 11400000, guid: e9cf4aed8ac5b9e4f81c40a95634f792, type: 2}
   behavior: {fileID: 11400000, guid: 7cb011597c9f9e3499d7f8cdaf320fad, type: 2}
   GoldReward: 10
   IsBoss: 0

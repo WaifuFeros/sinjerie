@@ -18,13 +18,13 @@ MonoBehaviour:
   MaxHealth: 10
   MaxStamina: 6
   Items:
-  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
-  - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
+  - {fileID: 11400000, guid: e39ac38057e9cc144ae1b469c8daf3fa, type: 2}
+  - {fileID: 11400000, guid: bd32cc19014849e47a97fbbab56c91ef, type: 2}
+  - {fileID: 11400000, guid: e9cf4aed8ac5b9e4f81c40a95634f792, type: 2}
   - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
-  - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+  - {fileID: 11400000, guid: 291f732214b1d48498e0bbe7fd37450e, type: 2}
+  - {fileID: 11400000, guid: cda912efc7296234e85547b44aaecc63, type: 2}
+  - {fileID: 11400000, guid: 3de7df18b0736e64db5af12212917e58, type: 2}
   behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
   GoldReward: 10
   IsBoss: 1

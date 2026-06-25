@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Boss 2
   m_EditorClassIdentifier: 
   Sprite: {fileID: 21300000, guid: df7010777058a734b92f4aa65db87c1f, type: 3}
-  Name: Boss 2
+  Name: Tank 2
   Description: C'est un singe
   MaxHealth: 10
   MaxStamina: 6
   Items:
-  - {fileID: 11400000, guid: 660dbaf783506f94c91a55198006a2cf, type: 2}
+  - {fileID: 11400000, guid: e39ac38057e9cc144ae1b469c8daf3fa, type: 2}
   - {fileID: 11400000, guid: c55c76fd672ea174fb12f0e62044694d, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
-  - {fileID: 11400000, guid: 8c328fd249b3f444b93552af4224f8f6, type: 2}
+  - {fileID: 11400000, guid: c718e095ff2be1f42866a38b5eb4f8f7, type: 2}
+  - {fileID: 11400000, guid: 7c5b7f7ac7bd9ee4a978efddb7b8839b, type: 2}
   - {fileID: 11400000, guid: 2cd0fb81435a0e54392717fa3fda1819, type: 2}
   - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
-  - {fileID: 11400000, guid: 110d5ff5eeb09134b9016dbfc23ffef3, type: 2}
+  - {fileID: 11400000, guid: b9e76fffa00d6b743b5f3c0b596dfdf5, type: 2}
   behavior: {fileID: 11400000, guid: 76f7a721132dd574db22aeeeb7aa4c6f, type: 2}
   GoldReward: 10
   IsBoss: 0
