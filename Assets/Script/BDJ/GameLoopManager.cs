@@ -72,6 +72,7 @@ public class GameLoopManager : MonoBehaviour
                 {
                     RewardSystem.Instance.Initialize(() =>
                     {                         // Tout est prêt, passer à la première salle
+                        Debug.Log("DEPAAAAAAAAAAAAAART");
                         TransitionToNewRoom(true);
                     });
 

@@ -316,23 +316,41 @@ public class CombatSystem : MonoBehaviour
         MeteoCheck(); //verifier si il pleut pour appliquer l'effet de mouille a la fin du tour de l'ennemi
         yield return WeatherEffect.Instance.OnFire(true);
 
-        // pioche des items aléatoires à la fin du tour
-        for (int i = 0; i < PlayerManager.Instance.stats.nbItemPerTurn; i++)
+        // Si le joueur n'a plus d'item, ça lui en redonne un peu
+        if (PlayerManager.Instance.stats.Deck.Length == 0 && ItemManager.Instance.activeItems.Count == 0)
         {
-            if (PlayerManager.Instance.stats.Deck.Length == 0 || !InventoryManager.Instance.HasEmptySlot())
+            Debug.Log("heyyyyyyyyyyyyyyy");
+            for (int j = 0; j < 2; j++)
             {
-                print("############# tu n'as plus d'objet dans ton deck");
-                break;
+                List<ObjetSO> communObjs = new List<ObjetSO>();
+                foreach (var o in ItemManager.Instance.ItemsDatabase)
+                {
+                    if (o.Rarity == ObjetRarity.Common)
+                        communObjs.Add(o);
+                }
+                ItemManager.Instance.SpawnItem(communObjs[UnityEngine.Random.Range(0, communObjs.Count)]);
+
             }
-            int randomIndex = UnityEngine.Random.Range(0, PlayerManager.Instance.stats.Deck.Length);
-            ObjetSO obj = PlayerManager.Instance.stats.Deck[randomIndex];
-            var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
-            deckList.RemoveAt(randomIndex);
-            PlayerManager.Instance.stats.Deck = deckList.ToArray();
-
-            ItemManager.Instance.SpawnItem(obj);
         }
+        else
+        {
+            // pioche des items aléatoires à la fin du tour
+            if (PlayerManager.Instance.stats.Deck.Length != 0)
+            {
+                for (int i = 0; i < PlayerManager.Instance.stats.nbItemPerTurn; i++)
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, PlayerManager.Instance.stats.Deck.Length);
+                    print(randomIndex);
+                    print(PlayerManager.Instance.stats.Deck.Length);
+                    ObjetSO obj = PlayerManager.Instance.stats.Deck[randomIndex];
+                    var deckList = new List<ObjetSO>(PlayerManager.Instance.stats.Deck);
+                    deckList.RemoveAt(randomIndex);
+                    PlayerManager.Instance.stats.Deck = deckList.ToArray();
 
+                    ItemManager.Instance.SpawnItem(obj);
+                }
+            }
+        }
         bool playerCanPlay = true;
         if (WeatherEffect.Instance.OnParalyze(true))
         {
@@ -359,7 +377,8 @@ public class CombatSystem : MonoBehaviour
             SetupSkipTurnButtonInteractable(true);
             isPlayerTurn = true;
         }
-
+        
+        // Tuto
         if (TutorialManager.Instance.IsTutorial && PlayerManager.Instance.HasTakenDamage)
             TutorialPanelsManager.Instance.DisplayPanel(TutorialStep.ThrowOnPlayer);
     }
