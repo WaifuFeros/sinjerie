@@ -8935,7 +8935,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8fbb5bc09020301498a68be003b015be, type: 2}
   - {fileID: 11400000, guid: 1edf5721c8246ce43a92225c7e11c24d, type: 2}
   - {fileID: 11400000, guid: 38f01eb820be83e4ab06d34af066c5d6, type: 2}
-  - {fileID: 11400000, guid: e9088d2eafbc4d94ea7804ca9053ad71, type: 2}
   characterPrefab: {fileID: 3162358337384565786, guid: 47c10ee26da9716489c2321007d372fd,
     type: 3}
   itemPrefab: {fileID: 8316754013918109564, guid: 500b8996ea2c44c46816f550536e2ca0,
