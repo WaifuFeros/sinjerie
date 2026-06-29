@@ -335,9 +335,10 @@ public class CombatSystem : MonoBehaviour
         else
         {
             // pioche des items aléatoires à la fin du tour
-            if (PlayerManager.Instance.stats.Deck.Length != 0)
+
+            for (int i = 0; i < PlayerManager.Instance.stats.nbItemPerTurn; i++)
             {
-                for (int i = 0; i < PlayerManager.Instance.stats.nbItemPerTurn; i++)
+                if (PlayerManager.Instance.stats.Deck.Length != 0)
                 {
                     int randomIndex = UnityEngine.Random.Range(0, PlayerManager.Instance.stats.Deck.Length);
                     print(randomIndex);
@@ -350,6 +351,7 @@ public class CombatSystem : MonoBehaviour
                     ItemManager.Instance.SpawnItem(obj);
                 }
             }
+            
         }
         bool playerCanPlay = true;
         if (WeatherEffect.Instance.OnParalyze(true))
